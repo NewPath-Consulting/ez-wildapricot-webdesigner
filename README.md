@@ -81,7 +81,7 @@ To move the Language button from the default location:
 3.	Click Edit code and delete the default “Insert your HTML code here”. 
 4.	Click Settings button for the new gadget. On the left panel, show Advanced and then replace the HTML ID with `languageButton` then Save the template.
 5.  Repeat this for each page template.
-5.	(Optional) Customize the look of the button by applying custom CSS class to the #languageButton ID in the WATM configuration file.
+5.	(Optional) Customize the look of the button by applying custom CSS class to the `#languageButton ID` in the WATM configuration file.
 
 ### Add the translated content
 The below is an example of adding translated content to a Wild Apricot "Contact" page.
