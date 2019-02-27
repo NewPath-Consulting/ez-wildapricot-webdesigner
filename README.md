@@ -124,14 +124,14 @@ When saving the file, use the CSV UTF-8 (Comma delimited) (*.csv). Other formats
 
 ### Function: 
 *	**text** – sets text of the element selected by the Query column.
-*	hide – hides the element selected by the Query column.
-*	button – sets value of the button selected by the Query column.
-*	placeholder – sets placeholder attribute. Only used for search boxes.
-*	delay – page will pause one second before replacing text. Used on elements that are written with JavaScript after page load.
-*	replace – Searches for Default Text column and replaces this sub-string in any element. If Query column is blank, the entire page is searched. 
-*	replace_element – Searches Default Text and replaces the text of the entire element. If Query column is blank, the entire page is searched.
-*	replace_delay – Replaces sub-string after one second delay.
-*	inactive – disables current configuration row. Can be used to save a configuration, but not use it.
+*	**hide** – hides the element selected by the Query column.
+*	**button** – sets value of the button selected by the Query column.
+*	**placeholder** – sets placeholder attribute. Only used for search boxes.
+*	**delay** – page will pause one second before replacing text. Used on elements that are written with JavaScript after page load.
+*	**replace** – Searches for Default Text column and replaces this sub-string in any element. If Query column is blank, the entire page is searched. 
+*	**replace_element** – Searches Default Text and replaces the text of the entire element. If Query column is blank, the entire page is searched.
+*	**replace_delay** – Replaces sub-string after one second delay.
+*	**inactive** – disables current configuration row. Can be used to save a configuration, but not use it.
 
 #### CSS-only functions:
 *	mouseover – Sets CSS inside an event handler when hovering over an element.
@@ -198,21 +198,23 @@ Query: .WaGadgetMenuHorizontal
 ```
 ### Replace text of any element of any page:
 ```
-	Default Text: 501\(c\)6 non-profit organization
-	English Replacement Text: My Organization Name
-	Function: replace_element
-	(Note: Use backslash to escape special characters such as commas, parentheses, brackets.)
+Default Text: 501\(c\)6 non-profit organization
+English Replacement Text: My Organization Name
+Function: replace_element
+(Note: Use backslash to escape special characters such as commas, parentheses, brackets.)
 ```
 ### Set CSS of an element:
 ```
-  Query: h2
-	Style: { "color" : "red", "font-style" : " italic" }	
+Query: h2
+Style: { "color" : "red", "font-style" : " italic" }	
 ```
 ### Set CSS of :before or :after (Note the use of standard CSS formatting):
 ```  
-  Query: .WaGadgetCustomMenu.menuStyleNone .orientationVertical li:before
-  Style: { content: "|"; color: #5e5e5e }
+Query: .WaGadgetCustomMenu.menuStyleNone .orientationVertical li:before
+Style: { content: "|"; color: #5e5e5e }
 ```
 ### Set CSS :hover of a button (Note, :hover is not needed in Query):
-	Query: .functionalButton
-	Style: { "color": “white", " background": "#a80532" }
+```
+Query: .functionalButton
+Style: { "color": “white", " background": "#a80532" }
+```
