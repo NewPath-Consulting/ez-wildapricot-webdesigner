@@ -36,6 +36,7 @@ The configuration for the Wild Apricot Text manager is made inside a comma separ
   var primaryLanguageClassName = ".english";
 </script>
 ```
+
 ### Files Setup
 1.	In Admin view of Wild Apricot, browse to [Website -> Files](https://gethelp.wildapricot.com/en/articles/177#uploading). 
 2.	Create a new folder named `WildApricotTextManager` under the Theme folder.
@@ -47,7 +48,7 @@ Alternatively you can reference the JavaScript libraries directly from GitHub us
 ```html
 <script src="https://raw.githubusercontent.com/asirota/watm/master/jquery.csv-0.8.9-mod.js"></script>
 <script src="https://raw.githubusercontent.com/asirota/watm/master/wildapricot-textmanager.js"></script>
- ```
+```
 If you load the libraries into your website directly from GitHub, new versions of the WATM project will automatically load on your website. Be careful!
 
 ### Overlay Setup (Optional)
