@@ -9,7 +9,7 @@ The management is done in a configuration file to make it easy to maintain a lar
 ## Installation
 
 ### Script Setup
-1.	In Admin View of Web Apricot, browse to Settings -> Site -> Global JavaScript.
+1.	In Admin View of Web Apricot, browse to Settings -> Site -> Global JavaScript. More details are available in [Wild Apricot Documentation](https://gethelp.wildapricot.com/en/articles/212-inserting-and-modifying-html-or-javascript#javascript).
 2.	Copy and paste the following lines to the top of the script.
 ```html
 <!-- jQuery-CSV Source: https://github.com/evanplaice/jquery-csv -->
