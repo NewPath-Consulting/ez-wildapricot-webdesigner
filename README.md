@@ -195,7 +195,9 @@ Default Text: Directory
 English Replacement Text: Members Directory
 Function: replace
 Query: .WaGadgetMenuHorizontal 
-Replace text of any element of any page:
+```
+### Replace text of any element of any page:
+```
 	Default Text: 501\(c\)6 non-profit organization
 	English Replacement Text: My Organization Name
 	Function: replace_element
