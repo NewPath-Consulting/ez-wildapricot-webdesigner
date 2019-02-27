@@ -89,16 +89,23 @@ The below is an example of adding translated content to a Wild Apricot "Contact"
 
 1.	Start with your Contact page. In Admin Mode, browse to Website -> Site pages -> Contact and click Edit. You may have a different page on your site, and you can start with any page.
 2.	Click on Gadgets and drag a new Content gadget below the existing Contact us heading. If your second language is French, then type in `Contactez nous` into this new space. Adjust font sizes and padding to match the original content.
+![Advanced Settings in CSS](docs/images/contact-us-heading.png)
 3.	Show [Advanced settings section](https://gethelp.wildapricot.com/en/articles/187#settings) on the left settings panel and add `french` to the CSS class text box.
 4.	Click on the original English Contact us heading and add `english` to the CSS class text box.
+![Advanced Settings in CSS](docs/images/advanced-english-class.png)
 5.	Repeat for other content blocks you wish to localize and Save page. The result should look similar to below:
- 
+![Advanced Settings in CSS for Contact Us Widgets](docs/images/contact-us-widgets.png)
+
+
 Note that if WATM is enabled, one of the two languages will be hidden based on the state of the language, even in the Admin Edit mode. Please make sure textManagerProductionMode = false is set in JavaScript configuration and then click the button to disable WATM to see both sets of languages at once.
  
 ## Wild Apricot Text Manager Configuration File
 Opening the configuration file in Excel or another commas seperated file (CSV) editor.
-  Choose Delimited. Check My data has headers.  Check Comma.
-  Click Finish.
+ 1. Choose Delimited, check My data has headers and click Next
+![Excel CSV Import Step 1](docs/images/excel-csv-import1.png)  
+ 2.   Check Comma for the Delimiters option, Click Finish
+![Excel CSV Import Step 1](docs/images/excel-csv-import2.png)  
+
 Saving the configuration file
 When saving the file, use the CSV UTF-8 (Comma delimited) (*.csv). Other formats will break WATM!
 
@@ -116,7 +123,7 @@ When saving the file, use the CSV UTF-8 (Comma delimited) (*.csv). Other formats
 **Notes**: Any other helpful notes can be added here for reference.
 
 ### Function: 
-*	text – sets text of the element selected by the Query column.
+*	**text** – sets text of the element selected by the Query column.
 *	hide – hides the element selected by the Query column.
 *	button – sets value of the button selected by the Query column.
 *	placeholder – sets placeholder attribute. Only used for search boxes.
@@ -135,15 +142,24 @@ When saving the file, use the CSV UTF-8 (Comma delimited) (*.csv). Other formats
 **Style**: Set the CSS style for the element. Optional.
  
 ## Example:
-Change the text “Current status” inside the Membership Renewal system gadget:
- 
-1.	Open wildapricot-textmanager-config.csv 
-2.	Search the file for “Current status”. Verify column A matches the name of the gadget we’re looking at.
-3.	Type in new text in column C.
-4.	(Optional) Type second language text in column D. 
-5.	Save as CSV UTF-8 (Comma delimited) (*.csv)
+Change the text “Current status” label inside the Membership Renewal system gadget:
+
+Here is what the standard Memmbership Renewal system gadget looks like:
+![Standard Membership Renewal Gadget](docs/images/membership-renewal-old-text.png)  
+
+1.	Open wildapricot-textmanager-config.csv in your text editor or Excel.
+2.	Search the file for the text “Current status”. Verify **Wild Apricot Reference** column matches the name of the gadget we’re looking at.
+3.	Type in new text in **English Replacement Text** column.
+![Update English Replacement Text in CSV File](docs/images/updating-csv-text.png)  
+4.	(Optional) Type translated language text in **Alternative Language Text**. 
+5.	Save as CSV UTF-8 (Comma delimited) (\*.csv)
+![Save Updated CSV File in UTF8](docs/images/saving-as-csv-utf8.png)  
 6.	Upload/Update .csv file.
+![Upload Updated CSV configuration into Wild Apricot File Manager](docs/images/updating-watm-csv.png)
 7.	Load the membership renewal page and use the toggle buttons to test.  
+Here is what the new Membership Renewal system gadget looks like:
+![Updated Membership Renewal Gadget](docs/images/membership-renewal-new-text.png)  
+
 
  
 ## Further Examples
