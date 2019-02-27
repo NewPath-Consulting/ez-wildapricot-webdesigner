@@ -4,11 +4,17 @@ The configuration for the Wild Apricot Text manager is made inside a comma separ
 
 ## Change History
 0.1 - Initial Release 11/19/18
+
 0.2 - Added support for many more system flags, added French translation into CSV configuration file, changed testing button toggle label 11/27/18
+
 0.3 - Added support for adding a style, added several more system labels, added support for limiting the language toggle display "flicker" 12/5/18
+
 0.4 - Added support for effective primary menu design changes, added support to override any CSS class or ID 12/13/18
+
 0.5 - Added support for mouseover, mouseout (hover) and :before and :after pseudo-elements 1/15/19
+
 0.6 - Added support for SCSS-style variables 1/24/19
+
 0.7 - Now managed in GitHub, fixed issues related to Internet Explorer 11 support in the CSV parser and in the WATM library 2/23/19
 
 ## Installation
