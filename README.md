@@ -110,7 +110,8 @@ Saving the configuration file
 When saving the file, use the CSV UTF-8 (Comma delimited) (*.csv). Other formats will break WATM!
 
 ### Columns in the WATM Configuration File
-**Note: Inserting or moving columns will break WATM!**
+
+####Note: Inserting or moving columns will break WATM!
 
 **Wild Apricot Reference**: Name of the Wild Apricot System Gadget. For administrative use only.
 
@@ -133,9 +134,11 @@ When saving the file, use the CSV UTF-8 (Comma delimited) (*.csv). Other formats
 *	**replace_delay** – Replaces sub-string after one second delay.
 *	**inactive** – disables current configuration row. Can be used to save a configuration, but not use it.
 
+**Note:** You can leave function empty to apply CSS to any CSS class or ID set in the **Query** column.
+
 #### CSS-only functions:
-*	mouseover – Sets CSS inside an event handler when hovering over an element.
-*	mouseout – Sets CSS inside an event handler when no longer hovering over element.
+*	**mouseover** – Sets CSS inside an event handler when hovering over an element.
+*	**mouseout** – Sets CSS inside an event handler when no longer hovering over element.
 
 **Query**: jQuery syntax for selecting an element. 
 
