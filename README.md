@@ -142,30 +142,34 @@ When saving the file, use the CSV UTF-8 (Comma delimited) (*.csv). Other formats
 **Style**: Set the CSS style for the element. Optional.
  
 ## Example:
-Change the text “Current status” label inside the Membership Renewal system gadget:
+### Change the label “Current status” on Membership Renewal system gadget:
 
-Here is what the standard Memmbership Renewal system gadget looks like:
+Here is what the standard Membership Renewal system gadget looks like:
 
 ![Standard Membership Renewal Gadget](docs/images/membership-renewal-old-text.png)  
 
 - [ ]	Open wildapricot-textmanager-config.csv in your text editor or Excel.
 
-- [ ]	Search the file for the text “Current status”. Verify **Wild Apricot Reference** column matches the name of the gadget we’re looking at.
+- [ ]	Search the file for “Current status”. Verify **Wild Apricot Reference** column matches the name of the gadget we’re looking at.
 
-- [ ] Type in new text in **English Replacement Text** column.
+- [ ] Type in new text `My New Text!` in **English Replacement Text** column.
+
 ![Update English Replacement Text in CSV File](docs/images/updating-csv-text.png)  
 
 - [ ] (Optional) Type translated language text in **Alternative Language Text**. 
 
-- [ ] Save as CSV UTF-8 (Comma delimited) (\*.csv)
+- [ ] Save as `CSV UTF-8 (Comma delimited) (*.csv)`
+
 ![Save Updated CSV File in UTF8](docs/images/saving-as-csv-utf8.png)  
 
-- [ ] Upload/Update .csv file.
+- [ ] Upload/Update .csv file
+
 ![Upload Updated CSV configuration into Wild Apricot File Manager](docs/images/updating-watm-csv.png)
 
 - [ ] Load the membership renewal page and use the toggle buttons to test.  
 
-Here is what the new Membership Renewal system gadget looks like:
+Here is what the new Membership Renewal system gadget should look like:
+
 ![Updated Membership Renewal Gadget](docs/images/membership-renewal-new-text.png)  
 
 
