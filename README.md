@@ -39,8 +39,8 @@ The configuration for the Wild Apricot Text manager is made inside a comma separ
 
 ### Files Setup
 1.	In Admin view of Wild Apricot, browse to [Website -> Files](https://gethelp.wildapricot.com/en/articles/177#uploading). 
-![File Manager in Wild Apricot](/watm/docs/images/files-make-new-folder.png)
 2.	Create a new folder named `WildApricotTextManager` under the Theme folder.
+![File Manager in Wild Apricot](docs/images/files-make-new-folder.png)
 3.	Upload jquery.csv-0.8.9-mod.js to the new folder.
 4.	Upload wildapricot-textmanager.js to the new folder.
 5.	Upload wildapricot-textmanager-config.csv to the new folder. 
