@@ -1,20 +1,19 @@
 # watm
 Wild Apricot Text Manager
 
-This is a jQuery-based library to manage languages, modify hard coded labels and strings and add CSS-styling in Wild Apricot (www.wildapricot.com).
+The [Wild Apricot Text Manager](https://www.newpathconsulting.com/watm) (aka WATM) is a simple to configure JavaScript library that levers the jQuery library already included with every [Wild Apricot](https://wildapricot.com) website. WATM will help any administrator manage and replace nearly every piece of system text in Wild Apricot. You can also use it to change CSS for any class or ID. WATM can be used optionally to enable 2 language Wild Apricot websites without needing to create any additional site pages or page templates. A list of replaceable elements is included in the easy-to-edit Excel configuration file. You can make a variety of changes such as global search and replace, modifying form labels and buttons, changing CSS properties on any class or ID and hiding certain labels or buttons altogether.
 
-The management is done in a configuration file to make it easy to maintain a large amount of modifications and translations.
-
+The configuration for the Wild Apricot Text manager is made inside a comma separated configuration file which can be edited in Microsoft Excel or another text editor. 
 
 ## Installation
 
 ### Script Setup
-1.	In Admin View of Web Apricot, browse to Settings -> Site -> Global JavaScript. More details are available in [Wild Apricot Documentation](https://gethelp.wildapricot.com/en/articles/212-inserting-and-modifying-html-or-javascript#javascript).
-2.	Copy and paste the following lines to the top of the script.
+1.	In Admin View of Web Apricot, browse to Settings -> Site -> Global JavaScript. More details on inserting JavaScript into Wild Apricot are available in [Wild Apricot Documentation](https://gethelp.wildapricot.com/en/articles/212-inserting-and-modifying-html-or-javascript#javascript).
+2.	Copy and paste the following lines to the Global JavaScript.
 ```html
 <!-- jQuery-CSV Source: https://github.com/evanplaice/jquery-csv -->
-<script src="/resources/Theme/WildApricotTextManager/jquery.csv-0.8.9.js"></script>
-<script src="/resources/Theme/WildApricotTextManager/wildapricot-textmanager-0.5.js"></script>
+<script src="/resources/Theme/WildApricotTextManager/jquery.csv-0.8.9-mod.js"></script>
+<script src="/resources/Theme/WildApricotTextManager/wildapricot-textmanager.js"></script>
 <script>
   var textManagerProductionMode = false;
   var textManagerMultilingualMode = true;
@@ -26,22 +25,28 @@ The management is done in a configuration file to make it easy to maintain a lar
 </script>
 ```
 ### Files Setup
-1.	In Admin View of Wild Apricot, browse to Website -> Files. 
-2.	Create a new folder named WildApricotTextManager under the Theme folder.
+1.	In Admin view of Wild Apricot, browse to [Website -> Files](https://gethelp.wildapricot.com/en/articles/177#uploading). 
+2.	Create a new folder named `WildApricotTextManager` under the Theme folder.
 3.	Upload jquery.csv-0.8.9-mod.js to the new folder.
-4.	Upload wildapricot-textmanager-0.7.js to the new folder.
+4.	Upload wildapricot-textmanager.js to the new folder.
 5.	Upload wildapricot-textmanager-config.csv to the new folder. 
- 
- 
-### Overlay Setup (Optional)
-Normally, when the text manager is enabled, the original text is displayed on the page load and then replaced within one second. This swap can be hidden with the additions described below. The text manager script will automatically remove the overlay once the script has been completed. 
 
-Open the default Page Template, add a Custom HTML gadget anywhere, and edit the HTML to include this:
+Alternatively you can reference the JavaScript libraries directly from GitHub using these alternative `<script>` lines:
+```html
+<script src="https://raw.githubusercontent.com/asirota/watm/master/jquery.csv-0.8.9-mod.js"></script>
+<script src="https://raw.githubusercontent.com/asirota/watm/master/wildapricot-textmanager.js"></script>
+ ```
+If you load the libraries into your website directly from GitHub, new versions of the WATM project will automatically load on your website. Be careful!
+
+### Overlay Setup (Optional)
+Normally, when the text manager is enabled, the original text is displayed on the page load and then replaced within one second. This "flicker" can be hidden with the HTML and CSS below. The WATM will automatically remove the overlay once the script has been completed, reducing the flicker.
+
+Open the each Wild Apricot Page Template in use, add a [Custom HTML](https://gethelp.wildapricot.com/en/articles/408) gadget anywhere in the template. Edit the code of the Custom HTML gadget and include this HTML snippet:
 ```html
 <div id="textmanager_overlay"></div>
 ```
 
-Add these lines to Website -> CSS:
+You must also ddd these lines to the Wild Apricot global CSS in the [Website -> CSS](https://gethelp.wildapricot.com/en/articles/438#entering) menu:
 ```
 #textmanager_overlay {
     position: fixed;
@@ -57,35 +62,34 @@ Add these lines to Website -> CSS:
 ```
 
 ### Multilingual Setup (Optional)
-Move the Language Button (Optional)
-1.	In Admin View, browse to Website -> Page templates -> Standard template.
+To move the Language button from the default location:
+1.	In Admin View, browse to each page template in use.
 2.	Click Edit, then Gadgets, then drag and drop Custom HTML gadget to where you would like to place the button.
 3.	Click Edit code and delete the default “Insert your HTML code here”. 
-4.	Click Settings button for the new gadget. On the left panel, show Advanced and then replace the HTML ID with languageButton then Save the template.
-5.	(Optional) Customize the look of the button in Website -> CSS.
+4.	Click Settings button for the new gadget. On the left panel, show Advanced and then replace the HTML ID with `languageButton` then Save the template.
+5.  Repeat this for each page template.
+5.	(Optional) Customize the look of the button by applying custom CSS class to the #languageButton ID in the WATM configuration file.
 
-### Add the localized content
-1.	We have to add content to each page. We’ll start with Contact page. In Admin Mode, browse to Website -> Site pages -> Contact and click Edit.
-2.	Click on Gadgets and drag a new Content gadget below the existing Contact us heading. If your second language is French, then type in Contactez nous into this new space. Adjust font sizes and padding to match the original content.
- 
-3.	Show Advanced on the left panel and add french to the CSS class text box.
- 
-4.	Click on the original English Contact us heading and add english to the CSS class text box.
- 
+### Add the translated content
+The below is an example of adding translated content to a Wild Apricot "Contact" page.
+
+1.	Start with your Contact page. In Admin Mode, browse to Website -> Site pages -> Contact and click Edit. You may have a different page on your site, and you can start with any page.
+2.	Click on Gadgets and drag a new Content gadget below the existing Contact us heading. If your second language is French, then type in `Contactez nous` into this new space. Adjust font sizes and padding to match the original content.
+3.	Show [Advanced settings section](https://gethelp.wildapricot.com/en/articles/187#settings) on the left settings panel and add `french` to the CSS class text box.
+4.	Click on the original English Contact us heading and add `english` to the CSS class text box.
 5.	Repeat for other content blocks you wish to localize and Save page. The result should look similar to below:
  
-Important: If Text Manager is enabled, one of the two languages will be hidden, even in Edit mode. Please make sure textManagerProductionMode = false is set in Global JavaScript and then click the button to disable Text Manager to see both sets of languages at once.
+Note that if WATM is enabled, one of the two languages will be hidden based on the state of the language, even in the Admin Edit mode. Please make sure textManagerProductionMode = false is set in JavaScript configuration and then click the button to disable WATM to see both sets of languages at once.
  
 ## Wild Apricot Text Manager Configuration File
-Opening the configuration file in Excel
+Opening the configuration file in Excel or another commas seperated file (CSV) editor.
   Choose Delimited. Check My data has headers.  Check Comma.
   Click Finish.
 Saving the configuration file
-When saving, please Save as CSV UTF-8 (Comma delimited) (*.csv).
- 
+When saving the file, use the CSV UTF-8 (Comma delimited) (*.csv). Other formats will break WATM!
 
-### Columns
-Note: Inserting or moving columns will break the functionality.
+### Columns in the WATM Configuration File
+**Note: Inserting or moving columns will break WATM!**
 
 **Wild Apricot Reference**: Name of the Wild Apricot System Gadget. For administrative use only.
 
@@ -106,7 +110,8 @@ Note: Inserting or moving columns will break the functionality.
 *	replace – Searches for Default Text column and replaces this sub-string in any element. If Query column is blank, the entire page is searched. 
 *	replace_element – Searches Default Text and replaces the text of the entire element. If Query column is blank, the entire page is searched.
 *	replace_delay – Replaces sub-string after one second delay.
-*	inactive – disables current configuration row. Can be used to save a setting, but not use it.
+*	inactive – disables current configuration row. Can be used to save a configuration, but not use it.
+
 #### CSS-only functions:
 *	mouseover – Sets CSS inside an event handler when hovering over an element.
 *	mouseout – Sets CSS inside an event handler when no longer hovering over element.
