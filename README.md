@@ -64,6 +64,8 @@ To enable automatic updates use the following Global JavaScript:
 ```
 
 ### Files Setup
+If you are using the "automatic update" approach of loading WATM you can disregard steps 3-4. Just make sure you upload the WATM configuration file to your Wild Apricot site.
+
 1.	In Admin view of Wild Apricot, browse to [Website -> Files](https://gethelp.wildapricot.com/en/articles/177#uploading). 
 2.	Create a new folder named `WildApricotTextManager` under the Theme folder.
 ![File Manager in Wild Apricot](docs/images/files-make-new-folder.png)
