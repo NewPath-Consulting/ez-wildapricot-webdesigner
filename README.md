@@ -122,17 +122,23 @@ The below is an example of adding translated content to a Wild Apricot "Contact"
 ![Advanced Settings in CSS for Contact Us Widgets](docs/images/contact-us-widgets.png)
 
 
-Note that if WATM is enabled, one of the two languages will be hidden based on the state of the language, even in the Edit mode. Please make sure `textManagerProductionMode = false` is set in JavaScript configuration and then click the button to disable WATM to see both sets of languages at once.
+Note that if WATM is enabled, one of the two languages will be hidden based on the state of the language, even in the Edit mode. Please make sure `textManagerProductionMode = false` is set in Global JavaScript and then click the button to disable WATM to see both sets of languages at once.
 
 ## Wild Apricot Text Manager Configuration File
-Opening the configuration file in Excel or another commas seperated file (CSV) editor.
- 1. Choose Delimited, check My data has headers and click Next
+To maintain all the WATM text changes, translations and styling changes, you must edit and maintain the CSV configuration file `wildapricot-textmanager-config.csv` using Excel or another commas seperated file (CSV) editor.
+
+### Instructions for editing the file in Excel
+
+ 1. Open the `wildapricot-textmanager-config.csv` file Choose Delimited, check My data has headers and click Next
+ 
 ![Excel CSV Import Step 1](docs/images/excel-csv-import1.png)  
+
  2.   Check Comma for the Delimiters option, Click Finish
+ 
 ![Excel CSV Import Step 1](docs/images/excel-csv-import2.png)  
 
-Saving the configuration file
-When saving the file, use the CSV UTF-8 (Comma delimited) (*.csv). Other formats will break WATM!
+### Saving the configuration file
+When saving the file, use the CSV UTF-8 (Comma delimited) (*.csv). **Other formats will break WATM!**
 
 ### Columns in the WATM Configuration File
 
