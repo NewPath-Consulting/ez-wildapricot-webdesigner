@@ -1,3 +1,6 @@
+# Wild Apricot Text Manager
+
+## Project Description
 The [Wild Apricot Text Manager](https://www.newpathconsulting.com/watm) (aka WATM) is a simple to configure JavaScript library that levers the jQuery library already included with every [Wild Apricot](https://wildapricot.com) website. WATM will help any administrator manage and replace nearly every piece of system text in Wild Apricot. You can also use it to change CSS for any class or ID. WATM can be used optionally to enable 2 language Wild Apricot websites without needing to create any additional site pages or page templates. A list of replaceable elements is included in the easy-to-edit Excel configuration file. You can make a variety of changes such as global search and replace, modifying form labels and buttons, changing CSS properties on any class or ID and hiding certain labels or buttons altogether.
 
 The configuration for the Wild Apricot Text manager is made inside a comma separated configuration file which can be edited in Microsoft Excel or another text editor. 
@@ -22,10 +25,31 @@ The configuration for the Wild Apricot Text manager is made inside a comma separ
 ### Script Setup
 1.	In Admin View of Web Apricot, browse to Settings -> Site -> Global JavaScript. More details on inserting JavaScript into Wild Apricot are available in [Wild Apricot Documentation](https://gethelp.wildapricot.com/en/articles/212-inserting-and-modifying-html-or-javascript#javascript).
 2.	Copy and paste the following lines to the Global JavaScript.
-```html
+```javascript
 <!-- jQuery-CSV Source: https://github.com/evanplaice/jquery-csv -->
 <script src="/resources/Theme/WildApricotTextManager/jquery.csv-0.8.9-mod.js"></script>
 <script src="/resources/Theme/WildApricotTextManager/wildapricot-textmanager.js"></script>
+<script>
+  var textManagerProductionMode = false;
+  var textManagerMultilingualMode = true;
+  var primaryLanguageButtonName = "English";
+  var alterativeLanguageButtonName = "Français";
+  var languageButtonHtmlID = "languageButton";
+  var alterativeLanguageClassName = ".french";
+  var primaryLanguageClassName = ".english";
+  
+  $(window).bind("load", function() {$('#textmanager_overlay').css('display', 'none'); });  // Fail-safe to remove white overlay
+</script>
+```
+
+**Note:** If you want to use the "automatic update" feature for WATM, you can load the JavaScript libraries from a  free, publicly available content delivery network (CDN). This will enable WATM to be updated automatically if there is a change or useful feature added, but it also has the risk of potentially breaking WATM on your site. The risk is not high, but it *is* possible. If you load the libraries into your Wild Apricot site rather than load it off a CDN you will **not** receive any automatic updates.
+
+To enable automatic updates use the following Global JavaScript:
+
+```javascript
+<!-- jQuery-CSV Source: https://github.com/evanplaice/jquery-csv -->
+<script src="https://cdn.jsdelivr.net/gh/asirota/watm/WildApricotTextManager/jquery.csv-0.8.9-mod.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asirota/watm/WildApricotTextManager/wildapricot-textmanager.js"></script>
 <script>
   var textManagerProductionMode = false;
   var textManagerMultilingualMode = true;
@@ -57,7 +81,7 @@ Open the each Wild Apricot Page Template in use, add a [Custom HTML](https://get
 ```
 
 You must also ddd these lines to the Wild Apricot global CSS in the [Website -> CSS](https://gethelp.wildapricot.com/en/articles/438#entering) menu:
-```
+```css
 #textmanager_overlay {
     position: fixed;
     width: 100%;
