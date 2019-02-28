@@ -41,7 +41,7 @@ The configuration for the Wild Apricot Text manager is made inside a comma separ
   $(window).bind("load", function() {$('#textmanager_overlay').css('display', 'none'); });  // Fail-safe to remove white overlay
 </script>
 ```
-
+#### Automatic-Update of WATM
 **Note:** If you want to use the "automatic update" feature for WATM, you can load the JavaScript libraries from a  free, publicly available content delivery network (CDN). This will enable WATM to be updated automatically if there is a change or useful feature added, but it also has the risk of potentially breaking WATM on your site. The risk is not high, but it *is* possible. If you load the libraries into your Wild Apricot site rather than load it off a CDN you will **not** receive any automatic updates.
 
 To enable automatic updates use the following Global JavaScript:
