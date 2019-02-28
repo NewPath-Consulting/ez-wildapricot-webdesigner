@@ -113,14 +113,16 @@ The below is an example of adding translated content to a Wild Apricot "Contact"
 2.	Click on Gadgets and drag a new Content gadget below the existing Contact us heading. If your second language is French, then type in `Contactez nous` into this new space. Adjust font sizes and padding to match the original content.
 ![Advanced Settings in CSS](docs/images/contact-us-heading.png)
 3.	Show [Advanced settings section](https://gethelp.wildapricot.com/en/articles/187#settings) on the left settings panel and add `french` to the CSS class text box.
+
 4.	Click on the original English Contact us heading and add `english` to the CSS class text box.
+
 ![Advanced Settings in CSS](docs/images/advanced-english-class.png)
 5.	Repeat for other content blocks you wish to localize and Save page. The result should look similar to below:
 ![Advanced Settings in CSS for Contact Us Widgets](docs/images/contact-us-widgets.png)
 
 
-Note that if WATM is enabled, one of the two languages will be hidden based on the state of the language, even in the Admin Edit mode. Please make sure textManagerProductionMode = false is set in JavaScript configuration and then click the button to disable WATM to see both sets of languages at once.
- 
+Note that if WATM is enabled, one of the two languages will be hidden based on the state of the language, even in the Edit mode. Please make sure `textManagerProductionMode = false` is set in JavaScript configuration and then click the button to disable WATM to see both sets of languages at once.
+
 ## Wild Apricot Text Manager Configuration File
 Opening the configuration file in Excel or another commas seperated file (CSV) editor.
  1. Choose Delimited, check My data has headers and click Next
