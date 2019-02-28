@@ -34,6 +34,8 @@ The configuration for the Wild Apricot Text manager is made inside a comma separ
   var languageButtonHtmlID = "languageButton";
   var alterativeLanguageClassName = ".french";
   var primaryLanguageClassName = ".english";
+  
+  $(window).bind("load", function() {$('#textmanager_overlay').css('display', 'none'); });  // Fail-safe to remove white overlay
 </script>
 ```
 
