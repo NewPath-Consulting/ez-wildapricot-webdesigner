@@ -1,9 +1,9 @@
 # Wild Apricot Text Manager
 
 ## Project Description
-The [Wild Apricot Text Manager](https://www.newpathconsulting.com/watm) (aka WATM) is a simple to configure JavaScript library that levers the jQuery library already included with every [Wild Apricot](https://wildapricot.com) website. WATM will help any administrator manage and replace nearly every piece of system text in Wild Apricot. You can also use it to change CSS for any class or ID. WATM can be used optionally to enable 2 language Wild Apricot websites without needing to create any additional site pages or page templates. A list of replaceable elements is included in the easy-to-edit Excel configuration file. You can make a variety of changes such as global search and replace, modifying form labels and buttons, changing CSS properties on any class or ID and hiding certain labels or buttons altogether.
+The [Wild Apricot Text Manager](https://www.newpathconsulting.com/watm) (aka WATM) is a JavaScript library that uses the [jQuery](https://www.jquery.org) library included with every [Wild Apricot](https://wildapricot.com) website. WATM will help any administrator manage and replace nearly every piece of text in Wild Apricot. You can make a variety of changes such as global search and replace of text, modifying form labels and buttons, changing CSS properties on any class or ID and hiding certain labels or buttons altogether. You can also use WATM to style your website with CSS. WATM will change CSS for any CSS class or ID and store the configuration in a documented CSV-formatted configuration file.
 
-The configuration for the Wild Apricot Text manager is made inside a comma separated configuration file which can be edited in Microsoft Excel or another text editor. 
+WATM can be also be used to enable 2 languages for Wild Apricot websites. WATM does *not* require you to create any additional site pages or page templates. Translations can be applied for any Wild Apricot module without the need to create multiple versions of a page, event, donation form etc. Several examples are included in an example WATM CSV configuration file which can be edited in Microsoft Excel or another text editor. 
 
 ## Change History
 0.1 - Initial Release 11/19/18
@@ -69,9 +69,9 @@ If you are using the "automatic update" approach of loading WATM you can disrega
 1.	In Admin view of Wild Apricot, browse to [Website -> Files](https://gethelp.wildapricot.com/en/articles/177#uploading). 
 2.	Create a new folder named `WildApricotTextManager` under the Theme folder.
 ![File Manager in Wild Apricot](docs/images/files-make-new-folder.png)
-3.	Upload jquery.csv-0.8.9-mod.js to the new folder.
-4.	Upload wildapricot-textmanager.js to the new folder.
-5.	Upload wildapricot-textmanager-config.csv to the new folder. 
+3.	Upload [jquery.csv-0.8.9-mod.js](https://raw.githubusercontent.com/asirota/watm/master/WildApricotTextManager/jquery.csv-0.8.9-mod.js) to the new folder.
+4.	Upload [wildapricot-textmanager.js](https://raw.githubusercontent.com/asirota/watm/master/WildApricotTextManager/wildapricot-textmanager.js) to the new folder.
+5.	Upload [wildapricot-textmanager-config.csv](https://raw.githubusercontent.com/asirota/watm/master/WildApricotTextManager/wildapricot-textmanager-config-sample.csv) to the new folder. 
 
 
 ### Overlay Setup (Optional)
