@@ -171,6 +171,9 @@ Here is what the new Membership Renewal system gadget should look like:
 
 ![Updated Membership Renewal Gadget](docs/images/membership-renewal-new-text.png)  
 
+## System Requirements
+
+WATM must be used with a free or paid Wild Apricot account. WATM is supported on the latest versions of Chrome, Safari, Firefox and Edge. Older browsers like Internet Explorer on Windows are supported "best effort," without formal testing or 100% compatibility.
 
 ## Further Examples
 
