@@ -1,5 +1,8 @@
 // Wild Apricot Text Manager Library
-// v0.7
+//
+// Licensed under LGPL 3.0
+// Contact NewPath Consulting for support at https://www.newpathconsulting.com
+
 
 /* Change Log:
   v0.7 Add IE11 support
