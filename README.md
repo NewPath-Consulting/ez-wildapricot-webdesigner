@@ -45,12 +45,6 @@ The configuration for the Wild Apricot Text manager is made inside a comma separ
 4.	Upload wildapricot-textmanager.js to the new folder.
 5.	Upload wildapricot-textmanager-config.csv to the new folder. 
 
-Alternatively you can reference the JavaScript libraries directly from GitHub using these alternative `<script>` lines:
-```html
-<script src="https://raw.githubusercontent.com/asirota/watm/master/WildApricotTextManager/jquery.csv-0.8.9-mod.js"></script>
-<script src="https://raw.githubusercontent.com/asirota/watm/master/WildApricotTextManager/wildapricot-textmanager.js"></script>
-```
-If you load the libraries into your website directly from GitHub, new versions of the WATM project will automatically load on your website. Be careful!
 
 ### Overlay Setup (Optional)
 Normally, when the text manager is enabled, the original text is displayed on the page load and then replaced within one second. This "flicker" can be hidden with the HTML and CSS below. The WATM will automatically remove the overlay once the script has been completed, reducing the flicker.
