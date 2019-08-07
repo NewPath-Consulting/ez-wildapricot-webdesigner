@@ -1,9 +1,15 @@
 # Wild Apricot Text Manager
 
 ## Project Description
-The [Wild Apricot Text Manager](https://www.newpathconsulting.com/watm) (aka WATM) is a JavaScript library that uses the [jQuery](https://www.jquery.org) library included with every [Wild Apricot](https://wildapricot.com) website. WATM will help any administrator manage and replace nearly every piece of text in Wild Apricot. You can make a variety of changes such as global search and replace of text, modifying form labels and buttons, changing CSS properties on any class or ID and hiding certain labels or buttons altogether. You can also use WATM to style your website with CSS. WATM will change CSS for any CSS class or ID and store the configuration in a documented CSV-formatted configuration file.
+The [Wild Apricot Text Manager](https://www.newpathconsulting.com/watm) (aka WATM) is a JavaScript library that uses the [jQuery](https://www.jquery.org) library included with every [Wild Apricot](https://wildapricot.com) website. WATM will help any administrator manage and replace nearly every piece of text in Wild Apricot. You can make a variety of changes such as global search and replace of text, modifying form labels and buttons, changing properties on any Cascading Style Sheets (CSS) class or ID including hiding text, labels or buttons. You can also use WATM to change specific styles of your Wild Apricot theme. WATM uses a CSV-formatted configuration file to store all the changes in a well documented, easy to maintain way.
 
 WATM can be also be used to enable 2 languages for Wild Apricot websites. WATM does *not* require you to create any additional site pages or page templates. Translations can be applied for any Wild Apricot module without the need to create multiple versions of a page, event, donation form etc. Several examples are included in an example WATM CSV configuration file which can be edited in Microsoft Excel or another text editor. 
+
+[Learning more about about Cascading Style Sheets (CSS)](https://developer.mozilla.org/en-US/docs/Web/CSS)
+
+Short Video on how to use Chrome Developer Tools to Isolate CSS classes and IDs
+[![How to use Chrome Developer Tools to find CSS classes or IDs](https://img.youtube.com/vi/YA-K-a59dX8/0.jpg)](https://www.youtube.com/watch?v=YA-K-a59dX8)
+
 
 ## Change History
 0.1 - Initial Release 11/19/18
