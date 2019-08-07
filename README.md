@@ -8,7 +8,10 @@ WATM can be also be used to enable 2 languages for Wild Apricot websites. WATM d
 [Learning more about about Cascading Style Sheets (CSS)](https://developer.mozilla.org/en-US/docs/Web/CSS)
 
 Short Video on how to use Chrome Developer Tools to Isolate CSS classes and IDs
-[![How to use Chrome Developer Tools to find CSS classes or IDs](https://img.youtube.com/vi/YA-K-a59dX8/0.jpg)](https://www.youtube.com/watch?v=YA-K-a59dX8)
+
+[![How to use Chrome Developer Tools to find CSS classes or IDs](https://i.vimeocdn.com/video/680677141_640.webp)](https://vimeo.com/253714058 "Watch Making CSS Edits - How to Invoke Developer Tools")
+
+
 
 
 ## Change History
