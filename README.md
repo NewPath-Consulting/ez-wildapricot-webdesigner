@@ -5,14 +5,13 @@ The [Wild Apricot Text Manager](https://www.newpathconsulting.com/watm) (aka WAT
 
 WATM can be also be used to enable 2 languages for Wild Apricot websites. WATM does *not* require you to create any additional site pages or page templates. Translations can be applied for any Wild Apricot module without the need to create multiple versions of a page, event, donation form etc. Several examples are included in an example WATM CSV configuration file which can be edited in Microsoft Excel or another text editor. 
 
+[Using Copy Selector and Copy Styles to Quickly](https://vimeo.com/368823350)
+
 [Learning more about about Cascading Style Sheets (CSS)](https://developer.mozilla.org/en-US/docs/Web/CSS)
 
-Short Video on how to use Chrome Developer Tools to Isolate CSS classes and IDs
+How to use Chrome Developer Tools
 
 [![How to use Chrome Developer Tools to find CSS classes or IDs](https://i.vimeocdn.com/video/680677141_640.webp)](https://vimeo.com/253714058 "Watch Making CSS Edits - How to Invoke Developer Tools")
-
-
-
 
 ## Change History
 0.1 - Initial Release 11/19/18
