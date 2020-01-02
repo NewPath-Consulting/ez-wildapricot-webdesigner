@@ -148,6 +148,10 @@ To maintain all the WATM text changes, translations and styling changes, you mus
 ### Saving the configuration file
 When saving the file, use the CSV UTF-8 (Comma delimited) (*.csv). **Other formats will break WATM!**
 
+Note that the configuration file will be cached in the web browser between changes. If you don't see your configuration file changes reflected on the website, you will need to [force-refresh your browser](https://www.wikihow.com/Force-Refresh-in-Your-Internet-Browser) to reload the latest configuration file.
+
+You can also [disable the cache in Chrome](https://www.technipages.com/google-chrome-how-to-completely-disable-cache) altogether in the Developer Tools of your web browser. [Firefox has a different way](https://dzone.com/articles/how-turn-firefox-browser-cache) of disabling the cache. Disabling the cache this way will force reload all content including the configuration file on each refresh, but only while the Developer Tools is open. Once the Developer Tools is closed the cache will return to standard operating procedure.
+
 ### Columns in the WATM Configuration File
 
 ####Note: Inserting or moving columns will break WATM!
