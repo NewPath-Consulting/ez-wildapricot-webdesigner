@@ -1,4 +1,4 @@
-# Wild Apricot Text Manager
+# Documentation
 
 ![WATM Logo](docs/images/wild-apricot-text-manager-logo.png)
 
