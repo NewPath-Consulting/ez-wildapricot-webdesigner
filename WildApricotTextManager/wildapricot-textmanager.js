@@ -99,7 +99,7 @@ if(!$('form.fsForm')[ 0 ])
 {
   // Open file server side
   $.ajax({
-    url: data_url,
+    url: data_url + '/?' + Math.random().toString(16).substring(2),
     //url: newpath_data_url,
     async: true,
     success: function (csvd) {
