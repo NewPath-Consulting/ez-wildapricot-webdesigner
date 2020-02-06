@@ -97,9 +97,11 @@ $(document).ready(function () {
 // Load only if Formstack isn't detected.
 if(!$('form.fsForm')[ 0 ])
 {
+  var urlSuffix = textManagerProductionMode ? "" : "/?" + Math.random().toString(16).substring(2);
+
   // Open file server side
   $.ajax({
-    url: data_url + '/?' + Math.random().toString(16).substring(2),
+    url: data_url + urlSuffix,
     //url: newpath_data_url,
     async: true,
     success: function (csvd) {
