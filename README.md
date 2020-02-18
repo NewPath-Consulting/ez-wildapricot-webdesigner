@@ -53,27 +53,7 @@ How to use Chrome Developer Tools
   $(window).bind("load", function() {$('#textmanager_overlay').css('display', 'none'); });  // Fail-safe to remove white overlay
 </script>
 ```
-#### Automatic-Update of WATM
-**Note:** If you want to use the "automatic update" feature for WATM, you can load the JavaScript libraries from a  free, publicly available content delivery network (CDN). This will enable WATM to be updated automatically if there is a change or useful feature added, but it also has the risk of potentially breaking WATM on your site. The risk is not high, but it *is* possible. If you load the libraries into your Wild Apricot site rather than load it off a CDN you will **not** receive any automatic updates.
 
-To enable automatic updates use the following Global JavaScript:
-
-```javascript
-<!-- jQuery-CSV Source: https://github.com/evanplaice/jquery-csv -->
-<script src="https://cdn.jsdelivr.net/gh/asirota/watm/WildApricotTextManager/jquery.csv-0.8.9-mod.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/asirota/watm/WildApricotTextManager/wildapricot-textmanager.js"></script>
-<script>
-  var textManagerProductionMode = false;
-  var textManagerMultilingualMode = true;
-  var primaryLanguageButtonName = "English";
-  var alterativeLanguageButtonName = "Français";
-  var languageButtonHtmlID = "languageButton";
-  var alterativeLanguageClassName = ".french";
-  var primaryLanguageClassName = ".english";
-  
-  $(window).bind("load", function() {$('#textmanager_overlay').css('display', 'none'); });  // Fail-safe to remove white overlay
-</script>
-```
 
 ### Files Setup
 If you are using the "automatic update" approach of loading WATM you can disregard steps 3-4. Just make sure you upload the WATM configuration file to your Wild Apricot site.
