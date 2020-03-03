@@ -138,41 +138,41 @@ Note that the configuration file will be cached in the web browser between chang
 
 ####Note: Inserting or moving columns will break WATM!
 
-**Wild Apricot Reference**: Name of the Wild Apricot System Gadget. For administrative use only, can be used to group configuration lines together
+`Wild Apricot Reference`: Name of the Wild Apricot System Gadget. For administrative use only, can be used to group configuration lines together
 
-**Default Text**: The text to search for in a Wild Apricot gadget or label. 
+`Default Text`: The text to search for in a Wild Apricot gadget or label. 
 
-**English Replacement Text**: If text is placed in this column, a replacement is done. Blank rows are ignored. Optional.
+`English Replacement Text`: If text is placed in this column, a replacement is done. Blank rows are ignored. Optional.
 
-**Alternative Language Text**: Optional
+`Alternative Language Text`: Optional
 
-**Notes**: Any other helpful notes can be added here for reference.
+`Notes`: Any other helpful notes can be added here for reference.
 
 ### Function: 
 For the following functions the `Default Text` column is ignored.
-*	**text** – sets text of the element selected by the `Query` column.
-*	**hide** – hides the element selected by the `Query` column.
-*	**button** – sets value of the button selected by the `Query` column.
-*	**placeholder** – sets placeholder attribute. Only used for search boxes.
-*	**delay** – page will pause one second before replacing text. Used on elements that are written with JavaScript after page load.
+*	`text` – sets text of the element selected by the `Query` column.
+*	`hide` – hides the element selected by the `Query` column.
+*	`button` – sets value of the button selected by the `Query` column.
+*	`placeholder` – sets placeholder attribute. Only used for search boxes.
+*	`delay` – page will pause one second before replacing text. Used on elements that are written with JavaScript after page load.
 
 For the following functions the `Default Text` column is required.
-*	**replace** – Searches for `Default Text` column and replaces this sub-string in any element. If `Query` column is blank, the entire page is searched. 
-*	**replace_element** – Searches text in `Default Text` column and replaces the text of the entire element. If `Query` column is blank, the entire page is searched.
-*	**replace_delay** – Replaces string after one second delay.
+*	`replace` – Searches for `Default Text` column and replaces this sub-string in any element. If `Query` column is blank, the entire page is searched. 
+*	`replace_element` – Searches text in `Default Text` column and replaces the text of the entire element. If `Query` column is blank, the entire page is searched.
+*	`replace_delay` – Replaces string after one second delay.
 
-*	**inactive** – disables current configuration row. This function can be used to save a configuration, but not activate it.
+*	`inactive` – disables current configuration row. This function can be used to save a configuration, but not activate it.
 
 **Note:** You can leave Function column empty if you wish to apply CSS to any CSS class or ID set in the `Query` column.
 
 #### CSS-only functions:
-*	**mouseover** – Sets CSS inside an event handler when hovering over an element.
-*	**mouseout** – Sets CSS inside an event handler when no longer hovering over element.
+*	`mouseover` – Sets CSS inside an event handler when hovering over an element.
+*	`mouseout` – Sets CSS inside an event handler when no longer hovering over element.
 
-**Query**: The CSS selector to target for the change. A selector can include HTML elements, classes and IDs as well as a CSS path (eg `div.class > td > #myID`).
+`Query`: The CSS selector to target for the change. A selector can include HTML elements, classes and IDs as well as a CSS path (eg `div.class > td > #myID`).
 [Using Copy Selector and Copy Styles to quickly find a CSS Selector](https://vimeo.com/368823350)
 
-**Style**: The CSS ruleset (properties & values) to apply to selector in the `Query` column. Optional.
+`Style`: The CSS ruleset (properties & values) to apply to selector in the `Query` column. Optional.
 
 The syntax in WATM surrounds each property and value with a double quote (") (eg "font-color":"red";)
 
