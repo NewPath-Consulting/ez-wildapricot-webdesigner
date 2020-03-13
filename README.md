@@ -149,18 +149,19 @@ Note that the configuration file will be cached in the web browser between chang
 `Notes`: Any other helpful notes can be added here for reference.
 
 ### Function: 
-For the following functions the `Default Text` column is ignored.
+For the following functions the `Default Text` column is ignored:
 *	`text` – sets text of the element selected by the `Query` column.
 *	`hide` – hides the element selected by the `Query` column.
 *	`button` – sets value of the button selected by the `Query` column.
 *	`placeholder` – sets placeholder attribute. Only used for search boxes.
 *	`delay` – page will pause one second before replacing text. Used on elements that are written with JavaScript after page load.
 
-For the following functions the `Default Text` column is required.
+For the following functions the `Default Text` column is required:
 *	`replace` – Searches for `Default Text` column and replaces this sub-string in any element. If `Query` column is blank, the entire page is searched. 
 *	`replace_element` – Searches text in `Default Text` column and replaces the text of the entire element. If `Query` column is blank, the entire page is searched.
 *	`replace_delay` – Replaces string after one second delay.
 
+The following function can be used on any line in the configuration file:
 *	`inactive` – disables current configuration row. This function can be used to save a configuration, but not activate it.
 
 **Note:** You can leave Function column empty if you wish to apply CSS to any CSS class or ID set in the `Query` column.
