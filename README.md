@@ -54,7 +54,14 @@ How to use Chrome Developer Tools
 </script>
 ```
 
+3. To remove the enable/disable button for WATM and activate WATM into production mode edit this JavaScript variable declaration as follows:
 
+  ```var textManagerProductionMode = true;```
+  
+4. To deactivate the multilingual mode for WATM edit this JavaScript variable declaration as follows:
+
+  ```var textManagerMultilingualMode = false;```
+  
 ### Files Setup
 If you are using the "automatic update" approach of loading WATM you can disregard steps 3-4. Just make sure you upload the WATM configuration file to your Wild Apricot site.
 
