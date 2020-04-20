@@ -1,0 +1,11 @@
+{
+  "name": "watm",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/asirota/watm.git",
+  "author": "NewPath Consulting",
+  "license": "MIT",
+  "dependencies": {
+    "prettier": "^2.0.4"
+  }
+}
