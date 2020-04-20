@@ -37,14 +37,10 @@ if (!String.prototype.includes) {
 
 /* App */
 $(document).ready(function () {
-  console.log("[watm] Wild Apricot Text Manager loaded");
-
   // Set Defaults
+  textManagerProductionMode = !isInEditMode();
   if (typeof textManagerDataURL !== "undefined") {
     data_url = textManagerDataURL;
-  }
-  if (typeof textManagerProductionMode === "undefined") {
-    textManagerProductionMode = !isInEditMode();
   }
   if (typeof textManagerMultilingualMode === "undefined") {
     textManagerMultilingualMode = false;
@@ -77,9 +73,9 @@ $(document).ready(function () {
   }
 
   if (textManagerProductionMode) {
-    setIsEnabled(true);
+    log("Wild Apricot Text Manager loaded in production mode");
   } else {
-    $("#mLayout").prepend('<div><button type="button" id="textToggle">Toggle Replacement Text</button></div>');
+    log("Wild Apricot Text Manager loaded in development mode");
   }
 
   // Set Cookie for Second Language Replacement
@@ -126,7 +122,7 @@ $(document).ready(function () {
           };
           list.push(data);
         }
-        if (isEnabled()) {
+        if (!isInEditMode()) {
           list.map(replaceText);
         }
       },
@@ -149,7 +145,7 @@ $(window).bind("load", function () {
     window.dispatchEvent(new Event("resize"));
   }
 
-  if (isEnabled()) {
+  if (!isInEditMode()) {
     // Replace text again to rewrite event handlers for the hover in menu
     list.map(replaceText);
   }
@@ -179,18 +175,7 @@ function getCookie(key) {
 }
 
 function isInEditMode() {
-  return window.location.pathname.indexOf("/sys/website/") > -1;
-}
-
-function isEnabled() {
-  return getCookie("ReplaceText");
-}
-
-function setIsEnabled(isEnabled) {
-  if (typeof isEnabled === "undefined") {
-    isEnabled = true;
-  }
-  setCookie("ReplaceText", isEnabled);
+  return top !== self; // detect if we're in an iframe
 }
 
 function isMultilingual() {
@@ -206,6 +191,10 @@ function setIsMultilingual(isMultilingual) {
 
 function hasFormstack() {
   return !!$("form.fsForm")[0];
+}
+
+function log(text) {
+  console.log("[watm]", text);
 }
 
 function replaceText(data) {
@@ -230,7 +219,7 @@ function replaceText(data) {
     key = data.query.split("=")[0]; // String before =
     value = data.query.split("=")[1]; // String after =
     scss_dict[key] = value;
-    console.log("[watm] SCSS Variable Added: " + key + "=" + value);
+    log("SCSS Variable Added: " + key + "=" + value);
   }
 
   // Check to see if any replacement text in the column
@@ -307,7 +296,6 @@ function replaceText(data) {
         for (c = 0; c < keys.length; c++) {
           var key = keys[c];
           var value = scss_dict[key];
-          console.log("[watm] SCSS Debug " + c + " Key:" + key + " Value:" + value);
           data.style = data.style.replace(key, value);
         }
       }
@@ -333,7 +321,7 @@ function replaceText(data) {
         $(data.query).css(JSON.parse(data.style));
       }
     } catch (err) {
-      console.log("[watm] Error Row " + data.row + " -- " + data.style);
+      log("Error Row " + data.row + " -- " + data.style);
       console.error(err);
     }
   }
@@ -356,7 +344,7 @@ function walkText(node, data, text) {
       }
     }
   } catch (err) {
-    console.log("[watm] Error Row " + data.row + " -- " + data.default_text);
+    log("Error Row " + data.row + " -- " + data.default_text);
     console.error(err);
   }
 }
