@@ -18,6 +18,24 @@ var array;
 var scss_dict = {};
 var data_url = "/resources/Theme/WildApricotTextManager/wildapricot-textmanager-config.csv";
 
+/* Polyfills */
+if (!String.prototype.includes) {
+  Object.defineProperty(String.prototype, "includes", {
+    value: function (search, start) {
+      if (typeof start !== "number") {
+        start = 0;
+      }
+
+      if (start + search.length > this.length) {
+        return false;
+      } else {
+        return this.indexOf(search, start) !== -1;
+      }
+    },
+  });
+}
+
+/* App */
 $(document).ready(function () {
   console.log("[watm] Wild Apricot Text Manager loaded");
 
@@ -26,7 +44,7 @@ $(document).ready(function () {
     data_url = textManagerDataURL;
   }
   if (typeof textManagerProductionMode === "undefined") {
-    textManagerProductionMode = false;
+    textManagerProductionMode = !isInEditMode();
   }
   if (typeof textManagerMultilingualMode === "undefined") {
     textManagerMultilingualMode = false;
@@ -59,46 +77,25 @@ $(document).ready(function () {
   }
 
   if (textManagerProductionMode) {
-    setCookie("ReplaceText", true);
+    setIsEnabled(true);
   } else {
     $("#mLayout").prepend('<div><button type="button" id="textToggle">Toggle Replacement Text</button></div>');
   }
 
-  // Set Cookie for English Text Replacement
-  $("#textToggle").click(function () {
-    if (getCookie("ReplaceText")) {
-      setCookie("ReplaceText", false);
-    } else {
-      setCookie("ReplaceText", true);
-    }
-    location.reload();
-  });
-
-  // Set Development Button Name
-  if (getCookie("ReplaceText")) {
-    $("#textToggle").text("Text Manager Disable");
-  } else {
-    $("#textToggle").text("Text Manager Enable");
-  }
-
   // Set Cookie for Second Language Replacement
   $("#languageToggle").click(function () {
-    if (getCookie("SecondLanguage")) {
-      setCookie("SecondLanguage", false);
-    } else {
-      setCookie("SecondLanguage", true);
-    }
+    setIsMultilingual(!isMultilingual());
     location.reload();
   });
 
-  if (getCookie("SecondLanguage")) {
+  if (isMultilingual()) {
     $("#languageToggle").text(primaryLanguageButtonName);
   } else {
     $("#languageToggle").text(alterativeLanguageButtonName);
   }
 
   // Load only if Formstack isn't detected.
-  if (!$("form.fsForm")[0]) {
+  if (!hasFormstack()) {
     var urlSuffix = textManagerProductionMode ? "" : "/?" + Math.random().toString(16).substring(2);
 
     // Open file server side
@@ -115,8 +112,21 @@ $(document).ready(function () {
       },
       dataType: "text",
       complete: function () {
-        arrayToStruct(array);
-        if (getCookie("ReplaceText")) {
+        for (var row in array) {
+          var data = {
+            container: array[row][0],
+            default_text: array[row][1],
+            english_text: array[row][2],
+            second_language_text: array[row][3],
+            note: array[row][4],
+            function: array[row][5],
+            query: array[row][6],
+            style: array[row][7],
+            row: row,
+          };
+          list.push(data);
+        }
+        if (isEnabled()) {
           list.map(replaceText);
         }
       },
@@ -129,7 +139,7 @@ $(window).bind("load", function () {
   $("#textmanager_overlay").css("display", "none"); // Remove the white overlay
 
   // Trigger Wild Apricot's resizeMenu()
-  if (detectIE()) {
+  if (isInternetExplorer()) {
     // IE 11
     var resizeEvent = window.document.createEvent("UIEvents");
     resizeEvent.initUIEvent("resize", true, false, window, 0);
@@ -139,12 +149,13 @@ $(window).bind("load", function () {
     window.dispatchEvent(new Event("resize"));
   }
 
-  if (getCookie("ReplaceText")) {
+  if (isEnabled()) {
     // Replace text again to rewrite event handlers for the hover in menu
     list.map(replaceText);
   }
 });
 
+/* Utilities */
 function setCookie(key, value) {
   var expires = new Date();
   expires.setTime(expires.getTime() + 1 * 24 * 60 * 60 * 1000);
@@ -167,9 +178,39 @@ function getCookie(key) {
   return keyValue;
 }
 
+function isInEditMode() {
+  return window.location.pathname.indexOf("/sys/website/") > -1;
+}
+
+function isEnabled() {
+  return getCookie("ReplaceText");
+}
+
+function setIsEnabled(isEnabled) {
+  if (typeof isEnabled === "undefined") {
+    isEnabled = true;
+  }
+  setCookie("ReplaceText", isEnabled);
+}
+
+function isMultilingual() {
+  return getCookie("SecondLanguage");
+}
+
+function setIsMultilingual(isMultilingual) {
+  if (typeof isMultilingual === "undefined") {
+    isMultilingual = true;
+  }
+  setCookie("SecondLanguage", isMultilingual);
+}
+
+function hasFormstack() {
+  return !!$("form.fsForm")[0];
+}
+
 function replaceText(data) {
   // Language Show/Hide Custom Content Block
-  if (getCookie("SecondLanguage")) {
+  if (isMultilingual()) {
     var replacement_text = data.second_language_text;
     $(alterativeLanguageClassName).show();
     $(primaryLanguageClassName).hide();
@@ -179,7 +220,9 @@ function replaceText(data) {
     $(primaryLanguageClassName).show();
   }
 
-  if (data.function == "hide") $(data.query).hide();
+  if (data.function === "hide") {
+    $(data.query).hide();
+  }
 
   // SCSS
   if (data.function.toLowerCase() === "scss") {
@@ -194,8 +237,6 @@ function replaceText(data) {
   if (replacement_text.length > 0) {
     // Delay these replacements by 1 second, and keep polling every second
     if (data.function === "delay") {
-      //setTimeout(function(){ $(data.query).text(replacement_text);}, 1000);
-      //delay_list.push(data);
       setInterval(function () {
         $(data.query).text(replacement_text);
       }, 1000);
@@ -320,41 +361,7 @@ function walkText(node, data, text) {
   }
 }
 
-function arrayToStruct(array) {
-  for (var row in array) {
-    var data = {
-      container: array[row][0],
-      default_text: array[row][1],
-      english_text: array[row][2],
-      second_language_text: array[row][3],
-      note: array[row][4],
-      function: array[row][5],
-      query: array[row][6],
-      style: array[row][7],
-      row: row,
-    };
-    list.push(data);
-  }
-}
-
-// Adds IE 11 Support
-if (!String.prototype.includes) {
-  Object.defineProperty(String.prototype, "includes", {
-    value: function (search, start) {
-      if (typeof start !== "number") {
-        start = 0;
-      }
-
-      if (start + search.length > this.length) {
-        return false;
-      } else {
-        return this.indexOf(search, start) !== -1;
-      }
-    },
-  });
-}
-
-function detectIE() {
+function isInternetExplorer() {
   var ua = window.navigator.userAgent;
   var msie = ua.indexOf("MSIE ");
   if (msie > 0) {
