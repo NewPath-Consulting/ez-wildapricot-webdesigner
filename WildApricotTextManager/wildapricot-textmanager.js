@@ -202,6 +202,10 @@ function replaceText(data) {
     if (data.function == "placeholder")
       $(data.query).attr("placeholder", replacement_text);  
 
+    // Replace text in attributes
+    if (data.function === "attribute") 
+      $("["+data.query+"='"+data.default_text+"']").attr(data.query, replacement_text);
+
     // Special function to replace substring after 1s delay
     // Used for shopping cart "Member price"
     if (data.function == "replace_delay") {
