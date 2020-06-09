@@ -32,6 +32,8 @@ How to use Chrome Developer Tools
 
 0.71 - The Wild Apricot Text  Manger config file is not cached while in testing mode 2/6/20 
 
+0.8 - WATM will now automatically enable when it goes into public view in Wild Apricot, new `attribute` function has been added
+
 ## Installation
 
 ### Script Setup
@@ -167,6 +169,15 @@ For the following functions the `Default Text` column is required:
 *	`replace` – Searches for `Default Text` column and replaces this sub-string in any element. If `Query` column is blank, the entire page is searched. 
 *	`replace_element` – Searches text in `Default Text` column and replaces the text of the entire element. If `Query` column is blank, the entire page is searched.
 *	`replace_delay` – Replaces string after one second delay.
+* `attribute` - Replaces string containted in any HTML attribute tag
+
+For example, to replace "Purchase Organ Music" `title` attribute, you'd enter the following in the configuration file:
+
+Default text: Purchase Organ Music
+English Replacement Text: test
+Alternate Language Text: test
+Function: attribute
+Query: title
 
 The following function can be used on any line in the configuration file:
 *	`inactive` – disables current configuration row. This function can be used to save a configuration, but not activate it.
