@@ -173,11 +173,13 @@ For the following functions the `Default Text` column is required:
 
 For example, to replace "Purchase Organ Music" `title` attribute, you'd enter the following in the configuration file:
 
+```
 Default text: Purchase Organ Music
 English Replacement Text: test
 Alternate Language Text: test
 Function: attribute
 Query: title
+```
 
 The following function can be used on any line in the configuration file:
 *	`inactive` – disables current configuration row. This function can be used to save a configuration, but not activate it.
