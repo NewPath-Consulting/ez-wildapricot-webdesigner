@@ -32,7 +32,7 @@ How to use Chrome Developer Tools
 
 0.71 - The Wild Apricot Text  Manger config file is not cached while in testing mode 2/6/20 
 
-0.8 - WATM will now automatically enable when it goes into public view in Wild Apricot, new `attribute` function has been added
+0.8 - WATM will now automatically enable when it goes into public view in Wild Apricot, new `attribute` function has been added 6/15/20
 
 ## Installation
 
