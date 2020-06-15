@@ -44,7 +44,6 @@ How to use Chrome Developer Tools
 <script src="/resources/Theme/WildApricotTextManager/jquery.csv-0.8.9-mod.js"></script>
 <script src="/resources/Theme/WildApricotTextManager/wildapricot-textmanager.js"></script>
 <script>
-  var textManagerProductionMode = false;
   var textManagerMultilingualMode = true;
   var primaryLanguageButtonName = "English";
   var alterativeLanguageButtonName = "Français";
