@@ -34,6 +34,8 @@ How to use Chrome Developer Tools
 
 0.8 - WATM will now automatically enable when it goes into public view in Wild Apricot, new `attribute` function has been added 6/15/20
 
+0.81 - fixed code typo in wildapricot-textmanager.js due to reformatting 6/29/20
+
 ## Installation
 
 ### Script Setup
