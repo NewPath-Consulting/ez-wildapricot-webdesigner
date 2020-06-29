@@ -242,8 +242,7 @@ function replaceText(data) {
     }
 
     // Replace text in attributes
-    if (data.function === "attribute") 
-      $("["+data.query+"='"+data.default_text+"']").attr(data.query, replacement_text);
+    if (data.function === "attribute") $("[" + data.query + "='" + data.default_text + "']").attr(data.query, replacement_text);
 
     // Special function to replace substring after 1s delay
     // Used for shopping cart "Member price"
@@ -341,10 +340,9 @@ function walkText(node, data, text) {
           node.data = node.data.replace(data.default_text, text);
         }
       }
-      if (node.nodeType === 1 && node.nodeName != "SCRIPT") {
-        for (var i = 0; i < node.childNodes.length; i++) {
-          walkText(node.childNodes[i], data, text);
-        }
+    } else if (node.nodeType === 1 && node.nodeName != "SCRIPT") {
+      for (var i = 0; i < node.childNodes.length; i++) {
+        walkText(node.childNodes[i], data, text);
       }
     }
   } catch (err) {
