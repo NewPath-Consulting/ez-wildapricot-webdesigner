@@ -74,7 +74,13 @@ If you are using the "automatic update" approach of loading WATM you can disrega
 4.	Upload [wildapricot-textmanager.js](https://raw.githubusercontent.com/asirota/watm/master/WildApricotTextManager/wildapricot-textmanager.js) to the new folder.
 5.	Upload [wildapricot-textmanager-config.csv](https://raw.githubusercontent.com/asirota/watm/master/WildApricotTextManager/wildapricot-textmanager-config-sample.csv) to the new folder. 
 
+### Testing Installation
+To test whether WATM has been installed properly:
+1. Click Public View to browse the Wild Apricot website.
+2. Right click on the page and select 'Inspect'. Invoking Developer Tools may be different depending on the browser you are using.
+3. Navigate to Console and look for the message in yellow below. The version number for WATM should appear. If you do not see this message WATM has not been properly installed.
 
+![WATM version message](docs/images/console%20watm%20version%20logging.jpg)
 ### Overlay Setup (Optional)
 Normally, when the text manager is enabled, the original text is displayed on the page load and then replaced within one second. This "flicker" can be hidden with the HTML and CSS below. The WATM will automatically remove the overlay once the script has been completed, reducing the flicker.
 
