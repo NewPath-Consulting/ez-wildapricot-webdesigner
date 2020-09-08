@@ -1,22 +1,14 @@
 // Wild Apricot Text Manager Library
 //
 // Licensed under LGPL 3.0
-// Contact NewPath Consulting for support at https://www.newpathconsulting.com
+// Contact NewPath Consulting for support at https://www.newpathconsulting.com/watm
 
-/* Change Log:
-  v0.7 Add IE11 support
-  v0.6 Add support for SCSS-style variables, fix bug in cookies
-  v0.5 Add support for :after and :before pseudo-elements in CSS
-  v0.4 Add support for dynamic menu CSS
-  v0.3 Added CSS management and overlay to hide script behavior
-  v0.2 Added alert for incorrect saved CSV file
-  v0.1 Initial Release
-*/
 
 var list = [];
 var array;
 var scss_dict = {};
 var data_url = "/resources/Theme/WildApricotTextManager/wildapricot-textmanager-config.csv";
+var watm_version = "0.82";
 
 /* Polyfills */
 if (!String.prototype.includes) {
@@ -73,9 +65,9 @@ $(document).ready(function () {
   }
 
   if (textManagerProductionMode) {
-    log("Wild Apricot Text Manager loaded in production mode");
+    log("Wild Apricot Text Manager " + watm_version + " loaded in production mode");
   } else {
-    log("Wild Apricot Text Manager loaded in development mode");
+    log("Wild Apricot Text Manager " + watm_version + " loaded in development mode");
   }
 
   // Set Cookie for Second Language Replacement
