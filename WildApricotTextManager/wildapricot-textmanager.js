@@ -95,7 +95,7 @@ $(document).ready(function () {
         try {
           array = $.csv.toArrays(csvd);
         } catch (err) {
-          alert(err.message + " Did you Save as .CSV UTF-8?");
+          alert("[watm error] WATM configuration file is not in correct format. " + err.message + " Did you Save as .CSV UTF-8?");
         }
       },
       dataType: "text",
@@ -211,7 +211,7 @@ function replaceText(data) {
     key = data.query.split("=")[0]; // String before =
     value = data.query.split("=")[1]; // String after =
     scss_dict[key] = value;
-    log("SCSS Variable Added: " + key + "=" + value);
+    log("[watm notice] SCSS Variable Added: " + key + "=" + value);
   }
 
   // Check to see if any replacement text in the column
@@ -316,7 +316,7 @@ function replaceText(data) {
         $(data.query).css(JSON.parse(data.style));
       }
     } catch (err) {
-      log("Error Row " + data.row + " -- " + data.style);
+      log("[watm error] row " + data.row + " -- " + data.style);
       console.error(err);
     }
   }
@@ -338,7 +338,7 @@ function walkText(node, data, text) {
       }
     }
   } catch (err) {
-    log("Error Row " + data.row + " -- " + data.default_text);
+    log("[watm error] row " + data.row + " -- " + data.default_text);
     console.error(err);
   }
 }
