@@ -36,6 +36,8 @@ How to use Chrome Developer Tools
 
 0.81 - fixed code typo in wildapricot-textmanager.js due to reformatting 6/29/20
 
+0.82 - added display of WATM version on console log 9/8/20
+
 ## Installation
 
 ### Script Setup
