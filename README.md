@@ -191,7 +191,7 @@ The following function can be used on any line in the configuration file:
 
 `Style`: The CSS ruleset (properties & values) to apply to selector in the `Query` column. Optional.
 
-The syntax in WATM surrounds each property and value with a double quote (") (eg "font-color":"red";)
+The syntax in WATM surrounds each property and value with a double quote (") (eg "color":"red";)
 
 ![Anatomy of a CSS ruleset](https://mdn.mozillademos.org/files/9461/css-declaration-small.png "Anatomy of a CSS ruleset")
 
