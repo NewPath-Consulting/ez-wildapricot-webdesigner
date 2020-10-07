@@ -69,7 +69,7 @@ If you are using the "automatic update" approach of loading WATM you can disrega
 
 1.	In Admin view of Wild Apricot, browse to [Website -> Files](https://gethelp.wildapricot.com/en/articles/177#uploading). 
 2.	Create a new folder named `WildApricotTextManager` under the Theme folder.
-![File Manager in Wild Apricot](docs/images/files-make-new-folder.png)
+![File Manager in Wild Apricot](https://github.com/asirota/watm/raw/master/docs/images/files-make-new-folder.png)
 3.	Upload [jquery.csv-0.8.9-mod.js](https://raw.githubusercontent.com/asirota/watm/master/WildApricotTextManager/jquery.csv-0.8.9-mod.js) to the new folder.
 4.	Upload [wildapricot-textmanager.js](https://raw.githubusercontent.com/asirota/watm/master/WildApricotTextManager/wildapricot-textmanager.js) to the new folder.
 5.	Upload [wildapricot-textmanager-config.csv](https://raw.githubusercontent.com/asirota/watm/master/WildApricotTextManager/wildapricot-textmanager-config-sample.csv) to the new folder. 
@@ -80,7 +80,7 @@ To test whether WATM has been installed properly:
 2. Right click on the page and select 'Inspect'. Invoking Developer Tools may be different depending on the browser you are using.
 3. Navigate to Console and look for the message in yellow below. The version number for WATM should appear. If you do not see this message WATM has not been properly installed.
 
-![WATM version message](docs/images/console%20watm%20version%20logging.jpg)
+![WATM version message](https://github.com/asirota/watm/raw/master/docs/images/console%20watm%20version%20logging.jpg)
 ### Overlay Setup (Optional)
 Normally, when the text manager is enabled, the original text is displayed on the page load and then replaced within one second. This "flicker" can be hidden with the HTML and CSS below. The WATM will automatically remove the overlay once the script has been completed, reducing the flicker.
 
@@ -118,15 +118,15 @@ The below is an example of adding translated content to a Wild Apricot "Contact"
 
 1.	Start with your Contact page. In Admin Mode, browse to Website -> Site pages -> Contact and click Edit. You may have a different page on your site, and you can start with any page.
 2.	Click on Gadgets and drag a new Content gadget below the existing Contact us heading. If your second language is French, then type in `Contactez nous` into this new space. Adjust font sizes and padding to match the original content.
-![Advanced Settings in CSS](docs/images/contact-us-heading.png)
+![Advanced Settings in CSS](https://github.com/asirota/watm/raw/master/docs/images/contact-us-heading.png)
 3.	Show [Advanced settings section](https://gethelp.wildapricot.com/en/articles/187#settings) on the left settings panel and add `french` to the CSS class text box.
 4.	Click on the original English Contact us heading and add `english` to the CSS class text box.
 
-![Advanced Settings in CSS](docs/images/advanced-english-class.png)
+![Advanced Settings in CSS](https://github.com/asirota/watm/raw/master/docs/images/advanced-english-class.png)
 
 5.	Repeat for other content blocks you wish to localize and Save page. The result should look similar to below:
 
-![Advanced Settings in CSS for Contact Us Widgets](docs/images/contact-us-widgets.png)
+![Advanced Settings in CSS for Contact Us Widgets](https://github.com/asirota/watm/raw/master/docs/images/contact-us-widgets.png)
 
 
 Note that if WATM is enabled, one of the two languages will be hidden based on the state of the language, even in the Edit mode. Please make sure `textManagerProductionMode = false` is set in Global JavaScript and then click the button to disable WATM to see both sets of languages at once.
@@ -138,11 +138,11 @@ To maintain all the WATM text changes, translations and styling changes, you mus
 
  1. Open the `wildapricot-textmanager-config.csv` file Choose Delimited, check My data has headers and click Next
  
-![Excel CSV Import Step 1](docs/images/excel-csv-import1.png)  
+![Excel CSV Import Step 1](https://github.com/asirota/watm/raw/master/docs/images/excel-csv-import1.png)  
 
  2.   Check Comma for the Delimiters option, Click Finish
  
-![Excel CSV Import Step 1](docs/images/excel-csv-import2.png)  
+![Excel CSV Import Step 1](https://github.com/asirota/watm/raw/master/docs/images/excel-csv-import2.png)  
 
 ### Saving the configuration file
 When saving the file, use the CSV UTF-8 (Comma delimited) (*.csv). **Other formats will break WATM!**
@@ -200,7 +200,7 @@ The syntax in WATM surrounds each property and value with a double quote (") (eg
 
 Here is what the standard Membership Renewal system gadget looks like:
 
-![Standard Membership Renewal Gadget](docs/images/membership-renewal-old-text.png)  
+![Standard Membership Renewal Gadget](https://github.com/asirota/watm/raw/master/docs/images/membership-renewal-old-text.png)  
 
 - [ ]	Open wildapricot-textmanager-config.csv in your text editor or Excel.
 
@@ -208,23 +208,23 @@ Here is what the standard Membership Renewal system gadget looks like:
 
 - [ ] Type in new text `My New Text!` in **English Replacement Text** column.
 
-![Update English Replacement Text in CSV File](docs/images/updating-csv-text.png)  
+![Update English Replacement Text in CSV File](https://github.com/asirota/watm/raw/master/docs/images/updating-csv-text.png)  
 
 - [ ] (Optional) Type translated language text in **Alternative Language Text**. 
 
 - [ ] Save as `CSV UTF-8 (Comma delimited) (*.csv)`
 
-![Save Updated CSV File in UTF8](docs/images/saving-as-csv-utf8.png)  
+![Save Updated CSV File in UTF8](https://github.com/asirota/watm/raw/master/docs/images/saving-as-csv-utf8.png)  
 
 - [ ] Upload/Update .csv file
 
-![Upload Updated CSV configuration into Wild Apricot File Manager](docs/images/updating-watm-csv.png)
+![Upload Updated CSV configuration into Wild Apricot File Manager](https://github.com/asirota/watm/raw/master/docs/images/updating-watm-csv.png)
 
 - [ ] Load the membership renewal page and use the toggle buttons to test.  
 
 Here is what the new Membership Renewal system gadget should look like:
 
-![Updated Membership Renewal Gadget](docs/images/membership-renewal-new-text.png)  
+![Updated Membership Renewal Gadget](https://github.com/asirota/watm/raw/master/docs/images/membership-renewal-new-text.png)  
 
 ## System Requirements
 
