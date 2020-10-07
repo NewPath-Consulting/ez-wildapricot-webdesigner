@@ -1,6 +1,6 @@
 # Documentation
 
-![WATM Logo](docs/images/wild-apricot-text-manager-logo.png)
+![WATM Logo](https://github.com/asirota/watm/raw/master/docs/images/wild-apricot-text-manager-logo.png)
 
 ## Project Description
 The [Wild Apricot Text Manager](https://waxm.newpathconsulting.com/watm) (aka WATM) is a JavaScript library that uses the [jQuery](https://www.jquery.org) library included with every [Wild Apricot](https://wildapricot.com) website. WATM will help any administrator manage and replace nearly every piece of text in Wild Apricot. You can make a variety of changes such as global search and replace of text, modifying form labels and buttons, changing properties on any Cascading Style Sheets (CSS) class or ID including hiding text, labels or buttons. You can also use WATM to change specific styles of your Wild Apricot theme. WATM uses a CSV-formatted configuration file to store all the changes in a well documented, easy to maintain way.
