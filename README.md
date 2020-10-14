@@ -65,7 +65,6 @@ How to use Chrome Developer Tools
   ```var textManagerMultilingualMode = false;```
   
 ### Files Setup
-If you are using the "automatic update" approach of loading WATM you can disregard steps 3-4. Just make sure you upload the WATM configuration file to your Wild Apricot site.
 
 1.	In Admin view of Wild Apricot, browse to [Website -> Files](https://gethelp.wildapricot.com/en/articles/177#uploading). 
 2.	Create a new folder named `WildApricotTextManager` under the Theme folder.
@@ -216,7 +215,7 @@ Here is what the standard Membership Renewal system gadget looks like:
 
 ![Save Updated CSV File in UTF8](https://github.com/asirota/watm/raw/master/docs/images/saving-as-csv-utf8.png)  
 
-- [ ] Upload/Update .csv file
+- [ ] Upload/Update .csv file - Note: [WebDAV is available to update](https://gethelp.wildapricot.com/en/articles/198) the WATM configuration file to speed up the process of updating the file between changes.
 
 ![Upload Updated CSV configuration into Wild Apricot File Manager](https://github.com/asirota/watm/raw/master/docs/images/updating-watm-csv.png)
 
