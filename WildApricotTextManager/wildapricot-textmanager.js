@@ -51,6 +51,9 @@ $(document).ready(function () {
   }
   if (typeof languageButtonHtmlID === "undefined") {
     languageButtonHtmlID = "languageButton";
+  }  
+  if (typeof turnOnErrorLogging === "undefined") {
+    turnOnErrorLogging = true;
   }
 
   // Multiligual Mode
@@ -80,6 +83,7 @@ $(document).ready(function () {
     $("#languageToggle").text(primaryLanguageButtonName);
   } else {
     $("#languageToggle").text(alterativeLanguageButtonName);
+	log("[watm notice] switched to alternate language.");
   }
 
   // Load only if Formstack isn't detected.
@@ -96,6 +100,7 @@ $(document).ready(function () {
           array = $.csv.toArrays(csvd);
         } catch (err) {
           alert("[watm error] WATM configuration file is not in correct format. " + err.message + " Did you Save as .CSV UTF-8?");
+		  log("[watm error] WATM configuration file is not in correct format.");
         }
       },
       dataType: "text",
@@ -185,8 +190,11 @@ function hasFormstack() {
   return !!$("form.fsForm")[0];
 }
 
-function log(text) {
-  console.log("[watm]", text);
+function log(text) {	
+	if(turnOnErrorLogging) {
+		console.log(text);
+	}		
+	//console.log("[watm]", text);
 }
 
 function replaceText(data) {
@@ -316,7 +324,8 @@ function replaceText(data) {
         $(data.query).css(JSON.parse(data.style));
       }
     } catch (err) {
-      log("[watm error] row " + data.row + " -- " + data.style);
+      //log("[watm error] row " + data.row + " -- " + data.style);
+	  log("[watm error] line x : " + data.row + " -- " + data.style);
       console.error(err);
     }
   }
@@ -338,7 +347,8 @@ function walkText(node, data, text) {
       }
     }
   } catch (err) {
-    log("[watm error] row " + data.row + " -- " + data.default_text);
+    //log("[watm error] row " + data.row + " -- " + data.default_text);
+	log("[watm error] line x : " + data.row + " -- " + data.default_text);
     console.error(err);
   }
 }
