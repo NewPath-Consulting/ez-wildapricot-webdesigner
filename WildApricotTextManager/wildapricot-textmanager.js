@@ -3,7 +3,6 @@
 // Licensed under LGPL 3.0
 // Contact NewPath Consulting for support at https://www.newpathconsulting.com/watm
 
-
 var list = [];
 var array;
 var scss_dict = {};
@@ -65,9 +64,9 @@ $(document).ready(function () {
   }
 
   if (textManagerProductionMode) {
-    log("Wild Apricot Text Manager " + watm_version + " loaded in production mode");
+    log(`Wild Apricot Text Manager ${watm_version} loaded in production mode`);
   } else {
-    log("Wild Apricot Text Manager " + watm_version + " loaded in development mode");
+    log(`Wild Apricot Text Manager ${watm_version} loaded in development mode`);
   }
 
   // Set Cookie for Second Language Replacement
@@ -78,8 +77,10 @@ $(document).ready(function () {
 
   if (isMultilingual()) {
     $("#languageToggle").text(primaryLanguageButtonName);
+    if (textManagerMultilingualMode) log(`Current Language: ${alterativeLanguageButtonName}`);
   } else {
     $("#languageToggle").text(alterativeLanguageButtonName);
+    if (textManagerMultilingualMode) log(`Current Language: ${primaryLanguageButtonName}`);
   }
 
   // Load only if Formstack isn't detected.
@@ -95,8 +96,12 @@ $(document).ready(function () {
         try {
           array = $.csv.toArrays(csvd);
         } catch (err) {
-          alert("[watm error] WATM configuration file is not in correct format. " + err.message + " Did you Save as .CSV UTF-8?");
+          log(`WATM configuration file is not in correct format`, "error");
+          alert(`[watm error] WATM configuration file is not in correct format. ${err.message} Did you Save as .CSV UTF-8?`);
         }
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        log(`WATM configuration file not found`, "error");
       },
       dataType: "text",
       complete: function () {
@@ -185,8 +190,9 @@ function hasFormstack() {
   return !!$("form.fsForm")[0];
 }
 
-function log(text) {
-  console.log("[watm]", text);
+function log(text, logType = "") {
+  if (logType) logType = " " + logType;
+  console.log(`[watm${logType}]`, text);
 }
 
 function replaceText(data) {
@@ -211,7 +217,7 @@ function replaceText(data) {
     key = data.query.split("=")[0]; // String before =
     value = data.query.split("=")[1]; // String after =
     scss_dict[key] = value;
-    log("[watm notice] SCSS Variable Added: " + key + "=" + value);
+    log(`SCSS Variable Added: ${key} = ${value}`, "notice");
   }
 
   // Check to see if any replacement text in the column
@@ -316,8 +322,7 @@ function replaceText(data) {
         $(data.query).css(JSON.parse(data.style));
       }
     } catch (err) {
-      log("[watm error] row " + data.row + " -- " + data.style);
-      console.error(err);
+      log(`Error in configuration file - row #${data.row}: ${err.message}`, "error");
     }
   }
 }
@@ -338,8 +343,7 @@ function walkText(node, data, text) {
       }
     }
   } catch (err) {
-    log("[watm error] row " + data.row + " -- " + data.default_text);
-    console.error(err);
+    log(`Error in configuration file - row #${data.row}: ${err.message}`, "error");
   }
 }
 
