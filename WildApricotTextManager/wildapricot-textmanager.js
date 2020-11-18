@@ -461,6 +461,7 @@ function setCSS() {
     padding: "20px",
     "z-index": 999,
   });
+
   // Show inspector container at top or bottom of viewport based on activation keyword
   if (inspectorLocation == "top") {
     $("#" + inspectorContainerId).css({ top: 0 });
