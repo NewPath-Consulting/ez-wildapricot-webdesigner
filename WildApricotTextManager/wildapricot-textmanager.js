@@ -107,15 +107,15 @@ $(document).ready(function () {
       complete: function () {
         for (var row in array) {
           var data = {
-            container: array[row][0],
-            default_text: array[row][1],
-            english_text: array[row][2],
-            second_language_text: array[row][3],
-            note: array[row][4],
-            function: array[row][5],
-            query: array[row][6],
-            style: array[row][7],
-            row: row,
+            container: array[row][0].trim(),
+            default_text: array[row][1].trim(),
+            english_text: array[row][2].trim(),
+            second_language_text: array[row][3].trim(),
+            note: array[row][4].trim(),
+            function: array[row][5].trim(),
+            query: array[row][6].trim(),
+            style: array[row][7].trim(),
+            row: row.trim(),
           };
           list.push(data);
         }
