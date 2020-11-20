@@ -7,7 +7,7 @@ var list = [];
 var array;
 var scss_dict = {};
 var data_url = "/resources/Theme/WildApricotTextManager/wildapricot-textmanager-config.csv";
-var watm_version = "0.82";
+var watm_version = "0.9";
 
 /* Polyfills */
 if (!String.prototype.includes) {
