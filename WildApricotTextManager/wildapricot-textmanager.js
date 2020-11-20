@@ -380,35 +380,42 @@ function isInternetExplorer() {
   return false;
 }
 
-/* Element Inspector */
-
 function startDev() {
   // Create inspector container
   $("body").prepend($("<div>").attr("id", inspectorContainerId).html("<h1>Click on an element to begin</h1>"));
   // Add CSS to created container
   setCSS();
 
+  // Cancel all onclicks
+  setTimeout(function () {
+    $("*").attr("onclick", "").unbind("click");
+    $("tr").attr("onclick", "").unbind("click");
+  }, 1000);
+
   // Intercept all page clicks
-  $("body").on("click", "*", function (event) {
-    // Store clicked element ID
-    let clickedID = $(this).attr("id");
-    // Store clicked element class names
-    let clickedClass = $(this).attr("class");
+  setTimeout(function () {
+    log(`Element Inspector Active`, "notice");
+    $("body").on("click", "*", function (event) {
+      // Store clicked element ID
+      let clickedID = $(this).attr("id");
+      // Store clicked element class names
+      let clickedClass = $(this).attr("class");
 
-    // Obtain CSS path of clicked element
-    completePath = getPath(this);
+      // Obtain CSS path of clicked element
+      completePath = getPath(this);
 
-    // Ensure clicked element is not inspector container
-    if (completePath.indexOf("#" + inspectorContainerId) == -1) {
-      // Cancel default action for clicked element
-      event.preventDefault();
-      // Show element information
-      displyPath(completePath, clickedID, clickedClass);
-    }
+      // Ensure clicked element is not inspector container
+      if (completePath.indexOf("#" + inspectorContainerId) == -1) {
+        // Cancel default action for clicked element
+        event.preventDefault();
+        // Show element information
+        displyPath(completePath, clickedID, clickedClass);
+      }
 
-    // This prevents the function from firing multiple times for nested elements
-    return false;
-  });
+      // This prevents the function from firing multiple times for nested elements
+      return false;
+    });
+  }, 1500);
 }
 
 // Get full CSS path
