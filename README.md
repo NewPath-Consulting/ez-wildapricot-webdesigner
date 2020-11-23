@@ -12,7 +12,7 @@ WATM can be also be used to enable 2 languages for Wild Apricot websites. WATM d
 
 After installation just add `?dev` after the public URL to go into WATM "development" mode. You can then click on any element on the page to find the CSS class and/or ID that can be used to identify the element.
 
-Demo: Click [https://newpathconsulting.wildapricot.org/?dev](https://newpathconsulting.wildapricot.org/?dev) to go into WATM dev mode. Then click on any element to inspect the CSS class or ID.
+**Demo**: Click [https://newpathconsulting.wildapricot.org/?dev](https://newpathconsulting.wildapricot.org/?dev) to go into WATM dev mode. Then click on any element to inspect the CSS class or ID.
 
 ### Using Dev Tools to inspect
 
