@@ -350,12 +350,12 @@ function replaceText(data) {
 
 function walkText(node, data, text) {
   try {
-    if (node.nodeType === 3) {
-      if (node.data.search(RegExp(`(${data.default_text}`,"i") > -1) {
+    if (node.nodeType === 1) {
+      if (node.innerText.search(RegExp(`(${data.default_text})`, "i")) > -1) {
         if (data.function === "replace_element") {
-          node.data = text;
+          node.innerText = text;
         } else if (data.function === "replace") {
-          node.data = node.data.replace(RegExp(`(${data.default_text})`, "i"), text);
+          node.innerText = node.innerText.replace(RegExp(`(${data.default_text})`, "i"), text);
         }
       }
     } else if (node.nodeType === 1 && node.nodeName != "SCRIPT") {
