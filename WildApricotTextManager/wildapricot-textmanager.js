@@ -279,17 +279,21 @@ function replaceText(data) {
         // Multiple Query
         if (query_array.length > 0)
           for (query in query_array) {
-            begin_node = $(query_array[query])[0]; // Get first DOM element
-            if (begin_node) {
-              walkText(begin_node, data, replacement_text);
-            }
+            $(data.query).each(function () {
+              begin_node = this;
+              if (begin_node) {
+                walkText(begin_node, data, replacement_text);
+              }
+            });
           }
         // Single Query
         else {
-          begin_node = $(data.query)[0]; // Get first DOM element
-          if (begin_node) {
-            walkText(begin_node, data, replacement_text);
-          }
+          $(data.query).each(function () {
+            begin_node = this;
+            if (begin_node) {
+              walkText(begin_node, data, replacement_text);
+            }
+          });
         }
       }
       // Empty Query so walk the whole page
