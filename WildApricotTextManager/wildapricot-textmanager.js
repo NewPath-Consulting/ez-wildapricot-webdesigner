@@ -258,13 +258,16 @@ function replaceText(data) {
 
     // Special function to replace substring after 1s delay
     // Used for shopping cart "Member price"
-    if (data.function === "replace_delay") {
+    if (data.function.indexOf("replace_delay") != -1) {
+      var splitTime = 1000;
+      if (data.function.split("-")[1]) splitTime = data.function.split("-")[1] * 1000;
       setTimeout(function () {
-        node = $(data.query)[0];
-        if (node) {
-          node.innerText = node.innerText.replace(data.default_text, replacement_text);
-        }
-      }, 1000);
+        $(data.query).each(function () {
+          if (this) {
+            this.innerText = this.innerText.replace(data.default_text, replacement_text);
+          }
+        });
+      }, splitTime);
     }
 
     // Search and replace
@@ -276,17 +279,21 @@ function replaceText(data) {
         // Multiple Query
         if (query_array.length > 0)
           for (query in query_array) {
-            begin_node = $(query_array[query])[0]; // Get first DOM element
-            if (begin_node) {
-              walkText(begin_node, data, replacement_text);
-            }
+            $(data.query).each(function () {
+              begin_node = this;
+              if (begin_node) {
+                walkText(begin_node, data, replacement_text);
+              }
+            });
           }
         // Single Query
         else {
-          begin_node = $(data.query)[0]; // Get first DOM element
-          if (begin_node) {
-            walkText(begin_node, data, replacement_text);
-          }
+          $(data.query).each(function () {
+            begin_node = this;
+            if (begin_node) {
+              walkText(begin_node, data, replacement_text);
+            }
+          });
         }
       }
       // Empty Query so walk the whole page
