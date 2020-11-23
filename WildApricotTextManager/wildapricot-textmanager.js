@@ -258,13 +258,16 @@ function replaceText(data) {
 
     // Special function to replace substring after 1s delay
     // Used for shopping cart "Member price"
-    if (data.function === "replace_delay") {
+    if (data.function.indexOf("replace_delay") != -1) {
+      var splitTime = 1000;
+      if (data.function.split("-")[1]) splitTime = data.function.split("-")[1] * 1000;
       setTimeout(function () {
-        node = $(data.query)[0];
-        if (node) {
-          node.innerText = node.innerText.replace(data.default_text, replacement_text);
-        }
-      }, 1000);
+        $(data.query).each(function () {
+          if (this) {
+            this.innerText = this.innerText.replace(data.default_text, replacement_text);
+          }
+        });
+      }, splitTime);
     }
 
     // Search and replace
