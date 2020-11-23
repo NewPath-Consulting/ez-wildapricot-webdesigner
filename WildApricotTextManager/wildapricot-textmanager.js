@@ -351,7 +351,7 @@ function replaceText(data) {
 function walkText(node, data, text) {
   try {
     if (node.nodeType === 3) {
-      if (node.data.search(RegExp(`(${data.default_text}`,"i") > -1) {
+      if (node.data.search(RegExp(`(${data.default_text})`, "i")) > -1) {
         if (data.function === "replace_element") {
           node.data = text;
         } else if (data.function === "replace") {
