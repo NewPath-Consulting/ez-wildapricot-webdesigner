@@ -7,7 +7,7 @@ var list = [];
 var array;
 var scss_dict = {};
 var data_url = "/resources/Theme/WildApricotTextManager/wildapricot-textmanager-config.csv";
-var watm_version = "0.82";
+var watm_version = "0.9";
 
 /* Polyfills */
 if (!String.prototype.includes) {
@@ -50,6 +50,20 @@ $(document).ready(function () {
   }
   if (typeof languageButtonHtmlID === "undefined") {
     languageButtonHtmlID = "languageButton";
+  }
+  // Used for element inspector
+  if (typeof inspectorKeword === "undefined") {
+    inspectorKeword = "?dev";
+  }
+  if (typeof inspectorContainerId === "undefined") {
+    inspectorContainerId = "el-details";
+  }
+  if (typeof inspectorLocation === "undefined") {
+    inspectorLocation = "bottom";
+  }
+  // Start Inspector if keyword present
+  if (window.location.href.indexOf(inspectorKeword) > -1) {
+    startDev();
   }
 
   // Multiligual Mode
@@ -364,4 +378,103 @@ function isInternetExplorer() {
 
   // other browser
   return false;
+}
+
+function startDev() {
+  // Create inspector container
+  $("body").prepend($("<div>").attr("id", inspectorContainerId).html("<h1>Click on an element to begin</h1>"));
+  // Add CSS to created container
+  setCSS();
+
+  // Cancel all onclicks
+  setTimeout(function () {
+    $("*").attr("onclick", "").unbind("click");
+    $("tr").attr("onclick", "").unbind("click");
+  }, 1000);
+
+  // Intercept all page clicks
+  setTimeout(function () {
+    log(`Element Inspector Active`, "notice");
+    $("body").on("click", "*", function (event) {
+      // Store clicked element ID
+      let clickedID = $(this).attr("id");
+      // Store clicked element class names
+      let clickedClass = $(this).attr("class");
+
+      // Obtain CSS path of clicked element
+      completePath = getPath(this);
+
+      // Ensure clicked element is not inspector container
+      if (completePath.indexOf("#" + inspectorContainerId) == -1) {
+        // Cancel default action for clicked element
+        event.preventDefault();
+        // Show element information
+        displyPath(completePath, clickedID, clickedClass);
+      }
+
+      // This prevents the function from firing multiple times for nested elements
+      return false;
+    });
+  }, 1500);
+}
+
+// Get full CSS path
+function getPath(el) {
+  let path = [];
+  while (el.nodeType === Node.ELEMENT_NODE) {
+    let selector = el.nodeName.toLowerCase();
+    if (el.id) {
+      selector += "#" + el.id;
+    } else {
+      let sib = el,
+        nth = 1;
+      while (sib.nodeType === Node.ELEMENT_NODE && (sib = sib.previousSibling) && nth++);
+      selector += ":nth-child(" + nth + ")";
+    }
+    path.unshift(selector);
+    el = el.parentNode;
+  }
+  return path.join(" > ");
+}
+
+function displyPath(cssPath, elID, elClass) {
+  elInfo = "";
+  if (cssPath.lastIndexOf("#") > -1) {
+    // If the path contains an ID, start path from there
+    cssPath = cssPath.substring(cssPath.lastIndexOf("#"));
+  }
+  if (elID) {
+    // If clicked element has ID, display it
+    elInfo = elInfo + "<p><b>Element ID:</b> #" + elID + "</p>";
+  }
+  if (elClass) {
+    // If clicked element has classes, display them
+    elInfo = elInfo + "<p><b>Element Class(es):</b> ." + elClass.split(" ").join(" .") + "</p>";
+  }
+  // Display CSS path
+  elInfo = elInfo + "<p><b>CSS Path:</b> " + cssPath + "</p>";
+  // Add to inspector container
+  $("#" + inspectorContainerId).html(elInfo);
+}
+
+// Set inspector container styling
+function setCSS() {
+  $("#" + inspectorContainerId).css({
+    border: "5px solid #000",
+    width: "100%",
+    background: "#fff",
+    color: "#000",
+    position: "fixed",
+    padding: "20px",
+    "z-index": 999,
+  });
+
+  // Show inspector container at top or bottom of viewport based on activation keyword
+  if (inspectorLocation == "top") {
+    $("#" + inspectorContainerId).css({ top: 0 });
+    $("body").css({ "padding-top": "150px" });
+  } else {
+    $("#" + inspectorContainerId).css({ bottom: 0 });
+    $("body").css({ "padding-bottom": "150px" });
+  }
 }
