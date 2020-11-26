@@ -222,7 +222,10 @@ function replaceText(data) {
   }
 
   if (data.function === "hide") {
-    $(data.query).hide();
+    var queryArray = data.query.split(",");
+    $.each(queryArray, function (index, query) {
+      $(query.trim()).hide();
+    });
   }
 
   // SCSS
@@ -239,22 +242,36 @@ function replaceText(data) {
     // Delay these replacements by 1 second, and keep polling every second
     if (data.function === "delay") {
       setInterval(function () {
-        $(data.query).text(replacement_text);
+        var queryArray = data.query.split(",");
+        $.each(queryArray, function (index, query) {
+          $(query.trim()).text(replacement_text);
+        });
       }, 1000);
     }
 
     // Replace text on buttons
     if (data.function === "button") {
-      $(data.query).val(replacement_text);
+      var queryArray = data.query.split(",");
+      $.each(queryArray, function (index, query) {
+        $(query.trim()).val(replacement_text);
+      });
     }
 
     // Replace text in search boxes
     if (data.function === "placeholder") {
-      $(data.query).attr("placeholder", replacement_text);
+      var queryArray = data.query.split(",");
+      $.each(queryArray, function (index, query) {
+        $(query.trim()).attr("placeholder", replacement_text);
+      });
     }
 
     // Replace text in attributes
-    if (data.function === "attribute") $("[" + data.query + "='" + data.default_text + "']").attr(data.query, replacement_text);
+    if (data.function === "attribute") {
+      var queryArray = data.query.split(",");
+      $.each(queryArray, function (index, query) {
+        $("[" + query + "='" + data.default_text + "']").attr(query, replacement_text);
+      });
+    }
 
     // Special function to replace substring after 1s delay
     // Used for shopping cart "Member price"
@@ -262,10 +279,13 @@ function replaceText(data) {
       var splitTime = 1000;
       if (data.function.split("-")[1]) splitTime = data.function.split("-")[1] * 1000;
       setTimeout(function () {
-        $(data.query).each(function () {
-          if (this) {
-            this.innerText = this.innerText.replace(RegExp(`(${data.default_text})`, "i"), replacement_text);
-          }
+        var queryArray = data.query.split(",");
+        $.each(queryArray, function (index, query) {
+          $(query.trim()).each(function () {
+            if (this) {
+              this.innerText = this.innerText.replace(RegExp(`(${data.default_text})`, "i"), replacement_text);
+            }
+          });
         });
       }, splitTime);
     }
@@ -275,26 +295,15 @@ function replaceText(data) {
       var begin_node = document.body;
       // Walk a subset of the DOM based on Query
       if (data.query.length > 0) {
-        var query_array = data.query.split(" ");
-        // Multiple Query
-        if (query_array.length > 0)
-          for (query in query_array) {
-            $(data.query).each(function () {
-              begin_node = this;
-              if (begin_node) {
-                walkText(begin_node, data, replacement_text);
-              }
-            });
-          }
-        // Single Query
-        else {
-          $(data.query).each(function () {
+        var queryArray = data.query.split(",");
+        $.each(queryArray, function (index, query) {
+          $(query.trim()).each(function () {
             begin_node = this;
             if (begin_node) {
               walkText(begin_node, data, replacement_text);
             }
           });
-        }
+        });
       }
       // Empty Query so walk the whole page
       else {
@@ -304,7 +313,10 @@ function replaceText(data) {
 
     // Replace text on all other elements
     if (data.function === "text") {
-      $(data.query).text(replacement_text);
+      var queryArray = data.query.split(",");
+      $.each(queryArray, function (index, query) {
+        $(query.trim()).text(replacement_text);
+      });
     }
   }
 
