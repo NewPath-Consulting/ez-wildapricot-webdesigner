@@ -264,7 +264,7 @@ function replaceText(data) {
       setTimeout(function () {
         $(data.query).each(function () {
           if (this) {
-            this.innerText = this.innerText.replace(data.default_text, replacement_text);
+            this.innerText = this.innerText.replace(RegExp(`(${data.default_text})`, "i"), replacement_text);
           }
         });
       }, splitTime);
@@ -351,11 +351,11 @@ function replaceText(data) {
 function walkText(node, data, text) {
   try {
     if (node.nodeType === 3) {
-      if (node.data.search(data.default_text) > -1) {
+      if (node.data.search(RegExp(`(${data.default_text})`, "i")) > -1) {
         if (data.function === "replace_element") {
           node.data = text;
         } else if (data.function === "replace") {
-          node.data = node.data.replace(data.default_text, text);
+          node.data = node.data.replace(RegExp(`(${data.default_text})`, "i"), text);
         }
       }
     } else if (node.nodeType === 1 && node.nodeName != "SCRIPT") {
