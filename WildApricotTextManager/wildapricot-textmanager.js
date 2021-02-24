@@ -7,7 +7,7 @@ var list = [];
 var array;
 var scss_dict = {};
 var data_url = "/resources/Theme/WildApricotTextManager/wildapricot-textmanager-config.csv";
-var watm_version = "0.9";
+var watm_version = "0.91";
 
 /* Polyfills */
 if (!String.prototype.includes) {
@@ -350,6 +350,7 @@ function replaceText(data) {
 
 function walkText(node, data, text) {
   try {
+
     if (node.nodeType === 1) {
       if (node.innerText.search(RegExp(`(${data.default_text})`, "i")) > -1) {
         if (data.function === "replace_element") {

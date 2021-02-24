@@ -12,7 +12,7 @@ WATM can be also be used to enable 2 languages for Wild Apricot websites. WATM d
 
 After installation just add `?dev` after the public URL to go into WATM "development" mode. You can then click on any element on the page to find the CSS class and/or ID that can be used to identify the element.
 
-Demo: Click [https://newpathconsulting.wildapricot.org/?dev](https://newpathconsulting.wildapricot.org/?dev) to go into WATM dev mode. Then click on any element to inspect the CSS class or ID.
+**Demo**: Click [https://newpathconsulting.wildapricot.org/?dev](https://newpathconsulting.wildapricot.org/?dev) to go into WATM dev mode. Then click on any element to inspect the CSS class or ID.
 
 ### Using Dev Tools to inspect
 
@@ -49,6 +49,8 @@ How to use Chrome Developer Tools
 0.82 - added display of WATM version on console log 9/8/20
 
 0.9 - added CSS class/id inspector invoked with `?dev` in URL, added more error/information logging, strip leading/trailing space in "function" field of configuration file 11/20/20
+
+0.91 - Fixed replace\_delay function that works for form dropdowns, added "-n" suffix to the `replace-delay` function. For example, `replace-delay-3` will delay for 3 seconds 11/23/20
 
 ## Installation
 
@@ -200,7 +202,7 @@ For the following functions the `Default Text` column is required:
 
 * `replace` – Searches for `Default Text` column and replaces this sub-string in any element. If `Query` column is blank, the entire page is searched. 
 * `replace_element` – Searches text in `Default Text` column and replaces the text of the entire element. If `Query` column is blank, the entire page is searched.
-* `replace_delay` – Replaces string after one second delay.
+* `replace_delay` – Replaces string after one second delay. Add a `_n` suffix after `replace_delay`  to increase delay beyond the default 1 second.  `replace_delay_3`will delay 3 seconds.
 * `attribute` - Replaces string containted in any HTML attribute tag
 
 The following function can be used on any line in the configuration file:
