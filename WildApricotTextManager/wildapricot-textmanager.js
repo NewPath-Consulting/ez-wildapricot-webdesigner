@@ -7,7 +7,7 @@ var list = [];
 var array;
 var scss_dict = {};
 var data_url = "/resources/Theme/WildApricotTextManager/wildapricot-textmanager-config.csv";
-var watm_version = "0.91";
+var watm_version = "0.93";
 
 /* Polyfills */
 if (!String.prototype.includes) {
@@ -186,7 +186,8 @@ function getCookie(key) {
 }
 
 function isInEditMode() {
-  return top !== self; // detect if we're in an iframe
+  // detect if we are in admin
+  return $("body").hasClass("adminContentView");
 }
 
 function isMultilingual() {
