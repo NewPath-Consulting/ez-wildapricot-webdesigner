@@ -61,13 +61,21 @@ $(document).ready(function () {
   if (typeof inspectorLocation === "undefined") {
     inspectorLocation = "bottom";
   }
+
+  // Hide language toggle button if page loaded as a widget
+  if (window.location.href.indexOf("/widget/") > -1) {
+    hideToggle = true;
+  } else {
+    hideToggle = false;
+  }
+
   // Start Inspector if keyword present
   if (window.location.href.indexOf(inspectorKeword) > -1) {
     startDev();
   }
 
   // Multiligual Mode
-  if (textManagerMultilingualMode) {
+  if (textManagerMultilingualMode & !hideToggle) {
     if ($("#languageButton").length) {
       // Use Content Gadget if exists
       $("#languageButton").append('<div><button type="button" id="languageToggle">Toggle Second Language</button></div>');
