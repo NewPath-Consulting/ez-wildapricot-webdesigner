@@ -105,6 +105,13 @@ $(document).ready(function () {
     if (textManagerMultilingualMode) log(`Current Language: ${primaryLanguageButtonName}`);
   }
 
+    // Set language if keyword in URL
+    if (window.location.href.indexOf("?secondLanguage") > -1) {
+      isFrameMultilingual = true;
+    } else {
+      isFrameMultilingual = false;
+    }
+
   // Load only if Formstack isn't detected.
   if (!hasFormstack()) {
     var urlSuffix = textManagerProductionMode ? "" : "/?" + Math.random().toString(16).substring(2);
@@ -220,7 +227,7 @@ function log(text, logType = "") {
 
 function replaceText(data) {
   // Language Show/Hide Custom Content Block
-  if (isMultilingual()) {
+  if (isMultilingual() || isFrameMultilingual) {
     var replacement_text = data.second_language_text;
     $(alterativeLanguageClassName).show();
     $(primaryLanguageClassName).hide();
