@@ -61,21 +61,13 @@ $(document).ready(function () {
   if (typeof inspectorLocation === "undefined") {
     inspectorLocation = "bottom";
   }
-
-  // Hide language toggle button if page loaded as a widget
-  if (window.location.href.indexOf("/widget/") > -1) {
-    hideToggle = true;
-  } else {
-    hideToggle = false;
-  }
-
   // Start Inspector if keyword present
   if (window.location.href.indexOf(inspectorKeword) > -1) {
     startDev();
   }
 
   // Multiligual Mode
-  if (textManagerMultilingualMode & !hideToggle) {
+  if (textManagerMultilingualMode) {
     if ($("#languageButton").length) {
       // Use Content Gadget if exists
       $("#languageButton").append('<div><button type="button" id="languageToggle">Toggle Second Language</button></div>');
@@ -104,13 +96,6 @@ $(document).ready(function () {
     $("#languageToggle").text(alterativeLanguageButtonName);
     if (textManagerMultilingualMode) log(`Current Language: ${primaryLanguageButtonName}`);
   }
-
-    // Set language if keyword in URL
-    if (window.location.href.indexOf("?secondLanguage") > -1) {
-      isFrameMultilingual = true;
-    } else {
-      isFrameMultilingual = false;
-    }
 
   // Load only if Formstack isn't detected.
   if (!hasFormstack()) {
@@ -201,7 +186,7 @@ function getCookie(key) {
 }
 
 function isInEditMode() {
-  // detect if we are in admin
+  // detect if we are in admin view
   return $("body").hasClass("adminContentView");
 }
 
@@ -227,7 +212,7 @@ function log(text, logType = "") {
 
 function replaceText(data) {
   // Language Show/Hide Custom Content Block
-  if (isMultilingual() || isFrameMultilingual) {
+  if (isMultilingual()) {
     var replacement_text = data.second_language_text;
     $(alterativeLanguageClassName).show();
     $(primaryLanguageClassName).hide();
@@ -272,7 +257,7 @@ function replaceText(data) {
     // Replace text in attributes
     if (data.function === "attribute") $("[" + data.query + "='" + data.default_text + "']").attr(data.query, replacement_text);
 
-    // Special function to replace substring after 1s delay
+    // Special function to replace substring after (n)s delay
     // Used for shopping cart "Member price"
     if (data.function.indexOf("replace_delay") != -1) {
       var splitTime = 1000;
@@ -367,11 +352,11 @@ function replaceText(data) {
 function walkText(node, data, text) {
   try {
     if (node.nodeType === 3) {
-      if (node.data.search(data.default_text) > -1) {
+      if (node.data.search(RegExp(`(${data.default_text})`, "i")) > -1) {
         if (data.function === "replace_element") {
           node.data = text;
         } else if (data.function === "replace") {
-          node.data = node.data.replace(data.default_text, text);
+          node.data = node.data.replace(RegExp(`(${data.default_text})`, "i"), text);
         }
       }
     } else if (node.nodeType === 1 && node.nodeName != "SCRIPT") {
