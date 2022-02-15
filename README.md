@@ -1,18 +1,16 @@
 # Documentation
 
-![WATM Logo](https://github.com/asirota/watm/raw/master/docs/images/wild-apricot-text-manager-logo.png)
-
 ## Project Description
 
-The [Wild Apricot Text Manager](https://waxm.newpathconsulting.com/watm) \(aka WATM\) is a JavaScript library that uses the [jQuery](https://www.jquery.org) library included with every [Wild Apricot](https://wildapricot.com) website. WATM will help any administrator manage and replace nearly every piece of text in Wild Apricot. You can make a variety of changes such as global search and replace of text, modifying form labels and buttons, changing properties on any Cascading Style Sheets \(CSS\) class or ID including hiding text, labels or buttons. You can also use WATM to change specific styles of your Wild Apricot theme. WATM uses a CSV-formatted configuration file to store all the changes in a well documented, easy to maintain way.
+The [EZ Wild Apricot Web Designer](https://waxm.newpathconsulting.com/watm) \(aka WATM\) is a JavaScript library that uses the [jQuery](https://www.jquery.org) library included with every [WildApricot](https://wildapricot.com) website. EZ Wild Apricot Web Designer will help any administrator manage and replace nearly every piece of text in Wild Apricot. You can make a variety of changes such as global search and replace of text, modifying form labels and buttons, changing properties on any Cascading Style Sheets \(CSS\) class or ID including hiding text, labels or buttons. You can also use EZ Wild Apricot Web Designer to change specific styles of your WildApricot theme. EZ Wild Apricot Web Designer uses a CSV-formatted configuration file to store all the changes in a well documented, easy to maintain way.
 
-WATM can be also be used to enable 2 languages for Wild Apricot websites. WATM does _not_ require you to create any additional site pages or page templates. Translations can be applied for any Wild Apricot module without the need to create multiple versions of a page, event, donation form etc. Several examples are included in an example WATM CSV configuration file which can be edited in Microsoft Excel or another text editor.
+The configuration file must be named `wildapricot-textmanager-config.csv` in order to be used by EZ Wild Apricot Web Designer.
 
 ### Browser Based CSS Inspector
 
-After installation just add `?dev` after the public URL to go into WATM "development" mode. You can then click on any element on the page to find the CSS class and/or ID that can be used to identify the element.
+After installation just add `?dev` after the public URL to go into "development" mode. You can then click on any element on the page to find the CSS class and/or ID that can be used to identify the element.
 
-**Demo**: Click [https://newpathconsulting.wildapricot.org/?dev](https://newpathconsulting.wildapricot.org/?dev) to go into WATM dev mode. Then click on any element to inspect the CSS class or ID.
+**Demo**: Click [https://newpathconsulting.wildapricot.org/?dev](https://newpathconsulting.wildapricot.org/?dev) to go into dev mode. Then click on any element to inspect the CSS class or ID.
 
 ### Using Dev Tools to inspect
 
@@ -52,6 +50,8 @@ After installation just add `?dev` after the public URL to go into WATM "develop
 
 0.91 - Fixed replace\_delay function that works for form dropdowns, added "-n" suffix to the `replace-delay` function. For example, `replace-delay-3` will delay for 3 seconds 11/23/20
 
+0.93 - support for switching languages using embedded WildApricot "widgets" in 3rd party content management system, added a standard French translation file 2/15/22
+
 ## Installation
 
 ### Script Setup
@@ -75,7 +75,7 @@ After installation just add `?dev` after the public URL to go into WATM "develop
    </script>
    ```
 
-3. To deactivate the multilingual mode for WATM edit this JavaScript variable declaration as follows:
+3. To deactivate the multilingual mode edit this JavaScript variable declaration as follows:
 
    `var textManagerMultilingualMode = false;`
 
@@ -88,11 +88,11 @@ After installation just add `?dev` after the public URL to go into WATM "develop
 
 3. Upload [jquery.csv-0.8.9-mod.js](https://raw.githubusercontent.com/asirota/watm/master/WildApricotTextManager/jquery.csv-0.8.9-mod.js) to the new folder.
 4. Upload [wildapricot-textmanager.js](https://raw.githubusercontent.com/asirota/watm/master/WildApricotTextManager/wildapricot-textmanager.js) to the new folder.
-5. Upload [wildapricot-textmanager-config.csv](https://raw.githubusercontent.com/asirota/watm/master/WildApricotTextManager/wildapricot-textmanager-config-sample.csv) to the new folder. 
+5. Upload [wildapricot-textmanager-config.csv](https://raw.githubusercontent.com/asirota/watm/master/WildApricotTextManager/wildapricot-textmanager-config.csv) to the new folder. 
 
 ### Testing Installation
 
-To test whether WATM has been installed properly:
+To test whether EZ Wild Apricot Web Designer has been installed properly:
 
 1. Click Public View to browse the Wild Apricot website.
 
@@ -100,13 +100,13 @@ To test whether WATM has been installed properly:
 
 2. Right click on the page and select 'Inspect'. Invoking Developer Tools may be different depending on the browser you are using.
 
-3. Navigate to Console and look for the message in yellow below. The version number for WATM should appear. If you do not see this message, or you see errors WATM may not have been properly installed.
+3. Navigate to Console and look for the message in yellow below. The version number should appear. If you do not see this message, or you see errors EZ Wild Apricot Web Designer may not have been properly installed.
 
 ![WATM version message](https://github.com/asirota/watm/raw/master/docs/images/console%20watm%20version%20logging.jpg)
 
 ### Overlay Setup \(Optional\)
 
-Normally, when the text manager is enabled, the original text is displayed on the page load and then replaced within one second. This "flicker" can be hidden with the HTML and CSS below. The WATM will automatically remove the overlay once the script has been completed, reducing the flicker.
+Normally, when the EZ Wild Apricot Web Designer is enabled, the original text is displayed on the page load and then replaced within one second. This "flicker" can be hidden with the HTML and CSS below. EZ Wild Apricot Web Designer will automatically remove the overlay once the script has been completed, reducing the flicker.
 
 Open the each Wild Apricot Page Template in use, add a [Custom HTML](https://gethelp.wildapricot.com/en/articles/408) gadget anywhere in the template. Edit the code of the Custom HTML gadget and include this HTML snippet:
 
@@ -114,7 +114,7 @@ Open the each Wild Apricot Page Template in use, add a [Custom HTML](https://get
 <div id="textmanager_overlay"></div>
 ```
 
-You must also ddd these lines to the Wild Apricot global CSS in the [Website -&gt; CSS](https://gethelp.wildapricot.com/en/articles/438#entering) menu:
+You must also add these lines to the Wild Apricot global CSS in the [Website -&gt; CSS](https://gethelp.wildapricot.com/en/articles/438#entering) menu:
 
 ```css
 #textmanager_overlay {
@@ -132,9 +132,22 @@ You must also ddd these lines to the Wild Apricot global CSS in the [Website -&g
 
 ### Multilingual Setup \(Optional\)
 
-To move the Language button from the default location: 1. In Admin View, browse to each page template in use. 2. Click Edit, then Gadgets, then drag and drop Custom HTML gadget to where you would like to place the button. 3. Click Edit code and delete the default “Insert your HTML code here”. 4. Click Settings button for the new gadget. On the left panel, show Advanced and then replace the HTML ID with `languageButton` then Save the template. 5. Repeat this for each page template. 5. \(Optional\) Customize the look of the button by applying custom CSS class to the `#languageButton ID` in the WATM configuration file.
 
-### Add the translated content
+#### Standard WildApricot translation file
+
+EZ Wild Apricot Web Designer can be also be used to enable 2 languages for WildApricot websites. EZ Wild Apricot Web Designer does _not_ require you to create any additional site pages or page templates. Translations can be applied for any Wild Apricot module without the need to create multiple versions of a page, event, donation form etc. A French translation file is included as sample CSV configuration file. It is named `FR-wildapricot-textmanager-config.csv`. This file can be edited in Microsoft Excel or another text editor. Make sure CSV UTF-8 format is used when saving to preserve any accented or multi-byte characters.
+
+#### Moving the language switcher button
+
+To move the Language button from the default location:
+1. In Admin View, browse to each page template in use.
+2. Click Edit, then Gadgets, then drag and drop Custom HTML gadget to where you would like to place the button.
+3. Click Edit code and delete the default “Insert your HTML code here”.
+4. Click Settings button for the new gadget. On the left panel, show Advanced and then replace the HTML ID with `languageButton` then Save the template.
+5. Repeat this for each page template.
+6. \(Optional\) Customize the look of the button by applying custom CSS class to the `#languageButton ID` in the configuration file.
+
+#### Add the translated content
 
 The below is an example of adding translated content to a Wild Apricot "Contact" page.
 
@@ -148,15 +161,36 @@ The below is an example of adding translated content to a Wild Apricot "Contact"
 
 ![Advanced Settings in CSS](https://github.com/asirota/watm/raw/master/docs/images/advanced-english-class.png)
 
-1. Repeat for other content blocks you wish to localize and Save page. The result should look similar to below:
+5. Repeat for other content blocks you wish to localize and Save page. The result should look similar to below:
 
 ![Advanced Settings in CSS for Contact Us Widgets](https://github.com/asirota/watm/raw/master/docs/images/contact-us-widgets.png)
 
-Note that if WATM is enabled, one of the two languages will be hidden based on the state of the language, even in the Edit mode. Please make sure `textManagerProductionMode = false` is set in Global JavaScript and then click the button to disable WATM to see both sets of languages at once.
+Note that if EZ Wild Apricot Web Designer is enabled, one of the two languages will be hidden based on the state of the language, even in the Edit mode. Please make sure `textManagerProductionMode = false` is set in Global JavaScript and then click the button to disable EZ Wild Apricot Web Designer to see both sets of languages at once.
+
+### Support for embedded WildApricot widgets on 3rd party Content Management Systems
+
+If you are using the WildApricot widget code using iframes, use the ?secondLanguage argument at the end of widget URL to trigger translations to be loaded.
+
+1. Alter the WildApricot widget code to support the ?secondLanguage widget.
+2. Embed the widget on the translated page on the 3rd party CMS. This works with systems like Drupal, Squarespace and WordPress.
+
+Example code:
+
+For ENGLISH pages use the default language widget:
+```html
+<iframe width='750px' height='400px' frameborder='no' src='https://mysite.wildapricot.org/widget/join-us' onload='tryToEnableWACookies("https://mysite.wildapricot.org");' ></iframe>
+<script  type="text/javascript" language="javascript" src="https://mysite.wildapricot.org/Common/EnableCookies.js" ></script>
+```
+
+For FRENCH pages add  the ?secondLanguage widget: 
+```html
+<iframe width='750px' height='400px' frameborder='no' src='https://mysite.wildapricot.org/widget/join-us/?secondLanguage' onload='tryToEnableWACookies("https://mysite.wildapricot.org");' ></iframe>
+<script  type="text/javascript" language="javascript" src="https://mysite.wildapricot.org/Common/EnableCookies.js" ></script>
+```
 
 ## Wild Apricot Text Manager Configuration File
 
-To maintain all the WATM text changes, translations and styling changes, you must edit and maintain the CSV configuration file `wildapricot-textmanager-config.csv` using Excel or another commas seperated file \(CSV\) editor.
+To maintain all the EZ Wild Apricot Web Designer text changes, translations and styling changes, you must edit and maintain the CSV configuration file `wildapricot-textmanager-config.csv` using Excel or another commas seperated file \(CSV\) editor.
 
 ### Instructions for editing the file in Excel
 
@@ -170,13 +204,14 @@ To maintain all the WATM text changes, translations and styling changes, you mus
 
 ### Saving the configuration file
 
-When saving the file, use the CSV UTF-8 \(Comma delimited\) \(_.csv\). \*Other formats will break WATM!_
+When saving the file, use the CSV UTF-8 \(Comma delimited\) \(_.csv\). \*Other formats will break the configuration file!_
 
-Note that the configuration file will be cached in the web browser between changes while in production mode. If you don't see your configuration file changes reflected on the website, you will need to [force-refresh your browser](https://www.wikihow.com/Force-Refresh-in-Your-Internet-Browser) to reload the latest configuration file.
+The configuration file may be cached in the web browser between changes while in production mode. If you don't see your configuration file changes reflected on the website, you will need to [force-refresh your browser](https://www.wikihow.com/Force-Refresh-in-Your-Internet-Browser) to reload the latest configuration file.
 
-### Columns in the WATM Configuration File
 
-#### Note: Inserting or moving columns will break WATM!
+### Columns in the  Configuration File
+
+#### Note: Inserting or moving columns will break the configuration file!
 
 `Wild Apricot Reference`: Name of the Wild Apricot System Gadget. For administrative use only, can be used to group configuration lines together
 
@@ -220,7 +255,7 @@ The following function can be used on any line in the configuration file:
 
 `Style`: The CSS ruleset \(properties & values\) to apply to selector in the `Query` column. Optional.
 
-The syntax in WATM surrounds each property and value with a double quote \("\) \(eg "color":"red";\)
+Each property and value should be enclosed with a double quote \("\) \(eg "color":"red";\)
 
 ![Anatomy of a CSS ruleset](https://mdn.mozillademos.org/files/9461/css-declaration-small.png)
 
@@ -255,7 +290,7 @@ Here is what the new Membership Renewal system gadget should look like:
 
 ## System Requirements
 
-WATM must be used with a free or paid Wild Apricot account. WATM is supported on the latest versions of Chrome, Safari, Firefox and Edge. Older browsers like Internet Explorer on Windows are supported "best effort," without formal testing or 100% compatibility.
+EZ Wild Apricot Web Designer must be used with a free or paid WildApricot account. EZ Wild Apricot Web Designer is supported on the latest versions of Chrome, Safari, Firefox and Edge. Older browsers like Internet Explorer on Windows are supported "best effort," without formal testing or 100% compatibility.
 
 ## Further Examples
 
@@ -324,4 +359,3 @@ English Replacement Text: test
 Function: attribute
 Query: title
 ```
-
