@@ -135,7 +135,7 @@ You must also add these lines to the Wild Apricot global CSS in the [Website -&g
 
 #### Standard WildApricot translation file
 
-EZ Wild Apricot Web Designer can be also be used to enable 2 languages for WildApricot websites. EZ Wild Apricot Web Designer does _not_ require you to create any additional site pages or page templates. Translations can be applied for any Wild Apricot module without the need to create multiple versions of a page, event, donation form etc. A French translation file is included as sample CSV configuration file. It is named `FR-wildapricot-textmanager-config.csv`. This file can be edited in Microsoft Excel or another text editor. Make sure CSV UTF-8 format is used when saving to preserve any accented or multi-byte characters.
+EZ Wild Apricot Web Designer can be also be used to enable 2 languages for WildApricot websites. EZ Wild Apricot Web Designer does _not_ require you to create any additional site pages or page templates. Translations can be applied for any Wild Apricot module without the need to create multiple versions of a page, event, donation form etc. A French translation file is included as sample CSV configuration file, named `FR-wildapricot-textmanager-config.csv`. Remember to rename this file to `wildapricot-textmanager-config.csv` before using it. This file can be edited in Microsoft Excel or another CSV editor. When saving the file, make sure to save with the UTF-8 encoding format to preserve any accented or multi-byte characters.
 
 #### Moving the language switcher button
 
