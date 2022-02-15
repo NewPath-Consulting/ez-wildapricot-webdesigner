@@ -145,9 +145,11 @@ To move the Language button from the default location:
 1. In Admin View, browse to each page template in use.
 2. Click Edit, then Gadgets, then drag and drop Custom HTML gadget to where you would like to place the button.
 3. Click Edit code and delete the default “Insert your HTML code here”.
-4. Click Settings button for the new gadget. On the left panel, show Advanced and then replace the HTML ID with `languageButton` then Save the template.
-5. Repeat this for each page template.
-6. \(Optional\) Customize the look of the button by applying custom CSS class to the `#languageButton ID` in the configuration file.
+4. Add a single space into the gadget. It will show empty but there will be a "placeholder" space.
+5. Click Settings button for the new gadget. On the left panel, show Advanced and then change the HTML ID tp `languageButton`.
+6. Save the template.
+7. Repeat this for each page template.
+8. \(Optional\) Customize the look of the button by applying custom CSS to the ID `#languageButton` in the configuration file on the Custom CSS section.
 
 #### Add the translated content
 
