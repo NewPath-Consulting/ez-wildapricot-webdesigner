@@ -59,7 +59,9 @@ After installation just add `?dev` after the public URL to go into "development"
 1. In Admin View of Web Apricot, browse to Settings -&gt; Site -&gt; Global JavaScript. More details on inserting JavaScript into Wild Apricot are available in [Wild Apricot Documentation](https://gethelp.wildapricot.com/en/articles/212-inserting-and-modifying-html-or-javascript#javascript).
 2. Copy and paste the following lines to the Global JavaScript.
 
-   ```javascript
+NOTE: this code snippet assumes you have uploaded all files into the folder `/resources/Theme/WildApricotTextManager`
+
+   ```html
    <!-- jQuery-CSV Source: https://github.com/evanplaice/jquery-csv -->
    <script src="/resources/Theme/WildApricotTextManager/jquery.csv-0.8.9-mod.js"></script>
    <script src="/resources/Theme/WildApricotTextManager/wildapricot-textmanager.js"></script>
