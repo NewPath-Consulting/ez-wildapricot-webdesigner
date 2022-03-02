@@ -192,7 +192,7 @@ For FRENCH pages add  the ?secondLanguage widget:
 <script  type="text/javascript" language="javascript" src="https://mysite.wildapricot.org/Common/EnableCookies.js" ></script>
 ```
 
-## Wild Apricot Text Manager Configuration File
+## EZ Wild Apricot Web Designer Configuration File
 
 To maintain all the EZ Wild Apricot Web Designer text changes, translations and styling changes, you must edit and maintain the CSV configuration file `wildapricot-textmanager-config.csv` using Excel or another commas seperated file \(CSV\) editor.
 
@@ -213,42 +213,91 @@ When saving the file, use the CSV UTF-8 \(Comma delimited\) \(_.csv\). \*Other f
 The configuration file may be cached in the web browser between changes while in production mode. If you don't see your configuration file changes reflected on the website, you will need to [force-refresh your browser](https://www.wikihow.com/Force-Refresh-in-Your-Internet-Browser) to reload the latest configuration file.
 
 
-### Columns in the  Configuration File
+### Fields in the configuration file
 
 #### Note: Inserting or moving columns will break the configuration file!
 
-`Wild Apricot Reference`: Name of the Wild Apricot System Gadget. For administrative use only, can be used to group configuration lines together
+`Wild Apricot Reference`: The field can be used to group configuration lines together in the configration file. It is for reference use only.
 
-`Default Text`: The text to search for in a Wild Apricot gadget or label.
+`Default Text`: The text that will be searched for replacement in a Wild Apricot gadget or label. This is a case-sensitive and space sensitive field.
 
-`English Replacement Text`: If text is placed in this column, a replacement is done. Blank rows are ignored. Optional.
+`English Replacement Text`: If you wish to replace the text with another value, place the new text in this field. This is an optional field.
 
-`Alternative Language Text`: Optional
+`Alternative Language Text`: If you wish to translate text with another language, place the translated language in this field. This field is an optional field.
 
-`Notes`: Any other helpful notes can be added here for reference.
+`Notes`: Notes can be added here for reference.
 
-### Function:
+`Function`: This field is used to manage text. If a function is used the `Default Text`, `English Replacement Text` and `Alternative Language Text` fields will be used. It is an optional field.
 
-For the following functions the `Default Text` column is ignored:
+`Query`: This is the targeted CSS ID, CSS Path or CSS Style to target for changes. It is a required field.
+
+`Style`: Contains the CSS style properties and value to apply to the `Query` element
+
+**Note:** You can leave the `Function` field empty if you wish to apply CSS using the `Query` and `Style` fields.
+
+### Text Management Functions for `Function` field:
+
+The functions below change the text with the contents of `English Replacement Text` or the `Alternative Language Text` column. Any text in the `Default Text` column is ignored.
 
 * `text` – sets text of the element selected by the `Query` column.
 * `hide` – hides the element selected by the `Query` column.
 * `button` – sets value of the button selected by the `Query` column.
 * `placeholder` – sets placeholder attribute. Only used for search boxes.
-* `delay` – page will pause one second before replacing text. Used on elements that are written with JavaScript after page load.
+* `delay` – page will pause one second before replacing text. This can be used on text elements that are written with JavaScript after page load (eg the member directory gadget).
 
-For the following functions the `Default Text` column is required:
+The following functions expect to use `Default Text` column as the search criteria for replacement.
 
 * `replace` – Searches for `Default Text` column and replaces this sub-string in any element. If `Query` column is blank, the entire page is searched. 
 * `replace_element` – Searches text in `Default Text` column and replaces the text of the entire element. If `Query` column is blank, the entire page is searched.
 * `replace_delay` – Replaces string after one second delay. Add a `_n` suffix after `replace_delay`  to increase delay beyond the default 1 second.  `replace_delay_3`will delay 3 seconds.
-* `attribute` - Replaces string containted in any HTML attribute tag
+* `attribute` - Replaces string containted in any HTML `attribute` tag
 
-The following function can be used on any line in the configuration file:
+There is a subtle difference between the `text`, `replace`/`replace_delay` and `replace_element` functions.
 
-* `inactive` – disables current configuration row. This function can be used to save a configuration, but not activate it.
 
-**Note:** You can leave Function column empty if you wish to apply CSS to any CSS class or ID set in the `Query` column.
+Function `text` ignores the `Default Text` value and simply replaces the text inside the element tht matches the `Query`. It is *not* a search/replace function.
+
+*Example:*
+
+If the ID is #myelement and you wish to replace the content with "Wild Apricot is awesome!" create the following configuration row:
+
+-  `Function` is `text`
+-  `Query` is `#myelement` and
+-  `English Replacement Text` is `Wild Apricot is awesome!`
+
+Functions `replace`, `replace_delay` and `replace_element` do a search & replace based on the `Default Text` field.
+
+*Example:*
+
+If the ID is #myelement and you wish to find the text `Personify` anywhere in an element and replace it with `Wild Apricot` create the following configuration row:
+
+-  `Function` is `replace`
+-  `Query` is `#myelement` and
+-  `Default Text` is `Personify`. Make sure case is correct as the search is case-sensitive.
+-  `English Replacement Text` is `Wild Apricot`
+
+If the original text is `Personify is awesome!` the configuration above will replace the string with `Wild Apricot is awesome!`.
+
+*Example:*
+
+If the ID is #myelement and you wish to find the text `Personify` anywhere inside an element and replace _the whole element_ with `Wild Apricot is great!` create the following configuration row:
+
+-  `Function` is `replace_element`
+-  `Query` is `#myelement` and
+-  `Default Text` is `Personify`. Make sure case is correct as the search is case-sensitive.
+-  `English Replacement Text` is `Wild Apricot is great!`
+
+If the original text is `Personify is awesome!` the configuration above will replace the element with `Wild Apricot is awesome!`. It simply searches for the the `Default Text` and when found uses the `English Replacement Text`.
+
+The `replace_delay` function waits a preset number of seconds before making a replacement to allow any other Javascript to execute before making element changes.
+
+In the above examples, the `English Replacement Text` can be replaced with `Alternative Language Text` if multilingual mode is turned on.
+
+
+#### Utility Functions
+
+* `inactive` – disables the configuration row. This function can be used to save a configuration, but not activate it for use.
+
 
 #### CSS-only functions:
 
