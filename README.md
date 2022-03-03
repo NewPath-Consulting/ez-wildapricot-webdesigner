@@ -2,13 +2,23 @@
 
 ## Project Description
 
-The [EZ Wild Apricot Web Designer](https://newpathconsulting.com/watm) \(aka WATM\) is a JavaScript library that uses the [jQuery](https://www.jquery.org) library included with every [WildApricot](https://wildapricot.com) website. EZ Wild Apricot Web Designer will help any administrator manage and replace nearly every piece of text in Wild Apricot. You can make a variety of changes such as global search and replace of text, modifying form labels and buttons, changing properties on any Cascading Style Sheets \(CSS\) class or ID including hiding text, labels or buttons. You can also use EZ Wild Apricot Web Designer to change specific styles of your WildApricot theme. EZ Wild Apricot Web Designer uses a CSV-formatted configuration file to store all the changes in a well documented, easy to maintain way.
+The [EZ Wild Apricot Web Designer](https://newpathconsulting.com/watm) \(aka WATM\) is a JavaScript library that is written using the [jQuery](https://www.jquery.org) framework included with every [WildApricot](https://wildapricot.com) website. EZ Wild Apricot Web Designer will help any administrator with some knowledge of the Document Object Model (DOM) manage and replace nearly every piece of hard-coded and configurable text in Wild Apricot. You can make a variety of changes such as global search and replace of a particular text string or modify field labels on forms, buttons labels, hard coded warning boxes. The module enables changing properties of any Cascading Style Sheets \(CSS\) class or CSS ID or path. You can also hide text, labels or buttons. The module can be used to make Wild Apricot sites bi-lingual by dynamically replacing strings with a translated string. EZ Wild Apricot Web Designer uses a comma separated value (CSV)-formatted configuration file that is easily editable, making it easy to maintain hundreds of modifications in a human-readable file.
 
-The configuration file must be named `wildapricot-textmanager-config.csv` in order to be used by EZ Wild Apricot Web Designer.
+The configuration file must be saved in UTF-8 format, and it must be named `wildapricot-textmanager-config.csv`.
 
 ### Browser Based CSS Inspector
 
-After installation just add `?dev` after the public URL to go into "development" mode. You can then click on any element on the page to find the CSS class and/or ID that can be used to identify the element.
+After successful installation, go to the public view of your Wild Apricot website, and  add `?dev` into the URL. This will switch EZ Wild Apricot Web Designer into a "development" mode. You can then click on any element on the page to inspect its CSS naming properties.
+
+There are 3 potential values that will show up when you click on any element on a page: the [Element ID](https://www.w3schools.com/htmL/html_id.asp), the CSS path or the Element Class(es).
+
+An element ID is unique per web page and identifies a particlar object on a web page. IDs always have a `#` at the beginning of the name and appear in the optional `id` attribute of an element. The `id` attribute is used to point to a specific style declaration in a style sheet. An example ID is `#mytable`. Unfortunately not all elements in a WildApricot page have an `id` but many do.
+
+The CSS path can be the same as the element ID, or it can be combination of several tags. A CSS path is precise definition of an element that may be nested within multiple elements. If an Element ID is not available a CSS path can be be used instead.
+
+An Elemenct class is simply one or more CSS classes applied to the element. A class can be used by multiple HTML elements, while an `id` name must only be used by one HTML element within the page.
+
+**NOTE: When applying changes to an element class be aware that the changes can be applied wherever the class is applied. The change can cascade into multiple places on a page or even across the website, where as the ID or CSS Path is usually unique to a specific web page.**
 
 **Demo**: Click [https://newpathconsulting.wildapricot.org/?dev](https://newpathconsulting.wildapricot.org/?dev) to go into dev mode. Then click on any element to inspect the CSS class or ID.
 
