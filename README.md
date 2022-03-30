@@ -64,6 +64,8 @@ An Elemenct class is simply one or more CSS classes applied to the element. A cl
 
 0.93 - support for switching languages using embedded WildApricot "widgets" in 3rd party content management system, added a standard French translation file 2/15/22
 
+0.94 - added support for dev mode toggle and easy copy/paste of elements in the dev mode panel
+
 ## Installation
 
 ### Script Setup
