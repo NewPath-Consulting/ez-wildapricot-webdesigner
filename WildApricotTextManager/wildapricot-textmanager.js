@@ -7,7 +7,10 @@ var list = [];
 var array;
 var scss_dict = {};
 var data_url = "/resources/Theme/WildApricotTextManager/wildapricot-textmanager-config.csv";
-var watm_version = "0.93";
+var watm_version = "0.94";
+
+// Initialize global clipboard variable
+var clipboardPath;
 
 /* Polyfills */
 if (!String.prototype.includes) {
@@ -61,12 +64,20 @@ $(document).ready(function () {
   if (typeof inspectorLocation === "undefined") {
     inspectorLocation = "bottom";
   }
+  if (typeof showInspectorLink === "undefined") {
+    showInspectorLink = true;
+  }
 
   // Hide language toggle button if page loaded as a widget
   if (window.location.href.indexOf("/widget/") > -1) {
     hideToggle = true;
   } else {
     hideToggle = false;
+  }
+
+  // Show Inspector link in footer
+  if(showInspectorLink){
+    $("#idFooterPoweredByWA").prepend( $( "<span><a href='./?dev'>Show Inspector</a> | </span>" ) );
   }
 
   // Start Inspector if keyword present
@@ -405,7 +416,12 @@ function isInternetExplorer() {
 
 function startDev() {
   // Create inspector container
-  $("body").prepend($("<div>").attr("id", inspectorContainerId).html("<h1>Click on an element to begin</h1>"));
+  $("body").prepend($("<div>").attr("id", inspectorContainerId).html("<div id='inspectorBody'><h1>Click on an element to begin</h1></div>"));
+
+  inspectorExitbtn = $("<button>").addClass("inspectorBtn").text("Exit Inspector").css('margin','5px');
+  inspectorCopybtn = $("<button>").addClass("inspectorBtn").text("Copy CSS Path").css('margin','5px').prop('disabled', true);
+  
+
   // Add CSS to created container
   setCSS();
 
@@ -438,7 +454,22 @@ function startDev() {
       // This prevents the function from firing multiple times for nested elements
       return false;
     });
+
+    // Append Inspector buttons
+    $("#"+inspectorContainerId).prepend($(inspectorCopybtn).attr("onclick", "copyInspector()"));
+    $("#"+inspectorContainerId).prepend($(inspectorExitbtn).attr("onclick", "closeInspector()"));
   }, 1500);
+}
+
+// Exit inspector
+function closeInspector() {
+  window.location.href = "./";
+}
+
+// Copy path to clipboard
+function copyInspector() {
+  navigator.clipboard.writeText(clipboardPath);
+  alert("CSS Path copied to clipboard!");
 }
 
 // Get full CSS path
@@ -476,8 +507,11 @@ function displyPath(cssPath, elID, elClass) {
   }
   // Display CSS path
   elInfo = elInfo + "<p><b>CSS Path:</b> " + cssPath + "</p>";
+  // Add path to global clipboard variable
+  clipboardPath = cssPath;
   // Add to inspector container
-  $("#" + inspectorContainerId).html(elInfo);
+  $("#inspectorBody").html(elInfo);
+  $(".inspectorBtn").prop('disabled', false);
 }
 
 // Set inspector container styling
@@ -495,9 +529,9 @@ function setCSS() {
   // Show inspector container at top or bottom of viewport based on activation keyword
   if (inspectorLocation == "top") {
     $("#" + inspectorContainerId).css({ top: 0 });
-    $("body").css({ "padding-top": "150px" });
+    $("#idCustomJsContainer").css({ "padding-top": "150px" });
   } else {
     $("#" + inspectorContainerId).css({ bottom: 0 });
-    $("body").css({ "padding-bottom": "150px" });
+    $("#idCustomJsContainer").css({ "padding-bottom": "150px" });
   }
 }
