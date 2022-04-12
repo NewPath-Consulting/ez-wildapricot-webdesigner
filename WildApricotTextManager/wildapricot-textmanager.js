@@ -11,6 +11,8 @@ var watm_version = "0.94";
 
 // Initialize global clipboard variable
 var clipboardPath;
+var clipboardClass;
+var clipboardId;
 
 /* Polyfills */
 if (!String.prototype.includes) {
@@ -75,10 +77,7 @@ $(document).ready(function () {
     hideToggle = false;
   }
 
-  // Show Inspector link in footer
-  if(showInspectorLink){
-    $("#idFooterPoweredByWA").prepend( $( "<span><a href='./?dev'>Show Inspector</a> | </span>" ) );
-  }
+ 
 
   // Start Inspector if keyword present
   if (window.location.href.indexOf(inspectorKeword) > -1) {
@@ -161,6 +160,11 @@ $(document).ready(function () {
         }
         if (!isInEditMode()) {
           list.map(replaceText);
+
+          // Show Inspector link in footer
+          if(showInspectorLink){
+            $("#idFooterPoweredByWA").prepend( $( "<span><a href='./?dev'>Show Inspector</a> | </span>" ) );
+          }
         }
       },
     });
@@ -186,6 +190,8 @@ $(window).bind("load", function () {
     // Replace text again to rewrite event handlers for the hover in menu
     list.map(replaceText);
   }
+
+
 });
 
 /* Utilities */
@@ -419,7 +425,9 @@ function startDev() {
   $("body").prepend($("<div>").attr("id", inspectorContainerId).html("<div id='inspectorBody'><h1>Click on an element to begin</h1></div>"));
 
   inspectorExitbtn = $("<button>").addClass("inspectorBtn").text("Exit Inspector").css('margin','5px');
-  inspectorCopybtn = $("<button>").addClass("inspectorBtn").text("Copy CSS Path").css('margin','5px').prop('disabled', true);
+  copyPathInspectorBtn = $("<button>").addClass("inspectorBtn").text("Copy CSS Path").css('margin','5px').hide();
+  copyIdInspectorBtn = $("<button>").addClass("inspectorBtn").text("Copy Element ID").css('margin','5px').hide();
+  copyClassInspectorBtn = $("<button>").addClass("inspectorBtn").text("Copy Classes").css('margin','5px').hide();
   
 
   // Add CSS to created container
@@ -456,7 +464,9 @@ function startDev() {
     });
 
     // Append Inspector buttons
-    $("#"+inspectorContainerId).prepend($(inspectorCopybtn).attr("onclick", "copyInspector()"));
+    $("#"+inspectorContainerId).prepend($(copyPathInspectorBtn).attr("onclick", "copyInspector(this)").attr("id","copyPathInspector"));
+    $("#"+inspectorContainerId).prepend($(copyClassInspectorBtn).attr("onclick", "copyInspector(this)").attr("id","copyClassInspector"));
+    $("#"+inspectorContainerId).prepend($(copyIdInspectorBtn).attr("onclick", "copyInspector(this)").attr("id","copyIdInspector"));
     $("#"+inspectorContainerId).prepend($(inspectorExitbtn).attr("onclick", "closeInspector()"));
   }, 1500);
 }
@@ -466,10 +476,28 @@ function closeInspector() {
   window.location.href = "./";
 }
 
-// Copy path to clipboard
-function copyInspector() {
-  navigator.clipboard.writeText(clipboardPath);
-  alert("CSS Path copied to clipboard!");
+// Copy to clipboard
+function copyInspector(elm) {
+  switch(elm.id) {
+    case "copyPathInspector":
+      navigator.clipboard.writeText(clipboardPath);
+      break;
+    case "copyClassInspector":
+      navigator.clipboard.writeText(clipboardClass);
+      break;
+    case "copyIdInspector":
+      navigator.clipboard.writeText(clipboardId);
+      break;
+  }
+  displayCopiedMessage(elm.id);
+}
+
+function displayCopiedMessage(btnId) {
+  prevMessage = $("#"+btnId).text();
+  $("#"+btnId).text("Copied to clipboard!").attr("disabled",true);
+  setTimeout(function () {
+    $("#"+btnId).text(prevMessage).attr("disabled",false);
+  }, 5000);
 }
 
 // Get full CSS path
@@ -500,15 +528,30 @@ function displyPath(cssPath, elID, elClass) {
   if (elID) {
     // If clicked element has ID, display it
     elInfo = elInfo + "<p><b>Element ID:</b> #" + elID + "</p>";
+    clipboardId = elID;
+    $("#copyIdInspector").show();
+  } else {
+    clipboardId = null;
+    $("#copyIdInspector").hide();
   }
   if (elClass) {
     // If clicked element has classes, display them
-    elInfo = elInfo + "<p><b>Element Class(es):</b> ." + elClass.split(" ").join(" .") + "</p>";
+    elClasses = elClass.split(" ").join(" .")
+    elInfo = elInfo + "<p><b>Element Class(es):</b> ." + elClasses + "</p>";
+    clipboardClass = elClasses;
+    $("#copyClassInspector").show();
+  } else {
+    clipboardClass = null;
+    $("#copyClassInspector").hide();
   }
   // Display CSS path
   elInfo = elInfo + "<p><b>CSS Path:</b> " + cssPath + "</p>";
+  
   // Add path to global clipboard variable
   clipboardPath = cssPath;
+  $("#copyPathInspector").show();
+
+
   // Add to inspector container
   $("#inspectorBody").html(elInfo);
   $(".inspectorBtn").prop('disabled', false);
