@@ -319,7 +319,7 @@ If the ID is #myelement and you wish to find the text `Personify` anywhere insid
 
 If the original text is `Personify is awesome!` the configuration above will replace the element with `Wild Apricot is awesome!`. It simply searches for the the `Default Text` and when found uses the `English Replacement Text`.
 
-The `replace_delay` function waits a preset number of seconds before making a replacement to allow any other Javascript to execute before making element changes.
+The `replace_delay` function waits a preset number of seconds before making a replacement to allow any other Javascript to execute before making element changes. This is particularly useful on any content that is rendered with Javascript, such as the membership directory gadget. If you are having trouble with EZ Web Designer rendering changes, try the `replace_delay` function.
 
 In the above examples, the `English Replacement Text` can be replaced with `Alternative Language Text` if multilingual mode is turned on.
 
