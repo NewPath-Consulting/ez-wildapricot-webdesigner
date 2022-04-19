@@ -7,7 +7,12 @@ var list = [];
 var array;
 var scss_dict = {};
 var data_url = "/resources/Theme/WildApricotTextManager/wildapricot-textmanager-config.csv";
-var watm_version = "0.93";
+var watm_version = "0.94";
+
+// Initialize global clipboard variable
+var clipboardPath;
+var clipboardClass;
+var clipboardId;
 
 /* Polyfills */
 if (!String.prototype.includes) {
@@ -61,6 +66,9 @@ $(document).ready(function () {
   if (typeof inspectorLocation === "undefined") {
     inspectorLocation = "bottom";
   }
+  if (typeof showInspectorLink === "undefined") {
+    showInspectorLink = true;
+  }
 
   // Hide language toggle button if page loaded as a widget
   if (window.location.href.indexOf("/widget/") > -1) {
@@ -68,6 +76,8 @@ $(document).ready(function () {
   } else {
     hideToggle = false;
   }
+
+ 
 
   // Start Inspector if keyword present
   if (window.location.href.indexOf(inspectorKeword) > -1) {
@@ -150,6 +160,11 @@ $(document).ready(function () {
         }
         if (!isInEditMode()) {
           list.map(replaceText);
+
+          // Show Inspector link in footer
+          if(showInspectorLink){
+            $("#idFooterPoweredByWA").prepend( $( "<span><a href='./?dev'>Show Inspector</a> | </span>" ) );
+          }
         }
       },
     });
@@ -175,6 +190,8 @@ $(window).bind("load", function () {
     // Replace text again to rewrite event handlers for the hover in menu
     list.map(replaceText);
   }
+
+
 });
 
 /* Utilities */
@@ -405,7 +422,14 @@ function isInternetExplorer() {
 
 function startDev() {
   // Create inspector container
-  $("body").prepend($("<div>").attr("id", inspectorContainerId).html("<h1>Click on an element to begin</h1>"));
+  $("body").prepend($("<div>").attr("id", inspectorContainerId).html("<div id='inspectorBody'><h1>Click on an element to begin</h1></div>"));
+
+  inspectorExitbtn = $("<button>").addClass("inspectorBtn").text("Exit Inspector").css('margin','5px');
+  copyPathInspectorBtn = $("<button>").addClass("inspectorBtn").text("Copy CSS Path").css('margin','5px').hide();
+  copyIdInspectorBtn = $("<button>").addClass("inspectorBtn").text("Copy Element ID").css('margin','5px').hide();
+  copyClassInspectorBtn = $("<button>").addClass("inspectorBtn").text("Copy Classes").css('margin','5px').hide();
+  
+
   // Add CSS to created container
   setCSS();
 
@@ -438,7 +462,42 @@ function startDev() {
       // This prevents the function from firing multiple times for nested elements
       return false;
     });
+
+    // Append Inspector buttons
+    $("#"+inspectorContainerId).prepend($(copyPathInspectorBtn).attr("onclick", "copyInspector(this)").attr("id","copyPathInspector"));
+    $("#"+inspectorContainerId).prepend($(copyClassInspectorBtn).attr("onclick", "copyInspector(this)").attr("id","copyClassInspector"));
+    $("#"+inspectorContainerId).prepend($(copyIdInspectorBtn).attr("onclick", "copyInspector(this)").attr("id","copyIdInspector"));
+    $("#"+inspectorContainerId).prepend($(inspectorExitbtn).attr("onclick", "closeInspector()"));
   }, 1500);
+}
+
+// Exit inspector
+function closeInspector() {
+  window.location.href = "./";
+}
+
+// Copy to clipboard
+function copyInspector(elm) {
+  switch(elm.id) {
+    case "copyPathInspector":
+      navigator.clipboard.writeText(clipboardPath);
+      break;
+    case "copyClassInspector":
+      navigator.clipboard.writeText(clipboardClass);
+      break;
+    case "copyIdInspector":
+      navigator.clipboard.writeText(clipboardId);
+      break;
+  }
+  displayCopiedMessage(elm.id);
+}
+
+function displayCopiedMessage(btnId) {
+  prevMessage = $("#"+btnId).text();
+  $("#"+btnId).text("Copied to clipboard!").attr("disabled",true);
+  setTimeout(function () {
+    $("#"+btnId).text(prevMessage).attr("disabled",false);
+  }, 5000);
 }
 
 // Get full CSS path
@@ -469,15 +528,33 @@ function displyPath(cssPath, elID, elClass) {
   if (elID) {
     // If clicked element has ID, display it
     elInfo = elInfo + "<p><b>Element ID:</b> #" + elID + "</p>";
+    clipboardId = elID;
+    $("#copyIdInspector").show();
+  } else {
+    clipboardId = null;
+    $("#copyIdInspector").hide();
   }
   if (elClass) {
     // If clicked element has classes, display them
-    elInfo = elInfo + "<p><b>Element Class(es):</b> ." + elClass.split(" ").join(" .") + "</p>";
+    elClasses = elClass.split(" ").join(" .")
+    elInfo = elInfo + "<p><b>Element Class(es):</b> ." + elClasses + "</p>";
+    clipboardClass = elClasses;
+    $("#copyClassInspector").show();
+  } else {
+    clipboardClass = null;
+    $("#copyClassInspector").hide();
   }
   // Display CSS path
   elInfo = elInfo + "<p><b>CSS Path:</b> " + cssPath + "</p>";
+  
+  // Add path to global clipboard variable
+  clipboardPath = cssPath;
+  $("#copyPathInspector").show();
+
+
   // Add to inspector container
-  $("#" + inspectorContainerId).html(elInfo);
+  $("#inspectorBody").html(elInfo);
+  $(".inspectorBtn").prop('disabled', false);
 }
 
 // Set inspector container styling
@@ -495,9 +572,9 @@ function setCSS() {
   // Show inspector container at top or bottom of viewport based on activation keyword
   if (inspectorLocation == "top") {
     $("#" + inspectorContainerId).css({ top: 0 });
-    $("body").css({ "padding-top": "150px" });
+    $("#idCustomJsContainer").css({ "padding-top": "150px" });
   } else {
     $("#" + inspectorContainerId).css({ bottom: 0 });
-    $("body").css({ "padding-bottom": "150px" });
+    $("#idCustomJsContainer").css({ "padding-bottom": "150px" });
   }
 }
