@@ -70,7 +70,7 @@ An Element class describes one or more CSS classes applied to the element. A cla
 
 0.93 - support for switching languages using embedded WildApricot "widgets" in 3rd party content management system, added a standard French translation file 2/15/22
 
-0.94 - added support for dev mode toggle and easy copy/paste of elements in the dev mode panel
+0.94 - added support for entering/exiting Inspect mode, easy copy/paste of elements in the dev mode panel, more details in install script
 
 ## Installation
 
@@ -86,12 +86,19 @@ NOTE: this code snippet assumes you have uploaded all files into the folder `/re
    <script src="/resources/Theme/WildApricotTextManager/jquery.csv-0.8.9-mod.js"></script>
    <script src="/resources/Theme/WildApricotTextManager/wildapricot-textmanager.js"></script>
    <script>
-   var textManagerMultilingualMode = true;
-   var primaryLanguageButtonName = "English";
-   var alterativeLanguageButtonName = "Français";
-   var languageButtonHtmlID = "languageButton";
-   var alterativeLanguageClassName = ".french";
-   var primaryLanguageClassName = ".english";
+   
+   
+   var showInspectorLink = true; // this will show the Inspector mode link in the footer of the website, set to false to turn off
+   var inspectorKeword = "?dev"; // this is the URL keyword that enables Inspector mode
+   var inspectorContainerId = "el-details"; //this is the Element ID that contains the Inspector
+   var inspectorlocation = "bottom"; //this is the location of the Inspector, can be set to "top" as well
+
+   var textManagerMultilingualMode = false; // alternative language button toggle, set to true to turn on multi-lingual mode  
+   var primaryLanguageButtonName = "English"; // default langauge button name
+   var alterativeLanguageButtonName = "Français"; // alternative language button name
+   var languageButtonHtmlID = "languageButton"; // the Element ID of the language button
+   var alterativeLanguageClassName = ".french"; // the CSS class name for all alternative language content gadgets
+   var primaryLanguageClassName = ".english"; // the CSS class name for all default language content gadgets
 
    $(window).bind("load", function() {$('#textmanager_overlay').css('display', 'none'); });  // Fail-safe to remove white overlay
    </script>
@@ -100,6 +107,9 @@ NOTE: this code snippet assumes you have uploaded all files into the folder `/re
 3. To deactivate the multilingual mode edit this JavaScript variable declaration as follows:
 
    `var textManagerMultilingualMode = false;`
+   
+
+
 
 ### Files Setup
 
