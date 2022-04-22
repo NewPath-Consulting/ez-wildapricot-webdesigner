@@ -422,7 +422,7 @@ function isInternetExplorer() {
 
 function startDev() {
   // Create inspector container
-  $("body").prepend($("<div>").attr("id", inspectorContainerId).html("<div id='inspectorBody'><h1>Click on an element to begin</h1></div>"));
+  $("body").prepend($("<div>").attr("id", inspectorContainerId).html("<div id='inspectorBody'><h1>Inspector - Click on any page element</h1></div>"));
 
   inspectorExitbtn = $("<button>").addClass("inspectorBtn").text("Exit Inspector").css('margin','5px');
   copyPathInspectorBtn = $("<button>").addClass("inspectorBtn").text("Copy CSS Path").css('margin','5px').hide();
@@ -483,7 +483,7 @@ function copyInspector(elm) {
       navigator.clipboard.writeText(clipboardPath);
       break;
     case "copyClassInspector":
-      navigator.clipboard.writeText(clipboardClass);
+      navigator.clipboard.writeText("." + clipboardClass);
       break;
     case "copyIdInspector":
       navigator.clipboard.writeText(clipboardId);
