@@ -94,7 +94,8 @@ NOTE: this code snippet assumes you have uploaded all files into the folder `/re
    <script src="/resources/Theme/WildApricotTextManager/wildapricot-textmanager.js"></script>
    <script>
    
-   
+   var csvFile = "/resources/Theme/WildApricotTextManager/wildapricot-textmanager-config.csv"; // location of EZ Wild Apricot Web Designer configuration file
+      
    var showInspectorLink = true; // this will show the Inspector mode link in the footer of the website, set to false to turn off
    var inspectorKeword = "?dev"; // this is the URL keyword that enables Inspector mode
    var inspectorContainerId = "el-details"; //this is the Element ID that contains the Inspector
