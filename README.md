@@ -2,9 +2,16 @@
 
 ## Project Description
 
-The [EZ Wild Apricot Web Designer](https://newpathconsulting.com/watm) \(aka WATM\) is a JavaScript library that is written using the [jQuery](https://www.jquery.org) framework included with every [WildApricot](https://wildapricot.com) website. EZ Wild Apricot Web Designer will help any administrator with some knowledge of the Document Object Model (DOM) manage and replace nearly every piece of hard-coded and configurable text in Wild Apricot. You can make a variety of changes such as global search and replace of a particular text string or modify field labels on forms, buttons labels, hard coded warning boxes. The module enables changing properties of any Cascading Style Sheets \(CSS\) class or CSS ID or path. You can also hide text, labels or buttons. The module can be used to make Wild Apricot sites bi-lingual by dynamically replacing strings with a translated string. EZ Wild Apricot Web Designer uses a comma separated value (CSV)-formatted configuration file that is easily editable, making it easy to maintain hundreds of modifications in a human-readable file.
+The [EZ Wild Apricot Web Designer](https://newpathconsulting.com/watm) \(aka WATM\) is a JavaScript library that is written using the [jQuery](https://www.jquery.org) framework included with every [WildApricot](https://wildapricot.com) website. EZ Wild Apricot Web Designer will help any administrator with some knowledge of the [Document Object Model (DOM)](https://www.w3schools.com/js/js_htmldom.asp) manage and replace nearly every piece of hard-coded and configurable text in Wild Apricot.
 
-The configuration file must be saved in UTF-8 format, and it must be named `wildapricot-textmanager-config.csv`.
+You can make a variety of single page and whole site changes such as:
+
+- search and replace of a particular text string
+- modify field labels on forms, button labels
+- change hard-coded errors and warnings
+- hide text on any user interface items
+
+EZ Wild Apricot Web Designer module can be used to make Wild Apricot sites bi-lingual by dynamically replacing strings with a translated string. A translator will use a comma separated value (CSV)-formatted configuration file that is easily editable, making it easy to maintain hundreds of modifications in a human-readable file. A standard file with over 600 English-to-French  Wild Apricot labels and strings is included.
 
 ### Browser Based CSS Inspector
 
@@ -121,6 +128,8 @@ NOTE: this code snippet assumes you have uploaded all files into the folder `/re
 3. Upload [jquery.csv-0.8.9-mod.js](https://raw.githubusercontent.com/asirota/watm/master/WildApricotTextManager/jquery.csv-0.8.9-mod.js) to the new folder.
 4. Upload [wildapricot-textmanager.js](https://raw.githubusercontent.com/asirota/watm/master/WildApricotTextManager/wildapricot-textmanager.js) to the new folder.
 5. Upload [wildapricot-textmanager-config.csv](https://raw.githubusercontent.com/asirota/watm/master/WildApricotTextManager/wildapricot-textmanager-config.csv) to the new folder. 
+
+The configuration file must be saved as a CSV file format in UTF-8 format. The file must be named `wildapricot-textmanager-config.csv`.
 
 ### Testing Installation
 
@@ -342,7 +351,7 @@ Each property and value should be enclosed with a double quote \("\) \(eg "color
 
 ![Anatomy of a CSS ruleset](https://mdn.mozillademos.org/files/9461/css-declaration-small.png)
 
-## Example:
+## Example of a Text Change
 
 ### Change the label “Current status” on Membership Renewal system gadget:
 
