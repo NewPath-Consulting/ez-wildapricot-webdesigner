@@ -7,7 +7,7 @@ var list = [];
 var array;
 var scss_dict = {};
 var data_url = "/resources/Theme/WildApricotTextManager/wildapricot-textmanager-config.csv";
-var watm_version = "0.94";
+var watm_version = "0.95";
 
 // Initialize global clipboard variable
 var clipboardPath;
@@ -70,6 +70,14 @@ $(document).ready(function () {
     showInspectorLink = true;
   }
 
+  if (typeof showInspectorHover === "undefined") {
+    showInspectorHover = true;
+  }
+
+  if (typeof inspectorHoverColor === "undefined") {
+    inspectorHoverColor = "#f00";
+  }
+
   // Hide language toggle button if page loaded as a widget
   if (window.location.href.indexOf("/widget/") > -1) {
     hideToggle = true;
@@ -77,7 +85,9 @@ $(document).ready(function () {
     hideToggle = false;
   }
 
- 
+  // Create CSS rule for inspector hover
+  var style = $(`<style>.watm-hover { border: 2px solid ${inspectorHoverColor}!important; box-sizing: border-box!important; }</style>`)
+  $('html > head').append(style);
 
   // Start Inspector if keyword present
   if (window.location.href.indexOf(inspectorKeword) > -1) {
@@ -163,7 +173,10 @@ $(document).ready(function () {
 
           // Show Inspector link in footer
           if(showInspectorLink){
-            $("#idFooterPoweredByWA").prepend( $( "<span><a href='./?dev'>Show Inspector</a> | </span>" ) );
+            setTimeout(
+              function () {
+                $("#idFooterPoweredByWA").prepend( $( "<span><a href='./?dev'>Show Inspector</a> | </span>" ) )
+              },3000);
           }
         }
       },
@@ -443,6 +456,8 @@ function startDev() {
   setTimeout(function () {
     log(`Element Inspector Active`, "notice");
     $("body").on("click", "*", function (event) {
+      // Remove WATM hover class
+      $(this).removeClass("watm-hover");
       // Store clicked element ID
       let clickedID = $(this).attr("id");
       // Store clicked element class names
@@ -469,7 +484,25 @@ function startDev() {
     $("#"+inspectorContainerId).prepend($(copyIdInspectorBtn).attr("onclick", "copyInspector(this)").attr("id","copyIdInspector"));
     $("#"+inspectorContainerId).prepend($(inspectorExitbtn).attr("onclick", "closeInspector()"));
   }, 1500);
+
+  // Add/remove hover outline
+  if (showInspectorHover) {
+    $('*').mouseover(function(e){
+      addHover(e.target)
+    }).mouseout(function(e){
+      $(e.target).removeClass("watm-hover")
+    })
+  }
 }
+
+// Only add hover outline if not in inspector
+function addHover (elm){
+    completePath = getPath(elm);
+    if (completePath.indexOf("#" + inspectorContainerId) == -1) {
+      $(elm).addClass("watm-hover");
+    }
+}
+
 
 // Exit inspector
 function closeInspector() {
