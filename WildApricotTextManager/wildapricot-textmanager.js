@@ -175,7 +175,7 @@ $(document).ready(function () {
           if(showInspectorLink){
             setTimeout(
               function () {
-                $("#idFooterPoweredByWA").prepend( $( "<span><a href='./?dev'>Show Inspector</a> | </span>" ) )
+                $("#idFooterPoweredByWA").prepend( $( "<span><a href='?dev'>Show Inspector</a> | </span>" ) )
               },3000);
           }
         }
