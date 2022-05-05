@@ -57,8 +57,8 @@ $(document).ready(function () {
     languageButtonHtmlID = "languageButton";
   }
   // Used for element inspector
-  if (typeof inspectorKeword === "undefined") {
-    inspectorKeword = "?dev";
+  if (typeof inspectorKeyword === "undefined") {
+    inspectorKeyword = "?dev";
   }
   if (typeof inspectorContainerId === "undefined") {
     inspectorContainerId = "el-details";
@@ -90,7 +90,7 @@ $(document).ready(function () {
   $('html > head').append(style);
 
   // Start Inspector if keyword present
-  if (window.location.href.indexOf(inspectorKeword) > -1) {
+  if (window.location.href.indexOf(inspectorKeyword) > -1) {
     startDev();
   }
 
@@ -506,7 +506,7 @@ function addHover (elm){
 
 // Exit inspector
 function closeInspector() {
-  window.location.href = "./";
+  window.location.href = window.location.href.replace(inspectorKeyword, "");
 }
 
 // Copy to clipboard
