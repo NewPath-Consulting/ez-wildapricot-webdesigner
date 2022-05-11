@@ -79,6 +79,8 @@ An Element class describes one or more CSS classes applied to the element. A cla
 
 0.94 - added support for entering/exiting Inspect mode, easy copy/paste of elements in the dev mode panel, more details in install script
 
+0.95 - added support for Inspector Hover mode which shows the outlines of each element on a page when using the Inspector
+
 ## Installation
 
 ### Script Setup
@@ -97,7 +99,11 @@ NOTE: this code snippet assumes you have uploaded all files into the folder `/re
    var csvFile = "/resources/Theme/WildApricotTextManager/wildapricot-textmanager-config.csv"; // location of EZ Wild Apricot Web Designer configuration file
       
    var showInspectorLink = true; // this will show the Inspector mode link in the footer of the website, set to false to turn off
-   var inspectorKeword = "?dev"; // this is the URL keyword that enables Inspector mode
+
+   var showInspectorHover = true; // this will show the Inspector Hover mode, set to false to turn off
+   var inspectorHoverColor= "red"; // this will change the the Inspector Hover mode outline, set to any CSS color or hex value
+
+   var inspectorKeyword = "?dev"; // this is the URL keyword that enables Inspector mode
    var inspectorContainerId = "el-details"; //this is the Element ID that contains the Inspector
    var inspectorlocation = "bottom"; //this is the location of the Inspector, can be set to "top" as well
 
@@ -138,11 +144,13 @@ To test whether EZ Wild Apricot Web Designer has been installed properly:
 
 1. Click Public View to browse the Wild Apricot website.
 
-2. Append ?dev and hit return to reload the page. You should see the CSS class/id inspector.
+2. Click the Show Inspector link in the footer of the website. You should see the "Inspector". You can also add a /?dev to the URL to turn on the Inspector manually.
 
-2. Right click on the page and select 'Inspect'. Invoking Developer Tools may be different depending on the browser you are using.
+3. Use the inspector to select any highlighted element by hovering over any element on the web page.
 
-3. Navigate to Console and look for the message in yellow below. The version number should appear. If you do not see this message, or you see errors EZ Wild Apricot Web Designer may not have been properly installed.
+4. Click Exit Inspector button to leave Inspector mode.
+
+If you do not see the Inspector or the Show Inspector link, check Dev Tools and see if EZ WIld Apricot Web Designer loaded. You should see the version number message in the Console. If you do not see this message, or you see errors EZ Wild Apricot Web Designer may not have been properly installed.
 
 ![WATM version message](https://github.com/asirota/watm/raw/master/docs/images/console%20watm%20version%20logging.jpg)
 
