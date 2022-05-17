@@ -81,6 +81,8 @@ An Element class describes one or more CSS classes applied to the element. A cla
 
 0.95 - added support for Inspector Hover mode which shows the outlines of each element on a page when using the Inspector
 
+0.951 - fixed translations to be rendered for multi-page widgets embedded with a primary and second language
+
 ## Installation
 
 ### Script Setup
@@ -221,20 +223,25 @@ Note that if EZ Wild Apricot Web Designer is enabled, one of the two languages w
 
 ### Support for embedded WildApricot widgets on 3rd party Content Management Systems
 
-If you are using the WildApricot widget code using iframes, use the ?secondLanguage argument at the end of widget URL to trigger translations to be loaded.
+If you are using the WildApricot widget code using iframes, use the ?primaryLanguage and ?secondLanguage query string at the end of widget URL to trigger translations to be loaded by a page that is hosting the widget.
 
-1. Alter the WildApricot widget code to support the ?secondLanguage widget.
-2. Embed the widget on the translated page on the 3rd party CMS. This works with systems like Drupal, Squarespace and WordPress.
+1. Alter the WildApricot widget code to support the ?primaryLanguage and ?secondLanguage widget.
+2. Embed the widget with ?primaryLanguage to be loaded on the primary language page(s) of the website.
+3. Embed the widget with ?secondLanguage to be loaded on the translated page(s) of the website. 
 
-Example code:
+This works with systems like Drupal, Squarespace and WordPress.
 
-For ENGLISH pages use the default language widget:
+Example code for ENGLISH as a primary language, and FRENCH as a second language:
+
+For all ENGLISH pages add the ?primaryLanguage query string to the src="" part of the widget:
+
 ```html
-<iframe width='750px' height='400px' frameborder='no' src='https://mysite.wildapricot.org/widget/join-us' onload='tryToEnableWACookies("https://mysite.wildapricot.org");' ></iframe>
+<iframe width='750px' height='400px' frameborder='no' src='https://mysite.wildapricot.org/widget/join-us?primaryLanguage' onload='tryToEnableWACookies("https://mysite.wildapricot.org");' ></iframe>
 <script  type="text/javascript" language="javascript" src="https://mysite.wildapricot.org/Common/EnableCookies.js" ></script>
 ```
 
-For FRENCH pages add  the ?secondLanguage widget: 
+For all FRENCH pages add the ?secondLanguage query string to the src="" part of the widget:
+ 
 ```html
 <iframe width='750px' height='400px' frameborder='no' src='https://mysite.wildapricot.org/widget/join-us/?secondLanguage' onload='tryToEnableWACookies("https://mysite.wildapricot.org");' ></iframe>
 <script  type="text/javascript" language="javascript" src="https://mysite.wildapricot.org/Common/EnableCookies.js" ></script>
