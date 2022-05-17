@@ -127,9 +127,11 @@ $(document).ready(function () {
 
     // Set language if keyword in URL
     if (window.location.href.indexOf("?secondLanguage") > -1) {
-      isFrameMultilingual = true;
-    } else {
-      isFrameMultilingual = false;
+      setIsMultilingual(true);
+      window.location.href = window.location.href.replace("?secondLanguage", "");
+    } if (window.location.href.indexOf("?primaryLanguage") > -1) {
+      setIsMultilingual(false);
+      window.location.href = window.location.href.replace("?primaryLanguage", "");
     }
 
   // Load only if Formstack isn't detected.
@@ -257,7 +259,7 @@ function log(text, logType = "") {
 
 function replaceText(data) {
   // Language Show/Hide Custom Content Block
-  if (isMultilingual() || isFrameMultilingual) {
+  if (isMultilingual()) {
     var replacement_text = data.second_language_text;
     $(alterativeLanguageClassName).show();
     $(primaryLanguageClassName).hide();
