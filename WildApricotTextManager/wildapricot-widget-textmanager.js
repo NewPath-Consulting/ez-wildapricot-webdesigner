@@ -21,16 +21,18 @@ $(document).ready(function () {
         waWidgetClass = waWidgetClass;
     }
 
-    // Check for language slug
+    // Check for slug
     if (window.location.href.indexOf("/" + alterativeLanguageSlug + "/") > -1) {
-        toggleWidgetLanguage();
+        // Modify iframe src URL to use second language
+        $(waWidgetClass).each(function () {
+            widgetURL = $(this).attr('src');
+            $(this).attr('src', widgetURL + "?secondLanguage");
+        });
+    } else {
+        // Modify iframe src URL to use primary language
+        $(waWidgetClass).each(function () {
+            widgetURL = $(this).attr('src');
+            $(this).attr('src', widgetURL + "?primaryLanguage");
+        });
     }
 });
-
-// Modify iframe src URL
-function toggleWidgetLanguage() {
-    $(waWidgetClass).each(function () {
-        widgetURL = $(this).attr('src');
-        $(this).attr('src', widgetURL + "?secondLanguage");
-    });
-}
