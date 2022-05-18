@@ -1,0 +1,40 @@
+.watm-dropdown-menu {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+.watm-dropdown-menu a {
+  text-decoration: none;
+  color: black;
+}
+.watm-dropdown {
+  transition: all 0.2s ease-in-out;
+  overflow: hidden;
+  margin: 5px;
+  background: rgb(248, 248, 248);
+  border: solid 1px rgb(222, 222, 222);
+  width: 320px;
+  cursor: pointer;
+  position: absolute;
+  z-index: 999;
+}
+.watm-dropdown-icon {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 25px 0 10px;
+  font-size: 16px;
+}
+
+.watm-dropdown-menu li {
+  font-size: 16px;
+  text-transform: uppercase;
+  padding: 14px 10px;
+  border-top: solid 1px rgb(202, 202, 202);
+}
+
+.watm-dropdown-closed .watm-dropdown-menu {
+  height: 0px;
+}
+.watm-dropdown-closed .watm-dropdown-icon span {
+  transform: rotate(180deg);
+}
