@@ -83,6 +83,8 @@ An Element class describes one or more CSS classes applied to the element. A cla
 
 0.951 - fixed translations to be rendered for multi-page widgets embedded with a primary and second language
 
+0.952 - fixed bug on Copy ID button in inspector that adds a # to the id on the clipboard
+
 ## Installation
 
 ### Script Setup
