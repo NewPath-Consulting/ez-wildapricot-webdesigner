@@ -7,7 +7,7 @@ var list = [];
 var array;
 var scss_dict = {};
 var data_url = "/resources/Theme/WildApricotTextManager/wildapricot-textmanager-config.csv";
-var watm_version = "0.95";
+var watm_version = "0.952";
 
 // Initialize global clipboard variable
 var clipboardPath;
@@ -521,7 +521,7 @@ function copyInspector(elm) {
       navigator.clipboard.writeText("." + clipboardClass);
       break;
     case "copyIdInspector":
-      navigator.clipboard.writeText(clipboardId);
+      navigator.clipboard.writeText("#" + clipboardId);
       break;
   }
   displayCopiedMessage(elm.id);
