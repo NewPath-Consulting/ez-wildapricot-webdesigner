@@ -1,13 +1,13 @@
 // Wild Apricot Text Manager Library
 //
 // Licensed under LGPL 3.0
-// Contact NewPath Consulting for support at https://www.newpathconsulting.com/watm
+// Contact NewPath Consulting for support at https://talk.newpathconsulting.com
 
 var list = [];
 var array;
 var scss_dict = {};
 var data_url = "/resources/Theme/WildApricotTextManager/wildapricot-textmanager-config.csv";
-var watm_version = "0.952";
+var watm_version = "0.96";
 
 // Initialize global clipboard variable
 var clipboardPath;
@@ -173,12 +173,12 @@ $(document).ready(function () {
         if (!isInEditMode()) {
           list.map(replaceText);
 
-          // Show Inspector link in footer
+          // Show Inspector link in footer, with a 1 second timeout
           if(showInspectorLink){
             setTimeout(
               function () {
                 $("#idFooterPoweredByWA").prepend( $( "<span><a href='?dev'>Show Inspector</a> | </span>" ) )
-              },3000);
+              },showInspectorLinkDelay);
           }
         }
       },
@@ -456,7 +456,7 @@ function startDev() {
 
   // Intercept all page clicks
   setTimeout(function () {
-    log(`Element Inspector Active`, "notice");
+    log(`[watm] Element Inspector Active`, "notice");
     $("body").on("click", "*", function (event) {
       // Remove WATM hover class
       $(this).removeClass("watm-hover");
@@ -468,12 +468,22 @@ function startDev() {
       // Obtain CSS path of clicked element
       completePath = getPath(this);
 
+      // Obtain contents of clicked element
+      if ( $(this).is("input") || $(this).is("textarea") || $(this).is("select") ) {
+      
+      clickedContents = $(this).val();
+    } else
+    
+    {
+      clickedContents = $(this).text();
+    }
+
       // Ensure clicked element is not inspector container
       if (completePath.indexOf("#" + inspectorContainerId) == -1) {
         // Cancel default action for clicked element
         event.preventDefault();
         // Show element information
-        displyPath(completePath, clickedID, clickedClass);
+        displayPath(completePath, clickedID, clickedClass, clickedContents);
       }
 
       // This prevents the function from firing multiple times for nested elements
@@ -554,7 +564,7 @@ function getPath(el) {
   return path.join(" > ");
 }
 
-function displyPath(cssPath, elID, elClass) {
+function displayPath(cssPath, elID, elClass, elContents) {
   elInfo = "";
   if (cssPath.lastIndexOf("#") > -1) {
     // If the path contains an ID, start path from there
@@ -569,6 +579,7 @@ function displyPath(cssPath, elID, elClass) {
     clipboardId = null;
     $("#copyIdInspector").hide();
   }
+
   if (elClass) {
     // If clicked element has classes, display them
     elClasses = elClass.split(" ").join(" .")
@@ -579,6 +590,19 @@ function displyPath(cssPath, elID, elClass) {
     clipboardClass = null;
     $("#copyClassInspector").hide();
   }
+  
+  if (elContents) {
+    // If clicked element has contents, display them
+    elInfo = elInfo + "<p><b>Element Contents:</b> " + elContents + "</p>";
+    clipboardClass = elContents;
+    $("#copyClassInspector").show();
+  } else {
+    clipboardClass = null;
+    alert("Contents are empty...")
+    $("#copyClassInspector").hide();
+  }
+  
+
   // Display CSS path
   elInfo = elInfo + "<p><b>CSS Path:</b> " + cssPath + "</p>";
   
@@ -596,7 +620,7 @@ function displyPath(cssPath, elID, elClass) {
 function setCSS() {
   $("#" + inspectorContainerId).css({
     border: "5px solid #000",
-    width: "100%",
+    width: "95%",
     background: "#fff",
     color: "#000",
     position: "fixed",
@@ -608,6 +632,7 @@ function setCSS() {
   if (inspectorLocation == "top") {
     $("#" + inspectorContainerId).css({ top: 0 });
     $("#idCustomJsContainer").css({ "padding-top": "150px" });
+    $("body").css({"margin-top": "250px"});
   } else {
     $("#" + inspectorContainerId).css({ bottom: 0 });
     $("#idCustomJsContainer").css({ "padding-bottom": "150px" });
