@@ -1,5 +1,5 @@
-//import {loadConfig} from "./modules/required-modules.js";
 import * as watm_fn from "./modules/functions.js";
+import * as inspector from "./modules/inspector.js";
 
 let languages = [];
 let watm_version = "2.0";
@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
       // Set current language csv csv name
       let filename = watm_language_csv_file[index]
         ? watm_language_csv_file[index] // Use provided filename if provided
-        : value.toLowerCase() + ".csv"; // Default to label name if not provided
+        : className + ".csv"; // Default to class name if not provided
 
       // Push values to language object
       languages.push({ label, className, filename });
@@ -74,11 +74,14 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     let currentLanguage = watm_fn.getCurrentLanguage();
     currentLanguage =
-      currentLanguage == "Default" ? languages[0].className : currentLanguage;
+      currentLanguage == "Default" ||
+      currentLanguage == null ||
+      currentLanguage == ""
+        ? languages[0].className
+        : currentLanguage;
 
-    console.log(currentLanguage);
+    watm_fn.log(`Currently using ${currentLanguage} translation`);
 
-    //if (currentLanguage !== languages[0].className) {
     // Hide classes for unselected language
     languages.forEach((language) => {
       if (language.className !== currentLanguage) {
@@ -90,8 +93,13 @@ document.addEventListener("DOMContentLoaded", function (event) {
       }
     });
     // TODO: Load selected language CSV
-    //}
   }
 
-  // TODO: Create element inspector
+  // If inspector is enabled
+  if (include_watm_modules.includes("inspector")) {
+    // Start Inspector if keyword present
+    if (window.location.href.indexOf("?dev") > -1) inspector.start();
+    // Attach inspector button
+    else if (showInspectorButton) inspector.appendBtn();
+  }
 });

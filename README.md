@@ -87,3 +87,27 @@ NOTE: this code snippet assumes you have uploaded all files into the folder `/re
 4. Upload a seperate CSV for each additional language you are offering to the `translations` folder
 
 The configuration and translation files must be saved as a CSV file format in UTF-8 format.
+
+### Browser Based CSS Inspector
+
+If enabled, you will see an icon at the bottom-left of the screen to launch the inspector.
+
+There are 3 potential values that will show up when you click on any element on a page:
+- the [Element ID](https://www.w3schools.com/htmL/html_id.asp)
+- the CSS Path
+- the [Element Class(es)](https://www.w3schools.com/cssref/sel_class.asp).
+
+#### Element ID
+An Element ID is unique per web page and identifies a particlar object on a web page. IDs always have a `#` at the beginning of the name and appear in the optional `id` attribute of an element. The `id` attribute is used to point to a specific style declaration in a style sheet. An example ID is `#mytable`. Using the Element ID is the most specific and usually the most accurate way to target a particular element on a page. Unfortunately not all elements in a WildApricot page have an `id` but many do.
+
+#### CSS Path
+The CSS Path also can define a particular element using a "chain" of HTML elements. A CSS Path describes an elememt in relation to other elements that contain the specific element so it can be composed of a combination of several tags. A CSS path is precise definition of an element that may be nested within multiple elements. Note that a CSS Path can change if the order of elements on a page are added or removed. As a result a CSS Path can "mutate" due to the configuration of a Wild Apricot database for example. If an Element ID is not available a CSS path can be be used instead.
+
+#### Element Class
+An Element class describes one or more CSS classes applied to the element. A class can be used by multiple HTML elements, so as a result it is the least specific of all targets. Use he element class when you wish to apply your changes to all elements that share this class. 
+
+**NOTE: The effects of using an Element class can have unintended consequences. When applying changes to an element class be aware that the changes can be applied wherever the class is applied. A change to an Element class change can cascade into multiple places on a page or even across the website. Using an Element ID or CSS Path is always unique to a specific web page.**
+
+---
+
+Click on the `View Properties` button to view the properties of the clicked item.
