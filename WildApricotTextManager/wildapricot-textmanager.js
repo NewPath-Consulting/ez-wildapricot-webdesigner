@@ -443,7 +443,16 @@ function startDev() {
   copyPathInspectorBtn = $("<button>").addClass("inspectorBtn").text("Copy CSS Path").css('margin','5px').hide();
   copyIdInspectorBtn = $("<button>").addClass("inspectorBtn").text("Copy Element ID").css('margin','5px').hide();
   copyClassInspectorBtn = $("<button>").addClass("inspectorBtn").text("Copy Classes").css('margin','5px').hide();
-  
+  previewInspectorBtn = $("<button>").addClass("inspectorBtn").text("Preview")
+                        .css({'margin':'5px', 'background-color': 'yellow', 'color': 'grey'});
+  copytoClipBoardInspectorBtn = $("<button>").addClass("inspectorBtn").text("Copy to Clipboard")
+                                .css({'margin':'5px', 'background-color': 'green', 'color': 'white'})
+                                .mouseover(function() { $(this).css({'background-color':'white','color':'green'})})
+                                .mouseout(function() { $(this).css({'background-color':'green','color':'white'})});
+
+
+  versionstring = $("#inspectorBody").addClass("watm-versionString")
+                                      .text("EZ WildApricot Web Designer " + watm_version + " | " + "LICENSED/TRIAL").css('margin','5px');
 
   // Add CSS to created container
   setCSS();
@@ -491,6 +500,9 @@ function startDev() {
     });
 
     // Append Inspector buttons
+    $("#"+inspectorContainerId).prepend($(previewInspectorBtn).attr("onclick", "copyInspector(this)").attr("id","previewInspectorBtn"));
+    $("#"+inspectorContainerId).prepend($(copytoClipBoardInspectorBtn).attr("onclick", "copyInspector(this)").attr("id","copytoClipBoardInspectorBtn"));
+
     $("#"+inspectorContainerId).prepend($(copyPathInspectorBtn).attr("onclick", "copyInspector(this)").attr("id","copyPathInspector"));
     $("#"+inspectorContainerId).prepend($(copyClassInspectorBtn).attr("onclick", "copyInspector(this)").attr("id","copyClassInspector"));
     $("#"+inspectorContainerId).prepend($(copyIdInspectorBtn).attr("onclick", "copyInspector(this)").attr("id","copyIdInspector"));
@@ -533,16 +545,37 @@ function copyInspector(elm) {
     case "copyIdInspector":
       navigator.clipboard.writeText("#" + clipboardId);
       break;
+    case "previewInspectorBtn":
+      navigator.clipboard.writeText("#" + clipboardId);
+      break;
+    case "copytoClipBoardInspectorBtn":
+      navigator.clipboard.writeText("#" + clipboardId);
+      break;
   }
   displayCopiedMessage(elm.id);
 }
 
 function displayCopiedMessage(btnId) {
   prevMessage = $("#"+btnId).text();
+
+  if (btnId == "previewInspectorBtn")
+  {
+    $("#"+btnId).text("In Preview Mode").attr("disabled",true)
+                .css({'background-color':'white','color':'grey'});
+
+    ;
+    setTimeout(function () {
+      $("#"+btnId).text(prevMessage).attr("disabled",false)
+                 .css({'background-color':'yellow','color':'grey'});
+    }, 10000);
+  } else
+  {
+
   $("#"+btnId).text("Copied to clipboard!").attr("disabled",true);
   setTimeout(function () {
     $("#"+btnId).text(prevMessage).attr("disabled",false);
-  }, 5000);
+  }, 2000);
+  }
 }
 
 // Get full CSS path
