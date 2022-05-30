@@ -14,6 +14,11 @@ var clipboardPath;
 var clipboardClass;
 var clipboardId;
 
+// Add WATM styles
+$('head').append('<link rel="stylesheet" href="WildApricotTextManager/watm.css" type="text/css" />');
+
+
+
 /* Polyfills */
 if (!String.prototype.includes) {
   Object.defineProperty(String.prototype, "includes", {
