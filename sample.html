@@ -15,7 +15,7 @@
 
    var showInspectorHover = true; // this will show the Inspector Hover mode, set to false to turn off
    var inspectorHoverColor= "red"; // this will change the the Inspector Hover mode outline, set to any CSS color or hex value
-   var inspectorLocation = "bottom"; //this is the location of the Inspector, can be set to "top" as well
+   var inspectorLocation = "top"; //this is the location of the Inspector, can be set to "top" as well
 
    var inspectorKeyword = "?dev"; // this is the URL keyword that enables Inspector mode
    var inspectorContainerId = "el-details"; //this is the Element ID that contains the Inspector
@@ -38,6 +38,11 @@
         {
             padding-top: 100px;
         }
+
+        .blink {
+     color: initial !important;
+     background: yellow !important;
+            }
     </style>
 <div id="testID" class="test-class">This is some text</div>    
 
