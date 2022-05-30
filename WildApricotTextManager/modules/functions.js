@@ -53,6 +53,61 @@ export function getCurrentLanguage() {
   return currentLanguage;
 }
 
+export function process(row) {
+  let defaultText = row["Default Text"].trim();
+  let watmFunction = row["Function"].trim();
+  let watmQuery = row["Query"].trim();
+  let replacementText = row["Replacement Text"].trim();
+  let watmStyle = row["Style"].trim();
+
+  switch (watmFunction) {
+    case "hide":
+      document.querySelectorAll(watmQuery).forEach(function (el) {
+        el.style.display = "none";
+      });
+      break;
+    case "text":
+      document.querySelectorAll(watmQuery).forEach(function (el) {
+        el.innerText = replacementText;
+      });
+      break;
+    case "button":
+      document.querySelectorAll(watmQuery).forEach(function (el) {
+        el.value = replacementText;
+      });
+      break;
+    case "placeholder":
+      document.querySelectorAll(watmQuery).forEach(function (el) {
+        el.setAttribute(placeholder, replacementText);
+      });
+      break;
+    case "delay":
+      setInterval(function () {
+        document.querySelectorAll(watmQuery).forEach(function (el) {
+          el.innerText = replacementText;
+        });
+      }, 1000);
+      break;
+    case "replace":
+    case "replace_element":
+      if (watmQuery == null || watmQuery == "") watmQuery = "body";
+      document.querySelectorAll(watmQuery).forEach(function (el) {
+        let regex = new RegExp("\\b" + defaultText + "\\b", "gi");
+        walkText(el, regex, replacementText, watmFunction);
+      });
+      break;
+    case "attribute":
+      document
+        .querySelectorAll(`[${watmQuery}="${defaultText}"]`)
+        .forEach(function (el) {
+          el.setAttribute(watmQuery, replacementText);
+        });
+      break;
+  }
+  if (watmFunction !== "inactive" && watmStyle !== null && watmStyle !== "")
+    processCSS(watmQuery, watmStyle);
+}
+
 export function isInEditMode() {
   // Check if in admin view
   const bodyTag = document.querySelector("body");
@@ -66,15 +121,15 @@ export function log(text, logType = "") {
 }
 
 // Util function for setting cookies
-function setCookie(key, value) {
+const setCookie = (key, value) => {
   var expires = new Date();
   expires.setTime(expires.getTime() + 1 * 24 * 60 * 60 * 1000);
   document.cookie =
     key + "=" + value + ";path=/;expires=" + expires.toUTCString();
-}
+};
 
 // Util function for reading cookies
-function getCookie(key) {
+const getCookie = (key) => {
   var keyValue = document.cookie.match("(^|;) ?" + key + "=([^;]*)(;|$)");
   if (keyValue && keyValue.length > 0) {
     keyValue = keyValue[2];
@@ -88,4 +143,36 @@ function getCookie(key) {
     }
   }
   return keyValue;
-}
+};
+
+const walkText = (node, regex, replacementText, watmFunction) => {
+  if (node.nodeType == 3) {
+    if (watmFunction === "replace_element") {
+      node.data = replacementText;
+    } else if (watmFunction === "replace") {
+      node.data = node.data.replace(regex, replacementText);
+    }
+  }
+  if (node.nodeType == 1 && node.nodeName != "SCRIPT") {
+    for (let i = 0; i < node.childNodes.length; i++) {
+      walkText(node.childNodes[i], regex, replacementText, watmFunction);
+    }
+  }
+};
+
+const processCSS = (watmQuery, watmStyle) => {
+  // SCSS
+  if (watmStyle.includes("$")) {
+    let regex = /\$[a-zA-Z0-9_-]+/g;
+    let keys = watmStyle.match(regex);
+    for (c = 0; c < keys.length; c++) {
+      let key = keys[c];
+      let value = scss_dict[key];
+      watmStyle = watmStyle.replace(key, value);
+    }
+  }
+
+  let cssNode = document.createElement("style");
+  cssNode.innerHTML = `${watmQuery} { ${watmStyle} }`;
+  document.head.appendChild(cssNode);
+};

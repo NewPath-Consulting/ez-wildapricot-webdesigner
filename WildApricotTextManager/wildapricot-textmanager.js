@@ -2,6 +2,7 @@ import * as watm_fn from "./modules/functions.js";
 import * as inspector from "./modules/inspector.js";
 
 let languages = [];
+let currentCSV;
 let watm_version = "2.0";
 
 document.addEventListener("DOMContentLoaded", function (event) {
@@ -15,6 +16,19 @@ document.addEventListener("DOMContentLoaded", function (event) {
     watm_fn.log(
       `Wild Apricot Text Manager ${watm_version} loaded in development mode`
     );
+  }
+
+  const overlay = document.createElement("div");
+  overlay.id = "watm-overlay";
+  document.body.appendChild(overlay);
+
+  // set watm folder location
+  if (
+    typeof watm_location === "undefined" ||
+    watm_location === null ||
+    watm_location === ""
+  ) {
+    var watm_location = "/resources/Theme/WildApricotTextManager";
   }
 
   if (
@@ -58,7 +72,19 @@ document.addEventListener("DOMContentLoaded", function (event) {
       watm_fn.createToggle(languages, elmId);
   } else var isMultilingual = false; // Site is not multilingual
 
-  // TODO: Load default config file
+  // Load default config file
+
+  Papa.parse(`${watm_location}/config.csv`, {
+    download: true,
+    header: true,
+    skipEmptyLines: "greedy",
+    complete: function (results) {
+      results.data.forEach((row) => {
+        watm_fn.process(row);
+      });
+      languageCallback();
+    },
+  });
 
   // Routines for multilanguage site
   if (isMultilingual && textManagerProductionMode) {
@@ -83,17 +109,37 @@ document.addEventListener("DOMContentLoaded", function (event) {
     watm_fn.log(`Currently using ${currentLanguage} translation`);
 
     // Hide classes for unselected language
-    languages.forEach((language) => {
+    languages.forEach((language, index) => {
       if (language.className !== currentLanguage) {
         document
           .querySelectorAll(`.${language.className}`)
           .forEach(function (el) {
             el.style.display = "none";
           });
+      } else {
+        // set language csv
+        if (index !== 0) {
+          currentCSV = language.filename;
+        }
       }
     });
-    // TODO: Load selected language CSV
   }
+
+  const languageCallback = () => {
+    // Load selected language CSV
+    if (currentCSV) {
+      Papa.parse(`${watm_location}/translations/${currentCSV}`, {
+        download: true,
+        header: true,
+        skipEmptyLines: "greedy",
+        complete: function (results) {
+          results.data.forEach((row) => {
+            watm_fn.process(row);
+          });
+        },
+      });
+    }
+  };
 
   // If inspector is enabled
   if (include_watm_modules.includes("inspector")) {
@@ -102,4 +148,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
     // Attach inspector button
     else if (showInspectorButton) inspector.appendBtn();
   }
+
+  document.getElementById("watm-overlay").style.display = "none"; // Remove the white overlay
 });

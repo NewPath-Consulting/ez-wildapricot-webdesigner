@@ -335,6 +335,8 @@ const viewElementProperties = () => {
   if (clickedElement.innerText)
     tableHTML +=
       "<tr><th>innerText</th><td>" + clickedElement.innerText + "</td></tr>";
+  if (clickedElement.value)
+    tableHTML += "<tr><th>value</th><td>" + clickedElement.value + "</td></tr>";
   if (clickedElement.getAttribute("href"))
     tableHTML +=
       "<tr><th>link</th><td>" +
