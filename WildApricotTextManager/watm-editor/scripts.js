@@ -48,7 +48,41 @@ document.addEventListener("DOMContentLoaded", function (event) {
   });
 
   document.getElementById("saveCSV").addEventListener("click", () => {
-    alert("Saving to webDAV is not yet implemented.");
+    let csvJSON = generateCSV();
+    let csv = Papa.unparse(csvJSON);
+
+    let csvData = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+
+    let filePath = csvFile.substring(0, csvFile.lastIndexOf("/"));
+    let filename = csvFile.substring(csvFile.lastIndexOf("/") + 1);
+
+    console.log(filePath, filename);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", filePath, true);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == 4) console.log(xhr.responseText);
+    };
+    xhr.onload = function (e) {
+      if (xhr.status == 200) {
+        console.log("uploaded"); //(correctly uploaded)
+        alert(
+          "===================================\n" +
+            "File has been successfully updated.\n" +
+            "===================================\n\n" +
+            "To view your changes, please refresh the page.\n\nYou may need to clear your browser cache if you do not see your changes right away."
+        );
+      } else
+        console.log(
+          "Error " + e.status + " occurred uploading your file.<br />"
+        );
+    };
+
+    var formData = new FormData();
+    formData.append("localfile", csvData, filename);
+    formData.append("filetype", "csv");
+    formData.append("source", "SOFT");
+    xhr.send(formData);
   });
 
   document.getElementById("downloadCSV").addEventListener("click", () => {

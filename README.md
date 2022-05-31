@@ -29,9 +29,16 @@ NOTE: this code snippet assumes you have uploaded all files into the folder `/re
 
    ```html
 <script>
+  // Initialization
   var watm_language_name = [];
   var watm_language_className = [];
   var watm_language_csv_file = [];
+
+  // Specify which modules to load
+  var include_watm_modules = ["inspector","editor"]
+
+  // Used to enable Inspector button
+  var showInspectorButton = true;
 
   /*
     Array of available languages
@@ -72,18 +79,24 @@ NOTE: this code snippet assumes you have uploaded all files into the folder `/re
     The file and folder structure will be as follows:
 
     ```
-    📦WildApricotTextManager
-    ┣ 📂css
-    ┃ ┗ 📜default.css
-    ┣ 📂modules
-    ┃ ┗ 📜functions.js
-    ┣ 📂translations
-    ┃ ┣ 📜french.csv
-    ┃ ┣ 📜...
-    ┃ ┗ 📜...
-    ┣ 📜config.csv
-    ┣ 📜csv-parser.js
-    ┗ 📜wildapricot-textmanager.js
+📦WildApricotTextManager
+ ┣ 📂css
+ ┃ ┗ 📜default.css
+ ┣ 📂modules
+ ┃ ┣ 📜functions.js
+ ┃ ┗ 📜inspector.js
+ ┣ 📂translations
+ ┃ ┣ 📜french.csv
+ ┃ ┣ 📜...
+ ┃ ┗ 📜...
+ ┣ 📂watm-editor
+ ┃ ┣ 📜bootstrap.min.css
+ ┃ ┣ 📜editor.html
+ ┃ ┣ 📜scripts.js
+ ┃ ┗ 📜style.css
+ ┣ 📜config.csv
+ ┣ 📜csv-parser.js
+ ┗ 📜wildapricot-textmanager.js
     ```
 
 3. Modify `config.csv with your general` in the `WildApricotTextManager` folder with your general changes
@@ -114,3 +127,7 @@ An Element class describes one or more CSS classes applied to the element. A cla
 ---
 
 Click on the `View Properties` button to view the properties of the clicked item.
+
+### Browser Based CSS Editor
+
+If enabled, when using the Inspector, you will have a button labeled `Switch to Inspector`. Clicking this button will change the Inspector panel into a CSV editor. Select the CSV file you wish to edit from the drop down, make your edits, and then click on the `Save to Site` or `Download File` buttons.
