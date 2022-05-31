@@ -1,6 +1,7 @@
 # Documentation (Version 2.0-Alpha)
 
 ⚠️ This is an alpha test build, and should not be used in production.
+Addresses issues [#1](/../../issues/1), [#2](/../../issues/2), [#7](/../../issues/7), [#21](/../../issues/21), [#28](/../../issues/28), [#31](/../../issues/31), [#36](/../../issues/36)
 
 ## Project Description
 

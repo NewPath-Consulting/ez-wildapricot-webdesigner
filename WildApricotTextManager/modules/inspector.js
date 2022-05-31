@@ -390,6 +390,7 @@ const toggleEditor = () => {
     document.getElementById("watm-inspector-body").style.display = "block";
     document.getElementById("watm-editor-body").style.display = "none";
     document.getElementById("watm-editor-btn").innerText = "Switch to Editor";
+    document.body.firstElementChild.style.paddingBottom = "150px";
   } else {
     document.getElementById("watm-inspector-body").style.display = "none";
     document.getElementById("watm-editor-body").style.display = "block";
@@ -404,6 +405,7 @@ const toggleEditor = () => {
     document.getElementById(
       "watm-inspector-view-properties-btn"
     ).style.display = "none";
+    document.body.firstElementChild.style.paddingBottom = "50vh";
   }
 };
 

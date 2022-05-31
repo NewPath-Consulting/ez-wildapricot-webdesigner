@@ -78,7 +78,7 @@ export function process(row) {
       break;
     case "placeholder":
       document.querySelectorAll(watmQuery).forEach(function (el) {
-        el.setAttribute(placeholder, replacementText);
+        el.setAttribute("placeholder", replacementText);
       });
       break;
     case "delay":
