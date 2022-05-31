@@ -179,3 +179,22 @@
   background-color: white;
   z-index: 2;
 }
+
+#watm-editor-body {
+  display: none;
+  clear: both;
+  padding-top: 10px;
+  height: 40vh;
+}
+#watm-editor-body span{
+  font-weight: bold;
+  font-size: 17px;
+}
+
+#watm-editor-body iframe{
+  height: 90%;
+  width: 97%;
+  margin-top: 10px;
+  border:none;
+  padding:0;
+}

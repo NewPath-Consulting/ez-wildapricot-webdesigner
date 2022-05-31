@@ -57,7 +57,10 @@ NOTE: this code snippet assumes you have uploaded all files into the folder `/re
 
 </script>
 
-<script src="/resources/Theme/WildApricotTextManager/wildapricot-textmanager.js" type="module"></script>
+<script
+  src="../csv-parser.js"
+></script>
+<script src="scripts.js"></script>
 <link rel="stylesheet" href="resources/Theme/WildApricotTextManager/css/default.css">
    ```
 

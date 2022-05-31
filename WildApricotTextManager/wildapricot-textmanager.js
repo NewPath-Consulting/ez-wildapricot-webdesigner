@@ -143,8 +143,15 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
   // If inspector is enabled
   if (include_watm_modules.includes("inspector")) {
-    // Start Inspector if keyword present
-    if (window.location.href.indexOf("?dev") > -1) inspector.start();
+    // show Inspector if keyword present
+    if (window.location.href.indexOf("?dev") > -1) {
+      // If editor is enabled
+      let isEditorEnabled;
+      if (include_watm_modules.includes("editor")) isEditorEnabled = true;
+      else isEditorEnabled = false;
+      // start inspector
+      inspector.start(isEditorEnabled, languages, watm_location);
+    }
     // Attach inspector button
     else if (showInspectorButton) inspector.appendBtn();
   }

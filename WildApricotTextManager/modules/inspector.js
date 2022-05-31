@@ -16,14 +16,15 @@ export function appendBtn() {
   });
 }
 
-export function start() {
+export function start(isEditorEnabled, languages, watm_location) {
   createModal();
   interceptClicks();
-  createInspectorBar();
+  createInspectorBar(isEditorEnabled);
+  if (isEditorEnabled) setupEditor(languages, watm_location);
 }
 
 // Attach inspector to footer of website
-const createInspectorBar = () => {
+const createInspectorBar = (isEditorEnabled) => {
   // add padding to bottom of page
   document.body.firstElementChild.style.paddingBottom = "150px";
 
@@ -36,6 +37,11 @@ const createInspectorBar = () => {
   inspectorBody.id = "watm-inspector-body";
   inspectorBody.classList.add("watm-inspector-body");
   inspectorBody.innerHTML = "<h1>Click on an element to begin</h1>";
+
+  // create container for editor
+  const editorBody = document.createElement("div");
+  editorBody.id = "watm-editor-body";
+  editorBody.classList.add("watm-editor-body");
 
   // create exit button
   const exitbtn = document.createElement("button");
@@ -79,13 +85,25 @@ const createInspectorBar = () => {
     viewElementProperties();
   });
 
+  // create editor button
+  const editorBtn = document.createElement("button");
+  editorBtn.id = "watm-editor-btn";
+  editorBtn.classList.add("watm-inspector-btn");
+  editorBtn.innerText = "Switch to Editor";
+  editorBtn.style.display = "block";
+  editorBtn.addEventListener("click", () => {
+    toggleEditor();
+  });
+
   // add buttons to inspector bar
   inspectorBar.appendChild(exitbtn);
+  if (isEditorEnabled) inspectorBar.appendChild(editorBtn);
   inspectorBar.appendChild(copyClassBtn);
   inspectorBar.appendChild(copyIdBtn);
   inspectorBar.appendChild(copyPathBtn);
   inspectorBar.appendChild(viewPropsBtn);
   inspectorBar.appendChild(inspectorBody);
+  if (isEditorEnabled) inspectorBar.appendChild(editorBody);
 
   // exit inspector
   exitbtn.addEventListener("click", () => {
@@ -362,4 +380,67 @@ const viewElementProperties = () => {
   document.getElementById("watm-props-modal-body").innerHTML = tableHTML;
 
   show_watm_modal();
+};
+
+const toggleEditor = () => {
+  if (
+    document.getElementById("watm-editor-btn").innerText ==
+    "Switch to Inspector"
+  ) {
+    document.getElementById("watm-inspector-body").style.display = "block";
+    document.getElementById("watm-editor-body").style.display = "none";
+    document.getElementById("watm-editor-btn").innerText = "Switch to Editor";
+  } else {
+    document.getElementById("watm-inspector-body").style.display = "none";
+    document.getElementById("watm-editor-body").style.display = "block";
+    document.getElementById("watm-editor-btn").innerText =
+      "Switch to Inspector";
+    document.getElementById("watm-inspector-copy-class-btn").style.display =
+      "none";
+    document.getElementById("watm-inspector-copy-id-btn").style.display =
+      "none";
+    document.getElementById("watm-inspector-copy-path-btn").style.display =
+      "none";
+    document.getElementById(
+      "watm-inspector-view-properties-btn"
+    ).style.display = "none";
+  }
+};
+
+const setupEditor = (languages, watm_location) => {
+  let csvSelector = '<select id="watm-csv-toggle">';
+  languages.forEach(function (language, index) {
+    csvSelector += `<option value="${watm_location}/${
+      index == 0 ? "config.csv" : "translations/" + language.filename
+    }">${index == 0 ? "config.csv" : language.filename}</option>`;
+  });
+  csvSelector += "</select>";
+
+  const fileSelecter = document.createElement("div");
+  const fileSelecterSpan = document.createElement("span");
+  const fileSelecterSpan2 = document.createElement("span");
+  fileSelecterSpan.innerText = "Select the file you wish to edit: ";
+  fileSelecterSpan2.innerHTML = csvSelector;
+  fileSelecter.appendChild(fileSelecterSpan);
+  fileSelecter.appendChild(fileSelecterSpan2);
+  document.getElementById("watm-editor-body").appendChild(fileSelecter);
+
+  const csvFrame = document.createElement("iframe");
+  csvFrame.id = "watm-editor-iframe";
+
+  document.getElementById("watm-editor-body").appendChild(csvFrame);
+
+  const selectElement = document.getElementById("watm-csv-toggle");
+
+  selectElement.addEventListener("change", (event) => {
+    loadCSV(event.target.value);
+  });
+
+  loadCSV(`${watm_location}/config.csv`);
+};
+
+const loadCSV = (csvFile) => {
+  document.getElementById(
+    "watm-editor-iframe"
+  ).src = `/resources/Theme/WildApricotTextManager/watm-editor/editor.html?loadCSV=${csvFile}`;
 };
