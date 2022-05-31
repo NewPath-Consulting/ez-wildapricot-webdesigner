@@ -79,24 +79,24 @@ NOTE: this code snippet assumes you have uploaded all files into the folder `/re
     The file and folder structure will be as follows:
 
     ```
-📦WildApricotTextManager
- ┣ 📂css
- ┃ ┗ 📜default.css
- ┣ 📂modules
- ┃ ┣ 📜functions.js
- ┃ ┗ 📜inspector.js
- ┣ 📂translations
- ┃ ┣ 📜french.csv
- ┃ ┣ 📜...
- ┃ ┗ 📜...
- ┣ 📂watm-editor
- ┃ ┣ 📜bootstrap.min.css
- ┃ ┣ 📜editor.html
- ┃ ┣ 📜scripts.js
- ┃ ┗ 📜style.css
- ┣ 📜config.csv
- ┣ 📜csv-parser.js
- ┗ 📜wildapricot-textmanager.js
+    📦WildApricotTextManager
+     ┣ 📂css
+     ┃ ┗ 📜default.css
+     ┣ 📂modules
+     ┃ ┣ 📜functions.js
+     ┃ ┗ 📜inspector.js
+     ┣ 📂translations
+     ┃ ┣ 📜french.csv
+     ┃ ┣ 📜...
+     ┃ ┗ 📜...
+     ┣ 📂watm-editor
+     ┃ ┣ 📜bootstrap.min.css
+     ┃ ┣ 📜editor.html
+     ┃ ┣ 📜scripts.js
+     ┃ ┗ 📜style.css
+     ┣ 📜config.csv
+     ┣ 📜csv-parser.js
+     ┗ 📜wildapricot-textmanager.js
     ```
 
 3. Modify `config.csv with your general` in the `WildApricotTextManager` folder with your general changes
