@@ -36,6 +36,58 @@ document.addEventListener("DOMContentLoaded", function (event) {
   table.appendChild(tableBody);
   document.getElementById("csvTableContainer").appendChild(table);
 
+  let newRowBtnHolder = document.createElement("div");
+  newRowBtnHolder.classList.add("button-holder");
+  let newRowBtn = document.createElement("button");
+  newRowBtn.classList.add("btn", "btn-success", "btn-sm");
+  newRowBtn.id = "addRow";
+  newRowBtn.innerText = "Add New Row";
+  newRowBtn.addEventListener("click", () => {
+    let functionHTML = createFunctionDropdown();
+
+    let newRow = document.createElement("tr");
+    let td1 = document.createElement("td");
+    td1.contentEditable = "true";
+    td1.classList.add("reference");
+
+    let td2 = document.createElement("td");
+    td2.contentEditable = "true";
+    td2.classList.add("defaultText");
+
+    let td3 = document.createElement("td");
+    td3.contentEditable = "true";
+    td3.classList.add("replacementText");
+
+    let td4 = document.createElement("td");
+    td4.classList.add("function");
+    td4.innerHTML = functionHTML;
+
+    let td5 = document.createElement("td");
+    td5.contentEditable = "true";
+    td5.classList.add("query");
+
+    let td6 = document.createElement("td");
+    td6.contentEditable = "true";
+    td6.classList.add("style");
+
+    let td7 = document.createElement("td");
+    td7.contentEditable = "true";
+    td7.classList.add("notes");
+
+    newRow.appendChild(td1);
+    newRow.appendChild(td2);
+    newRow.appendChild(td3);
+    newRow.appendChild(td4);
+    newRow.appendChild(td5);
+    newRow.appendChild(td6);
+    newRow.appendChild(td7);
+
+    document.getElementById("csv_data").appendChild(newRow);
+  });
+
+  newRowBtnHolder.appendChild(newRowBtn);
+  document.getElementById("csvTableContainer").appendChild(newRowBtnHolder);
+
   Papa.parse(csvFile, {
     download: true,
     header: true,
