@@ -104,8 +104,11 @@ export function process(row) {
         });
       break;
   }
-  if (watmFunction !== "inactive" && watmStyle !== null && watmStyle !== "")
-    processCSS(watmQuery, watmStyle);
+  if (watmFunction !== "inactive" && watmStyle !== null && watmStyle !== "") {
+    let mediaQuery = "";
+    if (watmFunction == "@media") mediaQuery = replacementText;
+    processCSS(watmQuery, watmStyle, mediaQuery);
+  }
 }
 
 export function isInEditMode() {
@@ -160,7 +163,7 @@ const walkText = (node, regex, replacementText, watmFunction) => {
   }
 };
 
-const processCSS = (watmQuery, watmStyle) => {
+const processCSS = (watmQuery, watmStyle, mediaQuery) => {
   // SCSS
   if (watmStyle.includes("$")) {
     let regex = /\$[a-zA-Z0-9_-]+/g;
@@ -173,6 +176,8 @@ const processCSS = (watmQuery, watmStyle) => {
   }
 
   let cssNode = document.createElement("style");
-  cssNode.innerHTML = `${watmQuery} { ${watmStyle} }`;
+  cssNode.innerHTML = `${
+    mediaQuery !== "" ? "@media " + mediaQuery + " { " : ""
+  }${watmQuery} { ${watmStyle} }${mediaQuery !== "" ? " }" : ""}`;
   document.head.appendChild(cssNode);
 };

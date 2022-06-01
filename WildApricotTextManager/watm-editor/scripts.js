@@ -10,6 +10,7 @@ let watmFunctions = [
   "button",
   "delay",
   "attribute",
+  "@media",
   "inactive",
 ];
 
