@@ -1,3 +1,5 @@
+import ColorThief from "./color-thief.js";
+
 // global variable for clipboard
 // Initialize global clipboard variable
 var clipboardPath;
@@ -372,11 +374,41 @@ const viewElementProperties = () => {
       "<tr><th>link</th><td>" +
       clickedElement.getAttribute("href") +
       "</td></tr>";
-  if (clickedElement.getAttribute("src"))
+  if (clickedElement.getAttribute("src")) {
     tableHTML +=
       "<tr><th>source</th><td>" +
       clickedElement.getAttribute("src") +
       "</td></tr>";
+
+    const colorThief = new ColorThief();
+
+    let dominantColor = colorThief.getColor(clickedElement);
+    let paletteColors = colorThief.getPalette(clickedElement, 3);
+
+    let dominantColorHex = rgbToHex(
+      dominantColor[0],
+      dominantColor[1],
+      dominantColor[2]
+    );
+
+    tableHTML +=
+      "<tr><th>Primary Color</th><td>" +
+      `<div class="colorInfo"><div class="swatch" style="background-color: ${dominantColorHex}"></div><div class="hex">${dominantColorHex}</div></div>` +
+      "</td></tr>";
+
+    tableHTML += "<tr><th>Palette Colors</th><td>";
+
+    paletteColors.forEach((paletteColor) => {
+      let paletteColorHex = rgbToHex(
+        paletteColor[0],
+        paletteColor[1],
+        paletteColor[2]
+      );
+      tableHTML += `<div class="colorInfo"><div class="swatch" style="background-color: ${paletteColorHex}"></div><div class="hex">${paletteColorHex}</div></div>`;
+    });
+
+    tableHTML += "</td></tr>";
+  }
 
   propArray.forEach((val) => {
     tableHTML +=
@@ -458,3 +490,12 @@ const loadCSV = (csvFile) => {
     "watm-editor-iframe"
   ).src = `/resources/Theme/WildApricotTextManager/watm-editor/editor.html?loadCSV=${csvFile}`;
 };
+
+const rgbToHex = (r, g, b) =>
+  "#" +
+  [r, g, b]
+    .map((x) => {
+      const hex = x.toString(16);
+      return hex.length === 1 ? "0" + hex : hex;
+    })
+    .join("");

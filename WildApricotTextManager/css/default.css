@@ -146,9 +146,12 @@
   width: 100%;
 }
 
+#watm-props-modal-body table tr {
+  border: 1px solid #ddd;
+}
+
 #watm-props-modal-body table td,
 #watm-props-modal-body table th {
-  border: 1px solid #ddd;
   padding: 8px;
 }
 
@@ -197,4 +200,27 @@
   margin-top: 10px;
   border:none;
   padding:0;
+}
+
+.swatch {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.watm-modal-body td {
+  display: flex;
+  align-items: center;
+  vertical-align: middle;
+}
+
+.hex {
+  padding: 10px;
+}
+
+.colorInfo {
+  padding: 4px;
+  display: flex;
+  align-items: center;
 }
