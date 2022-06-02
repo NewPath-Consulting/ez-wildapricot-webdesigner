@@ -350,9 +350,21 @@ const viewElementProperties = () => {
     "padding",
   ];
 
-  if (clickedElement.innerText)
-    tableHTML +=
-      "<tr><th>innerText</th><td>" + clickedElement.innerText + "</td></tr>";
+  if (clickedElement.innerText) {
+    // Do not include text of child elements
+    let childElement = clickedElement.firstChild;
+    let clickedTexts = [];
+    while (childElement) {
+      if (childElement.nodeType == 3) {
+        clickedTexts.push(childElement.data);
+      }
+      childElement = childElement.nextSibling;
+    }
+    let clickedText = clickedTexts.join(" ").trim();
+    if (clickedText)
+      tableHTML += "<tr><th>innerText</th><td>" + clickedText + "</td></tr>";
+  }
+
   if (clickedElement.value)
     tableHTML += "<tr><th>value</th><td>" + clickedElement.value + "</td></tr>";
   if (clickedElement.getAttribute("href"))
