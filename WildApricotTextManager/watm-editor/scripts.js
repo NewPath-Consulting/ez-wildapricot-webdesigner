@@ -11,6 +11,8 @@ let watmFunctions = [
   "delay",
   "attribute",
   "@media",
+  "link",
+  "source",
   "inactive",
 ];
 

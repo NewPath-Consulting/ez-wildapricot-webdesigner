@@ -102,6 +102,15 @@ export function process(row) {
         .forEach(function (el) {
           el.setAttribute(watmQuery, replacementText);
         });
+    case "link":
+      document.querySelectorAll(watmQuery).forEach(function (el) {
+        if (el.hasAttribute("href")) el.setAttribute("href", replacementText);
+      });
+      break;
+    case "source":
+      document.querySelectorAll(watmQuery).forEach(function (el) {
+        if (el.hasAttribute("src")) el.setAttribute("src", replacementText);
+      });
       break;
   }
   if (watmFunction !== "inactive" && watmStyle !== null && watmStyle !== "") {
