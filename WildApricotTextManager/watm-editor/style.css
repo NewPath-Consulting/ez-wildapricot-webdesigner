@@ -5,3 +5,11 @@
 .button-holder {
   margin-bottom: 10px;
 }
+
+iframe{
+  height: 90vh;
+  width: 100%;
+  margin-top: 10px;
+  border:none;
+  padding:0;
+}

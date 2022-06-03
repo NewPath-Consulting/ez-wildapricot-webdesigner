@@ -471,6 +471,19 @@ const setupEditor = (languages, watm_location) => {
   fileSelecter.appendChild(fileSelecterSpan2);
   document.getElementById("watm-editor-body").appendChild(fileSelecter);
 
+  const newWindowBtn = document.createElement("button");
+  newWindowBtn.classList.add("watm-editor-window-btn");
+  newWindowBtn.innerText = "Launch Editor in New Window";
+  let languagesJSON = encodeURIComponent(JSON.stringify(languages));
+  newWindowBtn.addEventListener("click", () => {
+    window.open(
+      `${watm_location}/watm-editor/editor-fullscreen.html?watm_location=${watm_location}&languages=${languagesJSON}`,
+      "watmEditorWindow",
+      "toolbars=0,width=1000,height=700,left=200,top=200,scrollbars=1,resizable=1"
+    );
+  });
+  fileSelecterSpan2.appendChild(newWindowBtn);
+
   const csvFrame = document.createElement("iframe");
   csvFrame.id = "watm-editor-iframe";
 
@@ -479,16 +492,16 @@ const setupEditor = (languages, watm_location) => {
   const selectElement = document.getElementById("watm-csv-toggle");
 
   selectElement.addEventListener("change", (event) => {
-    loadCSV(event.target.value);
+    loadCSV(event.target.value, watm_location);
   });
 
-  loadCSV(`${watm_location}/config.csv`);
+  loadCSV(`${watm_location}/config.csv`, watm_location);
 };
 
-const loadCSV = (csvFile) => {
+const loadCSV = (csvFile, watm_location) => {
   document.getElementById(
     "watm-editor-iframe"
-  ).src = `/resources/Theme/WildApricotTextManager/watm-editor/editor.html?loadCSV=${csvFile}`;
+  ).src = `${watm_location}/watm-editor/editor.html?loadCSV=${csvFile}`;
 };
 
 const rgbToHex = (r, g, b) =>
