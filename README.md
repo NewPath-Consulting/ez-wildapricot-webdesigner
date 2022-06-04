@@ -72,15 +72,17 @@ An Element class describes one or more CSS classes applied to the element. A cla
 
 0.91 - Fixed replace\_delay function that works for form dropdowns, added "-n" suffix to the `replace-delay` function. For example, `replace-delay-3` will delay for 3 seconds 11/23/20
 
-0.93 - support for switching languages using embedded WildApricot "widgets" in 3rd party content management system, added a standard French translation file 2/15/22
+0.92 - Fixed bug that prevented text containing HTML and links to be changed with replace or replace_element 3/5/2021
 
-0.94 - added support for entering/exiting Inspect mode, easy copy/paste of elements in the dev mode panel, more details in install script
+0.93 - support for switching languages using embedded WildApricot "widgets" in 3rd party content management system, added a standard French translation file 2/16/22
+
+0.94 - added support for entering/exiting Inspector panel,  copy/paste of element ID, class and CSS path in Inspector panel, more options  added install script 4/19/2022
 
 0.95 - added support for Inspector Hover mode which shows the outlines of each element on a page when using the Inspector
 
-0.951 - fixed translations to be rendered for multi-page widgets embedded with a primary and second language
+0.951 - fixed translations to be rendered for multi-page widgets embedded with a primary and second language 5/17/2022
 
-0.952 - fixed bug on Copy ID button in inspector that adds a # to the id on the clipboard
+0.952 - fixed bug on Copy ID button in inspector that adds a # to the id on the clipboard 5/25/2022
 
 0.96 - added showing the selected text of an element, ability to provide alternative text or translation and a drop down for the function
 
