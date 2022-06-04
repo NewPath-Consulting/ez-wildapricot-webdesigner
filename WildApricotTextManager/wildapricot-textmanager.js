@@ -14,6 +14,11 @@ var clipboardPath;
 var clipboardClass;
 var clipboardId;
 
+// Add WATM styles
+$('head').append('<link rel="stylesheet" href="WildApricotTextManager/watm.css" type="text/css" />');
+
+
+
 /* Polyfills */
 if (!String.prototype.includes) {
   Object.defineProperty(String.prototype, "includes", {
@@ -443,7 +448,16 @@ function startDev() {
   copyPathInspectorBtn = $("<button>").addClass("inspectorBtn").text("Copy CSS Path").css('margin','5px').hide();
   copyIdInspectorBtn = $("<button>").addClass("inspectorBtn").text("Copy Element ID").css('margin','5px').hide();
   copyClassInspectorBtn = $("<button>").addClass("inspectorBtn").text("Copy Classes").css('margin','5px').hide();
-  
+  previewInspectorBtn = $("<button>").addClass("inspectorBtn").text("Preview")
+                        .css({'margin':'5px', 'background-color': 'yellow', 'color': 'grey'});
+  copytoClipBoardInspectorBtn = $("<button>").addClass("inspectorBtn").text("Copy to Clipboard")
+                                .css({'margin':'5px', 'background-color': 'green', 'color': 'white'})
+                                .mouseover(function() { $(this).css({'background-color':'white','color':'green'})})
+                                .mouseout(function() { $(this).css({'background-color':'green','color':'white'})});
+
+
+  versionstring = $("#inspectorBody").addClass("watm-versionString")
+                                      .text("EZ WildApricot Web Designer " + watm_version + " | " + "LICENSED/TRIAL").css('margin','5px');
 
   // Add CSS to created container
   setCSS();
@@ -491,6 +505,9 @@ function startDev() {
     });
 
     // Append Inspector buttons
+    $("#"+inspectorContainerId).prepend($(previewInspectorBtn).attr("onclick", "copyInspector(this)").attr("id","previewInspectorBtn"));
+    $("#"+inspectorContainerId).prepend($(copytoClipBoardInspectorBtn).attr("onclick", "copyInspector(this)").attr("id","copytoClipBoardInspectorBtn"));
+
     $("#"+inspectorContainerId).prepend($(copyPathInspectorBtn).attr("onclick", "copyInspector(this)").attr("id","copyPathInspector"));
     $("#"+inspectorContainerId).prepend($(copyClassInspectorBtn).attr("onclick", "copyInspector(this)").attr("id","copyClassInspector"));
     $("#"+inspectorContainerId).prepend($(copyIdInspectorBtn).attr("onclick", "copyInspector(this)").attr("id","copyIdInspector"));
@@ -533,16 +550,37 @@ function copyInspector(elm) {
     case "copyIdInspector":
       navigator.clipboard.writeText("#" + clipboardId);
       break;
+    case "previewInspectorBtn":
+      navigator.clipboard.writeText("#" + clipboardId);
+      break;
+    case "copytoClipBoardInspectorBtn":
+      navigator.clipboard.writeText("#" + clipboardId);
+      break;
   }
   displayCopiedMessage(elm.id);
 }
 
 function displayCopiedMessage(btnId) {
   prevMessage = $("#"+btnId).text();
+
+  if (btnId == "previewInspectorBtn")
+  {
+    $("#"+btnId).text("In Preview Mode").attr("disabled",true)
+                .css({'background-color':'white','color':'grey'});
+
+    ;
+    setTimeout(function () {
+      $("#"+btnId).text(prevMessage).attr("disabled",false)
+                 .css({'background-color':'yellow','color':'grey'});
+    }, 10000);
+  } else
+  {
+
   $("#"+btnId).text("Copied to clipboard!").attr("disabled",true);
   setTimeout(function () {
     $("#"+btnId).text(prevMessage).attr("disabled",false);
-  }, 5000);
+  }, 2000);
+  }
 }
 
 // Get full CSS path
@@ -614,6 +652,8 @@ function displayPath(cssPath, elID, elClass, elContents) {
   // Add to inspector container
   $("#inspectorBody").html(elInfo);
   $(".inspectorBtn").prop('disabled', false);
+
+  blink(cssPath, 3, 500); //blink cssPath
 }
 
 // Set inspector container styling
@@ -637,4 +677,27 @@ function setCSS() {
     $("#" + inspectorContainerId).css({ bottom: 0 });
     $("#idCustomJsContainer").css({ "padding-bottom": "150px" });
   }
+}
+
+/**
+* Purpose: blink a page element
+* Preconditions: the element you want to apply the blink to, 
+    the number of times to blink the element (or -1 for infinite times),
+    the speed of the blink
+**/
+function blink(elem, times, speed)
+{
+    if (times > 0 || times < 0) { 
+      if ($(elem).hasClass("blink"))
+         $(elem).removeClass("blink");
+      else
+         $(elem).addClass("blink");
+     }
+
+     clearTimeout(function() { blink(elem, times, speed); });
+
+     if (times > 0 || times < 0) {
+       setTimeout(function() { blink(elem, times, speed); }, speed);
+       times-= .5;
+     }
 }
