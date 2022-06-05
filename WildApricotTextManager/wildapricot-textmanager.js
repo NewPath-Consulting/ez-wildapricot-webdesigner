@@ -8,15 +8,23 @@ var array;
 var scss_dict = {};
 var data_url = "/resources/Theme/WildApricotTextManager/wildapricot-textmanager-config.csv";
 var watm_version = "0.96";
+var watmlicensestatus = "";
+
 
 // Initialize global clipboard variable
 var clipboardPath;
 var clipboardClass;
 var clipboardId;
 
-// Add WATM styles
-$('head').append('<link rel="stylesheet" href="WildApricotTextManager/watm.css" type="text/css" />');
+// Add WATM styles based on if loading off file system or off a web server
+ if (location.protocol == "file:")
+{
+  $('head').append('<link rel="stylesheet" href="WildApricotTextManager/watm.css" type="text/css" />');
+} else
+{
+  $('head').append('<link rel="stylesheet" href="./watm.css" type="text/css" />');
 
+}
 
 
 /* Polyfills */
@@ -39,6 +47,8 @@ if (!String.prototype.includes) {
 /* App */
 $(document).ready(function () {
   // Set Defaults
+
+  
   textManagerProductionMode = !isInEditMode();
   if (typeof textManagerDataURL !== "undefined") {
     data_url = textManagerDataURL;
@@ -96,7 +106,7 @@ $(document).ready(function () {
 
   // Start Inspector if keyword present
   if (window.location.href.indexOf(inspectorKeyword) > -1) {
-    startDev();
+    startDev(licenseKey);
   }
 
   // Multiligual Mode
@@ -111,9 +121,9 @@ $(document).ready(function () {
   }
 
   if (textManagerProductionMode) {
-    log(`Wild Apricot Text Manager ${watm_version} loaded in production mode`);
+    log(`Wild Apricot Text Manager ${watm_version} loaded in production mode`,"info");
   } else {
-    log(`Wild Apricot Text Manager ${watm_version} loaded in development mode`);
+    log(`Wild Apricot Text Manager ${watm_version} loaded in development mode`,"info");
   }
 
   // Set Cookie for Second Language Replacement
@@ -152,12 +162,14 @@ $(document).ready(function () {
         try {
           array = $.csv.toArrays(csvd);
         } catch (err) {
-          log(`WATM configuration file is not in correct format`, "error");
-          alert(`[watm error] WATM configuration file is not in correct format. ${err.message} Did you Save as .CSV UTF-8?`);
+          log(`WATM configuration file is not in correct format`, "warning");
+          alert(`WATM configuration file is not in correct format. ${err.message} Did you Save as .CSV UTF-8?`);
         }
       },
       error: function (xhr, ajaxOptions, thrownError) {
         log(`WATM configuration file not found`, "error");
+       
+
       },
       dataType: "text",
       complete: function () {
@@ -259,7 +271,7 @@ function hasFormstack() {
 
 function log(text, logType = "") {
   if (logType) logType = " " + logType;
-  console.log(`[watm${logType}]`, text);
+  console.log(`[watm ${logType}]`, text);
 }
 
 function replaceText(data) {
@@ -440,9 +452,13 @@ function isInternetExplorer() {
   return false;
 }
 
-function startDev() {
+
+function startDev(licenseKey) {
+
+
   // Create inspector container
-  $("body").prepend($("<div>").attr("id", inspectorContainerId).html("<div id='inspectorBody'><h1>Inspector - Click on any page element</h1></div>"));
+  $("body").prepend($("<div>").attr("id", inspectorContainerId)
+                              .html("<div id='inspectorBody'><h1>Inspector - Click on any page element</h1></div>"));
 
   inspectorExitbtn = $("<button>").addClass("inspectorBtn").text("Exit Inspector").css('margin','5px');
   copyPathInspectorBtn = $("<button>").addClass("inspectorBtn").text("Copy CSS Path").css('margin','5px').hide();
@@ -455,9 +471,96 @@ function startDev() {
                                 .mouseover(function() { $(this).css({'background-color':'white','color':'green'})})
                                 .mouseout(function() { $(this).css({'background-color':'green','color':'white'})});
 
+  $.get(
+  "https://hook.integromat.com/mauo1z5yn88d94lfvc3wd4qulaqy1tko?json=true&key=" + licenseKey,
+  
+  function (recvLicense, status, xhr) {
 
-  versionstring = $("#inspectorBody").addClass("watm-versionString")
-                                      .text("EZ WildApricot Web Designer " + watm_version + " | " + "LICENSED/TRIAL").css('margin','5px');
+    if (status == "success") {
+        log(`WATM license checked on host: ` + location.protocol + '//' + location.host, "info");
+      } else
+      {
+        log(`WATM license check failed on host: ` + location.protocol + '//' + location.host, "error"); 
+      }
+    },
+    "json"
+  ).done(function(recvLicense) {
+
+    // empty or key provided that was not found in keystore
+
+    if (recvLicense['license-error'] == "no valid key found")
+    {
+      watmlicensestatus = "INVALID KEY";
+
+      log("License Status: " + watmlicensestatus, "error");
+       $("#inspectorBody").addClass("watm-versionString")
+      .text("EZ WildApricot Web Designer " +
+      watm_version + " | " + "License: " +
+      watmlicensestatus).css('margin','5px');
+      return;
+
+    }
+    expirydate = Date.parse(recvLicense['expiration date']);
+
+    // check if valid, unexpired key is provided for WATM
+
+    if (recvLicense.Products.includes("watm") &&
+          recvLicense['Support Level'] == "support" &&
+          expirydate  >= Date.now() &&
+          recvLicense['Licensed Wild Apricot URLs'] == location.protocol + '//' + location.host
+          //recvLicense['Licensed Wild Apricot URLs'] == "https://newpathconsulting.wildapricot.org"
+        )
+ 
+      {
+
+    watmlicensestatus = "LICENSED";
+
+    log("Is WATM?: " + recvLicense.Products.includes("watm")  + " support level: " + recvLicense['Support Level'] +
+    " expiry: " + expirydate.toLocaleString('en-CA') + " licensedWAURL: " + recvLicense['Licensed Wild Apricot URLs'] );
+
+    log("License Status: " + watmlicensestatus, "info");
+     $("#inspectorBody").addClass("watm-versionString")
+    .text("EZ WildApricot Web Designer " +
+    watm_version + " | " + "License: " +
+    watmlicensestatus).css('margin','5px');
+  } 
+  
+  // check if a valid non-WATM key provided
+  else if (!recvLicense.Products.includes("watm"))
+  {
+    watmlicensestatus = "INVALID KEY";
+
+    log("Is WATM?: " + recvLicense.Products.includes("watm")  + " support level: " + recvLicense['Support Level'] +
+    " expiry: " + expirydate.toLocaleString('en-CA') + " licensedWAURL: " + recvLicense['Licensed Wild Apricot URLs'] );
+
+    log("License Status: " + watmlicensestatus, "error");
+     $("#inspectorBody").addClass("watm-versionString")
+    .text("EZ WildApricot Web Designer " +
+    watm_version + " | " + "License: " +
+    watmlicensestatus).css('margin','5px');
+
+  }
+
+  // key must be a free or trial key
+
+  else
+
+  {
+    watmlicensestatus = "TRIAL";
+    log("Is WATM?: " + recvLicense.Products.includes("watm")  + " support level: " + recvLicense['Support Level'] +
+    " expiry: " + expirydate.toLocaleString('en-CA') + " licensedWAURL: " + recvLicense['Licensed Wild Apricot URLs'] );
+
+    log("License Status: " + watmlicensestatus, "info");
+     $("#inspectorBody").addClass("watm-versionString")
+    .text("EZ WildApricot Web Designer " +
+    watm_version + " | " + "License: " +
+    watmlicensestatus).css('margin','5px');
+
+
+  }
+  });;
+
+
 
   // Add CSS to created container
   setCSS();
@@ -470,7 +573,7 @@ function startDev() {
 
   // Intercept all page clicks
   setTimeout(function () {
-    log(`[watm] Element Inspector Active`, "notice");
+    log(`Element Inspector Active`, "info");
     $("body").on("click", "*", function (event) {
       // Remove WATM hover class
       $(this).removeClass("watm-hover");
