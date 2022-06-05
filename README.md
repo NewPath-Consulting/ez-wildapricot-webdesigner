@@ -118,6 +118,27 @@ NOTE: this code snippet assumes you have uploaded all files into the folder `/re
 The configuration and translation files must be saved as a CSV file format in UTF-8 format.
 
 ---
+# Switching Languages
+
+## Using the Language Toggle
+
+EZ Wild Apricot Web Designer provides an easy to install toggle for switching between the various languages on your site. To add it to your site, simply  add a Content Gadget to your page template in the location you would like the toggle to appear. Set the ID of this gadget to `language_switch` (or whatever you may have changed it to in the script setup). This gadget will now be replaced with the language toggle when viewed from the frontend.
+
+### Translating the Language Toggle
+
+To change the `Select language` text in the configuration or translation files, use the `.watm-dropdown-icon` query with the `Replace` function.
+
+## Using the Language Switch Hook
+
+You are not limited to using the EZ Wild Apricot Web Designer Language Toggle. You can create your own buttons, links, or menu items for switching the language. To switch language, you would link to `?watm-<language>` where `<language>` is the class name for the language you wish to use from the script setup. Note, there is no slash in this link - you are linking to the current page, and appending the language hook to it.
+
+**EXAMPLE:**
+
+```html
+<a href="?watm-french">Cette page est également disponible en français</a>
+```
+
+---
 
 # Modules
 
