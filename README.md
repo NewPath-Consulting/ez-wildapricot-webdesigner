@@ -128,6 +128,14 @@ EZ Wild Apricot Web Designer provides an easy to install toggle for switching be
 
 To change the `Select language` text in the configuration or translation files, use the `.watm-dropdown-icon` query with the `Replace` function.
 
+**EXAMPLE:**
+```text
+Default Text: Select language
+Function: replace
+Replacement Text: Changer le langue
+Query: .watm-dropdown-icon
+```
+
 ## Using the Language Switch Hook
 
 You are not limited to using the EZ Wild Apricot Web Designer Language Toggle. You can create your own buttons, links, or menu items for switching the language. To switch language, you would link to `?watm-<language>` where `<language>` is the class name for the language you wish to use from the script setup. Note, there is no slash in this link - you are linking to the current page, and appending the language hook to it.
