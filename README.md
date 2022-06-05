@@ -112,7 +112,7 @@ NOTE: this code snippet assumes you have uploaded all files into the folder `/re
     ┗ 📜wildapricot-textmanager.js
     ```
 
-3. Modify `config.csv with your general` in the `WildApricotTextManager` folder with your general changes
+3. Modify `config.csv` in the `WildApricotTextManager` folder with your general changes
 4. Upload a separate CSV for each additional language you are offering to the `translations` folder
 
 The configuration and translation files must be saved as a CSV file format in UTF-8 format.
@@ -138,6 +138,7 @@ The `View Properties` button will display the details about that element, such a
 ## CSV Editor
 
 **Module name:** *editor*
+
 **Dependencies:** *Element Inspector*
 
 The CSV Editor allows you to update the configuration and translations files directly in your web browser, without needing to first download the files or own spreadsheet software. To use the editor, you must also have the WATM Element Inspector enabled. When both of these modules are enabled, you will see a button labeled `Switch to Editor` in the inspector bar. Click on this button to launch the editor.
@@ -167,11 +168,12 @@ Function: hide
 Query: #idFooterPoweredByWA
 ```
 ## **text**
-> **Changes the text in targeted element(s)
+> Changes the text in targeted element(s)
 
 **EXAMPLE:**
 ```text
 Function: text
+Replacement Text: Changer le passe
 Query: .loginBoxChangePassword
 ```
 ## **replace**
@@ -182,7 +184,7 @@ Query: .loginBoxChangePassword
 Default Text: Home
 Function: replace
 Replacement Text: Accueil
-Query: .menuInner, .siteTitle > div > ul > li
+Query: .menuInner, .WaGadgetBreadcrumbs > div > ul > li
 ```
 ## **replace_element**
 > Replaces the contents targeted element(s)
