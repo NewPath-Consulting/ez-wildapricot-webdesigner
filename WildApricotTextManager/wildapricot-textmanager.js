@@ -507,8 +507,8 @@ function startDev(licenseKey) {
     if (recvLicense.Products.includes("watm") &&
           recvLicense['Support Level'] == "support" &&
           expirydate  >= Date.now() &&
-          recvLicense['Licensed Wild Apricot URLs'] == location.protocol + '//' + location.host
-          //recvLicense['Licensed Wild Apricot URLs'] == "https://newpathconsulting.wildapricot.org"
+          (recvLicense['Licensed Wild Apricot URLs'] == location.protocol + '//' + location.host ||
+          location.protocol == "file:")
         )
  
       {

@@ -84,7 +84,7 @@ An Element class describes one or more CSS classes applied to the element. A cla
 
 0.952 - fixed bug on Copy ID button in inspector that adds a # to the id on the clipboard 5/25/2022
 
-0.96 - added showing the selected text of an element, ability to provide alternative text or translation and a drop down for the function
+0.96 - added showing the selected text of an element, ability to provide alternative text or translation and a drop down for the function, added license checking, trial mode
 
 ## Installation
 
@@ -102,7 +102,9 @@ NOTE: this code snippet assumes you have uploaded all files into the folder `/re
    <script>
    
    var textManagerDataURL = "/resources/Theme/WildApricotTextManager/wildapricot-textmanager-config.csv"; // location of EZ Wild Apricot Web Designer configuration file
-      
+   
+   licenseKey = "REPLACE-WITH-YOUR-KEY";
+
    var showInspectorLink = true; // this will show the Inspector mode link in the footer of the website, set to false to turn off
 
    var showInspectorHover = true; // this will show the Inspector Hover mode, set to false to turn off
