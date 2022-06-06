@@ -1,7 +1,7 @@
 # Documentation (Version 2.0-Alpha)
 
 ⚠️ This is an alpha test build, and should not be used in production.
-Addresses issues [#1](/../../issues/1), [#2](/../../issues/2), [#7](/../../issues/7), [#21](/../../issues/21), [#28](/../../issues/28), [#31](/../../issues/31), [#34](/../../issues/31), [#38](/../../issues/31), [#36](/../../issues/36)
+Addresses issues [#1](/../../issues/1), [#2](/../../issues/2), [#7](/../../issues/7), [#21](/../../issues/21), [#28](/../../issues/28), [#31](/../../issues/31), [#34](/../../issues/34), [#38](/../../issues/38), [#36](/../../issues/36)
 
 ## Project Description
 
@@ -178,7 +178,7 @@ In the editor you can select the file you wish to update from the dropdown. Sele
 
 **Module name:** *profile_field*
 
-The User Preference module checks the logged in user's profile for a field indicating the user's preferred language. To enable this, you will need your Wild Apricot account number and a API Client ID. If you do not know your account number, you can obtain it from `Settings > Account` in the Wild APricot backend. To obtain a CLient ID, [follow the instructions here](https://gethelp.wildapricot.com/en/articles/180-authorizing-external-applications) for setting up User Authentication. You will also need to set up a field - either a dropdown list (recommended) or a radio button - with options that match the Language labels used during the script setup.
+The User Preference module checks the logged in user's profile for a field indicating the user's preferred language. To enable this, you will need your Wild Apricot account number and a API Client ID. If you do not know your account number, you can obtain it from `Settings > Account` in the Wild Apricot backend. To obtain a Client ID, [follow the instructions here](https://gethelp.wildapricot.com/en/articles/180-authorizing-external-applications) for setting up User Authentication. You will also need to set up a field - either a dropdown list (recommended) or a radio button - with options that match the Language labels used during the script setup.
 
 If a logged in user has this field set, the website language will switch to that language upon login.
 
