@@ -37,7 +37,7 @@ NOTE: this code snippet assumes you have uploaded all files into the folder `/re
     var watm_language_csv_file = [];
 
     // Specify which modules to load
-    let include_watm_modules = ["inspector","editor","profile_field"]
+    let include_watm_modules = ["inspector","editor"]
 
     // Used to enable Inspector button
     var showInspectorButton = true;
