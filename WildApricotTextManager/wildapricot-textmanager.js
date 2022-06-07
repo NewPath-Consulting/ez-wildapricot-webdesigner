@@ -1,6 +1,5 @@
 import * as watm_fn from "./modules/functions.js";
 import * as inspector from "./modules/inspector.js";
-import * as profile from "./modules/profile-field.js";
 
 let languages = [];
 let currentCSV;
@@ -101,31 +100,13 @@ document.addEventListener("DOMContentLoaded", function (event) {
       });
     }
 
-    if (include_watm_modules.includes("profile_field")) {
-      if (!profile.checked()) {
-        profile
-          .getLanguage(watm_account_id, watm_client_id, watm_language_field)
-          .then((profileLanguage) => {
-            if (profileLanguage !== "") {
-              let lang = languages.find((l) => l.label === profileLanguage);
-              if (lang)
-                window.location.href =
-                  window.location.href + `?watm-${lang.className}`;
-              else watm_continue = true;
-            } else watm_continue = true;
-          });
-      } else watm_continue = true;
-    } else watm_continue = true;
-
-    if (watm_continue) {
-      currentLanguage = watm_fn.getCurrentLanguage();
-      currentLanguage =
-        currentLanguage == "Default" ||
-        currentLanguage == null ||
-        currentLanguage == ""
-          ? languages[0].className
-          : currentLanguage;
-    }
+    currentLanguage = watm_fn.getCurrentLanguage();
+    currentLanguage =
+      currentLanguage == "Default" ||
+      currentLanguage == null ||
+      currentLanguage == ""
+        ? languages[0].className
+        : currentLanguage;
 
     watm_fn.log(`Currently using ${currentLanguage} translation`);
 

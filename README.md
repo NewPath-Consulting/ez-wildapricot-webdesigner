@@ -35,9 +35,6 @@ NOTE: this code snippet assumes you have uploaded all files into the folder `/re
     var watm_language_name = [];
     var watm_language_className = [];
     var watm_language_csv_file = [];
-    var watm_language_field;
-    var watm_account_id;
-    var watm_client_id;
 
     // Specify which modules to load
     let include_watm_modules = ["inspector","editor","profile_field"]
@@ -67,11 +64,6 @@ NOTE: this code snippet assumes you have uploaded all files into the folder `/re
     var showLanguageSwitch = true;
     var languageSwitcherId = "language_switch"; // ID of element to replace with switcher
 
-    /* Used to fetch logged-in user language preference from user profile */
-    watm_language_field = "Preferred Language"; // Name of common/membsership field
-    watm_account_id = 5555;    // Account number
-    watm_client_id = "abcdefg";  // WA API Client Id
-
   </script>
 
   <script src="/resources/Theme/WildApricotTextManager/csv-parser.js"></script>
@@ -93,8 +85,7 @@ NOTE: this code snippet assumes you have uploaded all files into the folder `/re
     ┣ 📂modules
     ┃ ┣ 📜color-thief.js
     ┃ ┣ 📜functions.js
-    ┃ ┣ 📜inspector.js
-    ┃ ┗ 📜profile-field.js
+    ┃ ┗ 📜inspector.js
     ┣ 📂translations
     ┃ ┣ 📜french.csv
     ┃ ┣ 📜...
@@ -173,14 +164,6 @@ The `View Properties` button will display the details about that element, such a
 The CSV Editor allows you to update the configuration and translations files directly in your web browser, without needing to first download the files or own spreadsheet software. To use the editor, you must also have the WATM Element Inspector enabled. When both of these modules are enabled, you will see a button labeled `Switch to Editor` in the inspector bar. Click on this button to launch the editor.
 
 In the editor you can select the file you wish to update from the dropdown. Selecting the file will automatically load it below. You may also click on the `Launch Editor in New Window` button to open the editor in a separate, larger window. Once you are finished making your changes, you can either download the updated CSV file or save the file back to your website. If you choose to download the file, the changes will not be applied to your website until you manually upload the file. If you choose to save the file to the website you will be prompted to login with an administrator account. This is done directly with the Wild Apricot website, and WATM can not see or access your website credentials. After saving to the site, you may need to refresh your site to see the changes. To do this, exit the inspector/editor and press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> on PC or <kbd>Option</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> on Mac. You may need to do this for each language enabled on your site.
-
-## User Language Preference
-
-**Module name:** *profile_field*
-
-The User Preference module checks the logged in user's profile for a field indicating the user's preferred language. To enable this, you will need your Wild Apricot account number and a API Client ID. If you do not know your account number, you can obtain it from `Settings > Account` in the Wild Apricot backend. To obtain a Client ID, [follow the instructions here](https://gethelp.wildapricot.com/en/articles/180-authorizing-external-applications) for setting up User Authentication. You will also need to set up a field - either a dropdown list (recommended) or a radio button - with options that match the Language labels used during the script setup.
-
-If a logged in user has this field set, the website language will switch to that language upon login.
 
 ---
 
