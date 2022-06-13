@@ -30,6 +30,7 @@ EZ Wild Apricot Web Designer module can be used to make Wild Apricot sites avail
 NOTE: this code snippet assumes you have uploaded all files into the folder `/resources/Theme/WildApricotTextManager`
 
    ```html
+  <style>body{visibility: hidden;}</style>
   <script src="/resources/Theme/WildApricotTextManager/wildapricot-textmanager.js"></script>
   <script>
 

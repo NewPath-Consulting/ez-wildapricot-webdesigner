@@ -28,10 +28,6 @@ let requiredScripts = [
 ];
 
 document.addEventListener("DOMContentLoaded", function (event) {
-  loadCSS(`${watm_location}/css/${watm_styles}.css`);
-  const overlay = document.createElement("div");
-  overlay.id = "watm-overlay";
-  if (show_watm_overlay) document.body.appendChild(overlay);
   loadScripts();
 });
 
@@ -54,6 +50,7 @@ function loadScripts() {
 }
 
 function start(license) {
+  loadCSS(`${watm_location}/css/${watm_styles}.css`);
   let textManagerProductionMode = !isInEditMode();
 
   if (textManagerProductionMode) {
@@ -206,7 +203,7 @@ function start(license) {
   if (!hideWATMIcon) showWATMIcon(license);
 
   if (window.location.href.indexOf("?watm-") == -1)
-    document.getElementById("watm-overlay").style.display = "none"; // Remove the white overlay
+    document.body.style.visibility = "visible";
 
   if (
     window.location.href.indexOf("?dev") > -1 &&
@@ -216,14 +213,3 @@ function start(license) {
     launchInspector(languages, watm_location);
   }
 }
-
-const loadCSS = (fileName) => {
-  let head = document.head;
-  let link = document.createElement("link");
-
-  link.type = "text/css";
-  link.rel = "stylesheet";
-  link.href = fileName;
-
-  head.appendChild(link);
-};

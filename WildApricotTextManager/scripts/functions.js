@@ -274,3 +274,14 @@ const appendWATMBtn = (license = "default", isAdmin) => {
 
   document.body.appendChild(btn);
 };
+
+const loadCSS = (fileName) => {
+  let head = document.head;
+  let link = document.createElement("link");
+
+  link.type = "text/css";
+  link.rel = "stylesheet";
+  link.href = fileName;
+
+  head.appendChild(link);
+};
