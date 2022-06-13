@@ -30,17 +30,8 @@ EZ Wild Apricot Web Designer module can be used to make Wild Apricot sites avail
 NOTE: this code snippet assumes you have uploaded all files into the folder `/resources/Theme/WildApricotTextManager`
 
    ```html
+  <script src="/resources/Theme/WildApricotTextManager/wildapricot-textmanager.js"></script>
   <script>
-    // Initialization
-    var watm_language_name = [];
-    var watm_language_className = [];
-    var watm_language_csv_file = [];
-
-    // Specify which modules to load
-    let include_watm_modules = ["inspector","editor"]
-
-    // Used to enable Inspector button
-    var showInspectorButton = true;
 
     /*
       Array of available languages
@@ -65,43 +56,11 @@ NOTE: this code snippet assumes you have uploaded all files into the folder `/re
     var languageSwitcherId = "language_switch"; // ID of element to replace with switcher
 
   </script>
-
-  <script src="/resources/Theme/WildApricotTextManager/csv-parser.js"></script>
-  <script src="/resources/Theme/WildApricotTextManager/wildapricot-textmanager.js" type="module"></script>
-  <link rel="stylesheet" href="/resources/Theme/WildApricotTextManager/css/default.css">
    ```
 
 ## Files Setup
 
 1. Follow these [instructions to connect to your Wild Apricot file folder](https://gethelp.wildapricot.com/en/articles/198-uploading-and-downloading-files-using-webdav)
-2. Upload the `WildApricotTextManager` folder to the Theme folder on your Wild Apricot site.
-
-    The file and folder structure will be as follows:
-
-    ```
-    📦WildApricotTextManager
-    ┣ 📂css
-    ┃ ┗ 📜default.css
-    ┣ 📂modules
-    ┃ ┣ 📜color-thief.js
-    ┃ ┣ 📜functions.js
-    ┃ ┗ 📜inspector.js
-    ┣ 📂translations
-    ┃ ┣ 📜french.csv
-    ┃ ┣ 📜...
-    ┃ ┣ 📜...
-    ┃ ┗ 📜...
-    ┣ 📂watm-editor
-    ┃ ┣ 📜bootstrap.min.css
-    ┃ ┣ 📜editor-fullscreen.html
-    ┃ ┣ 📜editor.html
-    ┃ ┣ 📜scripts-fullscreen.js
-    ┃ ┣ 📜scripts.js
-    ┃ ┗ 📜style.css
-    ┣ 📜config.csv
-    ┣ 📜csv-parser.js
-    ┗ 📜wildapricot-textmanager.js
-    ```
 
 3. Modify `config.csv` in the `WildApricotTextManager` folder with your general changes
 4. Upload a separate CSV for each additional language you are offering to the `translations` folder
@@ -139,29 +98,19 @@ You are not limited to using the EZ Wild Apricot Web Designer Language Toggle. Y
 
 ---
 
-# Modules
-
-EZ Wild Apricot Web Designer comes with a number of optional modules that provide additional features. They can be enabled by including the module name on the `let include_watm_modules` line during script setup.
-
-## Element Inspector
-
-**Module name:** *inspector*
+# Element Inspector
 
 The inspector is a tool you can use to view the styling and targeting information of the various elements on your website. This information is necessary when updating your configuration and translation files.
 
-When enabled, an icon will appear at the bottom-left of your screen - click on this to launch the inspector. While in Inspector mode, you will not be able to follow any links - click the exit button in the inspector bar to return to normal operation. Hovering over an element will outline the element in red. Clicking on the element will display the element ID and Class (if they are available), as well as the CSS path to the element. [The ID](https://www.w3schools.com/htmL/html_id.asp) or CSS path can be used to target that specific element. [The class](https://www.w3schools.com/cssref/sel_class.asp) can be used to target multiple elements of a similar function.
+The inspector is only accessible to logged in administrators. When logged in as an administrator, an icon will appear at the bottom-left of your screen - click on this to launch the inspector. While in Inspector mode, you will not be able to follow any links - click the exit button in the inspector bar to return to normal operation. Hovering over an element will outline the element in red. Clicking on the element will display the element ID and Class (if they are available), as well as the CSS path to the element. [The ID](https://www.w3schools.com/htmL/html_id.asp) or CSS path can be used to target that specific element. [The class](https://www.w3schools.com/cssref/sel_class.asp) can be used to target multiple elements of a similar function.
 
 The `Copy Element ID`, `Copy Element Class`, and `Copy CSS Path` buttons will copy the related information to the clipboard.
 
 The `View Properties` button will display the details about that element, such as the text it contains, styling, and any resource links.
 
-## CSV Editor
+# CSV Editor
 
-**Module name:** *editor*
-
-**Dependencies:** *Element Inspector*
-
-The CSV Editor allows you to update the configuration and translations files directly in your web browser, without needing to first download the files or own spreadsheet software. To use the editor, you must also have the WATM Element Inspector enabled. When both of these modules are enabled, you will see a button labeled `Switch to Editor` in the inspector bar. Click on this button to launch the editor.
+The CSV Editor allows you to update the configuration and translations files directly in your web browser, without needing to first download the files or own spreadsheet software. To access the editor, click on the button labeled `Switch to Editor` in the inspector bar. 
 
 In the editor you can select the file you wish to update from the dropdown. Selecting the file will automatically load it below. You may also click on the `Launch Editor in New Window` button to open the editor in a separate, larger window. Once you are finished making your changes, you can either download the updated CSV file or save the file back to your website. If you choose to download the file, the changes will not be applied to your website until you manually upload the file. If you choose to save the file to the website you will be prompted to login with an administrator account. This is done directly with the Wild Apricot website, and WATM can not see or access your website credentials. After saving to the site, you may need to refresh your site to see the changes. To do this, exit the inspector/editor and press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> on PC or <kbd>Option</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> on Mac. You may need to do this for each language enabled on your site.
 

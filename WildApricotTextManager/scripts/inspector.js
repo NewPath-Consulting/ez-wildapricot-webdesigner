@@ -1,5 +1,3 @@
-import ColorThief from "./color-thief.js";
-
 // global variable for clipboard
 // Initialize global clipboard variable
 var clipboardPath;
@@ -7,26 +5,15 @@ var clipboardClass;
 var clipboardId;
 var clickedElement;
 
-// Append link/button to launch inspector
-export function appendBtn() {
-  const btn = document.createElement("div");
-  btn.classList.add("watm-inspector-launch-btn");
-  btn.title = "Launch Page Inspector";
-  document.body.appendChild(btn);
-  btn.addEventListener("click", () => {
-    window.location.href = window.location.href + "?dev";
-  });
-}
-
-export function start(isEditorEnabled, languages, watm_location) {
+const launchInspector = (languages, watm_location) => {
   createModal();
   interceptClicks();
-  createInspectorBar(isEditorEnabled);
-  if (isEditorEnabled) setupEditor(languages, watm_location);
-}
+  createInspectorBar();
+  setupEditor(languages, watm_location);
+};
 
 // Attach inspector to footer of website
-const createInspectorBar = (isEditorEnabled) => {
+const createInspectorBar = () => {
   // add padding to bottom of page
   document.body.firstElementChild.style.paddingBottom = "150px";
 
@@ -99,13 +86,13 @@ const createInspectorBar = (isEditorEnabled) => {
 
   // add buttons to inspector bar
   inspectorBar.appendChild(exitbtn);
-  if (isEditorEnabled) inspectorBar.appendChild(editorBtn);
+  inspectorBar.appendChild(editorBtn);
   inspectorBar.appendChild(copyClassBtn);
   inspectorBar.appendChild(copyIdBtn);
   inspectorBar.appendChild(copyPathBtn);
   inspectorBar.appendChild(viewPropsBtn);
   inspectorBar.appendChild(inspectorBody);
-  if (isEditorEnabled) inspectorBar.appendChild(editorBody);
+  inspectorBar.appendChild(editorBody);
 
   // exit inspector
   exitbtn.addEventListener("click", () => {
@@ -189,6 +176,10 @@ const interceptClicks = () => {
         !Array.from(e.target.classList).some((c) => c.startsWith("watm-modal"))
       ) {
         e.target.classList.add("watm-hover");
+
+        tippy(e.target, {
+          content: e.target.tagName,
+        });
       }
     },
     false

@@ -1,4 +1,52 @@
-export function createToggle(languages, elm) {
+const checkLicense = () => {
+  let license;
+  //let checkUrl = "https://newpathconsulting.com/check";
+  //let checkUrlDev = "https://newpathconsulting.com/checkdev";
+  if (license_key !== "") {
+    let checkUrlDev =
+      "https://hook.us1.make.com/8euj9o9frkj3wz2nqm6xmcp4y1mdy5tp";
+    fetch(`${checkUrlDev}/?json=true&key=${license_key}`)
+      .then((response) => response.json())
+      .then((data) => {
+        if (
+          data["license-error"] == "no valid key found" ||
+          !data.Products.includes("watm")
+        ) {
+          license = "invalid";
+          log(
+            "Invalid License Key for EZ Designer - Plugin is now disabled",
+            "Error"
+          );
+        } else {
+          let expiryDate = Date.parse(data["expiration date"]);
+          if (
+            data.Products.includes("watm") &&
+            data["Support Level"] == "support" &&
+            expiryDate >= Date.now()
+          ) {
+            license = "active";
+          }
+          if (data.Products.includes("watm") && expiryDate < Date.now()) {
+            license = "expired";
+            log(
+              "License Key for EZ Designer - Running in trial mode. Please renew your license to unlock all features",
+              "Notice"
+            );
+          }
+        }
+        start(license);
+      });
+  } else {
+    license = "trial";
+    log(
+      "EZ Designer running in trial mode - Please obtain a valid license key to unlock all features",
+      "Notice"
+    );
+    start(license);
+  }
+};
+
+const createToggle = (languages, elm) => {
   // Target location for language switcher
   const toggleElementID = document.getElementById(elm);
 
@@ -13,11 +61,11 @@ export function createToggle(languages, elm) {
 
   // Add languages
   languages.forEach((language) => {
-    let lang_link = document.createElement("a");
-    lang_link.setAttribute("href", `?watm-${language.className}`);
-    lang_link.textContent = language.label;
     let lang_li = document.createElement("li");
-    lang_li.appendChild(lang_link);
+    lang_li.textContent = language.label;
+    lang_li.addEventListener("click", (e) => {
+      location.href = `?watm-${language.className}`;
+    });
     languageToggleMenu.appendChild(lang_li);
   });
 
@@ -36,24 +84,24 @@ export function createToggle(languages, elm) {
       languageToggle.classList.add("watm-dropdown-closed");
     }
   });
-}
+};
 
-export function setLanguage(language) {
+const setLanguage = (language) => {
   // Set cookie for selected language
   setCookie("currentLanguage", language);
   // Reload page without language keyword
   window.location.href = window.location.href.replace(`?watm-${language}`, "");
-}
+};
 
-export function getCurrentLanguage() {
+const getCurrentLanguage = () => {
   // Read selected language from cookie
   let currentLanguage = getCookie("currentLanguage");
   if (!currentLanguage) currentLanguage == "Default";
 
   return currentLanguage;
-}
+};
 
-export function process(row) {
+const process = (row) => {
   let defaultText = row["Default Text"].trim();
   let watmFunction = row["Function"].trim();
   let watmQuery = row["Query"].trim();
@@ -118,19 +166,19 @@ export function process(row) {
     if (watmFunction == "@media") mediaQuery = replacementText;
     processCSS(watmQuery, watmStyle, mediaQuery);
   }
-}
+};
 
-export function isInEditMode() {
+const isInEditMode = () => {
   // Check if in admin view
   const bodyTag = document.querySelector("body");
   return bodyTag.classList.contains("adminContentView");
-}
+};
 
-export function log(text, logType = "") {
+const log = (text, logType = "") => {
   // Function for logging actions to console
   if (logType) logType = " " + logType;
   console.log(`[watm${logType}]`, text);
-}
+};
 
 // Util function for setting cookies
 const setCookie = (key, value) => {
@@ -189,4 +237,33 @@ const processCSS = (watmQuery, watmStyle, mediaQuery) => {
     mediaQuery !== "" ? "@media " + mediaQuery + " { " : ""
   }${watmQuery} { ${watmStyle} }${mediaQuery !== "" ? " }" : ""}`;
   document.head.appendChild(cssNode);
+};
+
+const appendWATMBtn = (license = "default", isAdmin) => {
+  const btn = document.createElement("div");
+  btn.classList.add("watm-icon", `watm-${license}`);
+
+  if (isAdmin && license !== "invalid") {
+    btn.addEventListener("click", () => {
+      window.location.href = window.location.href + "?dev";
+    });
+  }
+
+  tippy(btn, {
+    content:
+      `<strong><a href="${watm_info_url}" target="_blank">EZ WildApricot Web Designer</a></strong><br/>` +
+      `Version: ${watm_version} | License: <span class="${license}">${license.toUpperCase()}</span>` +
+      `${
+        isAdmin && license !== "invalid"
+          ? "<br/><br/>Click icon to launch inspector"
+          : ""
+      }`,
+    interactiveBorder: 30,
+    interactiveDebounce: 75,
+    placement: "right",
+    interactive: true,
+    allowHTML: true,
+  });
+
+  document.body.appendChild(btn);
 };

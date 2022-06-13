@@ -1,162 +1,229 @@
-import * as watm_fn from "./modules/functions.js";
-import * as inspector from "./modules/inspector.js";
+let watm_location = document.currentScript.src.substring(
+  0,
+  document.currentScript.src.lastIndexOf("/")
+);
 
-let languages = [];
-let currentCSV;
 let watm_version = "2.0";
-let watm_continue = false;
-let currentLanguage;
+let watm_styles = "default";
+let watm_info_url = "https://newpathconsulting.com/watm";
+
+let watm_language_name = [],
+  watm_language_className = [],
+  watm_language_csv_file = [],
+  languages = [],
+  currentCSV = "",
+  currentLanguage = "",
+  license_key = "",
+  hideWATMIcon = false,
+  show_watm_overlay = true;
+
+let loadedScripts = 0;
+let requiredScripts = [
+  "csv-parser.js",
+  "functions.js",
+  "inspector.js",
+  "https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js",
+  "https://unpkg.com/@popperjs/core@2",
+  "https://unpkg.com/tippy.js@6",
+];
 
 document.addEventListener("DOMContentLoaded", function (event) {
-  let textManagerProductionMode = !watm_fn.isInEditMode();
-
-  if (textManagerProductionMode) {
-    watm_fn.log(
-      `Wild Apricot Text Manager ${watm_version} loaded in production mode`
-    );
-  } else {
-    watm_fn.log(
-      `Wild Apricot Text Manager ${watm_version} loaded in development mode`
-    );
-  }
-
+  loadCSS(`${watm_location}/css/${watm_styles}.css`);
   const overlay = document.createElement("div");
   overlay.id = "watm-overlay";
-  document.body.appendChild(overlay);
+  if (show_watm_overlay) document.body.appendChild(overlay);
+  loadScripts();
+});
 
-  // set watm folder location
-  if (
-    typeof watm_location === "undefined" ||
-    watm_location === null ||
-    watm_location === ""
-  ) {
-    var watm_location = "/resources/Theme/WildApricotTextManager";
+function loadScripts() {
+  let callback;
+  callback =
+    loadedScripts < requiredScripts.length - 1 ? loadScripts : checkLicense;
+  var head = document.head;
+  var script = document.createElement("script");
+  script.type = "text/javascript";
+  script.src = `${
+    requiredScripts[loadedScripts].includes("http")
+      ? ""
+      : watm_location + "/scripts/"
+  }${requiredScripts[loadedScripts]}`;
+  script.onreadystatechange = callback;
+  script.onload = callback;
+  loadedScripts++;
+  head.appendChild(script);
+}
+
+function start(license) {
+  let textManagerProductionMode = !isInEditMode();
+
+  if (textManagerProductionMode) {
+    log(`Wild Apricot Text Manager ${watm_version} loaded in production mode`);
+  } else {
+    log(`Wild Apricot Text Manager ${watm_version} loaded in development mode`);
   }
 
-  if (
-    // Check if watm_language_name array exists/is populated
-    typeof watm_language_name !== "undefined" &&
-    watm_language_name.length > 0
-  ) {
-    // Set site as multilingual
-    var isMultilingual = true;
-
-    watm_language_name.forEach(function (value, index) {
-      // Set current language label
-      let label = value;
-
-      // Set current language class name
-      let className = watm_language_className[index]
-        ? watm_language_className[index] // Use provided class name if provided
-        : value.toLowerCase(); // Default to label name if not provided
-
-      // Set current language csv csv name
-      let filename = watm_language_csv_file[index]
-        ? watm_language_csv_file[index] // Use provided filename if provided
-        : className + ".csv"; // Default to class name if not provided
-
-      // Push values to language object
-      languages.push({ label, className, filename });
-    });
-
-    // Create language toggle
-    let elmId =
-      typeof languageSwitcherId !== "undefined"
-        ? elmId // Use provided element ID if provided
-        : "language_switch"; // Default ID to use if one not provided
-
-    // Show language toggle if not disabled
+  if (license !== "invalid") {
     if (
-      (typeof showLanguageSwitch === "undefined" ||
-        showLanguageSwitch !== false) &&
-      textManagerProductionMode
-    )
-      watm_fn.createToggle(languages, elmId);
-  } else var isMultilingual = false; // Site is not multilingual
+      // Check if watm_language_name array exists/is populated
+      typeof watm_language_name !== "undefined" &&
+      watm_language_name.length > 0
+    ) {
+      // Set site as multilingual
+      var isMultilingual = true;
 
-  // Load default config file
+      watm_language_name.forEach(function (value, index) {
+        // Set current language label
+        let label = value;
 
-  Papa.parse(`${watm_location}/config.csv`, {
-    download: true,
-    header: true,
-    skipEmptyLines: "greedy",
-    complete: function (results) {
-      results.data.forEach((row) => {
-        watm_fn.process(row);
+        // Set current language class name
+        let className = watm_language_className[index]
+          ? watm_language_className[index] // Use provided class name if provided
+          : value.toLowerCase(); // Default to label name if not provided
+
+        // Set current language csv csv name
+        let filename = watm_language_csv_file[index]
+          ? watm_language_csv_file[index] // Use provided filename if provided
+          : className + ".csv"; // Default to class name if not provided
+
+        // Push values to language object
+        languages.push({ label, className, filename });
       });
-      languageCallback();
-    },
-  });
 
-  // Routines for multilanguage site
-  if (isMultilingual && textManagerProductionMode) {
-    // Check for language toggle keyword in URL
-    if (window.location.href.indexOf("?watm-") > -1) {
+      // Create language toggle
+      let elmId =
+        typeof languageSwitcherId !== "undefined"
+          ? elmId // Use provided element ID if provided
+          : "language_switch"; // Default ID to use if one not provided
+
+      // Show language toggle if not disabled
+      if (
+        (typeof showLanguageSwitch === "undefined" ||
+          showLanguageSwitch !== false) &&
+        textManagerProductionMode
+      )
+        createToggle(languages, elmId);
+    } else var isMultilingual = false; // Site is not multilingual
+
+    // Load default config file
+
+    Papa.parse(`${watm_location}/config.csv`, {
+      download: true,
+      header: true,
+      skipEmptyLines: "greedy",
+      complete: function (results) {
+        let lineCount = 0;
+        let BreakException = {};
+        try {
+          results.data.forEach((row) => {
+            process(row);
+            lineCount++;
+            if (license == "trial" && lineCount <= 10) throw BreakException;
+          });
+        } catch (e) {
+          log(
+            "Trial only permits loading first 10 lines of config.csv",
+            "Trial Mode"
+          );
+        }
+        languageCallback();
+      },
+    });
+
+    // Routines for multilanguage site
+    if (isMultilingual && textManagerProductionMode) {
+      // Check for language toggle keyword in URL
+      if (window.location.href.indexOf("?watm-") > -1) {
+        languages.forEach((language, index) => {
+          if (
+            window.location.href.indexOf(`?watm-${language.className}`) > -1
+          ) {
+            // Set language cookie
+            setLanguage(language.className);
+          }
+        });
+      }
+
+      currentLanguage = getCurrentLanguage();
+      currentLanguage =
+        currentLanguage == "Default" ||
+        currentLanguage == null ||
+        currentLanguage == ""
+          ? languages[0].className
+          : currentLanguage;
+
+      log(`Currently using ${currentLanguage} translation`);
+
+      // Hide classes for unselected language
       languages.forEach((language, index) => {
-        if (window.location.href.indexOf(`?watm-${language.className}`) > -1) {
-          // Set language cookie
-          watm_fn.setLanguage(language.className);
+        if (language.className !== currentLanguage) {
+          document
+            .querySelectorAll(`.${language.className}`)
+            .forEach(function (el) {
+              el.style.display = "none";
+            });
+        } else {
+          // set language csv
+          if (index !== 0) {
+            currentCSV = language.filename;
+          }
         }
       });
     }
 
-    currentLanguage = watm_fn.getCurrentLanguage();
-    currentLanguage =
-      currentLanguage == "Default" ||
-      currentLanguage == null ||
-      currentLanguage == ""
-        ? languages[0].className
-        : currentLanguage;
-
-    watm_fn.log(`Currently using ${currentLanguage} translation`);
-
-    // Hide classes for unselected language
-    languages.forEach((language, index) => {
-      if (language.className !== currentLanguage) {
-        document
-          .querySelectorAll(`.${language.className}`)
-          .forEach(function (el) {
-            el.style.display = "none";
-          });
-      } else {
-        // set language csv
-        if (index !== 0) {
-          currentCSV = language.filename;
-        }
+    const languageCallback = () => {
+      // Load selected language CSV
+      if (currentCSV) {
+        Papa.parse(`${watm_location}/translations/${currentCSV}`, {
+          download: true,
+          header: true,
+          skipEmptyLines: "greedy",
+          complete: function (results) {
+            let lineCount = 0;
+            let BreakException = {};
+            try {
+              results.data.forEach((row) => {
+                process(row);
+                lineCount++;
+                if (license == "trial" && lineCount <= 10) throw BreakException;
+              });
+            } catch (e) {
+              log(
+                `Trial only permits loading first 10 lines of ${currentCSV}`,
+                "Trial Mode"
+              );
+            }
+          },
+        });
       }
-    });
+    };
   }
 
-  const languageCallback = () => {
-    // Load selected language CSV
-    if (currentCSV) {
-      Papa.parse(`${watm_location}/translations/${currentCSV}`, {
-        download: true,
-        header: true,
-        skipEmptyLines: "greedy",
-        complete: function (results) {
-          results.data.forEach((row) => {
-            watm_fn.process(row);
-          });
-        },
-      });
-    }
+  const showWATMIcon = (license) => {
+    if (window.location.href.indexOf("?dev") == -1)
+      appendWATMBtn(license, !!document.getElementById("idWaAdminSwitcher"));
   };
 
-  // If inspector is enabled
-  if (include_watm_modules.includes("inspector")) {
-    // show Inspector if keyword present
-    if (window.location.href.indexOf("?dev") > -1) {
-      // If editor is enabled
-      let isEditorEnabled;
-      if (include_watm_modules.includes("editor")) isEditorEnabled = true;
-      else isEditorEnabled = false;
-      // start inspector
-      inspector.start(isEditorEnabled, languages, watm_location);
-    }
-    // Attach inspector button
-    else if (showInspectorButton) inspector.appendBtn();
-  }
+  if (!hideWATMIcon) showWATMIcon(license);
 
-  document.getElementById("watm-overlay").style.display = "none"; // Remove the white overlay
-});
+  if (window.location.href.indexOf("?watm-") == -1)
+    document.getElementById("watm-overlay").style.display = "none"; // Remove the white overlay
+
+  if (
+    window.location.href.indexOf("?dev") > -1 &&
+    !!document.getElementById("idWaAdminSwitcher") &&
+    license !== "invalid"
+  ) {
+    launchInspector(languages, watm_location);
+  }
+}
+
+const loadCSS = (fileName) => {
+  let head = document.head;
+  let link = document.createElement("link");
+
+  link.type = "text/css";
+  link.rel = "stylesheet";
+  link.href = fileName;
+
+  head.appendChild(link);
+};
