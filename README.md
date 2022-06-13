@@ -33,6 +33,9 @@ NOTE: this code snippet assumes you have uploaded all files into the folder `/re
   <script src="/resources/Theme/WildApricotTextManager/wildapricot-textmanager.js"></script>
   <script>
 
+    // Enter your license key if you have one - omit to use trial
+    license_key = "";
+
     /*
       Array of available languages
       Can omit if site is not multilingual
