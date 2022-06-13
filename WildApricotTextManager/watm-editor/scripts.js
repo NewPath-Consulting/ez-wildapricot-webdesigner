@@ -13,6 +13,7 @@ let watmFunctions = [
   "@media",
   "link",
   "source",
+  "tooltip",
   "inactive",
 ];
 

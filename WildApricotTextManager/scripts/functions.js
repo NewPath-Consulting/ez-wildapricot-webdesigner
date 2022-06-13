@@ -160,6 +160,13 @@ const process = (row) => {
         if (el.hasAttribute("src")) el.setAttribute("src", replacementText);
       });
       break;
+    case "tooltip":
+      document.querySelectorAll(watmQuery).forEach(function (el) {
+        tippy(el, {
+          content: replacementText,
+        });
+      });
+      break;
   }
   if (watmFunction !== "inactive" && watmStyle !== null && watmStyle !== "") {
     let mediaQuery = "";

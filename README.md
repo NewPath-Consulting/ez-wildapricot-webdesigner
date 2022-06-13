@@ -209,6 +209,16 @@ Query: .headerDonateBtn a
 ## **source**
 > Changes the `src` URL of targeted element(s)
 
+## **tooltip**
+> Creates a text popup when mouse is hovered over element
+
+**EXAMPLE:**
+```text
+Replacement Text: View/Edit Your Profile
+Function: tooltip
+Query: .loginBoxProfileLink
+```
+
 ## **inactive**
 > Ignores current line in file
 
