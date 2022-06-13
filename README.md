@@ -35,21 +35,18 @@ NOTE: this code snippet assumes you have uploaded all files into the folder `/re
 
     /*
       Array of available languages
-      Can omit is site is not multilingual
+      Can omit if site is not multilingual
       Only "watm_language_name" is required, "watm_language_className"
-      and "watm_language_csv_file" will use "watm_language_name" value if not present
+      will use "watm_language_name" value if not present, and "watm_language_csv_file"
+      will use "watm_language_className"+ ".csv" if not present
     */
-    watm_language_name[0] = "English";
-    watm_language_className[0] = "english";
+    watm_language_name[0] = "English";        // Default language - uses config.csv, watm_language_className[0] will default to "english"
     watm_language_name[1] = "Français";
-    watm_language_className[1] = "french";
-    watm_language_csv_file[1] = "french.csv";
+    watm_language_className[1] = "french";    // watm_language_csv_file[1] will default to french.csv
     watm_language_name[2] = "Español";
-    watm_language_className[2] = "spanish";
-    watm_language_csv_file[2] = "spanish.csv";
+    watm_language_className[2] = "spanish";   // watm_language_csv_file[2] will default to spanish.csv
     watm_language_name[3] = "日本語";
-    watm_language_className[3] = "japanese";
-    watm_language_csv_file[3] = "japanese.csv";
+    watm_language_className[3] = "japanese";  // watm_language_csv_file[3] will default to japanese.csv
 
     /* Optional, used to show default language switcher */
     var showLanguageSwitch = true;
