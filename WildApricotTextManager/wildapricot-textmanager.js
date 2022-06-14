@@ -16,7 +16,8 @@ let watm_language_name = [],
   license_key = "",
   hideWATMIcon = false,
   show_watm_overlay = true,
-  enable_public_inspector = false;
+  enable_public_inspector = false,
+  do_not_cache = false;
 
 let loadedScripts = 0;
 let requiredScripts = [
@@ -104,28 +105,34 @@ function start(license) {
 
     // Load default config file
 
-    Papa.parse(`${watm_location}/config.csv`, {
-      download: true,
-      header: true,
-      skipEmptyLines: "greedy",
-      complete: function (results) {
-        let lineCount = 0;
-        let BreakException = {};
-        try {
-          results.data.forEach((row) => {
-            process(row);
-            lineCount++;
-            if (license == "trial" && lineCount <= 10) throw BreakException;
-          });
-        } catch (e) {
-          log(
-            "Trial only permits loading first 10 lines of config.csv",
-            "Trial Mode"
-          );
-        }
-        languageCallback();
-      },
-    });
+    do_not_cache = false;
+    Papa.parse(
+      `${watm_location}/config.csv${
+        do_not_cache === true ? "?time=" + Math.round(Date.now() / 1000) : ""
+      }`,
+      {
+        download: true,
+        header: true,
+        skipEmptyLines: "greedy",
+        complete: function (results) {
+          let lineCount = 0;
+          let BreakException = {};
+          try {
+            results.data.forEach((row) => {
+              process(row);
+              lineCount++;
+              if (license == "trial" && lineCount <= 10) throw BreakException;
+            });
+          } catch (e) {
+            log(
+              "Trial only permits loading first 10 lines of config.csv",
+              "Trial Mode"
+            );
+          }
+          languageCallback();
+        },
+      }
+    );
 
     // Routines for multilanguage site
     if (isMultilingual && textManagerProductionMode) {
@@ -171,27 +178,35 @@ function start(license) {
     const languageCallback = () => {
       // Load selected language CSV
       if (currentCSV) {
-        Papa.parse(`${watm_location}/translations/${currentCSV}`, {
-          download: true,
-          header: true,
-          skipEmptyLines: "greedy",
-          complete: function (results) {
-            let lineCount = 0;
-            let BreakException = {};
-            try {
-              results.data.forEach((row) => {
-                process(row);
-                lineCount++;
-                if (license == "trial" && lineCount <= 10) throw BreakException;
-              });
-            } catch (e) {
-              log(
-                `Trial only permits loading first 10 lines of ${currentCSV}`,
-                "Trial Mode"
-              );
-            }
-          },
-        });
+        Papa.parse(
+          `${watm_location}/translations/${currentCSV}${
+            do_not_cache === true
+              ? "?time=" + Math.round(Date.now() / 1000)
+              : ""
+          }`,
+          {
+            download: true,
+            header: true,
+            skipEmptyLines: "greedy",
+            complete: function (results) {
+              let lineCount = 0;
+              let BreakException = {};
+              try {
+                results.data.forEach((row) => {
+                  process(row);
+                  lineCount++;
+                  if (license == "trial" && lineCount <= 10)
+                    throw BreakException;
+                });
+              } catch (e) {
+                log(
+                  `Trial only permits loading first 10 lines of ${currentCSV}`,
+                  "Trial Mode"
+                );
+              }
+            },
+          }
+        );
       }
     };
   }

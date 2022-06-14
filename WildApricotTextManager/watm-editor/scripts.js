@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
   newRowBtnHolder.appendChild(newRowBtn);
   document.getElementById("csvTableContainer").appendChild(newRowBtnHolder);
 
-  Papa.parse(csvFile, {
+  Papa.parse(csvFile + "?time=" + Math.round(Date.now() / 1000), {
     download: true,
     header: true,
     skipEmptyLines: "greedy",
