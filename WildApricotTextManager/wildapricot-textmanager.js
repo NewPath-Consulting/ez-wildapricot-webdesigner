@@ -201,7 +201,7 @@ function start(license) {
       appendWATMBtn(
         license,
         !!document.getElementById("idWaAdminSwitcher") ||
-          enable_public_inspector
+          (enable_public_inspector && !isInEditMode())
       );
   };
 
@@ -213,7 +213,7 @@ function start(license) {
   if (
     window.location.href.indexOf("?dev") > -1 &&
     (!!document.getElementById("idWaAdminSwitcher") ||
-      enable_public_inspector) &&
+      (enable_public_inspector && !isInEditMode())) &&
     license !== "invalid"
   ) {
     launchInspector(languages, watm_location);
