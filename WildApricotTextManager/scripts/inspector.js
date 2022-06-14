@@ -177,6 +177,10 @@ const interceptClicks = () => {
       ) {
         e.target.classList.add("watm-hover");
 
+        if (e.target._tippy) {
+          e.target._tippy.destroy();
+        }
+
         tippy(e.target, {
           content: e.target.tagName,
         });
