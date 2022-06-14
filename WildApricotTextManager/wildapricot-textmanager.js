@@ -15,7 +15,8 @@ let watm_language_name = [],
   currentLanguage = "",
   license_key = "",
   hideWATMIcon = false,
-  show_watm_overlay = true;
+  show_watm_overlay = true,
+  enable_public_inspector = false;
 
 let loadedScripts = 0;
 let requiredScripts = [
@@ -197,7 +198,11 @@ function start(license) {
 
   const showWATMIcon = (license) => {
     if (window.location.href.indexOf("?dev") == -1)
-      appendWATMBtn(license, !!document.getElementById("idWaAdminSwitcher"));
+      appendWATMBtn(
+        license,
+        !!document.getElementById("idWaAdminSwitcher") ||
+          enable_public_inspector
+      );
   };
 
   if (!hideWATMIcon) showWATMIcon(license);
@@ -207,7 +212,8 @@ function start(license) {
 
   if (
     window.location.href.indexOf("?dev") > -1 &&
-    !!document.getElementById("idWaAdminSwitcher") &&
+    (!!document.getElementById("idWaAdminSwitcher") ||
+      enable_public_inspector) &&
     license !== "invalid"
   ) {
     launchInspector(languages, watm_location);
