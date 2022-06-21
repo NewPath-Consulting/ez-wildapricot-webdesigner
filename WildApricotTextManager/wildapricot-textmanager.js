@@ -156,6 +156,8 @@ function start(license) {
           ? languages[0].className
           : currentLanguage;
 
+      document.body.classList.add(`${currentLanguage}-lang`);
+
       log(`Currently using ${currentLanguage} translation`);
 
       // Hide classes for unselected language
