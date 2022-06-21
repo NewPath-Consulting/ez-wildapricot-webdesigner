@@ -140,7 +140,12 @@ const process = (row) => {
     case "replace_element":
       if (watmQuery == null || watmQuery == "") watmQuery = "body";
       document.querySelectorAll(watmQuery).forEach(function (el) {
-        let regex = new RegExp("\\b" + defaultText + "\\b", "gi");
+        let regex = new RegExp(
+          (defaultText.includes("-") ? "" : "\\b") +
+            defaultText +
+            (defaultText.includes("-") ? "" : "\\b"),
+          "gi"
+        );
         walkText(el, regex, replacementText, watmFunction);
       });
       break;
