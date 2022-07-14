@@ -7,6 +7,15 @@ let watm_version = "2.0";
 let watm_styles = "default";
 let watm_info_url = "https://newpathconsulting.com/watm";
 
+window.addEventListener("error", function (e) {
+  document.body.style.visibility = "visible";
+  return false;
+});
+
+window.addEventListener("unhandledrejection", function (e) {
+  document.body.style.visibility = "visible";
+});
+
 let watm_language_name = [],
   watm_language_className = [],
   watm_language_csv_file = [],
@@ -91,7 +100,7 @@ function start(license) {
       // Create language toggle
       let elmId =
         typeof languageSwitcherId !== "undefined"
-          ? elmId // Use provided element ID if provided
+          ? languageSwitcherId // Use provided element ID if provided
           : "language_switch"; // Default ID to use if one not provided
 
       // Show language toggle if not disabled
