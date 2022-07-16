@@ -1,11 +1,8 @@
 const checkLicense = () => {
   let license;
-  //let checkUrl = "https://newpathconsulting.com/check";
-  //let checkUrlDev = "https://newpathconsulting.com/checkdev";
+  let checkUrl = "https://hook.us1.make.com/8euj9o9frkj3wz2nqm6xmcp4y1mdy5tp";
   if (license_key !== "") {
-    let checkUrlDev =
-      "https://hook.us1.make.com/8euj9o9frkj3wz2nqm6xmcp4y1mdy5tp";
-    fetch(`${checkUrlDev}/?json=true&key=${license_key}`)
+    fetch(`${checkUrl}/?json=true&key=${license_key}`)
       .then((response) => response.json())
       .then((data) => {
         if (
@@ -48,6 +45,14 @@ const checkLicense = () => {
 
 const createToggle = (languages, elm) => {
   // Target location for language switcher
+  if (!document.getElementById(elm)) {
+    log(
+      'No language switcher content gadget found. Add a content gadget with class "language_switcher" to all of your page templates or disable the language switcher',
+      "Warning"
+    );
+    return false;
+  }
+
   const toggleElementID = document.getElementById(elm);
 
   // Build switcher
