@@ -215,13 +215,16 @@ const generateCSV = () => {
     let watmNotes = tableRow.children[6].innerText.trim();
 
     jsonText += "{";
-    jsonText += `"Wild Apricot Reference":"${watmReference}",`;
-    jsonText += `"Default Text":"${defaultText}",`;
-    jsonText += `"Replacement Text":"${replacementText}",`;
-    jsonText += `"Function":"${watmFunction}",`;
-    jsonText += `"Query":"${watmQuery}",`;
-    jsonText += `"Style":"${watmStyle}",`;
-    jsonText += `"Notes":"${watmNotes}"`;
+    jsonText += `"Wild Apricot Reference":"${watmReference.replace(
+      /"/g,
+      '\\"'
+    )}",`;
+    jsonText += `"Default Text":"${defaultText.replace(/"/g, '\\"')}",`;
+    jsonText += `"Replacement Text":"${replacementText.replace(/"/g, '\\"')}",`;
+    jsonText += `"Function":"${watmFunction.replace(/"/g, '\\"')}",`;
+    jsonText += `"Query":"${watmQuery.replace(/"/g, '\\"')}",`;
+    jsonText += `"Style":"${watmStyle.replace(/"/g, '\\"')}",`;
+    jsonText += `"Notes":"${watmNotes.replace(/"/g, '\\"')}"`;
     jsonText += "},";
   });
 
