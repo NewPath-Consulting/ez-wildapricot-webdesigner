@@ -77,7 +77,7 @@ Sys/Email member,Cancel,Annuler,button,#FunctionalBlock1_ctl00_cancelButton,,
 Privacy,Privacy,Confidentialité,text,#FunctionalBlock1_ctl00_ctl00_privacyTabLabel,,
 Privacy,Privacy,Confidentialité,text,#ctl00_ContentArea_accessTabLink,,
 Privacy,Show profile to others,Montrer le profil aux autres,replace,#FunctionalBlock1_ctl00_ctl00_DetailsToShow_viewIncludeMeInMemberDirectory,,
-Privacy,Details to show,Détails à afficher,replace,#FunctionalBlock1_ctl00_ctl00_DetailsToShow_sectionAdministrationAccess,,
+Privacy,Details to show,Détails à  afficher,replace,#FunctionalBlock1_ctl00_ctl00_DetailsToShow_sectionAdministrationAccess,,
 Privacy,"(in member directories, forum and blog posts)","(dans les annuaires des membres, les forums et les articles de blog)",replace,#FunctionalBlock1_ctl00_ctl00_DetailsToShow_detailsToShowExplanationLabel,,
 Privacy,Anybody,N'importe qui,replace,#memberFieldTable > tbody > tr:nth-child(1) > td:nth-child(2) > div > div.memberFieldHeadingTitle,,
 Privacy,Members,Membres,replace,#memberFieldTable > tbody > tr:nth-child(1) > td:nth-child(3) > div > div.memberFieldHeadingTitle,,
@@ -101,7 +101,7 @@ Email subscriptions,Receive advance announcements about upcoming events,Annonces
 Email subscriptions,Subscribed,Souscrit,replace,#FunctionalBlock1_ctl00_ctl00_Subscriptions_emailNews_frontLabel,,
 Email subscriptions,"Mass emails from administrators, such as newsletters and other important notifications","Courriels de masse des administrateurs, tels que des infolettres et d'autres notifications importantes",replace,#FunctionalBlock1_ctl00_ctl00_Subscriptions_emailNews_tailLabel,,
 Email subscriptions,Forum subscriptions,Abonnements au Forum,replace,#FunctionalBlock1_ctl00_ctl00_Subscriptions_sectionSubscribeToForums,,
-Email subscriptions,You can subscribe for updates in a particular forum or forum topic. Go to forum/topic page to subscribe.,Vous pouvez vous abonner aux mises à jour faites dans un forum ou un thème de forum particulier. Cliquez sur la page du forum/thème pour vous abonner.,replace,#FunctionalBlock1_ctl00_ctl00_Subscriptions_memberSubscriptionsDiv > div:nth-child(7) > div > div.fieldBody,,
+Email subscriptions,You can subscribe for updates in a particular forum or forum topic. Go to forum/topic page to subscribe.,Vous pouvez vous abonner aux mises à  jour faites dans un forum ou un thème de forum particulier. Cliquez sur la page du forum/thème pour vous abonner.,replace,#FunctionalBlock1_ctl00_ctl00_Subscriptions_memberSubscriptionsDiv > div:nth-child(7) > div > div.fieldBody,,
 ,,,,,,
 Member photo albums ,Member photo albums ,Albums photos des membres,text,#ctl00_ContentArea_photoGalleryTabLink,,
 Member photo albums ,Member photo albums ,Albums photos des membres,replace,#FunctionalBlock1_ctl00_ctl00_photoGalleryTabLabel,,
@@ -173,21 +173,21 @@ Change Password/Top Link,Change password,Changer le mot de passe,replace,#id_qaI
 Change password,Change password,Changer le mot de passe,replace,#id_kZ3ILBA > div > h2,,
 Change password,Change password for,Changer le mot de passe pour,replace,#id_GxzIkeM > div.introContainer > div > div > div > div > div > div > div > div > div > div,,
 Reset password/Reset password request,Current password incorrect,Mot de passe actuel incorrect,,,,
-Reset password/Reset password request,An error occurred during password reset: ,Une erreur s’est produite durant la réinitialisation de votre mot de passe: ,,,,
-Reset password/Reset password request,"Invalid or expired link. To request password reset email again, please follow the link below.","Le lien est invalide ou a expiré. Pour demander la réinitialisation de votre mot de passe à nouveau, veuillez suivre le lien ci-dessous.",,,,
+Reset password/Reset password request,An error occurred during password reset: ,Une erreur s'est produite durant la réinitialisation de votre mot de passe: ,,,,
+Reset password/Reset password request,"Invalid or expired link. To request password reset email again, please follow the link below.","Le lien est invalide ou a expiré. Pour demander la réinitialisation de votre mot de passe à  nouveau, veuillez suivre le lien ci-dessous.",,,,
 Reset password/Reset password request,Passwords do not match,Les mots de passe ne correspondent pas,,,,
-Reset password/Reset password request,Minimum length is 7 characters,Le mot de passe doit contenir 7 caractàres minimum,,,,
+Reset password/Reset password request,Minimum length is 7 characters,Le mot de passe doit contenir 7 caractà res minimum,,,,
 Reset password/Reset password request,"Password reset instructions emailed. If you do not receive our email within a few minutes, please check your junk/spam filters and double-check the email address entered.","Les instructions pour réinitialiser votre mot de passe ont été envoyées. Si vous ne recevez pas de courriel dans les prochaines minutes, veuillez regarder dans vos filtres spam/corbeille pour vérifier que vous avez inscrit la bonne adresse.",,,,
-Reset password/Reset password request,Please enter your email and we will send instructions on how to reset your password.,Veuillez indiquer votre adresse de courriel pour recevoir les instructions nécessaire Ã  la réinitialisation de votre mot de passe,,,,
+Reset password/Reset password request,Please enter your email and we will send instructions on how to reset your password.,Veuillez indiquer votre adresse de courriel pour recevoir les instructions nécessaire àƒÂ  la réinitialisation de votre mot de passe,,,,
 ,My profile,Mon profil,replace,#id_bwHsR1l > div > ul > li:nth-child(2) > a,,
 ,Change password,Changer le mot de passe,replace,#id_bwHsR1l > div > ul > li.last > span,,
 ,Current password incorrect,Mot de passe actuel incorrect,replace,#ctl00_ContentArea_OldPasswordCv,,
-Reset Password request,An error occurred during password reset: ,Une erreur s’est produite durant la réinitialisation de votre mot de passe: ,,,,
-,"Invalid or expired link. To request password reset email again, please follow the link below.","Le lien est invalide ou a expiré. Pour demander la réinitialisation de votre mot de passe à nouveau, veuillez suivre le lien ci-dessous.",,,,
+Reset Password request,An error occurred during password reset: ,Une erreur s'est produite durant la réinitialisation de votre mot de passe: ,,,,
+,"Invalid or expired link. To request password reset email again, please follow the link below.","Le lien est invalide ou a expiré. Pour demander la réinitialisation de votre mot de passe à  nouveau, veuillez suivre le lien ci-dessous.",,,,
 ,Passwords do not match,Les mots de passe ne correspondent pas,replace,#ctl00_ContentArea_NewPasswordsCompareValidator,,
-,Minimum length is 7 characters,Le mot de passe doit contenir 7 caractàres minimum,replace,#ctl00_ContentArea_PasswordMinLengthCustomValidator,,
+,Minimum length is 7 characters,Le mot de passe doit contenir 7 caractà res minimum,replace,#ctl00_ContentArea_PasswordMinLengthCustomValidator,,
 ,"Password reset instructions emailed. If you do not receive our email within a few minutes, please check your junk/spam filters and double-check the email ","Les instructions pour réinitialiser votre mot de passe ont été envoyées. Si vous ne recevez pas de courriel dans les prochaines minutes, veuillez regarder dans vos filtres spam/corbeille pour vérifier que vous avez inscrit la bonne adresse.",replace,#ctl00_ContentArea_messageBox_idConfirmWindowStyle > div.cww-inner > div > div,,
-,Please enter your email and we will send instructions on how to reset your password.,Veuillez indiquer votre adresse de courriel pour recevoir les instructions nÃ©cessaire Ã  la rÃ©initialisation de votre mot de passe,replace,#ctl00_ContentArea_messageBox_idConfirmWindowStyle > div.cww-inner > div > div,,
+,Please enter your email and we will send instructions on how to reset your password.,Veuillez indiquer votre adresse de courriel pour recevoir les instructions nàƒÂ©cessaire àƒÂ  la ràƒÂ©initialisation de votre mot de passe,replace,#ctl00_ContentArea_messageBox_idConfirmWindowStyle > div.cww-inner > div > div,,
 ,,,,,,
 ,Reset password request,Demande de réinitialisation de mot de passe,replace,#id_bwHsR1l > div > ul > li.last > span,,
 Password Reset,Home,Accueil ,replace,#id_D1MJu64 > a,,
@@ -199,7 +199,7 @@ Authorization required,Password,Mot de passe,replace,#idPasswordBox > span.manda
 Authorization required,Remember me,Se souvenir de moi,replace,#idRememberMe > label,,
 Authorization required,Log in ,Se connecter,button,#ctl00_ContentArea_loginViewControl_loginControl_Login,,
 Authorization required,Forgot password,Mot de passe oublié,replace,#ctl00_ContentArea_loginViewControl_loginControl_forgottenPassword,,
-Access denied (403),"Sorry, but you have been denied access to the requested page or resource. (You might also see this message if you have been automatically logged out due to inactivity for reasons. Log out and log in again.) ","Désolé, mais l’accès à la page ou à la ressource demandée vous a été refusé. (Vous pouvez également voir ce message si vous avez été automatiquement déconnecté en raison d’une inactivité pour des raisons. Déconnectez-vous et reconnectez-vous.) ",,,,
+Access denied (403),"Sorry, but you have been denied access to the requested page or resource. (You might also see this message if you have been automatically logged out due to inactivity for reasons. Log out and log in again.) ","Désolé, mais l'accès à  la page ou à  la ressource demandée vous a été refusé. (Vous pouvez également voir ce message si vous avez été automatiquement déconnecté en raison d'une inactivité pour des raisons. Déconnectez-vous et reconnectez-vous.) ",,,,
 Sys/403 error,Access denied,Accès refusé,,#id_bwHsR1l > div > ul > li.last > span,,
 Sys/403 error,Log out and log in again.,Déconnectez-vous et reconnectez-vous.,text,,,
 Sys/403 error,"Sorry, login has failed. Please check your email address and password and try again.","Désolé, la connexion a échoué. Veuillez vérifier votre adresse e-mail et votre mot de passe et réessayer.",text,,,
@@ -226,7 +226,7 @@ Directory/Send Message,Cancel ,Annuler,replace,#FunctionalBlock1_ctl00_cancelBut
 WaGadgetMemberDirectory,Advanced search...,Recherche avancée...,text,#FunctionalBlock1_ctl00_ctl00_advancedSearchStatusPanel_advancedSearchLink,,List
 WaGadgetMemberDirectory,Clear values,Valeurs claires,text,#FunctionalBlock1_ctl00_ctl00_clearValuesLink,,Search
 WaGadgetMemberDirectory,Found: ,Trouvé:,text,#memberDirectorySearchArea div.memberDirectorySearchArea span,,List
-WaGadgetMemberDirectory,Go to simple search,Aller à l'option de recherche simple,text,#FunctionalBlock1_ctl00_ctl00_actionPanel_exitAdvancedSearchModeLink,,Search
+WaGadgetMemberDirectory,Go to simple search,Aller à  l'option de recherche simple,text,#FunctionalBlock1_ctl00_ctl00_actionPanel_exitAdvancedSearchModeLink,,Search
 WaGadgetMemberDirectory,Membership,Adhésion,delay,th:contains(Membership),,List
 WaGadgetMemberDirectory,Name,Prénom,delay,th:contains(Name),,List
 WaGadgetMemberDirectory,Organization,Organisation,delay,th:contains(Organization),,List
@@ -262,7 +262,7 @@ Store,Confirmation,Confirmation,replace,#idCheckoutWizardContainer > h1 > span:n
 Store,Please fill in your contact information,"S'il vous plait, veuillez indiquer vos coordonnées",replace,#step-1 > div.formAnnotates,,
 Store,Billing details,Détails de la facture,replace,#step-1 > h2,,
 Store,Contact email,Courriel de contact,replace,#step-1 > form > div > div.formFieldContainer.horizontalErrorMsg.required > label,,
-Store,We'll send an order confirmation to this address,Nous enverrons une confirmation de commande à cette adresse,replace,#step-1 > form > div > div.formFieldContainer.horizontalErrorMsg.required > div.formFieldAnnotate,,
+Store,We'll send an order confirmation to this address,Nous enverrons une confirmation de commande à  cette adresse,replace,#step-1 > form > div > div.formFieldContainer.horizontalErrorMsg.required > div.formFieldAnnotate,,
 Store,First name,Prénom,replace,#step-1 > form > div > div:nth-child(4) > label,,
 Store,Last name,Nom de famille,replace,#step-1 > form > div > div:nth-child(5) > label,,
 Store,Phone,Téléphone,replace,#step-1 > form > div > div:nth-child(6) > label,,
@@ -283,7 +283,7 @@ Online Store Cart/Checkout Step 1 Contact ,Please fill in your contact informati
 Online Store Cart/Checkout Step 1 Contact ,Billing details,Détails de la facture,replace,#step-1 > h2,,
 Online Store Cart/Checkout Step 1 Contact ,Contact email,"
 Courriel de contact",replace,#step-1 > form > div > div.formFieldContainer.horizontalErrorMsg.required > label,,
-Online Store Cart/Checkout Step 1 Contact ,We'll send an order confirmation to this address,Nous enverrons une confirmation de commande à cette adresse,replace,#step-1 > form > div > div.formFieldContainer.horizontalErrorMsg.required > div.formFieldAnnotate,,
+Online Store Cart/Checkout Step 1 Contact ,We'll send an order confirmation to this address,Nous enverrons une confirmation de commande à  cette adresse,replace,#step-1 > form > div > div.formFieldContainer.horizontalErrorMsg.required > div.formFieldAnnotate,,
 Online Store Cart/Checkout Step 1 Contact ,First name,Prénom,replace,#step-1 > form > div > div:nth-child(4) > label,,
 Online Store Cart/Checkout Step 1 Contact ,Last name,Nom de famille,replace,#step-1 > form > div > div:nth-child(5) > label,,
 Online Store Cart/Checkout Step 1 Contact ,Phone,Téléphone,replace,#step-1 > form > div > div:nth-child(6) > label,,
@@ -336,17 +336,17 @@ WaGadgetOnlineStoreCartCheckout,Phone,Téléphone,text,#step-1 > form > div > di
 WaGadgetOnlineStoreCartCheckout,Please fill in your contact information,"S'il vous plait, veuillez indiquer vos coordonnées",text,#step-1 > div.formAnnotates,,
 WaGadgetOnlineStoreCartCheckout,Proceed to checkout,Procéder au paiement,button,.toCheckout,,
 WaGadgetOnlineStoreCartCheckout,Total:,Total:,delay,.storeCartTable_totalLabel,,
-WaGadgetOnlineStoreCartCheckout,We'll send an order confirmation to this address ,Nous enverrons une confirmation de commande à cette adresse,text,#step-1 > form > div > div.formFieldContainer.horizontalErrorMsg.required > div.formFieldAnnotate,,
+WaGadgetOnlineStoreCartCheckout,We'll send an order confirmation to this addressÂ ,Nous enverrons une confirmation de commande à  cette adresse,text,#step-1 > form > div > div.formFieldContainer.horizontalErrorMsg.required > div.formFieldAnnotate,,
 WaGadgetOnlineStoreCartCheckout,Your cart is empty.,Votre panier est vide.,delay,.emptyCartMessage,,
 ,,,,#step-1 > form > div > div:nth-child(7) > div > label > a,,
-,Je confirme avoir lu et accepté les termes de la politique de confidentialité ,,,#step-1 > form > div > div:nth-child(8) > div > label > a,,
+,Je confirme avoir lu et accepté les termes de la politique de confidentialitéÂ ,,,#step-1 > form > div > div:nth-child(8) > div > label > a,,
 ,,,,,,
 ,,,,,,
-Sys/Online store checkout/Continue page,Billing and shipping information ,Information de facturation et de livraison,text,#step-3-content>h2,,
+Sys/Online store checkout/Continue page,Billing and shipping informationÂ ,Information de facturation et de livraison,text,#step-3-content>h2,,
 Sys/Online store checkout/Continue page,Billing details,Détails de la facture,text,#step-3-content p:nth-child(3)>strong,,
 Sys/Online store checkout/Continue page,Comments,Commentaires,text,#step-3 > form > div > h2,,
 Sys/Online store checkout/Continue page,Back,Retour,replace,#step-3 > div.storeCartControlNav > div.storeCartControlNav_left > a,,
-Sys/Online store checkout/Continue page,Invoice me,M’envoyer la facture,button,#button_pay_invoice,,
+Sys/Online store checkout/Continue page,Invoice me,M'envoyer la facture,button,#button_pay_invoice,,
 Sys/Online store checkout/Continue page,Pay online,Payer en ligne,button,#button_pay_online,,
 Sys/Online store checkout/Continue page,I'm not a robot,,text,#recaptcha-anchor-label,,
 ,,,,,,
@@ -368,10 +368,10 @@ Sys/Membership level change,Cancel,Annuler,button,#FunctionalBlock1_ctl00_ctl00_
 Sys/Membership level change,Next ,Suivant,button,#FunctionalBlock1_ctl00_ctl00_stepTemplate_next,,
 ,,,,,,
 Membership Bundles,,,,,,
-WaGadgetAddMemberToBundle,Add member to bundle,Ajouter un membre à un paquet,text,h3:contains(Add member to bundle),,
+WaGadgetAddMemberToBundle,Add member to bundle,Ajouter un membre à  un paquet,text,h3:contains(Add member to bundle),,
 WaGadgetAddMemberToBundle,Bundle summary,Résumé du paquet,text,h4:contains(Bundle summary),,
 WaGadgetAddMemberToBundle,Bundle limit,Limite de paquet,text,.fieldLabel:contains(Bundle limit),,
-WaGadgetAddMemberToBundle,Used so far,Utilisé jusqu'à présent,text,.fieldLabel:contains(Used so far),,
+WaGadgetAddMemberToBundle,Used so far,Utilisé jusqu'à  présent,text,.fieldLabel:contains(Used so far),,
 WaGadgetAddMemberToBundle,Your members,Vos membres,text,.fieldLabel:contains(Your members),,
 ,,,,,,
 ,,,,,,
@@ -387,13 +387,13 @@ Sys/Membership Renewal/Message box,"Membership renewal initiated, not paid yet."
 Sys/Membership Renewal/Message box,View/Pay invoice,Voir / Payer la facture,button,#FunctionalBlock1_ctl00_ctl00_Membership_renewalUnpaidMessageBox_viewPayRenewalInvoiceButton,,
 WaGadgetMembershipRenewal,Cancel,Annuler,button,#FunctionalBlock1_ctl00_ctl00_stepTemplate_cancelTop,,
 WaGadgetMembershipRenewal,Cancel,Annuler,button,#FunctionalBlock1_ctl00_ctl00_stepTemplate_cancel,,
-WaGadgetMembershipRenewal,Current status ,Statut actuel,text,#idInfoContainer div.infoTitle:contains(Current status),,
+WaGadgetMembershipRenewal,Current statusÂ ,Statut actuel,text,#idInfoContainer div.infoTitle:contains(Current status),,
 WaGadgetMembershipRenewal,Email,Adresse e-mail,text,span.required:contains(Email),,
 WaGadgetMembershipRenewal,I confirm I have read and accept the terms of the Privacy Policy,Je confirme avoir lu et accepté les termes de la politique de confidentialité,text,#FunctionalBlock1_ctl00_ctl00_stepTemplate_wizardMemberForm_memberForm_memberFormRepeater_ctl06_termsOfUse10041587 > div > span.label > label > span > a,,
-WaGadgetMembershipRenewal,Level ,Niveau,text,#FunctionalBlock1_ctl00_ctl00_stepTemplate_renewalHeader_level_levelText,,
-WaGadgetMembershipRenewal,Renew to ,Renouveler pour,text,#idInfoContainer div.infoTitle:contains(Renew to),,
-WaGadgetMembershipRenewal,Update and next,Mettre à jour et suivant,button,#FunctionalBlock1_ctl00_ctl00_stepTemplate_nextTop,,
-WaGadgetMembershipRenewal,Update and next,Mettre à jour et suivant,button,#FunctionalBlock1_ctl00_ctl00_stepTemplate_next,,
+WaGadgetMembershipRenewal,LevelÂ ,Niveau,text,#FunctionalBlock1_ctl00_ctl00_stepTemplate_renewalHeader_level_levelText,,
+WaGadgetMembershipRenewal,Renew toÂ ,Renouveler pour,text,#idInfoContainer div.infoTitle:contains(Renew to),,
+WaGadgetMembershipRenewal,Update and next,Mettre à  jour et suivant,button,#FunctionalBlock1_ctl00_ctl00_stepTemplate_nextTop,,
+WaGadgetMembershipRenewal,Update and next,Mettre à  jour et suivant,button,#FunctionalBlock1_ctl00_ctl00_stepTemplate_next,,
 WaGadgetMembershipRenewal,Your profile,Votre profil,text,.formTitle:contains(Your profile),,
 Incomplete Membership Renewal/Review and confirm window,Pending-Renewal,Renouvellement en attente,text,#confirmationTable > tbody > tr:nth-child(3) > td.infoColumn,,
 ,,,,,,
@@ -401,12 +401,12 @@ EVENTS WEBSITE,,,,,,
 Events ,Show details,Afficher les détails,replace,#idUpcomingEventsContainer .footerEventDetailsLink,,
 Register button on Events,Register,S'inscrire,button,.boxActionContainer input.registerButton,,
 ,Join waitlist ,Rejoindre la liste d'attente,button,.joinWaitlistButton,,
-WaGadgetEvents,<email> is already registered for this event - but you can submit another registration under the same email.,<email> est déjà inscrit(e) pour cet événement - mais vous pouvez soumettre une autre inscription sous la même adresse e-mail.,text,#FunctionalBlock1_ctl00_eventPageViewBase_ctl00_ctl00_stepTemplate_registrationTopMessage_alreadyRegisteredLoggedMessage_messageText,,Registration List
-WaGadgetEvents,Add to my calendar,Ajouter à mon calendrier,text,#FunctionalBlock1_ctl00_eventPageViewBase_ctl00_ctl00_importEvent_ImportEventText,,
-WaGadgetEvents,Add to my calendar,Ajouter à mon calendrier,text,#FunctionalBlock1_ctl00_eventPageViewBase_ctl00_ctl00_stepTemplate_importEvent_ImportEventText,,Registration
-WaGadgetEvents,Add to my calendar,Ajouter à mon calendrier,text,#FunctionalBlock1_ctl00_eventPageViewBase_ctl00_importEvent_ImportEventText,,Registration List
+WaGadgetEvents,<email> is already registered for this event - but you can submit another registration under the same email.,<email> est déjà  inscrit(e) pour cet événement - mais vous pouvez soumettre une autre inscription sous la màªme adresse e-mail.,text,#FunctionalBlock1_ctl00_eventPageViewBase_ctl00_ctl00_stepTemplate_registrationTopMessage_alreadyRegisteredLoggedMessage_messageText,,Registration List
+WaGadgetEvents,Add to my calendar,Ajouter à  mon calendrier,text,#FunctionalBlock1_ctl00_eventPageViewBase_ctl00_ctl00_importEvent_ImportEventText,,
+WaGadgetEvents,Add to my calendar,Ajouter à  mon calendrier,text,#FunctionalBlock1_ctl00_eventPageViewBase_ctl00_ctl00_stepTemplate_importEvent_ImportEventText,,Registration
+WaGadgetEvents,Add to my calendar,Ajouter à  mon calendrier,text,#FunctionalBlock1_ctl00_eventPageViewBase_ctl00_importEvent_ImportEventText,,Registration List
 WaGadgetEvents,Address,Adresse,text,span.fieldLabel:contains(Address),,Registration
-WaGadgetEvents,Already registered,Déjà enregistré,text,#FunctionalBlock1_ctl00_eventPageViewBase_ctl00_ctl00_UpcomingEventsRepeater_ctl01_eventRegistrationActions_ownRegistration,,
+WaGadgetEvents,Already registered,Déjà  enregistré,text,#FunctionalBlock1_ctl00_eventPageViewBase_ctl00_ctl00_UpcomingEventsRepeater_ctl01_eventRegistrationActions_ownRegistration,,
 WaGadgetEvents,Back,Retour,text,#FunctionalBlock1_ctl00_eventPageViewBase_ctl00_ctl00_back,,
 WaGadgetEvents,Back,Retour,button,#FunctionalBlock1_ctl00_eventPageViewBase_ctl00_ctl00_stepTemplate_prev,,Registration
 WaGadgetEvents,Back,Retour,button,#FunctionalBlock1_ctl00_eventPageViewBase_ctl00_ctl00_stepTemplate_prevTop,,Registration Confirm
@@ -424,7 +424,7 @@ WaGadgetEvents,Event,Un événement,text,#idInfoContainer > div.infoContainer > 
 WaGadgetEvents,Event,Un événement,text,div.infoTitle:contains(Event),,Registration
 WaGadgetEvents,Event,Un événement,text,#FunctionalBlock1_ctl00_eventPageViewBase_ctl00_ctl00_stepTemplate_infoMessageBox_idConfirmWindowStyle > div.cww-inner > div > div.kvTable > table > tbody > tr:nth-child(1) > td.labelInfoColumn,,Registration Confirm
 WaGadgetEvents,First name,Prénom,text,#FunctionalBlock1_ctl00_eventPageViewBase_ctl00_ctl00_stepTemplate_registrationForm_registrationForm_eventRegistrationFormRepeater_ctl00_titleLabel,,Registration Confirm
-WaGadgetEvents,"Invoice not paid. To change or cancel registration, contact administrator.","Facture non payée. Pour modifier ou annuler votre inscription, contactez l'administrateur.",text,#FunctionalBlock1_ctl00_eventPageViewBase_ctl00_messageBoxWarning_idConfirmWindowStyle > div.cww-inner > div > div.text,,Registration Confirm
+WaGadgetEvents,"Invoice not paid. To change or cancel registration, contactÂ administrator.","Facture non payée. Pour modifier ou annuler votre inscription, contactez l'administrateur.",text,#FunctionalBlock1_ctl00_eventPageViewBase_ctl00_messageBoxWarning_idConfirmWindowStyle > div.cww-inner > div > div.text,,Registration Confirm
 WaGadgetEvents,Last name,Nom de famille,text,#FunctionalBlock1_ctl00_eventPageViewBase_ctl00_ctl00_stepTemplate_registrationForm_registrationForm_eventRegistrationFormRepeater_ctl01_titleLabel,,Registration Confirm
 WaGadgetEvents,Location,Emplacement,text,".WaGadgetEventsStateList label:contains(""Location"")",,
 WaGadgetEvents,Location,Emplacement,text,#FunctionalBlock1_ctl00_eventPageViewBase_ctl00_ctl00_eventInfoBox_locationLi > label:contains(Location),,Details
@@ -440,16 +440,16 @@ WaGadgetEvents,Registration type,Type d'inscription,text,#FunctionalBlock1_ctl00
 WaGadgetEvents,Review all my registrations,Revoir toutes mes inscriptions,text,#FunctionalBlock1_ctl00_eventPageViewBase_ctl00_viewAllRegistrations,,Registration List
 WaGadgetEvents,Review and confirm,Réviser et confirmer,text,#FunctionalBlock1_ctl00_eventPageViewBase_ctl00_ctl00_stepTemplate_infoMessageBox_messageHeader,,Registration Confirm
 WaGadgetEvents,Review my registrations,Revoir mes inscriptions,text,#FunctionalBlock1_ctl00_eventPageViewBase_ctl00_ctl00_stepTemplate_additionalLink,,Registration List
-WaGadgetEvents,Show details ,Afficher les détails,text,#idUpcomingEventsContainer .footerEventDetailsLink,,
+WaGadgetEvents,Show detailsÂ ,Afficher les détails,text,#idUpcomingEventsContainer .footerEventDetailsLink,,
 WaGadgetEvents,Some registration types are unavailable because your membership hasn't been approved yet.,"Certains types d'inscription ne sont pas disponibles, car votre abonnement n'a pas encore été approuvé.",text,#FunctionalBlock1_ctl00_eventPageViewBase_ctl00_ctl00_stepTemplate_registrationTopMessage_suggestToActivateMembershipMessage_messageText,,Registration
 WaGadgetEvents,Province,Province,text,span.fieldLabel:contains(Province),,Registration
 WaGadgetEvents,Switch to Calendar View,Activer la vue Calendrier,text,#FunctionalBlock1_ctl00_eventPageViewBase_ctl00_ctl00_eventListViewSwitcher_calendarModeLink,,
 WaGadgetEvents,Total amount,Montant total,text,div.infoTitle:contains(Total amount),,Registration
 WaGadgetEvents,Total amount,Montant total,text,#FunctionalBlock1_ctl00_eventPageViewBase_ctl00_ctl00_stepTemplate_infoMessageBox_idConfirmWindowStyle > div.cww-inner > div > div.kvTable > table > tbody > tr:nth-child(5) > td.labelInfoColumn,,Registration Confirm
-WaGadgetEvents,Upcoming events ,Événements à venir,text,#idUpcomingEventsContainer > div.upcomingEventsContainer h3,,
+WaGadgetEvents,Upcoming events ,Événements à  venir,text,#idUpcomingEventsContainer > div.upcomingEventsContainer h3,,
 WaGadgetEvents,View / Pay Invoice,Voir / Payer la facture,button,#FunctionalBlock1_ctl00_eventPageViewBase_ctl00_messageBoxWarning_messageBoxWarningButton,,Registration Confirm
 WaGadgetEvents,When,Quand,text,li.eventInfoStartDate > label,,
-WaGadgetEvents,You can log in to auto-fill your contact information - or proceed with the registration without logging in.,Vous pouvez vous connecter pour saisir automatiquement vos coordonnées - ou procéder à l'inscription sans vous connecter.,text,#FunctionalBlock1_ctl00_eventPageViewBase_ctl00_ctl00_stepTemplate_registrationTopMessage_suggestToLoginMessage_idConfirmWindowStyle > div.cww-inner > div > div.text,,Registration
+WaGadgetEvents,You can log in to auto-fill your contact information - or proceed with the registration without logging in.,Vous pouvez vous connecter pour saisir automatiquement vos coordonnées - ou procéder à  l'inscription sans vous connecter.,text,#FunctionalBlock1_ctl00_eventPageViewBase_ctl00_ctl00_stepTemplate_registrationTopMessage_suggestToLoginMessage_idConfirmWindowStyle > div.cww-inner > div > div.text,,Registration
 WaGadgetEvents,Postal Code,Code postal,text,span.fieldLabel:contains(Postal Code),,Registration
 WaGadgetEvents,Spaces left,Espaces restants,text,.eventInfoBoxLabel:contains(Spaces left),,List
 WaGadgetEvents,Spaces left,Espaces restants,text,#FunctionalBlock1_ctl00_eventPageViewBase_ctl00_ctl00_eventInfoBox_ticketsLeft > label,,Details
@@ -457,20 +457,20 @@ WaGadgetEvents,"Registration confirmed (view invoice). To change or cancel, cont
 WaGadgetEvents,New registration,Nouvelle inscription,button,#FunctionalBlock1_ctl00_eventPageViewBase_ctl00_ctl06_bt,,List
 WaGadgetEvents,Confirmed,Confirmé,text,#FunctionalBlock1_ctl00_eventPageViewBase_ctl00_eventRegistrationsList_ctl01_ctl03_resitrationStateLabel,,List
 WaGadgetEvents,View details,Voir les détails,text,#membersTable > tbody > tr > td.memberDirectoryColumn3.thirdColumnWidth > div:nth-child(2) > a,,List
-WaGadgetEvents,Event registration,Inscription à l'événement,text,h2:contains(Event registration),,List
+WaGadgetEvents,Event registration,Inscription à  l'événement,text,h2:contains(Event registration),,List
 WaGadgetEvents,Location,Emplacement,replace,.infoText:contains(Location),,List
 WaGadgetEvents,registration type:,type d'inscription:,replace,.listLabelAlternative,,List
 WaGadgetEvents,New registration,Nouvelle inscription,button,#FunctionalBlock1_ctl00_eventPageViewBase_ctl00_ctl20_bt,,List
-WaGadgetEvents,Already registered,Déjà inscrit(e),text,#FunctionalBlock1_ctl00_eventPageViewBase_ctl00_ctl00_eventRegistrationActions_ownRegistration,,Details
+WaGadgetEvents,Already registered,Déjà  inscrit(e),text,#FunctionalBlock1_ctl00_eventPageViewBase_ctl00_ctl00_eventRegistrationActions_ownRegistration,,Details
 WaGadgetEvents,Enter information to join waitlist,Entrez les informations pour rejoindre la liste d'attente,text,h3:contains(Enter information to join waitlist),,Waitlist
-WaGadgetEvents,You have been added to the event's waitlist.,Vous avez été ajouté(e) à la liste d'attente de l'événement.,text,#FunctionalBlock1_ctl00_eventPageViewBase_ctl00_ctl00_stepTemplate_paymentStateMessageBox_messageText,,Waitlist
+WaGadgetEvents,You have been added to the event's waitlist.,Vous avez été ajouté(e) à  la liste d'attente de l'événement.,text,#FunctionalBlock1_ctl00_eventPageViewBase_ctl00_ctl00_stepTemplate_paymentStateMessageBox_messageText,,Waitlist
 WaGadgetEvents,Join Waitlist: Confirmation,Rejoindre la liste d'attente: confirmation,text,h2:contains(Join Waitlist),,Waitlist
 WaGadgetEvents,Event waitlist registration data,Données d'inscription de la liste d'attente de l'événement,text,h3:contains(Event waitlist registration data),,Waitlist
 WaGadgetEvents,Join waitlist,Rejoindre la liste d'attente,button,#FunctionalBlock1_ctl00_eventPageViewBase_ctl00_ctl00_eventRegistrationActions_lobJoinWaitlist_bt,,Waitlist
-WaGadgetEvents,Already on waitlist,Déjà sur la liste d'attente,text,#FunctionalBlock1_ctl00_eventPageViewBase_ctl00_ctl00_eventRegistrationActions_ownRegistration,,Waitlist
+WaGadgetEvents,Already on waitlist,Déjà  sur la liste d'attente,text,#FunctionalBlock1_ctl00_eventPageViewBase_ctl00_ctl00_eventRegistrationActions_ownRegistration,,Waitlist
 WaGadgetEvents,Registration form,Formulaire d'inscription,text,h3:contains(Registration form),,List
 WaGadgetEvents,Enter contact email,Entrer l'adresse e-mail de contact,text,h3:contains(Enter contact email),,Waitlist
-WaGadgetEvents,Already on waitlist,Déjà sur la liste d'attente,text,.infoAlreadyRegistered:contains(Already on waitlist),,List
+WaGadgetEvents,Already on waitlist,Déjà  sur la liste d'attente,text,.infoAlreadyRegistered:contains(Already on waitlist),,List
 WaGadgetEvents,Join waitlist,Rejoindre la liste d'attente,button,.joinWaitlistButton,,List
 WaGadgetEvents National Calendar page,Spaces left and Number,Espaces restants et nombre,hide,.eventInfoSpacesLeft,,List
 WaGadgetEvents,No events available,Aucun événement disponible,text,#idUpcomingEventsContainer > div.upcomingEventsContainer > div > div > div > div > div > div > div > div > div > div > p,,
@@ -541,8 +541,8 @@ WaGadgetBlog,Add comment,Ajouter un commentaire,text,.boxFooterPrimaryContainer 
 WaGadgetBlog,Add post,Ajouter un article,button,#FunctionalBlock1_ctl00_blogPostList_newEntry,,
 WaGadgetBlog,Author,Auteur,text,#idAuthorLabelContainer > div > div.fieldLabel,,
 WaGadgetBlog,Author,Auteur,text,#idDivBlogCommentFieldsContainer > div:nth-child(1) > div > table > tbody > tr > td.left > div,,Reply
-WaGadgetBlog,Back to list,Retour à la liste,text,#FunctionalBlock1_ctl00_blogPostEdit_title_backLink,,
-WaGadgetBlog,Back to list,Retour à la liste,text,#FunctionalBlock1_ctl00_blogPostView_title_backLink,,Details
+WaGadgetBlog,Back to list,Retour à  la liste,text,#FunctionalBlock1_ctl00_blogPostEdit_title_backLink,,
+WaGadgetBlog,Back to list,Retour à  la liste,text,#FunctionalBlock1_ctl00_blogPostView_title_backLink,,Details
 WaGadgetBlog,Body,Corps,text,#idBlogPostEditorFieldContainer > div > table > tbody > tr > td.left > div > strong > strong,,
 WaGadgetBlog,Cancel,Annuler,button,#FunctionalBlock1_ctl00_blogPostEdit_cancel,,
 WaGadgetBlog,Cancel,Annuler,button,#FunctionalBlock1_ctl00_blogPostView_blogEntry_blogCommentEdit_Cancel,,Reply
@@ -551,7 +551,7 @@ WaGadgetBlog,Comments,Commentaires,text,.boxFooterPrimaryContainer a:contains(Co
 ,,,,,,
 WaGadgetBlog,Creating new entry,Créer une nouvelle entrée,inactive,h4.boxHeaderTitle,,
 ,,,,,,
-WaGadgetBlog,Date/Time ,Date / heure,text,#idPostEditFormContentContainer div.generalFieldsContainer > div:nth-child(3) > div > table > tbody > tr > td.left > div > div > strong,,
+WaGadgetBlog,Date/TimeÂ ,Date / heure,text,#idPostEditFormContentContainer div.generalFieldsContainer > div:nth-child(3) > div > table > tbody > tr > td.left > div > div > strong,,
 WaGadgetBlog,Post,Publier,button,#FunctionalBlock1_ctl00_blogPostEdit_post,,
 WaGadgetBlog,Post,Publier,button,#FunctionalBlock1_ctl00_blogPostView_blogEntry_blogCommentEdit_PostComment,,Reply
 WaGadgetBlog,Read more,Lire la suite,text,.boxFooterPrimaryContainer a:contains(Read more),,List
@@ -587,22 +587,22 @@ Sys/Profile/Finances/memberId/Profile/Finances,If you make a payment and your ap
 ,,,,,,
 WaGadgetFinDocument,Amount,Montant,text,div.fieldLabel > span:contains(Amount),,Invoice
 WaGadgetFinDocument,Amount,Montant,text,#membersTable > thead > tr > th.memberDirectoryColumn3.right,,Invoice
-WaGadgetFinDocument,Date/Time ,Date / heure,text,div.fieldLabel > span:contains(Date),,Invoice
-WaGadgetFinDocument,Event registration,Inscription à l'événement,text,#idMemberInvoiceDetailsForm > div.formContainer > div > div.sectionOuterContainer > div > div > div > div > div > div > div > div > div.d8 > div > div > div:nth-child(5) > div > div.fieldBody > span > a,,Invoice
+WaGadgetFinDocument,Date/TimeÂ ,Date / heure,text,div.fieldLabel > span:contains(Date),,Invoice
+WaGadgetFinDocument,Event registration,Inscription à  l'événement,text,#idMemberInvoiceDetailsForm > div.formContainer > div > div.sectionOuterContainer > div > div > div > div > div > div > div > div > div.d8 > div > div > div:nth-child(5) > div > div.fieldBody > span > a,,Invoice
 WaGadgetFinDocument,Invoice #,Facture #,text,div.fieldLabel > span:contains(Invoice #),,Invoice
 WaGadgetFinDocument,Invoice details,Détails de la facture,text,h4:contains(Invoice details),,Invoice
 WaGadgetFinDocument,Invoice total,Total de la facture,text,#membersTable > tbody > tr.totalRow > td.memberDirectoryColumn1.right,,Invoice
-WaGadgetFinDocument,Invoiced to,Facturé à,text,div.fieldLabel > span:contains(Invoiced to),,Invoice
+WaGadgetFinDocument,Invoiced to,Facturé à ,text,div.fieldLabel > span:contains(Invoiced to),,Invoice
 WaGadgetFinDocument,Item,Article,text,#membersTable > thead > tr > th.memberDirectoryColumn1,,Invoice
 WaGadgetFinDocument,Origin,Origine,text,div.fieldLabel > span:contains(Origin),,Invoice
 WaGadgetFinDocument,Waiting for payment,En attente de paiement,text,#topMessageBoxDiv > div > div > div.cww-inner > div > div:nth-child(3):contains(Waiting for payment),,Invoice
 ,,,,,,
 ,,,,,,
 FORUM,,,,,,
-WaGadgetForum,Attachments ,Pièces jointes,text,#idEditModeAttachmentsContainer > div > table > tbody > tr > td.left > div,,Create
+WaGadgetForum,AttachmentsÂ ,Pièces jointes,text,#idEditModeAttachmentsContainer > div > table > tbody > tr > td.left > div,,Create
 WaGadgetForum,Author,Auteur,text,#idForumEditEntryBoxContainer #idAuthorLabelContainer > div > div.fieldLabel,,Create
 WaGadgetForum,Back to top,Retour en haut de la page,text,#FunctionalBlock1_ctl00_messageList_topLink,,MessageList
-WaGadgetForum,Back to topics ,Retour aux thèmes,text,#FunctionalBlock1_ctl00_messageList_mainForumTitle_backLink,,Create
+WaGadgetForum,Back to topicsÂ ,Retour aux thèmes,text,#FunctionalBlock1_ctl00_messageList_mainForumTitle_backLink,,Create
 WaGadgetForum,Body,Corps,text,#idForumEntryEditorFieldContainer > div > table > tbody > tr > td.left > div > strong,,Create
 WaGadgetForum,Cancel,Annuler,button,#FunctionalBlock1_ctl00_entryEdit_controlButtons_CancelButton,,Create
 WaGadgetForum,Choose files,Choisir des fichiers,text,#idAttachmentsContainer > div.attachmentsUploadContainer > label,,Create
@@ -617,29 +617,29 @@ WaGadgetForum,Edit,Modifier,text,#FunctionalBlock1_ctl00_messageList_messages_ct
 WaGadgetForum,Edit profile,Modifier le profil,text,#FunctionalBlock1_ctl00_messageList_idSelectActionDropDown > option:nth-child(2),,MessageList
 WaGadgetForum,Forum,Forum,text,td.forumListHeaderTD.threadTD h4,,ForumList
 WaGadgetForum,Immediately,Immédiatement,text,#FunctionalBlock1_ctl00_entryEdit_SubscriptionOptions_periodCheckBox > option:nth-child(3),,Create
-WaGadgetForum,Last message ,Dernier message,text,td.topicListHeaderTD.lastReplyTD h4,,MessageList
-WaGadgetForum,Last message ,Dernier message,text,td.forumListHeaderTD.lastReplyTD h4,,ForumList
+WaGadgetForum,Last messageÂ ,Dernier message,text,td.topicListHeaderTD.lastReplyTD h4,,MessageList
+WaGadgetForum,Last messageÂ ,Dernier message,text,td.forumListHeaderTD.lastReplyTD h4,,ForumList
 WaGadgetForum,Merge,Fusionner,text,#FunctionalBlock1_ctl00_messageList_idSelectActionDropDown > option:nth-child(3),,MessageList
 WaGadgetForum,Move,Déplacer,text,#FunctionalBlock1_ctl00_messageList_idSelectActionDropDown > option:nth-child(4),,MessageList
 WaGadgetForum,Move,Déplacer,text,#FunctionalBlock1_ctl00_messageList_messages_ctl01_forumMessage_move > span,,Edit
-WaGadgetForum,Replies ,Réponses,text,td.topicListHeaderTD.repliesCountTD h4,,MessageList
-WaGadgetForum,Replies ,Réponses,text,td.forumListHeaderTD.repliesCountTD h4,,ForumList
+WaGadgetForum,RepliesÂ ,Réponses,text,td.topicListHeaderTD.repliesCountTD h4,,MessageList
+WaGadgetForum,RepliesÂ ,Réponses,text,td.forumListHeaderTD.repliesCountTD h4,,ForumList
 WaGadgetForum,Reply,Répondre,button,#FunctionalBlock1_ctl00_messageList_replyTop,,Create
 WaGadgetForum,Reply,Répondre,button,#FunctionalBlock1_ctl00_messageList_replyBottom,,Create
-WaGadgetForum,Select action...,Sélectionner une action…,text,#FunctionalBlock1_ctl00_messageList_idSelectActionDropDown > option:nth-child(1),,MessageList
-WaGadgetForum,Show latest replies on top ,Afficher les dernières réponses en haut,text,#FunctionalBlock1_ctl00_messageList_sortOrderLinkButton,,MessageList
-WaGadgetForum,Stick topic to top of forum ,Insérer le sujet en haut du forum,text,#FunctionalBlock1_ctl00_entryEdit_MessageEditHtml1_stickiness_stickinessList > div > span.label > label > span,,Create
-WaGadgetForum,Stick until,Insérer jusqu'à,text,#idStickinessLabelContainer > div > div.fieldBody > span.stickinessForumLabelDate,,Create
+WaGadgetForum,Select action...,Sélectionner une actionâ€¦,text,#FunctionalBlock1_ctl00_messageList_idSelectActionDropDown > option:nth-child(1),,MessageList
+WaGadgetForum,Show latest replies on topÂ ,Afficher les dernières réponses en haut,text,#FunctionalBlock1_ctl00_messageList_sortOrderLinkButton,,MessageList
+WaGadgetForum,Stick topic to top of forumÂ ,Insérer le sujet en haut du forum,text,#FunctionalBlock1_ctl00_entryEdit_MessageEditHtml1_stickiness_stickinessList > div > span.label > label > span,,Create
+WaGadgetForum,Stick until,Insérer jusqu'à ,text,#idStickinessLabelContainer > div > div.fieldBody > span.stickinessForumLabelDate,,Create
 WaGadgetForum,Subject,Sujet,text,#idForumEditEntryBoxContainer strong:contains(Subject),,Create
-WaGadgetForum,Subscribe to forum ,S'abonner au forum,text,#FunctionalBlock1_ctl00_topicList_subsctibeLinkText,,ForumList
+WaGadgetForum,Subscribe to forumÂ ,S'abonner au forum,text,#FunctionalBlock1_ctl00_topicList_subsctibeLinkText,,ForumList
 WaGadgetForum,Subscribe to topic,S'abonner au thème,text,#FunctionalBlock1_ctl00_messageList_subsctibeLinkText,,MessageList
-WaGadgetForum,Subscribe to topic ,S'abonner au thème,text,#idForumSubscribeOptionCheckbox > label,,Create
-WaGadgetForum,Subscribed (Unsubscribe) ,Abonné(e) (Se désabonner),text,#FunctionalBlock1_ctl00_topicList_unsubsctibeLinkText,,ForumList
-WaGadgetForum,Topic ,Thème,text,td.topicListHeaderTD.threadTD h4,,MessageList
+WaGadgetForum,Subscribe to topicÂ ,S'abonner au thème,text,#idForumSubscribeOptionCheckbox > label,,Create
+WaGadgetForum,Subscribed (Unsubscribe)Â ,Abonné(e) (Se désabonner),text,#FunctionalBlock1_ctl00_topicList_unsubsctibeLinkText,,ForumList
+WaGadgetForum,TopicÂ ,Thème,text,td.topicListHeaderTD.threadTD h4,,MessageList
 WaGadgetForum,Topics,Thèmes,text,td.forumListHeaderTD.topicsCountTD h4,,ForumList
-WaGadgetForum,Subscribed (Unsubscribe) ,Abonné(e) (Se désabonner),text,#FunctionalBlock1_ctl00_messageList_unsubsctibeLinkText,,MessageList
+WaGadgetForum,Subscribed (Unsubscribe)Â ,Abonné(e) (Se désabonner),text,#FunctionalBlock1_ctl00_messageList_unsubsctibeLinkText,,MessageList
 WaGadgetForum,Weekly,Hebdomadairement,text,#FunctionalBlock1_ctl00_entryEdit_SubscriptionOptions_periodCheckBox > option:nth-child(2),,Create
-WaGadgetForum,You can upload up to 20 files. Each file should be less than 20 MB.,Vous pouvez télécharger jusqu'à 20 fichiers. Chaque fichier doit faire moins de 20 MB.,text,#idAttachmentsContainer > div.attachmentsUploadContainer > div,,Create
+WaGadgetForum,You can upload up to 20 files. Each file should be less than 20 MB.,Vous pouvez télécharger jusqu'à  20 fichiers. Chaque fichier doit faire moins de 20 MB.,text,#idAttachmentsContainer > div.attachmentsUploadContainer > div,,Create
 ,,,,,,
 ,,,,,,
 PHOTO ALBUM,,,,,,
@@ -652,17 +652,17 @@ WaGadgetPhotoAlbum,Upload photos,Télécharger des photos,text,#idDialogTitleTex
 ,,,,,,
 POLL,,,,,,
 WaGadgetPoll,Details,Détails,text,div.pollDetails > h2,,
-WaGadgetPoll,Go to home page,Aller à la page d'accueil,text,div.bottomBlock > a:contains(Go to home page),,
+WaGadgetPoll,Go to home page,Aller à  la page d'accueil,text,div.bottomBlock > a:contains(Go to home page),,
 WaGadgetPoll,Open from,Ouvrir,replace,form > div.date,,
 WaGadgetPoll,Submit,Soumettre,button,".WaGadgetPoll input[type=""submit""]",,
-WaGadgetPoll,You have already voted. Below are your voting details.,Vous avez déjà voté. Vous trouverez ci-dessous les détails relatifs à votre vote.,text,div.noticeBox.boxTypeInfo > div:contains(You have already voted),,
+WaGadgetPoll,You have already voted. Below are your voting details.,Vous avez déjà  voté. Vous trouverez ci-dessous les détails relatifs à  votre vote.,text,div.noticeBox.boxTypeInfo > div:contains(You have already voted),,
 WaGadgetPoll,Your member profile details will be recorded when you submit this form,Les détails de votre profil de membre seront enregistrés lorsque vous soumettrez ce formulaire,text,form > div.bottomLine > span:contains(Your member profile details will be recorded when you submit this form),,
 ,,,,,,
 SITE SEARCH WEBSITE,,,,,,
 WaGadgetSiteSearchResults,Blogs,Les blogs,text,.categories > div > div:nth-child(2) > label,,
 WaGadgetSiteSearchResults,Content type:,Type de contenu:,text,.categories > a > span,,
 WaGadgetSiteSearchResults,Forums,Les forums,text,.categories > div > div:nth-child(3) > label,,
-WaGadgetSiteSearchResults,Page contents ,Contenu de la page,text,.categories > div > div:nth-child(1) > label,,
+WaGadgetSiteSearchResults,Page contentsÂ ,Contenu de la page,text,.categories > div > div:nth-child(1) > label,,
 WaGadgetSiteSearchResults,Search,Chercher,text,.WaGadgetSiteSearchResults > div > div.searchControls > span.label,,
 WaGadgetSubscriptionForm,Back,Retour,text,#FunctionalBlock1_ctl00_prev,,
 WaGadgetOnly,Enter search string,Entrez un critère de recherche,placeholder,input.searchBoxField,,Header
@@ -670,19 +670,19 @@ WaGadgetOnly,Enter search string,Entrez un critère de recherche,placeholder,inp
 MISC STRINGS,,,,,,
 WaGadgetOnly,Featured member,Membre vedette,text, div.gadgetStyleTitle > h4:contains(Featured member),,
 WaGadgetOnly,Learn more,En apprendre plus,text, div.gadgetStyleTitle > h4:contains(Learn more),,
-WaGadgetOnly,Recent forum updates,Dernières mises à jour du forum,text, div.gadgetStyleTitle > h4:contains(Recent forum updates),,
+WaGadgetOnly,Recent forum updates,Dernières mises à  jour du forum,text, div.gadgetStyleTitle > h4:contains(Recent forum updates),,
 WaGadgetOnly,Recent News,Nouvelles récentes,text, div.gadgetStyleTitle > h4:contains(Recent news),,
-WaGadgetOnly,Upcoming events,Événements à venir,text, div.gadgetStyleTitle > h4:contains(Upcoming events),,
+WaGadgetOnly,Upcoming events,Événements à  venir,text, div.gadgetStyleTitle > h4:contains(Upcoming events),,
 WaGadgetOnly,View member directory,Voir le répertoire des membres,text,a:contains(View member directory),,
-WaGadgetUnsubscribeFromEmails,By clicking Submit you will unsubscribe the following addresses from receiving our emails: ,"En cliquant sur Soumettre, vous allez désabonner les adresses suivantes de recevoir nos courriels:",text,.WaGadgetUnsubscribeFromEmails > p:nth-child(1),,
+WaGadgetUnsubscribeFromEmails,By clicking Submit you will unsubscribe the following addresses from receiving our emails:Â ,"En cliquant sur Soumettre, vous allez désabonner les adresses suivantes de recevoir nos courriels:",text,.WaGadgetUnsubscribeFromEmails > p:nth-child(1),,
 WaGadgetUnsubscribeFromEmails,Submit,Soumettre,button,#ctl00_ContentArea_ConfirmBtn,,
 ,,,,,,
 TERMS OF USE,,,,,,
 WaGadgetTermsOfUse,Cancel,Annuler,button,#ctl00_ContentArea_cancelButton,,
 WaGadgetTermsOfUse,Continue,Continuer,button,#ctl00_ContentArea_submitButton,,
-WaGadgetTermsOfUse,I agree to the terms of use for this software ,J'accepte les conditions d'utilisation de ce logiciel,text,#ctl00_ContentArea_termsOfUse_lblTermsOfUse > span:nth-child(1),,
-WaGadgetTermsOfUse,To log in you must agree to the terms of use ,"Pour vous connecter, vous devez accepter les conditions d'utilisation",text,#ctl00_ContentArea_termsOfUse_acceptedValidator,,
-Sys/Agree to terms of use link,"I agree to the terms of use for Wild Apricotâ€™s websites, mobile apps, and services ","J'accepte les termes et conditions des sites webs, des applications et des services de Wild Apricot.",text,#ctl00_ContentArea_termsOfUse_lblTermsOfUse > span:nth-child(1),,
+WaGadgetTermsOfUse,I agree to theÂ terms of use for this softwareÂ ,J'accepte les conditions d'utilisation de ce logiciel,text,#ctl00_ContentArea_termsOfUse_lblTermsOfUse > span:nth-child(1),,
+WaGadgetTermsOfUse,To log in you must agree to the terms of useÂ ,"Pour vous connecter, vous devez accepter les conditions d'utilisation",text,#ctl00_ContentArea_termsOfUse_acceptedValidator,,
+Sys/Agree to terms of use link,"I agree to the terms of use for Wild Apricotà¢â‚¬â„¢s websites, mobile apps, and services ","J'accepte les termes et conditions des sites webs, des applications et des services de Wild Apricot.",text,#ctl00_ContentArea_termsOfUse_lblTermsOfUse > span:nth-child(1),,
 Sys/Agree to terms of use link,I agree to the terms of use ,J'accepte les,inactive,#ctl00_ContentArea_termsOfUse_lblTermsOfUse,,
 Sys/Agree to terms of use link,terms of use,termes et conditions,inactive,#aTermsOfUse,,
 ,,,,,,
