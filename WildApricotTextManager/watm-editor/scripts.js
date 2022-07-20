@@ -2,19 +2,19 @@ let searchParams = new URLSearchParams(window.location.search);
 let csvFile = searchParams.get("loadCSV");
 
 let watmFunctions = [
-  "hide",
   "text",
   "replace",
   "replace_element",
-  "placeholder",
-  "button",
   "delay",
+  "button",
+  "inactive",
+  "hide",
+  "placeholder",
   "attribute",
   "@media",
   "link",
   "source",
   "tooltip",
-  "inactive",
 ];
 
 document.addEventListener("DOMContentLoaded", function (event) {
