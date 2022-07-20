@@ -125,18 +125,21 @@ function start(license) {
         skipEmptyLines: "greedy",
         complete: function (results) {
           let lineCount = 0;
-          let BreakException = {};
           try {
             results.data.forEach((row) => {
               process(row);
               lineCount++;
-              if (license == "trial" && lineCount <= 10) throw BreakException;
+              if (license == "trial" && lineCount <= 10) throw "Trial Mode";
             });
           } catch (e) {
-            log(
-              "Trial only permits loading first 10 lines of config.csv",
-              "Trial Mode"
-            );
+            if (e == "Trial Mode") {
+              log(
+                `Trial only permits loading first 10 lines of ${currentCSV}`,
+                "Trial Mode"
+              );
+            } else {
+              log(e, "Error");
+            }
           }
           languageCallback();
         },
@@ -201,19 +204,21 @@ function start(license) {
             skipEmptyLines: "greedy",
             complete: function (results) {
               let lineCount = 0;
-              let BreakException = {};
               try {
                 results.data.forEach((row) => {
                   process(row);
                   lineCount++;
-                  if (license == "trial" && lineCount <= 10)
-                    throw BreakException;
+                  if (license == "trial" && lineCount <= 10) throw "Trial Mode";
                 });
               } catch (e) {
-                log(
-                  `Trial only permits loading first 10 lines of ${currentCSV}`,
-                  "Trial Mode"
-                );
+                if (e == "Trial Mode") {
+                  log(
+                    `Trial only permits loading first 10 lines of ${currentCSV}`,
+                    "Trial Mode"
+                  );
+                } else {
+                  log(e, "Error");
+                }
               }
             },
           }
