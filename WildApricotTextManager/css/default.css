@@ -76,6 +76,10 @@
   float: left;
 }
 
+.watm-save-btn {
+  margin: 5px;
+}
+
 #watm-inspector-bar {
   position: fixed;
   bottom: 0;
@@ -83,11 +87,25 @@
   border-top: 2px solid #052c3b;
   padding: 20px;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .watm-inspector-body {
   clear: both;
-  padding-top: 10px;
+  padding: 10px;
+  background: #F9F9F9;
+  border: 1px solid #DEDEDE;
+  margin-top: 10px;
+}
+
+.watm-inspector-body p {
+  margin: 10px 0;
+}
+
+.fileSelecter {
+  bottom: -30px;
+  position: relative;
+  width: fit-content;
 }
 
 .watm-hover {
@@ -199,23 +217,15 @@
 }
 
 #watm-editor-body {
-  display: none;
   clear: both;
-  padding-top: 10px;
-  height: 40vh;
 }
 #watm-editor-body span{
   font-weight: bold;
   font-size: 17px;
 }
 
-#watm-editor-body iframe{
-  height: 90%;
-  width: 97%;
-  margin-top: 10px;
-  border:none;
-  padding:0;
-}
+table.jexcel{width:100%;table-layout:fixed}
+
 
 .swatch {
   width: 1.5rem;

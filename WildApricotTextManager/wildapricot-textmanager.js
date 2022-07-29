@@ -25,17 +25,26 @@ let watm_language_name = [],
   license_key = "",
   hideWATMIcon = false,
   show_watm_overlay = true,
-  enable_public_inspector = false,
-  do_not_cache = false;
+  enable_public_editor = false,
+  do_not_cache = false,
+  checkCode = "8euj9o9frkj3wz2nqm6xmcp4y1mdy5tp",
+  toggleShowLangName = true;
 
 let loadedScripts = 0;
 let requiredScripts = [
-  "csv-parser.js",
+  "jspreadsheet.js",
+  "jsuites.js",
   "functions.js",
   "inspector.js",
   "https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js",
   "https://unpkg.com/@popperjs/core@2",
   "https://unpkg.com/tippy.js@6",
+];
+
+let requiredStyles = [
+  `${watm_location}/css/${watm_styles}.css`,
+  `${watm_location}/css/jspreadsheet.css`,
+  `${watm_location}/css/jsuites.css`,
 ];
 
 document.addEventListener("DOMContentLoaded", function (event) {
@@ -61,7 +70,7 @@ function loadScripts() {
 }
 
 function start(license) {
-  loadCSS(`${watm_location}/css/${watm_styles}.css`);
+  loadCSS(requiredStyles);
   let textManagerProductionMode = !isInEditMode();
 
   if (textManagerProductionMode) {
@@ -88,7 +97,7 @@ function start(license) {
           ? watm_language_className[index] // Use provided class name if provided
           : value.toLowerCase(); // Default to label name if not provided
 
-        // Set current language csv csv name
+        // Set current language csv name
         let filename = watm_language_csv_file[index]
           ? watm_language_csv_file[index] // Use provided filename if provided
           : className + ".csv"; // Default to class name if not provided
@@ -96,6 +105,14 @@ function start(license) {
         // Push values to language object
         languages.push({ label, className, filename });
       });
+
+      currentLanguage = getCurrentLanguage();
+      currentLanguage =
+        currentLanguage == "Default" ||
+        currentLanguage == null ||
+        currentLanguage == ""
+          ? languages[0].className
+          : currentLanguage;
 
       // Create language toggle
       let elmId =
@@ -109,7 +126,11 @@ function start(license) {
           showLanguageSwitch !== false) &&
         textManagerProductionMode
       )
-        createToggle(languages, elmId);
+        createToggle(
+          languages,
+          toggleShowLangName ? currentLanguage : "",
+          elmId
+        );
     } else var isMultilingual = false; // Site is not multilingual
 
     // Load default config file
@@ -129,7 +150,7 @@ function start(license) {
             results.data.forEach((row) => {
               process(row);
               lineCount++;
-              if (license == "trial" && lineCount <= 10) throw "Trial Mode";
+              if (license == "trial" && lineCount > 10) throw "Trial Mode";
             });
           } catch (e) {
             if (e == "Trial Mode") {
@@ -160,14 +181,6 @@ function start(license) {
         });
       }
 
-      currentLanguage = getCurrentLanguage();
-      currentLanguage =
-        currentLanguage == "Default" ||
-        currentLanguage == null ||
-        currentLanguage == ""
-          ? languages[0].className
-          : currentLanguage;
-
       document.body.classList.add(`${currentLanguage}-lang`);
 
       log(`Currently using ${currentLanguage} translation`);
@@ -182,9 +195,7 @@ function start(license) {
             });
         } else {
           // set language csv
-          if (index !== 0) {
-            currentCSV = language.filename;
-          }
+          currentCSV = language.filename;
         }
       });
     }
@@ -208,7 +219,7 @@ function start(license) {
                 results.data.forEach((row) => {
                   process(row);
                   lineCount++;
-                  if (license == "trial" && lineCount <= 10) throw "Trial Mode";
+                  if (license == "trial" && lineCount > 10) throw "Trial Mode";
                 });
               } catch (e) {
                 if (e == "Trial Mode") {
@@ -221,6 +232,9 @@ function start(license) {
                 }
               }
             },
+            error: () => {
+              log(`"${currentCSV}" not found`, "Error");
+            },
           }
         );
       }
@@ -232,7 +246,7 @@ function start(license) {
       appendWATMBtn(
         license,
         !!document.getElementById("idWaAdminSwitcher") ||
-          (enable_public_inspector && !isInEditMode())
+          (enable_public_editor && !isInEditMode())
       );
   };
 
@@ -244,7 +258,7 @@ function start(license) {
   if (
     window.location.href.indexOf("?dev") > -1 &&
     (!!document.getElementById("idWaAdminSwitcher") ||
-      (enable_public_inspector && !isInEditMode())) &&
+      (enable_public_editor && !isInEditMode())) &&
     license !== "invalid"
   ) {
     launchInspector(languages, watm_location);

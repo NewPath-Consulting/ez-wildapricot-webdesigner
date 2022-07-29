@@ -5,6 +5,38 @@ var clipboardClass;
 var clipboardId;
 var clickedElement;
 
+var csvTable;
+
+let watmFunctions = [
+  "text",
+  "replace",
+  "replace_element",
+  "delay",
+  "button",
+  "inactive",
+  "hide",
+  "placeholder",
+  "attribute",
+  "@media",
+  "link",
+  "source",
+  "tooltip",
+];
+
+let currentDateTime = new Date().toLocaleString();
+
+let tableColumns = [
+  { title: "Wild Apricot Reference", type: "text" },
+  { title: "Default Text", type: "text" },
+  { title: "Replacement Text", type: "text" },
+  { title: "Function", type: "dropdown", source: watmFunctions },
+  { title: "Query", type: "text" },
+  { title: "Style", type: "text" },
+  { title: "Notes", type: "text" },
+];
+
+const fileSelecter = document.createElement("div");
+
 const launchInspector = (languages, watm_location) => {
   createModal();
   interceptClicks();
@@ -15,7 +47,7 @@ const launchInspector = (languages, watm_location) => {
 // Attach inspector to footer of website
 const createInspectorBar = () => {
   // add padding to bottom of page
-  document.body.firstElementChild.style.paddingBottom = "150px";
+  //document.body.firstElementChild.style.paddingBottom = "50vh";
 
   // create bar
   const inspectorBar = document.createElement("div");
@@ -25,7 +57,8 @@ const createInspectorBar = () => {
   const inspectorBody = document.createElement("div");
   inspectorBody.id = "watm-inspector-body";
   inspectorBody.classList.add("watm-inspector-body");
-  inspectorBody.innerHTML = "<h1>Click on an element to begin</h1>";
+  inspectorBody.innerHTML =
+    "<p><strong>Click on an element on the webpage to view it's properties</strong></p>";
 
   // create container for editor
   const editorBody = document.createElement("div");
@@ -35,7 +68,7 @@ const createInspectorBar = () => {
   // create exit button
   const exitbtn = document.createElement("button");
   exitbtn.classList.add("watm-inspector-btn");
-  exitbtn.innerText = "Exit Inspector";
+  exitbtn.innerText = "Exit Editor";
   exitbtn.style.display = "block";
 
   // create path clipboard button
@@ -45,15 +78,6 @@ const createInspectorBar = () => {
   copyPathBtn.innerText = "Copy CSS Path";
   copyPathBtn.addEventListener("click", () => {
     copyInspector(copyPathBtn);
-  });
-
-  // create id clipboard button
-  const copyIdBtn = document.createElement("button");
-  copyIdBtn.id = "watm-inspector-copy-id-btn";
-  copyIdBtn.classList.add("watm-inspector-btn");
-  copyIdBtn.innerText = "Copy Element ID";
-  copyIdBtn.addEventListener("click", () => {
-    copyInspector(copyIdBtn);
   });
 
   // create class clipboard button
@@ -74,21 +98,9 @@ const createInspectorBar = () => {
     viewElementProperties();
   });
 
-  // create editor button
-  const editorBtn = document.createElement("button");
-  editorBtn.id = "watm-editor-btn";
-  editorBtn.classList.add("watm-inspector-btn");
-  editorBtn.innerText = "Switch to Editor";
-  editorBtn.style.display = "block";
-  editorBtn.addEventListener("click", () => {
-    toggleEditor();
-  });
-
   // add buttons to inspector bar
   inspectorBar.appendChild(exitbtn);
-  inspectorBar.appendChild(editorBtn);
   inspectorBar.appendChild(copyClassBtn);
-  inspectorBar.appendChild(copyIdBtn);
   inspectorBar.appendChild(copyPathBtn);
   inspectorBar.appendChild(viewPropsBtn);
   inspectorBar.appendChild(inspectorBody);
@@ -96,7 +108,10 @@ const createInspectorBar = () => {
 
   // exit inspector
   exitbtn.addEventListener("click", () => {
-    window.location.href = window.location.href.replace("?dev", "");
+    window.location.href =
+      window.location.href.replace("?dev", "").split("?t=")[0] +
+      "?t=" +
+      Date.now();
   });
 
   // attach inspector barr to screen
@@ -157,6 +172,7 @@ const interceptClicks = () => {
 
       if (
         completePath.indexOf("#watm-props") == -1 &&
+        completePath.indexOf("#watm-inspector-bar") == -1 &&
         !Array.from(e.target.classList).some((c) => c.startsWith("watm-modal"))
       ) {
         e.preventDefault();
@@ -176,14 +192,6 @@ const interceptClicks = () => {
         !Array.from(e.target.classList).some((c) => c.startsWith("watm-modal"))
       ) {
         e.target.classList.add("watm-hover");
-
-        if (e.target._tippy) {
-          e.target._tippy.destroy();
-        }
-
-        tippy(e.target, {
-          content: e.target.tagName,
-        });
       }
     },
     false
@@ -207,17 +215,7 @@ const displyPath = (cssPath, elID, elClass) => {
     // If the path contains an ID, start path from there
     cssPath = cssPath.substring(cssPath.lastIndexOf("#"));
   }
-  if (elID) {
-    // If clicked element has ID, display it
-    elInfo = elInfo + "<p><b>Element ID:</b> #" + elID + "</p>";
-    clipboardId = elID;
-    document.getElementById("watm-inspector-copy-id-btn").style.display =
-      "block";
-  } else {
-    clipboardId = null;
-    document.getElementById("watm-inspector-copy-id-btn").style.display =
-      "none";
-  }
+
   if (elClass) {
     // If clicked element has classes, display them
     let elClasses = elClass.split(" ").join(" .");
@@ -421,82 +419,199 @@ const viewElementProperties = () => {
   show_watm_modal();
 };
 
-const toggleEditor = () => {
-  if (
-    document.getElementById("watm-editor-btn").innerText ==
-    "Switch to Inspector"
-  ) {
-    document.getElementById("watm-inspector-body").style.display = "block";
-    document.getElementById("watm-editor-body").style.display = "none";
-    document.getElementById("watm-editor-btn").innerText = "Switch to Editor";
-    document.body.firstElementChild.style.paddingBottom = "150px";
-  } else {
-    document.getElementById("watm-inspector-body").style.display = "none";
-    document.getElementById("watm-editor-body").style.display = "block";
-    document.getElementById("watm-editor-btn").innerText =
-      "Switch to Inspector";
-    document.getElementById("watm-inspector-copy-class-btn").style.display =
-      "none";
-    document.getElementById("watm-inspector-copy-id-btn").style.display =
-      "none";
-    document.getElementById("watm-inspector-copy-path-btn").style.display =
-      "none";
-    document.getElementById(
-      "watm-inspector-view-properties-btn"
-    ).style.display = "none";
-    document.body.firstElementChild.style.paddingBottom = "50vh";
-  }
-};
-
 const setupEditor = (languages, watm_location) => {
-  let csvSelector = '<select id="watm-csv-toggle">';
+  let csvSelector = document.createElement("select");
+  csvSelector.id = "watm-csv-toggle";
+  let opt = document.createElement("option");
+  opt.value = `${watm_location}/config.csv`;
+  opt.text = "[ Global Configuration ]";
+  csvSelector.appendChild(opt);
   languages.forEach(function (language, index) {
-    csvSelector += `<option value="${watm_location}/${
-      index == 0 ? "config.csv" : "translations/" + language.filename
-    }">${index == 0 ? "config.csv" : language.filename}</option>`;
+    let opt = document.createElement("option");
+    opt.value = `${watm_location}/translations/${language.filename}`;
+    opt.text = `${language.label} (${language.className}) Translations`;
+    csvSelector.appendChild(opt);
   });
-  csvSelector += "</select>";
 
-  const fileSelecter = document.createElement("div");
+  // create save button
+  const saveBtn = document.createElement("button");
+  saveBtn.id = "watm-save-btn";
+  saveBtn.classList.add("watm-save-btn");
+  saveBtn.innerText = "Save changes to Site";
+  saveBtn.addEventListener("click", () => {
+    let filePath = csvTable.options.csv.substring(
+      0,
+      csvTable.options.csv.lastIndexOf("/")
+    );
+    let filename = csvTable.options.csv.substring(
+      csvTable.options.csv.lastIndexOf("/") + 1
+    );
+
+    let csv = csvTable.copy(
+      false,
+      csvTable.options.csvDelimiter,
+      true,
+      true,
+      true
+    );
+
+    let csvData = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", filePath, true);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == 4) console.log(xhr.responseText);
+      window.location.href =
+        window.location.href.split("?t=")[0] + "?dev&t=" + Date.now();
+    };
+    xhr.onload = function (e) {
+      if (xhr.status == 200) {
+        console.log("uploaded"); //(correctly uploaded)
+      } else
+        console.log(
+          "Error " + e.status + " occurred uploading your file.<br />"
+        );
+    };
+
+    var formData = new FormData();
+    formData.append("localfile", csvData, filename);
+    formData.append("filetype", "csv");
+    formData.append("source", "SOFT");
+    xhr.send(formData);
+  });
+
   const fileSelecterSpan = document.createElement("span");
+
   const fileSelecterSpan2 = document.createElement("span");
   fileSelecterSpan.innerText = "Select the file you wish to edit: ";
-  fileSelecterSpan2.innerHTML = csvSelector;
+  fileSelecterSpan2.appendChild(csvSelector);
   fileSelecter.appendChild(fileSelecterSpan);
   fileSelecter.appendChild(fileSelecterSpan2);
+  fileSelecter.appendChild(saveBtn);
+
+  fileSelecter.classList.add("fileSelecter");
+
+  const csvTableContainer = document.createElement("div");
+  csvTableContainer.id = "csvTableContainer";
+
   document.getElementById("watm-editor-body").appendChild(fileSelecter);
 
-  const newWindowBtn = document.createElement("button");
-  newWindowBtn.classList.add("watm-editor-window-btn");
-  newWindowBtn.innerText = "Launch Editor in New Window";
-  let languagesJSON = encodeURIComponent(JSON.stringify(languages));
-  newWindowBtn.addEventListener("click", () => {
-    window.open(
-      `${watm_location}/watm-editor/editor-fullscreen.html?watm_location=${watm_location}&languages=${languagesJSON}`,
-      "watmEditorWindow",
-      "toolbars=0,width=1000,height=700,left=200,top=200,scrollbars=1,resizable=1"
-    );
-  });
-  fileSelecterSpan2.appendChild(newWindowBtn);
+  document.getElementById("watm-editor-body").appendChild(csvTableContainer);
 
-  const csvFrame = document.createElement("iframe");
-  csvFrame.id = "watm-editor-iframe";
-
-  document.getElementById("watm-editor-body").appendChild(csvFrame);
-
-  const selectElement = document.getElementById("watm-csv-toggle");
-
-  selectElement.addEventListener("change", (event) => {
-    loadCSV(event.target.value, watm_location);
+  csvSelector.addEventListener("change", (event) => {
+    loadCSV(event.target.value);
   });
 
-  loadCSV(`${watm_location}/config.csv`, watm_location);
+  loadCSV(`${watm_location}/config.csv`);
+
+  document.body.firstElementChild.style.paddingBottom =
+    document.getElementById("watm-inspector-bar").offsetHeight + 300 + "px";
 };
 
-const loadCSV = (csvFile, watm_location) => {
-  document.getElementById(
-    "watm-editor-iframe"
-  ).src = `${watm_location}/watm-editor/editor.html?loadCSV=${csvFile}`;
+const setUpdateDate = (instance, cell, x, y, value) => {
+  if (x == "6") return false;
+  csvTable.setValueFromCoords(6, y, "Last updated: " + currentDateTime);
+};
+
+let loadCSV = (csvFile) => {
+  jexcel.destroy(document.getElementById("csvTableContainer"), false);
+
+  csvTable = jspreadsheet(document.getElementById("csvTableContainer"), {
+    csv: csvFile,
+    csvHeaders: true,
+    tableOverflow: true,
+    minDimensions: [7, 10],
+    columns: tableColumns,
+    tableWidth: "100%",
+    tableHeight: "20vh",
+    search: true,
+    parseFormulas: false,
+    allowInsertColumn: false,
+    allowManualInsertColumn: false,
+    allowDeleteColumn: false,
+    allowRenameColumn: false,
+    allowComments: false,
+    allowExport: true,
+    csvFileName: csvFile.substring(csvFile.lastIndexOf("/") + 1).split(".")[0],
+    onchange: setUpdateDate,
+    contextMenu: function (obj, x, y, e) {
+      var items = [];
+
+      if (y == null) {
+        // Sorting
+        if (obj.options.columnSorting == true) {
+          // Line
+          items.push({ type: "line" });
+
+          items.push({
+            title: obj.options.text.orderAscending,
+            onclick: function () {
+              obj.orderBy(x, 0);
+            },
+          });
+          items.push({
+            title: obj.options.text.orderDescending,
+            onclick: function () {
+              obj.orderBy(x, 1);
+            },
+          });
+        }
+      } else {
+        // Insert new row
+        if (obj.options.allowInsertRow == true) {
+          items.push({
+            title: obj.options.text.insertANewRowBefore,
+            onclick: function () {
+              obj.insertRow(1, parseInt(y), 1);
+            },
+          });
+
+          items.push({
+            title: obj.options.text.insertANewRowAfter,
+            onclick: function () {
+              obj.insertRow(1, parseInt(y));
+            },
+          });
+        }
+
+        if (obj.options.allowDeleteRow == true) {
+          items.push({
+            title: obj.options.text.deleteSelectedRows,
+            onclick: function () {
+              obj.deleteRow(
+                obj.getSelectedRows().length ? undefined : parseInt(y)
+              );
+            },
+          });
+        }
+      }
+
+      // Line
+      items.push({ type: "line" });
+
+      // Save
+      if (obj.options.allowExport) {
+        items.push({
+          title: "Download CSV",
+          onclick: function () {
+            obj.download(true);
+          },
+        });
+      }
+
+      // Help
+      if (obj.options.about) {
+        items.push({
+          title: "EZ Designer Help",
+          onclick: function () {
+            alert("Redirect to WATM hep page");
+          },
+        });
+      }
+
+      return items;
+    },
+  });
 };
 
 const rgbToHex = (r, g, b) =>

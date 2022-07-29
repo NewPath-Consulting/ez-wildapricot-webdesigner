@@ -1,7 +1,5 @@
-# Documentation (Version 2.0-Alpha)
+# Documentation (Version 2.0-Beta)
 
-⚠️ This is an alpha test build, and should not be used in production.
-Addresses issues [#1](/../../issues/1), [#2](/../../issues/2), [#7](/../../issues/7), [#21](/../../issues/21), [#28](/../../issues/28), [#31](/../../issues/31), [#34](/../../issues/34), [#38](/../../issues/38), [#36](/../../issues/36)
 
 ## Project Description
 
@@ -40,11 +38,11 @@ NOTE: this code snippet assumes you have uploaded all files into the folder `/re
     /*
       Array of available languages
       Can omit if site is not multilingual
-      Only "watm_language_name" is required, "watm_language_className"
-      will use "watm_language_name" value if not present, and "watm_language_csv_file"
-      will use "watm_language_className"+ ".csv" if not present
+      Use "watm_language_name" to assign the language name displayed to the user
+      Use "watm_language_className" to assign the language slug used on your site
     */
-    watm_language_name[0] = "English";        // Default language - uses config.csv, watm_language_className[0] will default to "english"
+    watm_language_name[0] = "English";        // Default language
+    watm_language_className[0] = "english";   // watm_language_csv_file[0] will default to english.csv
     watm_language_name[1] = "Français";
     watm_language_className[1] = "french";    // watm_language_csv_file[1] will default to french.csv
     watm_language_name[2] = "Español";
@@ -52,19 +50,16 @@ NOTE: this code snippet assumes you have uploaded all files into the folder `/re
     watm_language_name[3] = "日本語";
     watm_language_className[3] = "japanese";  // watm_language_csv_file[3] will default to japanese.csv
 
-    /* Optional, used to show default language switcher */
-    var showLanguageSwitch = true;
-    var languageSwitcherId = "language_switch"; // ID of element to replace with switcher
-
   </script>
    ```
 
 ## Files Setup
 
 1. Follow these [instructions to connect to your Wild Apricot file folder](https://gethelp.wildapricot.com/en/articles/198-uploading-and-downloading-files-using-webdav)
-
-3. Modify `config.csv` in the `WildApricotTextManager` folder with your general changes
-4. Upload a separate CSV for each additional language you are offering to the `translations` folder
+2. Modify `config.csv` in the `WildApricotTextManager` folder with your general changes
+3. If you are setting up a multilingual site:
+  * Add a Content Gadget to your page template in the location you would like the language toggle to appear. Set the ID of this gadget to `language_switch`
+  * Upload a separate CSV for each language you are offering to the `translations` folder.
 
 The configuration and translation files must be saved as a CSV file format in UTF-8 format.
 
@@ -73,19 +68,7 @@ The configuration and translation files must be saved as a CSV file format in UT
 
 ## Using the Language Toggle
 
-EZ Wild Apricot Web Designer provides an easy to install toggle for switching between the various languages on your site. To add it to your site, simply  add a Content Gadget to your page template in the location you would like the toggle to appear. Set the ID of this gadget to `language_switch` (or whatever you may have changed it to in the script setup). This gadget will now be replaced with the language toggle when viewed from the frontend.
-
-### Translating the Language Toggle
-
-To change the `Select language` text in the configuration or translation files, use the `.watm-dropdown-icon` query with the `Replace` function.
-
-**EXAMPLE:**
-```text
-Default Text: Select language
-Function: replace
-Replacement Text: Changer le langue
-Query: .watm-dropdown-icon
-```
+EZ Wild Apricot Web Designer provides an easy to install toggle for switching between the various languages on your site. To add it to your site, simply  add a Content Gadget to your page template in the location you would like the toggle to appear. Set the ID of this gadget to `language_switch`. This gadget will now be replaced with the language toggle when viewed from the frontend.
 
 ## Using the Language Switch Hook
 
@@ -99,13 +82,17 @@ You are not limited to using the EZ Wild Apricot Web Designer Language Toggle. Y
 
 ---
 
-# Element Inspector
+# EZ Wild Apricot Inspector & Editor
 
-The inspector is a tool you can use to view the styling and targeting information of the various elements on your website. This information is necessary when updating your configuration and translation files.
+Using the Inspector & Editor, you can use to view the styling and targeting information of the various elements on your website, as well as make modifications to your EZ Wild Apricot Web Designer configuration files. This information is necessary when updating your configuration and translation files.
 
-The inspector is only accessible to logged in administrators by default, but you can enable it in public view using `enable_public_inspector = true;`. When logged in as an administrator, an icon will appear at the bottom-left of your screen - click on this to launch the inspector. While in Inspector mode, you will not be able to follow any links - click the exit button in the inspector bar to return to normal operation. Hovering over an element will outline the element in red. Clicking on the element will display the element ID and Class (if they are available), as well as the CSS path to the element. [The ID](https://www.w3schools.com/htmL/html_id.asp) or CSS path can be used to target that specific element. [The class](https://www.w3schools.com/cssref/sel_class.asp) can be used to target multiple elements of a similar function.
+The Inspector & Editor are only accessible to logged in administrators by default, but you can enable it in public view using `enable_public_editor = true;`. When logged in as an administrator, an icon will appear at the bottom-left of your screen - click on this to launch the editor. While in Editor mode, you will not be able to follow any links - click the exit button in the inspector bar to return to normal operation. Hovering over an element will outline the element in red.
 
-The `Copy Element ID`, `Copy Element Class`, and `Copy CSS Path` buttons will copy the related information to the clipboard.
+# Page Inspector
+
+The top half of the panel that appears is the page Inspector. Clicking on the element will display the element  Class (if they are available), as well as the CSS path to the element.
+
+The `Copy Element Class`, and `Copy CSS Path` buttons will copy the related information to the clipboard.
 
 The `View Properties` button will display the details about that element, such as the text it contains, styling, and any resource links.
 
@@ -113,11 +100,9 @@ The `View Properties` button will display the details about that element, such a
 
 # CSV Editor
 
-The CSV Editor allows you to update the configuration and translations files directly in your web browser, without needing to first download the files or own spreadsheet software. To access the editor, click on the button labeled `Switch to Editor` in the inspector bar. 
+The bottom half of the panel displays the CSV Editor. In the editor you can select the file you wish to update from the dropdown. Selecting the file will automatically load it below. You can resize the columns as needed, as well as drag the rows to rearrange them. Right clicking will give you the options to create and delete rows, and download the modified CSV file. Once you are finished making your changes, save the file back to your website by clicking on `Save changes to site`. If you choose to download the file, the changes will not be applied to your website until you manually upload the file. If you choose to save the file to the website you will be prompted to login with an administrator account. This is done directly with the Wild Apricot website, and WATM can not see or access your website credentials.
 
-In the editor you can select the file you wish to update from the dropdown. Selecting the file will automatically load it below. You may also click on the `Launch Editor in New Window` button to open the editor in a separate, larger window. Once you are finished making your changes, you can either download the updated CSV file or save the file back to your website. If you choose to download the file, the changes will not be applied to your website until you manually upload the file. If you choose to save the file to the website you will be prompted to login with an administrator account. This is done directly with the Wild Apricot website, and WATM can not see or access your website credentials.
-
-Your browser may locally cache the CSV files in order to load pages faster - as a result to do a hard refresh of your site to see the changes. To do this, exit the inspector/editor and press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> on PC or <kbd>Option</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> on Mac. You may need to do this for each language enabled on your site. You can also disable caching by adding the following to your JavaScript: `enable_public_inspector = true;`
+When you save to the website, the page will automatically refresh. Your changes shoudl be immediately visible, if not your browser may locally cache the CSV files in order to load pages faster - as a result to do a hard refresh of your site to see the changes. To do this, exit the inspector/editor and press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> on PC or <kbd>Option</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> on Mac. You may need to do this for each language enabled on your site.
 
 ---
 

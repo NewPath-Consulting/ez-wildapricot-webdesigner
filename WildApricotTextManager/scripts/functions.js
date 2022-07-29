@@ -1,6 +1,6 @@
 const checkLicense = () => {
   let license;
-  let checkUrl = "https://hook.us1.make.com/8euj9o9frkj3wz2nqm6xmcp4y1mdy5tp";
+  let checkUrl = "https://hook.us1.make.com/" + checkCode;
   if (license_key !== "") {
     fetch(`${checkUrl}/?json=true&key=${license_key}`)
       .then((response) => response.json())
@@ -43,7 +43,7 @@ const checkLicense = () => {
   }
 };
 
-const createToggle = (languages, elm) => {
+const createToggle = (languages, currentLanguage, elm) => {
   // Target location for language switcher
   if (!document.getElementById(elm)) {
     log(
@@ -51,6 +51,14 @@ const createToggle = (languages, elm) => {
       "Warning"
     );
     return false;
+  }
+  let toggleText = "Select language";
+  if (currentLanguage !== "") {
+    languages.forEach((language, index) => {
+      if (language.className == currentLanguage) {
+        toggleText = language.label;
+      }
+    });
   }
 
   const toggleElementID = document.getElementById(elm);
@@ -60,7 +68,7 @@ const createToggle = (languages, elm) => {
   languageToggle.classList.add("watm-dropdown", "watm-dropdown-closed");
   const languageToggleIcon = document.createElement("h2");
   languageToggleIcon.classList.add("watm-dropdown-icon");
-  languageToggleIcon.innerHTML = "Select language <span>∆</span>";
+  languageToggleIcon.innerHTML = `${toggleText} <span>∆</span>`;
   const languageToggleMenu = document.createElement("ul");
   languageToggleMenu.classList.add("watm-dropdown-menu");
 
@@ -285,13 +293,15 @@ const appendWATMBtn = (license = "default", isAdmin) => {
   document.body.appendChild(btn);
 };
 
-const loadCSS = (fileName) => {
+const loadCSS = (cssFiles) => {
   let head = document.head;
-  let link = document.createElement("link");
+  cssFiles.forEach((cssFile) => {
+    let link = document.createElement("link");
 
-  link.type = "text/css";
-  link.rel = "stylesheet";
-  link.href = fileName;
+    link.type = "text/css";
+    link.rel = "stylesheet";
+    link.href = cssFile;
 
-  head.appendChild(link);
+    head.appendChild(link);
+  });
 };
