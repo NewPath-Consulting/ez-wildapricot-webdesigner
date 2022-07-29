@@ -58,7 +58,7 @@ const createInspectorBar = () => {
   inspectorBody.id = "watm-inspector-body";
   inspectorBody.classList.add("watm-inspector-body");
   inspectorBody.innerHTML =
-    "<p><strong>Click on an element on the webpage to view it's properties</strong></p>";
+    "<p><strong>Hover and click on a web page element to view its properties</strong></p>";
 
   // create container for editor
   const editorBody = document.createElement("div");
