@@ -36,6 +36,7 @@ let requiredScripts = [
   "jsuites.js",
   "functions.js",
   "inspector.js",
+  "csv-parser.js",
   "https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js",
   "https://unpkg.com/@popperjs/core@2",
   "https://unpkg.com/tippy.js@6",
