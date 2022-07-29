@@ -599,12 +599,26 @@ let loadCSV = (csvFile) => {
         });
       }
 
+      // Line
+      items.push({ type: "line" });
+
       // Help
       if (obj.options.about) {
         items.push({
           title: "EZ Designer Help",
           onclick: function () {
-            alert("Redirect to WATM hep page");
+            window.open(
+              "https://talk.newpathconsulting.com/c/wa-discuss/watm/7"
+            );
+          },
+        });
+      }
+      // Help
+      if (obj.options.about) {
+        items.push({
+          title: "I need a hero",
+          onclick: function () {
+            window.open("https://newpathconsulting.com/wildapricot-hero");
           },
         });
       }
