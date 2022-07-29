@@ -574,6 +574,34 @@ let loadCSV = (csvFile) => {
           });
         }
 
+        items.push({ type: "line" });
+
+        // Copy
+        items.push({
+          title: "Copy",
+          onclick: function () {
+            obj.copy(obj.selectedCell[0], obj.selectedCell[1]);
+          },
+        });
+
+        // Paste
+        if (navigator && navigator.clipboard && navigator.clipboard.readText) {
+          items.push({
+            title: "Paste",
+            onclick: function () {
+              if (obj.selectedCell) {
+                navigator.clipboard.readText().then(function (text) {
+                  if (text) {
+                    obj.paste(obj.selectedCell[0], obj.selectedCell[1], text);
+                  }
+                });
+              }
+            },
+          });
+        }
+
+        items.push({ type: "line" });
+
         if (obj.options.allowDeleteRow == true) {
           items.push({
             title: obj.options.text.deleteSelectedRows,
