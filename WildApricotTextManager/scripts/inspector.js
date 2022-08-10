@@ -618,7 +618,7 @@ let loadCSV = (csvFile) => {
       // Save
       if (obj.options.allowExport) {
         items.push({
-          title: "Download CSV",
+          title: "Download Configuration File (CSV)",
           onclick: function () {
             obj.download(true);
           },
@@ -631,7 +631,7 @@ let loadCSV = (csvFile) => {
       // Help
       if (obj.options.about) {
         items.push({
-          title: "EZ Designer Help",
+          title: "Support Forum",
           onclick: function () {
             window.open(
               "https://talk.newpathconsulting.com/c/wa-discuss/watm/7"
@@ -642,7 +642,7 @@ let loadCSV = (csvFile) => {
       // Help
       if (obj.options.about) {
         items.push({
-          title: "I need a hero",
+          title: "I need a WildApricot Hero!",
           onclick: function () {
             window.open("https://newpathconsulting.com/wildapricot-hero");
           },
