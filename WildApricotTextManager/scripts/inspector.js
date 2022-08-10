@@ -109,9 +109,7 @@ const createInspectorBar = () => {
   // exit inspector
   exitbtn.addEventListener("click", () => {
     window.location.href =
-      window.location.href.replace("?dev", "").split("?t=")[0] +
-      "?t=" +
-      Date.now();
+      window.location.href.split("?")[0] + "?t=" + Date.now();
   });
 
   // attach inspector barr to screen
@@ -462,7 +460,7 @@ const setupEditor = (languages, watm_location) => {
     xhr.onreadystatechange = function () {
       if (xhr.readyState == 4) console.log(xhr.responseText);
       window.location.href =
-        window.location.href.split("?t=")[0] + "?dev&t=" + Date.now();
+        window.location.href.split("?")[0] + "?dev&t=" + Date.now();
     };
     xhr.onload = function (e) {
       if (xhr.status == 200) {
