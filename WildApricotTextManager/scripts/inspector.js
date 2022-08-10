@@ -8,9 +8,10 @@ var clickedElement;
 var csvTable;
 
 let watmFunctions = [
+  "",
   "text",
   "replace",
-  "replace_element",
+  //"replace_element",
   "delay",
   "button",
   "inactive",
