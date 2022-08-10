@@ -620,7 +620,7 @@ let loadCSV = (csvFile) => {
       // Save
       if (obj.options.allowExport) {
         items.push({
-          title: "Download CSV",
+          title: "Download Configuration File (CSV)",
           onclick: function () {
             obj.download(true);
           },
