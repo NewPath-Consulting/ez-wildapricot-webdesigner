@@ -3,7 +3,7 @@
 
 ## Project Description
 
-Introducing our new [EZ Wild Apricot Web Designer](https://newpathconsulting.com/watm) \(aka WATM\), redesigned from the ground up using ECMAScript 6 to work without jQuery. 
+Introducing our new [EZ Wild Apricot Web Designer](https://newpathconsulting.com/watm) \(aka WATM\), redesigned from the ground up. The product has been rewritten in ECMAScript 6. 
 
 EZ Wild Apricot Web Designer will help any administrator with some knowledge of the [Document Object Model (DOM)](https://www.w3schools.com/js/js_htmldom.asp) manage and replace nearly every piece of hard-coded and configurable text in Wild Apricot.
 
@@ -15,7 +15,7 @@ You can make a variety of single page, whole site, and Wild Apricot widget chang
 - hide text on any user interface items
 - allow your site to be offered in an unlimited number of languages
 
-EZ Wild Apricot Web Designer module can be used to make Wild Apricot sites available in two or more languages by dynamically replacing strings with a translated string. A translator will use a comma separated value (CSV)-formatted configuration file that is easily editable, making it easy to maintain hundreds of modifications in a human-readable file. A standard file with over 600 English-to-French Wild Apricot labels and strings is included.
+EZ Wild Apricot Web Designer module can be used to make Wild Apricot sites available in two or more languages by dynamically replacing strings with a translated string. A translator will use a comma separated value (CSV) configuration file that is easily editable, making it easy to maintain hundreds of modifications in a human-readable file. A standard file with over 600 English-to-French Wild Apricot labels and strings is included.
 
 ---
 # Installation
@@ -110,21 +110,14 @@ When you save to the website, the page will automatically refresh. Your changes 
 
 When editing the EZ Wild Apricot Web Designer configuration and translation files, the following functions are available:
 
-## **hide**
-> Hides the targeted element(s)
 
-**EXAMPLE:**
-```text
-Function: hide
-Query: #idFooterPoweredByWA
-```
 ## **text**
-> Changes the text in targeted element(s)
+> Changes the text in targeted element(s), note that any links are eliminated in the targeted element(s)
 
 **EXAMPLE:**
 ```text
 Function: text
-Replacement Text: Changer le passe
+Replacement Text: Change my password!
 Query: .loginBoxChangePassword
 ```
 ## **replace**
@@ -134,11 +127,49 @@ Query: .loginBoxChangePassword
 ```text
 Default Text: Home
 Function: replace
-Replacement Text: Accueil
+Replacement Text: Home Page
 Query: .menuInner, .WaGadgetBreadcrumbs > div > ul > li
 ```
-## **replace_element**
-> Replaces the contents targeted element(s)
+
+
+## **delay**
+> Changes the text in targeted element(s) after 1 second - used for dynamically generated elements, such as a member directory
+
+**EXAMPLE:**
+```text
+Replacement Text: Coordonnées
+Function: delay
+Query: #membersTable > thead > tr > th:nth-child(1)
+```
+
+## **button**
+> Changes the text on targeted button(s)
+
+**EXAMPLE:**
+```text
+Default Text: Click here to login
+Function: button
+Query: .loginButton
+```
+
+## **inactive**
+> Ignores current line in file
+
+## The style column can be used in conjunction with a function, or on it's own.
+**EXAMPLE:**
+```text
+Query: h3
+Style: color: blue;font-style: italic
+```
+
+## **hide**
+> Hides the targeted element(s)
+
+**EXAMPLE:**
+```text
+Function: hide
+Query: #idFooterPoweredByWA
+```
 
 ## **placeholder**
 > Changes the placeholder text of targeted form element(s)
@@ -149,24 +180,8 @@ Replacement Text: Enter your search keywords here
 Function: placeholder
 Query: .searchBoxField
 ```
-## **button**
-> Changes the text on targeted button(s)
 
-**EXAMPLE:**
-```text
-Default Text: Click here to login
-Function: button
-Query: .loginButton
-```
-## **delay**
-> Changes the text in targeted element(s) after 1 second - used for dynamically generated elements, such as member directory
 
-**EXAMPLE:**
-```text
-Replacement Text: Coordonnées
-Function: delay
-Query: #membersTable > thead > tr > th:nth-child(1)
-```
 ## **attribute**
 > Sets/changes attribute of targeted element(s). Enter attribute name in "Default Text" column, and the attribute value in "Replacement Text"
 
@@ -190,12 +205,19 @@ Stye: display: none;
 ## **link**
 > Changes the `href` URL of targeted element(s)
 
-**EXAMPLE:**
+**EXAMPLES:**
 ```text
 Replacement Text: /donate
 Function: link
 Query: .headerDonateBtn a
 ```
+
+```text
+Replacement Text: https://newpathconsulting.com/watm
+Function: link
+Query: #idFooterPoweredByWA a
+```
+
 ## **source**
 > Changes the `src` URL of targeted element(s)
 
@@ -207,16 +229,6 @@ Query: .headerDonateBtn a
 Replacement Text: View/Edit Your Profile
 Function: tooltip
 Query: .loginBoxProfileLink
-```
-
-## **inactive**
-> Ignores current line in file
-
-## The style column can be used in conjunction with a function, or on it's own.
-**EXAMPLE:**
-```text
-Query: h3
-Style: color: blue;font-style: italic
 ```
 
 ---
