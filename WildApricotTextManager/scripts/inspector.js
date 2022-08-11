@@ -24,6 +24,8 @@ let watmFunctions = [
   "tooltip",
 ];
 
+const urlParams = new URLSearchParams(window.location.search);
+
 let currentDateTime = new Date().toLocaleString();
 
 let tableColumns = [
@@ -429,6 +431,7 @@ const setupEditor = (languages, watm_location) => {
     let opt = document.createElement("option");
     opt.value = `${watm_location}/translations/${language.filename}`;
     opt.text = `${language.label} (${language.className}) Translations`;
+    if (urlParams.get("f") == language.filename) opt.selected = true;
     csvSelector.appendChild(opt);
   });
 
@@ -461,7 +464,11 @@ const setupEditor = (languages, watm_location) => {
     xhr.onreadystatechange = function () {
       if (xhr.readyState == 4) console.log(xhr.responseText);
       window.location.href =
-        window.location.href.split("?")[0] + "?dev&t=" + Date.now();
+        window.location.href.split("?")[0] +
+        "?dev&f=" +
+        filename +
+        "&t=" +
+        Date.now();
     };
     xhr.onload = function (e) {
       if (xhr.status == 200) {
@@ -501,7 +508,7 @@ const setupEditor = (languages, watm_location) => {
     loadCSV(event.target.value);
   });
 
-  loadCSV(`${watm_location}/config.csv`);
+  loadCSV(document.getElementById("watm-csv-toggle").value);
 
   document.body.firstElementChild.style.paddingBottom =
     document.getElementById("watm-inspector-bar").offsetHeight + 300 + "px";
