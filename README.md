@@ -32,7 +32,7 @@ NOTE: this code snippet assumes you have uploaded all files into the folder `/re
   <script src="/resources/Theme/WildApricotTextManager/wildapricot-textmanager.js"></script>
   <script>
 
-    // Enter your license key if you have one - omit to use trial
+    // Enter your license key if you have one - omit to use a trial that uses the first 10 lines of a config file
     license_key = "";
 
     /*
@@ -52,6 +52,8 @@ NOTE: this code snippet assumes you have uploaded all files into the folder `/re
 
   </script>
    ```
+   
+   3. Enter your license key in the quotes `""` to apply your license.
 
 ## Files Setup
 
