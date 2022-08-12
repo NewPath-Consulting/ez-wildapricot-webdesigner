@@ -55,6 +55,10 @@ NOTE: this code snippet assumes you have uploaded all files into the folder `/re
    
    3. Enter your license key in the quotes `""` to apply your license.
 
+The Inspector & Editor are only accessible to logged in WildApricot administrators by default, but you can enable EZ WildApricot Web Designer 2 in the public view using this line in the install script:
+
+`enable_public_editor = true;`
+
 ## Files Setup
 
 1. Follow these [instructions to connect to your Wild Apricot file folder](https://gethelp.wildapricot.com/en/articles/198-uploading-and-downloading-files-using-webdav)
@@ -88,11 +92,11 @@ You are not limited to using the EZ Wild Apricot Web Designer Language Toggle. Y
 
 Using the Inspector & Editor, you can use to view the styling and targeting information of the various elements on your website, as well as make modifications to your EZ Wild Apricot Web Designer configuration files. This information is necessary when updating your configuration and translation files.
 
-The Inspector & Editor are only accessible to logged in administrators by default, but you can enable it in public view using `enable_public_editor = true;`. When logged in as an administrator, an icon will appear at the bottom-left of your screen - click on this to launch the editor. While in Editor mode, you will not be able to follow any links - click the exit button in the inspector bar to return to normal operation. Hovering over an element will outline the element in red.
+ When logged in as a WildApricot administrator, an icon will appear at the bottom-left of your screen. Click on the icon to launch the inspector and editor. While in Editor mode, you will not be able to follow any links on the web page. Click the Exit Editor button in the inspector to return to normal browsing. When you hover over an element a red outline will appear around the element.
 
-# Page Inspector
+# Inspector
 
-The top half of the panel that appears is the page Inspector. Clicking on the element will display the element's CSS Class (if a class has been set), as well as the CSS path to the element.
+The top half of the panel that appears is the Inspector. Clicking on the element will display the element's CSS Class (if a class has been set), as well as the CSS path to the element.
 
 The `Copy Element Class`, and `Copy CSS Path` buttons will copy the related information to the clipboard. You can use either one for the Query part of the configuration. CSS Path is always more specific and usually the best Query to use. The CSS Element Class can have unintended consequences on other elements that share the same CSS Class, but sometimes using a CSS Class is a good fallback if the CSS Path is not working to change the site.
 
