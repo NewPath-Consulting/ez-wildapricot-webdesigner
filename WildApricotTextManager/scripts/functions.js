@@ -154,9 +154,21 @@ const process = (row) => {
       if (watmQuery == null || watmQuery == "") watmQuery = "body";
       document.querySelectorAll(watmQuery).forEach(function (el) {
         let regex = new RegExp(
-          (defaultText.includes("-") ? "" : "\\b") +
-            defaultText +
-            (defaultText.includes("-") ? "" : "\\b"),
+          (defaultText.includes("-") ||
+          defaultText.includes(".") ||
+          defaultText.includes("!") ||
+          defaultText.includes("?") ||
+          defaultText.includes(":")
+            ? ""
+            : "\\b") +
+            escapeRegExp(defaultText) +
+            (defaultText.includes("-") ||
+            defaultText.includes(".") ||
+            defaultText.includes("!") ||
+            defaultText.includes("?") ||
+            defaultText.includes(":")
+              ? ""
+              : "\\b"),
           "gi"
         );
         walkText(el, regex, replacementText, watmFunction);
@@ -304,4 +316,8 @@ const loadCSS = (cssFiles) => {
 
     head.appendChild(link);
   });
+};
+
+const escapeRegExp = (string) => {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 };
