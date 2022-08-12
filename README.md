@@ -90,9 +90,9 @@ The Inspector & Editor are only accessible to logged in administrators by defaul
 
 # Page Inspector
 
-The top half of the panel that appears is the page Inspector. Clicking on the element will display the element  Class (if they are available), as well as the CSS path to the element.
+The top half of the panel that appears is the page Inspector. Clicking on the element will display the element's CSS Class (if a class has been set), as well as the CSS path to the element.
 
-The `Copy Element Class`, and `Copy CSS Path` buttons will copy the related information to the clipboard.
+The `Copy Element Class`, and `Copy CSS Path` buttons will copy the related information to the clipboard. You can use either one for the Query part of the configuration. CSS Path is always more specific and usually the best Query to use. The CSS Element Class can have unintended consequences on other elements that share the same CSS Class, but sometimes using a CSS Class is a good fallback if the CSS Path is not working to change the site.
 
 The `View Properties` button will display the details about that element, such as the text it contains, styling, and any resource links.
 
@@ -100,19 +100,23 @@ The `View Properties` button will display the details about that element, such a
 
 # CSV Editor
 
-The bottom half of the panel displays the CSV Editor. In the editor you can select the file you wish to update from the dropdown. Selecting the file will automatically load it below. You can resize the columns as needed, as well as drag the rows to rearrange them. Right clicking will give you the options to create and delete rows, and download the modified CSV file. Once you are finished making your changes, save the file back to your website by clicking on `Save changes to site`. If you choose to download the file, the changes will not be applied to your website until you manually upload the file. If you choose to save the file to the website you will be prompted to login with an administrator account. This is done directly with the Wild Apricot website, and WATM can not see or access your website credentials.
+The bottom half of the panel displays the CSV Editor. In the editor you can select the file you wish to update from the dropdown. Selecting the file will automatically load the configuration file editor. You can resize the columns as needed by dragging on the divider on the right hand side of the panel. You can also drag the rows to rearrange them. Right clicking on a row will give you the options to create and delete rows, and download the currently saved configuration file
 
-When you save to the website, the page will automatically refresh. Your changes shoudl be immediately visible, if not your browser may locally cache the CSV files in order to load pages faster - as a result to do a hard refresh of your site to see the changes. To do this, exit the inspector/editor and press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> on PC or <kbd>Option</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> on Mac. You may need to do this for each language enabled on your site.
+Once you are finished making your changes, save the file back to your website by clicking on `Save changes to site`. You will need to authenticate once with your administrative WildApricot account.
+
+If you choose to download the file and edit it outside of the Inspector, the changes will be applied only when you manually upload the configuration file.
+
+When you use the Inspector to save the configuration file, the current page will automatically refresh, and your changes should be immediately visible.  If you don't see your changes, you may need to do a hard refresh of your site to see the changes. To do this, exit the inspector/editor and press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> on PC or <kbd>Option</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> on Mac. You may need to do this for each language enabled on your site.
 
 ---
 
 # EZ Wild Apricot Web Designer Functions
 
-When editing the EZ Wild Apricot Web Designer configuration and translation files, the following functions are available:
+When editing the EZ Wild Apricot Web Designer configuration and translation files, the following functions are available: Ech function operates in a specific way to modify, hide or translate parts of your website.
 
 
 ## **text**
-> Changes the text in targeted element(s), note that any links are eliminated in the targeted element(s)
+> Changes the text in targeted element(s), note that any links are eliminated in the targeted element(s). Note that the Default Text is empty (and ignored if filled) when using the text function.
 
 **EXAMPLE:**
 ```text
@@ -121,7 +125,7 @@ Replacement Text: Change my password!
 Query: .loginBoxChangePassword
 ```
 ## **replace**
-> Finds and replaces specific text in targeted element(s)
+> Finds and replaces specific text in targeted element(s). Note that the Default Text must match the text that is being replaced.
 
 **EXAMPLE:**
 ```text
@@ -133,7 +137,7 @@ Query: .menuInner, .WaGadgetBreadcrumbs > div > ul > li
 
 
 ## **delay**
-> Changes the text in targeted element(s) after 1 second - used for dynamically generated elements, such as a member directory
+> Changes the text in targeted element(s) after 1 second - used for dynamically generated elements, such as a member directory. Note that the Default Text must match the text that is being replaced.
 
 **EXAMPLE:**
 ```text
@@ -153,7 +157,7 @@ Query: .loginButton
 ```
 
 ## **inactive**
-> Ignores current line in file
+> Ignores the configuration row. This is useful when troubleshooting an item or you wish to save details in the configuration file, but not activate it.
 
 ## The style column can be used in conjunction with a function, or on it's own.
 **EXAMPLE:**
@@ -163,7 +167,7 @@ Style: color: blue;font-style: italic
 ```
 
 ## **hide**
-> Hides the targeted element(s)
+> Hides the targeted element(s). This is useful when you wish to hide an element altogether. Neither Default Text or Replacement Text fields are necessary or used.
 
 **EXAMPLE:**
 ```text
@@ -203,7 +207,7 @@ Query: #id_Header2
 Stye: display: none;
 ```
 ## **link**
-> Changes the `href` URL of targeted element(s)
+> Changes the target link of an existing link. Specifically it changes the  `href` URL of targeted element(s). Note that almost always the query must contain the `a` target after the CSS Element Class or CSS Element Path.
 
 **EXAMPLES:**
 ```text
@@ -219,7 +223,7 @@ Query: #idFooterPoweredByWA a
 ```
 
 ## **source**
-> Changes the `src` URL of targeted element(s)
+> Changes the `src` URL of targeted element(s). This is useful when changing the iframe src or img src URL to load an alternative image or iframe.
 
 ## **tooltip**
 > Creates a text popup when mouse is hovered over element
