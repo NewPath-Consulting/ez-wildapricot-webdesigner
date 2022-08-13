@@ -284,7 +284,7 @@ EZ Wild Apricot Web Designer is supported on the latest versions of Chrome, Safa
 
 0.94 - added support for entering/exiting Inspector panel,  copy/paste of element ID, class and CSS path in Inspector panel, more options  added install script 4/19/2022
 
-0.95 - added support for Inspector Hover mode which shows the outlines of each element on a page when using the Inspector
+0.95 - added support for Inspector Hover mode which shows the outlines of each element on a page when using the Inspector 5/11/2022
 
 0.951 - fixed translations to be rendered for multi-page widgets embedded with a primary and second language 5/17/2022
 
