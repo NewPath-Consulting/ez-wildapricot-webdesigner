@@ -290,6 +290,6 @@ EZ Wild Apricot Web Designer is supported on the latest versions of Chrome, Safa
 
 0.952 - fixed bug on Copy ID button in inspector that adds a # to the id on the clipboard 5/25/2022
 
-0.96 - added showing the selected text of an element, ability to provide alternative text or translation and a drop down for the function, added license checking, trial mode
+0.96 - added showing the selected text of an element, ability to provide alternative text or translation and a drop down for the function, added license checking, trial mode 6/4/2022
 
 2.0b1 - new inspector and configuration file editor, a view properties window including image color picker, support for unlimited languages, easy configuration file upload and preview of changes, rewritten in ECMAScript 6 (no more jQuery!) 8/13/2022
