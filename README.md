@@ -20,6 +20,16 @@ EZ Wild Apricot Web Designer module can be used to make Wild Apricot sites avail
 ---
 # Installation
 
+## Files Setup
+
+1. Follow these [instructions to connect to your Wild Apricot file folder](https://gethelp.wildapricot.com/en/articles/198-uploading-and-downloading-files-using-webdav) or go to the Website -> Files manager.
+2. Unzip the downloaded zip file and upload the folder `WildApricotTextManager`into /Theme/WildApricotTextManager.
+3. If you are setting up a multilingual site:
+  * Add a Content Gadget to your page template in the location you would like the language toggle to appear. Set the ID of this gadget to `language_switch`
+  * Create a separate CSV for each language you need in the `translations` folder.
+
+The configuration and translation files must be saved as a CSV file format in UTF-8 format.
+
 ## Script Setup
 
 1. In Admin View of Web Apricot, browse to Settings -&gt; Site -&gt; Global JavaScript. More details on inserting JavaScript into Wild Apricot are available in [Wild Apricot Documentation](https://gethelp.wildapricot.com/en/articles/212-inserting-and-modifying-html-or-javascript#javascript).
@@ -59,15 +69,7 @@ The Inspector & Editor are only accessible to logged in WildApricot administrato
 
 `enable_public_editor = true;`
 
-## Files Setup
 
-1. Follow these [instructions to connect to your Wild Apricot file folder](https://gethelp.wildapricot.com/en/articles/198-uploading-and-downloading-files-using-webdav)
-2. Modify `config.csv` in the `WildApricotTextManager` folder with your general changes
-3. If you are setting up a multilingual site:
-  * Add a Content Gadget to your page template in the location you would like the language toggle to appear. Set the ID of this gadget to `language_switch`
-  * Upload a separate CSV for each language you are offering to the `translations` folder.
-
-The configuration and translation files must be saved as a CSV file format in UTF-8 format.
 
 ---
 # Switching Languages
