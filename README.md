@@ -1,4 +1,4 @@
-# Documentation (Version 2.0-Beta)
+# Documentation (Version 2.0)
 
 
 ## Project Description
@@ -248,3 +248,48 @@ Query: .loginBoxProfileLink
 ---
 # Browser Requirements
 EZ Wild Apricot Web Designer is supported on the latest versions of Chrome, Safari, Firefox and Edge. Older browsers like Internet Explorer on Windows are supported "best effort," without formal testing or 100% compatibility.
+
+---
+# Release History
+
+0.1 - Initial Release 11/19/18
+
+0.2 - Added support for many more system flags, added French translation into CSV configuration file, changed testing button toggle label 11/27/18
+
+0.3 - Added support for adding a style, added several more system labels, added support for limiting the language toggle display "flicker" 12/5/18
+
+0.4 - Added support for effective primary menu design changes, added support to override any CSS class or ID 12/13/18
+
+0.5 - Added support for mouseover, mouseout \(hover\) and :before and :after pseudo-elements 1/15/19
+
+0.6 - Added support for SCSS-style variables 1/24/19
+
+0.7 - Now managed in GitHub, fixed issues related to Internet Explorer 11 support in the CSV parser and in the WATM library 2/23/19
+
+0.71 - The Wild Apricot Text Manger config file is not cached while in testing mode 2/6/20
+
+0.8 - WATM will now automatically enable when it goes into public view in Wild Apricot, new `attribute` function has been added 6/15/20
+
+0.81 - fixed code typo in wildapricot-textmanager.js due to reformatting 6/29/20
+
+0.82 - added display of WATM version on console log 9/8/20
+
+0.9 - added CSS class/id inspector invoked with `?dev` in URL, added more error/information logging, strip leading/trailing space in "function" field of configuration file 11/20/20
+
+0.91 - Fixed replace\_delay function that works for form dropdowns, added "-n" suffix to the `replace-delay` function. For example, `replace-delay-3` will delay for 3 seconds 11/23/20
+
+0.92 - Fixed bug that prevented text containing HTML and links to be changed with replace or replace_element 3/5/2021
+
+0.93 - support for switching languages using embedded WildApricot "widgets" in 3rd party content management system, added a standard French translation file 2/16/22
+
+0.94 - added support for entering/exiting Inspector panel,  copy/paste of element ID, class and CSS path in Inspector panel, more options  added install script 4/19/2022
+
+0.95 - added support for Inspector Hover mode which shows the outlines of each element on a page when using the Inspector
+
+0.951 - fixed translations to be rendered for multi-page widgets embedded with a primary and second language 5/17/2022
+
+0.952 - fixed bug on Copy ID button in inspector that adds a # to the id on the clipboard 5/25/2022
+
+0.96 - added showing the selected text of an element, ability to provide alternative text or translation and a drop down for the function, added license checking, trial mode
+
+2.0b1 - new inspector and configuration file editor, a view properties window including image color picker, support for unlimited languages, easy configuration file upload and preview of changes, rewritten in ECMAScript 6 (no more jQuery!) 8/13/2022
