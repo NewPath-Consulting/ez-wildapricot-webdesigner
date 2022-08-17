@@ -150,8 +150,11 @@ const process = (row) => {
       }, 1000);
       break;
     case "replace":
-    case "replace_element":
+    case "createlink":
+      /*
       if (watmQuery == null || watmQuery == "") watmQuery = "body";
+      if (watmFunction == "createlink")
+        replacementText = `<a href="${replacementText}">${defaultText}</a>`;
       document.querySelectorAll(watmQuery).forEach(function (el) {
         let regex = new RegExp(
           (defaultText.includes("-") ||
@@ -173,6 +176,44 @@ const process = (row) => {
         );
         walkText(el, regex, replacementText, watmFunction);
       });
+      */
+
+      if (watmQuery == null || watmQuery == "") watmQuery = "body";
+      let regex = new RegExp(
+        (defaultText.includes("-") ||
+        defaultText.includes(".") ||
+        defaultText.includes("!") ||
+        defaultText.includes("?") ||
+        defaultText.includes(":")
+          ? ""
+          : "\\b") +
+          escapeRegExp(defaultText) +
+          (defaultText.includes("-") ||
+          defaultText.includes(".") ||
+          defaultText.includes("!") ||
+          defaultText.includes("?") ||
+          defaultText.includes(":")
+            ? ""
+            : "\\b"),
+        "gi"
+      );
+      document.querySelectorAll(watmQuery).forEach(function (el) {
+        if (watmFunction === "replace") {
+          walkText(el, regex, watmFunction, function (node, match, offset) {
+            let newText = document.createTextNode(replacementText);
+            return newText;
+          });
+        }
+        if (watmFunction === "createlink") {
+          walkText(el, regex, watmFunction, function (node, match, offset) {
+            let alink = document.createElement("a");
+            alink.href = replacementText;
+            alink.textContent = match;
+            return alink;
+          });
+        }
+      });
+
       break;
     case "attribute":
       document
@@ -242,19 +283,41 @@ const getCookie = (key) => {
   return keyValue;
 };
 
-const walkText = (node, regex, replacementText, watmFunction) => {
-  if (node.nodeType == 3) {
-    if (watmFunction === "replace_element") {
-      node.data = replacementText;
-    } else if (watmFunction === "replace") {
-      node.data = node.data.replace(regex, replacementText);
-    }
+const walkText = function (node, regex, watmFunction, callback) {
+  const excludeElements = [
+    "script",
+    "style",
+    "iframe",
+    "canvas",
+    "script",
+    watmFunction === "createlink" ? "a" : "",
+  ];
+  switch (node.nodeType) {
+    case 1:
+      if (excludeElements.indexOf(node.tagName.toLowerCase()) > -1) break;
+      for (let i = 0; i < node.childNodes.length; i++) {
+        walkText(node.childNodes[i], regex, watmFunction, callback);
+      }
+      break;
+    case 3:
+      var bk = 0;
+      node.data.replace(regex, function (all) {
+        var args = [].slice.call(arguments),
+          offset = args[args.length - 2],
+          newTextNode = node.splitText(offset + bk),
+          tag;
+        bk -= node.data.length + all.length;
+
+        newTextNode.data = newTextNode.data.substr(all.length);
+        tag = callback.apply(window, [node].concat(args));
+        node.parentNode.insertBefore(tag, newTextNode);
+        node = newTextNode;
+      });
+      regex.lastIndex = 0;
+      break;
   }
-  if (node.nodeType == 1 && node.nodeName != "SCRIPT") {
-    for (let i = 0; i < node.childNodes.length; i++) {
-      walkText(node.childNodes[i], regex, replacementText, watmFunction);
-    }
-  }
+
+  return node;
 };
 
 const processCSS = (watmQuery, watmStyle, mediaQuery) => {

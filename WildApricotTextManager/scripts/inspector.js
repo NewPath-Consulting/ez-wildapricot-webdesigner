@@ -11,7 +11,6 @@ let watmFunctions = [
   "",
   "text",
   "replace",
-  //"replace_element",
   "delay",
   "button",
   "inactive",
@@ -20,6 +19,7 @@ let watmFunctions = [
   "attribute",
   "@media",
   "link",
+  "createlink",
   "source",
   "tooltip",
 ];
