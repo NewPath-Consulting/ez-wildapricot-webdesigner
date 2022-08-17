@@ -71,6 +71,16 @@ function loadScripts() {
 }
 
 function start(license) {
+  let googlePreconnect1 = document.createElement("link");
+  let googlePreconnect2 = document.createElement("link");
+  googlePreconnect1.href = "https://fonts.googleapis.com";
+  googlePreconnect2.href = "https://fonts.gstatic.com";
+  googlePreconnect1.setAttribute("rel", "preconnect");
+  googlePreconnect2.setAttribute("rel", "preconnect");
+  googlePreconnect2.setAttribute("crossorigin", "true");
+  document.head.appendChild(googlePreconnect1);
+  document.head.appendChild(googlePreconnect2);
+
   loadCSS(requiredStyles);
   let textManagerProductionMode = !isInEditMode();
 

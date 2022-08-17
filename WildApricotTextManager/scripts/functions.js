@@ -151,33 +151,6 @@ const process = (row) => {
       break;
     case "replace":
     case "createlink":
-      /*
-      if (watmQuery == null || watmQuery == "") watmQuery = "body";
-      if (watmFunction == "createlink")
-        replacementText = `<a href="${replacementText}">${defaultText}</a>`;
-      document.querySelectorAll(watmQuery).forEach(function (el) {
-        let regex = new RegExp(
-          (defaultText.includes("-") ||
-          defaultText.includes(".") ||
-          defaultText.includes("!") ||
-          defaultText.includes("?") ||
-          defaultText.includes(":")
-            ? ""
-            : "\\b") +
-            escapeRegExp(defaultText) +
-            (defaultText.includes("-") ||
-            defaultText.includes(".") ||
-            defaultText.includes("!") ||
-            defaultText.includes("?") ||
-            defaultText.includes(":")
-              ? ""
-              : "\\b"),
-          "gi"
-        );
-        walkText(el, regex, replacementText, watmFunction);
-      });
-      */
-
       if (watmQuery == null || watmQuery == "") watmQuery = "body";
       let regex = new RegExp(
         (defaultText.includes("-") ||
@@ -221,6 +194,14 @@ const process = (row) => {
         .forEach(function (el) {
           el.setAttribute(watmQuery, replacementText);
         });
+      break;
+    case "googlefont":
+      let fontUrl = `https://fonts.googleapis.com/css2?family=${replacementText.trim()}:wght@200;300;400;600;700;800;900&display=swap`;
+      let fontLink = document.createElement("link");
+      fontLink.href = fontUrl;
+      fontLink.setAttribute("rel", "stylesheet");
+      document.head.appendChild(fontLink);
+      break;
     case "link":
       document.querySelectorAll(watmQuery).forEach(function (el) {
         if (el.hasAttribute("href")) el.setAttribute("href", replacementText);

@@ -22,6 +22,7 @@ let watmFunctions = [
   "createlink",
   "source",
   "tooltip",
+  "googlefont",
 ];
 
 const urlParams = new URLSearchParams(window.location.search);
