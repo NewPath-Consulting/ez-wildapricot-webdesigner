@@ -189,11 +189,9 @@ const process = (row) => {
 
       break;
     case "attribute":
-      document
-        .querySelectorAll(`[${watmQuery}="${defaultText}"]`)
-        .forEach(function (el) {
-          el.setAttribute(watmQuery, replacementText);
-        });
+      document.querySelectorAll(watmQuery).forEach(function (el) {
+        el.setAttribute(defaultText, replacementText);
+      });
       break;
     case "googlefont":
       let fontUrl = `https://fonts.googleapis.com/css2?family=${replacementText.trim()}:wght@200;300;400;600;700;800;900&display=swap`;

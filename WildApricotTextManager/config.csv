@@ -1,2 +1,7 @@
 ﻿Wild Apricot Reference,Default Text,Replacement Text,Function,Query,Style,Notes
-Powered by,Powered by Wild Apricot Membership Software,WATM Development Playground,text,#idFooterPoweredByWA,"{ ""color"" : ""red"", ""font-style"" : "" italic"" }",Change the WA Powered by text
+POWERED BY,,,,#idFooterPoweredByContainer,text-align:center;,Center text
+POWERED BY,,https://register.wildapricot.com/?refcode=S8H3M,link,#idFooterPoweredByWA a,,Update WA link
+POWERED BY,Powered by,Built on,replace,#idFooterPoweredByWA,,Update Powered By Text
+POWERED BY,Membership Software,• Designed with EZ Web Designer,replace,#idFooterPoweredByWA,,Update Designer EZ Text
+POWERED BY,EZ Web Designer,https://newpathconsulting.com/watm,createlink,#idFooterPoweredByWA,,Create link for EZ Designer
+POWERED BY,target,_blank,attribute,#idFooterPoweredByWA a,,Set EZ link to open in new window
