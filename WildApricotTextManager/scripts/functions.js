@@ -242,7 +242,12 @@ const setCookie = (key, value) => {
   var expires = new Date();
   expires.setTime(expires.getTime() + 1 * 24 * 60 * 60 * 1000);
   document.cookie =
-    key + "=" + value + ";path=/;expires=" + expires.toUTCString();
+    key +
+    "=" +
+    value +
+    ";path=/;expires=" +
+    expires.toUTCString() +
+    "; SameSite=None; Secure";
 };
 
 // Util function for reading cookies
