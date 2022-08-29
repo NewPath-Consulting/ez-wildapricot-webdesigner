@@ -245,6 +245,26 @@ Function: tooltip
 Query: .loginBoxProfileLink
 ```
 
+## **googlefont**
+> Installs a Google font that can be used throughout other CSS property declarations
+
+**EXAMPLE:**
+```text
+Function: googlefont
+Query: GoogleFontName
+```
+
+
+## **createlink**
+> Adds a link to an existing non-linked piece of text
+
+**EXAMPLE:**
+```text
+Replacement Text: View/Edit Your Profile
+Function: createlink
+Query: .loginBoxProfileLink
+```
+
 ---
 # Browser Requirements
 EZ WildApricot Web Designer is supported on the latest versions of Chrome, Safari, Firefox and Edge. Older browsers like Internet Explorer on Windows are supported "best effort," without formal testing or 100% compatibility.
