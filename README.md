@@ -1,13 +1,13 @@
-# Documentation (Version 2.0)
+# Documentation
 
 
 ## Project Description
 
-Introducing our new [EZ Wild Apricot Web Designer](https://newpathconsulting.com/watm) \(aka WATM\), redesigned from the ground up. The product has been rewritten in ECMAScript 6. 
+Introducing our new [EZ WildApricot Web Designer 2](https://newpathconsulting.com/watm) \(aka WATM\), redesigned from the ground up. The product has been rewritten in JavaScript (ECMAScript 6). 
 
-EZ Wild Apricot Web Designer will help any administrator with some knowledge of the [Document Object Model (DOM)](https://www.w3schools.com/js/js_htmldom.asp) manage and replace nearly every piece of hard-coded and configurable text in Wild Apricot.
+EZ WildApricot Web Designer will help any administrator with some knowledge of the [Document Object Model (DOM)](https://www.w3schools.com/js/js_htmldom.asp) manage and replace nearly every piece of hard-coded and configurable text in WildApricot.
 
-You can make a variety of single page, whole site, and Wild Apricot widget changes such as:
+You can make a variety of single page, whole site, and WildApricot widget changes such as:
 
 - search and replace of a particular text string
 - modify field labels on forms, button labels
@@ -15,14 +15,14 @@ You can make a variety of single page, whole site, and Wild Apricot widget chang
 - hide text on any user interface items
 - allow your site to be offered in an unlimited number of languages
 
-EZ Wild Apricot Web Designer module can be used to make Wild Apricot sites available in two or more languages by dynamically replacing strings with a translated string. A translator will use a comma separated value (CSV) configuration file that is easily editable, making it easy to maintain hundreds of modifications in a human-readable file. A standard file with over 600 English-to-French Wild Apricot labels and strings is included.
+EZ WildApricot Web Designer module can be used to make WildApricot sites available in two or more languages by dynamically replacing strings with a translated string. A translator will use a comma separated value (CSV) configuration file that is easily editable, making it easy to maintain hundreds of modifications in a human-readable file. A standard file with over 600 English-to-French WildApricot labels and strings is included.
 
 ---
 # Installation
 
 ## Files Setup
 
-1. Follow these [instructions to connect to your Wild Apricot file folder](https://gethelp.wildapricot.com/en/articles/198-uploading-and-downloading-files-using-webdav) or go to the Website -> Files manager.
+1. Follow these [instructions to connect to your WildApricot file folder](https://gethelp.wildapricot.com/en/articles/198-uploading-and-downloading-files-using-webdav) or go to the Website -> Files manager.
 2. Unzip the downloaded zip file and upload the folder `WildApricotTextManager`into /Theme/WildApricotTextManager.
 3. If you are setting up a multilingual site:
   * Add a Content Gadget to your page template in the location you would like the language toggle to appear. Set the ID of this gadget to `language_switch`
@@ -32,7 +32,7 @@ The configuration and translation files must be saved as a CSV file format in UT
 
 ## Script Setup
 
-1. In Admin View of Web Apricot, browse to Settings -&gt; Site -&gt; Global JavaScript. More details on inserting JavaScript into Wild Apricot are available in [Wild Apricot Documentation](https://gethelp.wildapricot.com/en/articles/212-inserting-and-modifying-html-or-javascript#javascript).
+1. In Admin View of Web Apricot, browse to Settings -&gt; Site -&gt; Global JavaScript. More details on inserting JavaScript into WildApricot are available in [WildApricot Documentation](https://gethelp.wildapricot.com/en/articles/212-inserting-and-modifying-html-or-javascript#javascript).
 2. Copy and paste the following lines to the Global JavaScript.
 
 NOTE: this code snippet assumes you have uploaded all files into the folder `/resources/Theme/WildApricotTextManager`
@@ -76,11 +76,11 @@ The Inspector & Editor are only accessible to logged in WildApricot administrato
 
 ## Using the Language Toggle
 
-EZ Wild Apricot Web Designer provides an easy to install toggle for switching between the various languages on your site. To add it to your site, simply  add a Content Gadget to your page template in the location you would like the toggle to appear. Set the ID of this gadget to `language_switch`. This gadget will now be replaced with the language toggle when viewed from the frontend.
+EZ WildApricot Web Designer provides an easy to install toggle for switching between the various languages on your site. To add it to your site, simply  add a Content Gadget to your page template in the location you would like the toggle to appear. Set the ID of this gadget to `language_switch`. This gadget will now be replaced with the language toggle when viewed from the frontend.
 
 ## Using the Language Switch Hook
 
-You are not limited to using the EZ Wild Apricot Web Designer Language Toggle. You can create your own buttons, links, or menu items for switching the language. To switch language, you would link to `?watm-<language>` where `<language>` is the class name for the language you wish to use from the script setup. Note, there is no slash in this link - you are linking to the current page, and appending the language hook to it.
+You are not limited to using the EZ WildApricot Web Designer Language Toggle. You can create your own buttons, links, or menu items for switching the language. To switch language, you would link to `?watm-<language>` where `<language>` is the class name for the language you wish to use from the script setup. Note, there is no slash in this link - you are linking to the current page, and appending the language hook to it.
 
 **EXAMPLE:**
 
@@ -90,9 +90,9 @@ You are not limited to using the EZ Wild Apricot Web Designer Language Toggle. Y
 
 ---
 
-# EZ Wild Apricot Inspector & Editor
+# EZ WildApricot Inspector & Editor
 
-Using the Inspector & Editor, you can use to view the styling and targeting information of the various elements on your website, as well as make modifications to your EZ Wild Apricot Web Designer configuration files. This information is necessary when updating your configuration and translation files.
+Using the Inspector & Editor, you can use to view the styling and targeting information of the various elements on your website, as well as make modifications to your EZ WildApricot Web Designer configuration files. This information is necessary when updating your configuration and translation files.
 
  When logged in as a WildApricot administrator, an icon will appear at the bottom-left of your screen. Click on the icon to launch the inspector and editor. While in Editor mode, you will not be able to follow any links on the web page. Click the Exit Editor button in the inspector to return to normal browsing. When you hover over an element a red outline will appear around the element.
 
@@ -120,9 +120,9 @@ When you use the Inspector to save the configuration file, the current page will
 
 ---
 
-# EZ Wild Apricot Web Designer Functions
+# EZ WildApricot Web Designer Functions
 
-When editing the EZ Wild Apricot Web Designer configuration and translation files, the following functions are available: Ech function operates in a specific way to modify, hide or translate parts of your website.
+When editing the EZ WildApricot Web Designer configuration and translation files, the following functions are available: Ech function operates in a specific way to modify, hide or translate parts of your website.
 
 
 ## **text**
@@ -247,7 +247,7 @@ Query: .loginBoxProfileLink
 
 ---
 # Browser Requirements
-EZ Wild Apricot Web Designer is supported on the latest versions of Chrome, Safari, Firefox and Edge. Older browsers like Internet Explorer on Windows are supported "best effort," without formal testing or 100% compatibility.
+EZ WildApricot Web Designer is supported on the latest versions of Chrome, Safari, Firefox and Edge. Older browsers like Internet Explorer on Windows are supported "best effort," without formal testing or 100% compatibility.
 
 ---
 # Release History
@@ -293,3 +293,5 @@ EZ Wild Apricot Web Designer is supported on the latest versions of Chrome, Safa
 0.96 - added showing the selected text of an element, ability to provide alternative text or translation and a drop down for the function, added license checking, trial mode 6/4/2022
 
 2.0b1 - new inspector and configuration file editor, a view properties window including image color picker, support for unlimited languages, easy configuration file upload and preview of changes, rewritten in ECMAScript 6 (no more jQuery!) 8/13/2022
+
+2.0.1 - added a new function for adding a Google font and adding a link to a piece of text
