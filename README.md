@@ -257,12 +257,12 @@ Query: .loginBoxProfileLink
 ```
 
 ## **googlefont**
-> Installs a Google font that can be used throughout other CSS property declarations
+> Installs a Google font that can be used throughout other CSS property declarations. Place the font family name to use in the "Replacement Text" field. THe font family name can be obtained from the [Google Fonts](https://fonts.google.com/) website
 
 **EXAMPLE:**
 ```text
+Replacement Text: Lobster
 Function: googlefont
-Query: GoogleFontName
 ```
 
 ---
