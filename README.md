@@ -232,6 +232,17 @@ Function: link
 Query: #idFooterPoweredByWA a
 ```
 
+## **createlink**
+> Adds a link to an existing non-linked piece of text
+
+**EXAMPLE:**
+```text
+Default Text: Some Text String that Needs a Link
+Replacement Text: https://newpathconsuling.com
+Function: createlink
+Query: #someID
+```
+
 ## **source**
 > Changes the `src` URL of targeted element(s). This is useful when changing the iframe src or img src URL to load an alternative image or iframe.
 
@@ -252,17 +263,6 @@ Query: .loginBoxProfileLink
 ```text
 Function: googlefont
 Query: GoogleFontName
-```
-
-
-## **createlink**
-> Adds a link to an existing non-linked piece of text
-
-**EXAMPLE:**
-```text
-Replacement Text: View/Edit Your Profile
-Function: createlink
-Query: .loginBoxProfileLink
 ```
 
 ---
