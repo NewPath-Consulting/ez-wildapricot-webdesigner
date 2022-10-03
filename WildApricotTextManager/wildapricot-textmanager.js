@@ -3,7 +3,7 @@ let watm_location = document.currentScript.src.substring(
   document.currentScript.src.lastIndexOf("/")
 );
 
-let watm_version = "2.01";
+let watm_version = "2.03";
 let watm_styles = "default";
 let watm_info_url = "https://newpathconsulting.com/watm";
 

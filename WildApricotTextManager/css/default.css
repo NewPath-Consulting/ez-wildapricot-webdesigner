@@ -46,11 +46,18 @@
   position: fixed;
   z-index: 999;
   bottom: 35px;
-  left: 20px;
   padding: 5px;
   box-shadow: 0 3px 10px rgb(0 0 0 / 1);
   border-radius: 100%;
   cursor: pointer;
+}
+
+.watm-icon-left {
+  left: 20px;
+}
+
+.watm-icon-right {
+  right: 20px;
 }
 
 .watm-trial,

@@ -325,11 +325,22 @@ const processCSS = (watmQuery, watmStyle, mediaQuery) => {
 
 const appendWATMBtn = (license = "default", isAdmin) => {
   const btn = document.createElement("div");
-  btn.classList.add("watm-icon", `watm-${license}`);
+  btn.classList.add("watm-icon", "watm-icon-left", `watm-${license}`);
 
   if (isAdmin && license !== "invalid") {
     btn.addEventListener("click", () => {
       window.location.href = window.location.href + "?dev";
+    });
+    btn.addEventListener("contextmenu", (e) => {
+      e.preventDefault();
+      if (btn.classList.contains("watm-icon-left")) {
+        btn.classList.remove("watm-icon-left");
+        btn.classList.add("watm-icon-right");
+      } else {
+        btn.classList.remove("watm-icon-right");
+        btn.classList.add("watm-icon-left");
+      }
+      return false;
     });
   }
 
