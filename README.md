@@ -315,3 +315,7 @@ EZ WildApricot Web Designer is supported on the latest versions of Chrome, Safar
 2.0b1 - new inspector and configuration file editor, a view properties window including image color picker, support for unlimited languages, easy configuration file upload and preview of changes, rewritten in ECMAScript 6 (no more jQuery!) 8/13/2022
 
 2.0.1 - added a new function for adding a Google font (`googlefont`) and adding a link to a piece of text (`createlink`), added support for cookies to work better
+
+2.0.2 - bug fixes
+
+2.0.3 - allow moving of WATM icon to the right or left
