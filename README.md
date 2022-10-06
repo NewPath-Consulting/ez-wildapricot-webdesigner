@@ -266,7 +266,7 @@ Function: googlefont
 ```
 
 ---
-# Additional Features
+# EZ Add-Ons
 ## **FontAwesome Icons**
 
 EZ Wild Apricot Web Designer makes it easy to insert FontAwesome icons by using macros. Simply [sign up for FontAwesome](https://fontawesome.com/start) and add the provided JavaScript code snippet to your WildApricot Global JavaScript settings.
