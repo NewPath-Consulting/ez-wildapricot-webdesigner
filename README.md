@@ -266,6 +266,21 @@ Function: googlefont
 ```
 
 ---
+# Additional Features
+## **FontAwesome Icons**
+
+EZ Wild Apricot Web Designer makes it easy to insert FontAwesome icons by using macros. Simply [sign up for FontAwesome](https://fontawesome.com/start) and add the provided JS code to your Wild Apricot Global JavaScript settings.
+
+To insert and icon, first find the name if the icon you wish to use here: [https://fontawesome.com/search?o=r&m=free&s=solid](https://fontawesome.com/search?o=r&m=free&s=solid). Next, add that icon name within the `[fa][/fa]` macro.
+
+**EXAMPLE:**
+```text
+Macro Text: [fa]home[/fa]
+Result: 🏠
+```
+In this current version, it is not let possible to add icons to menus and buttons via the EZ Editor.
+
+---
 # Browser Requirements
 EZ WildApricot Web Designer is supported on the latest versions of Chrome, Safari, Firefox and Edge. Older browsers like Internet Explorer on Windows are supported "best effort," without formal testing or 100% compatibility.
 
@@ -319,3 +334,5 @@ EZ WildApricot Web Designer is supported on the latest versions of Chrome, Safar
 2.0.2 - bug fixes
 
 2.0.3 - allow moving of WATM icon to the right or left
+
+2.0.4 - add macros for FontAwesome

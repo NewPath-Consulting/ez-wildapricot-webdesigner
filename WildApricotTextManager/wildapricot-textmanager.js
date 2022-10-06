@@ -3,7 +3,7 @@ let watm_location = document.currentScript.src.substring(
   document.currentScript.src.lastIndexOf("/")
 );
 
-let watm_version = "2.03";
+let watm_version = "2.04";
 let watm_styles = "default";
 let watm_info_url = "https://newpathconsulting.com/watm";
 
@@ -59,11 +59,10 @@ function loadScripts() {
   var head = document.head;
   var script = document.createElement("script");
   script.type = "text/javascript";
-  script.src = `${
-    requiredScripts[loadedScripts].includes("http")
+  script.src = `${requiredScripts[loadedScripts].includes("http")
       ? ""
       : watm_location + "/scripts/"
-  }${requiredScripts[loadedScripts]}`;
+    }${requiredScripts[loadedScripts]}`;
   script.onreadystatechange = callback;
   script.onload = callback;
   loadedScripts++;
@@ -120,8 +119,8 @@ function start(license) {
       currentLanguage = getCurrentLanguage();
       currentLanguage =
         currentLanguage == "Default" ||
-        currentLanguage == null ||
-        currentLanguage == ""
+          currentLanguage == null ||
+          currentLanguage == ""
           ? languages[0].className
           : currentLanguage;
 
@@ -148,8 +147,7 @@ function start(license) {
 
     do_not_cache = false;
     Papa.parse(
-      `${watm_location}/config.csv${
-        do_not_cache === true ? "?time=" + Math.round(Date.now() / 1000) : ""
+      `${watm_location}/config.csv${do_not_cache === true ? "?time=" + Math.round(Date.now() / 1000) : ""
       }`,
       {
         download: true,
@@ -215,10 +213,9 @@ function start(license) {
       // Load selected language CSV
       if (currentCSV) {
         Papa.parse(
-          `${watm_location}/translations/${currentCSV}${
-            do_not_cache === true
-              ? "?time=" + Math.round(Date.now() / 1000)
-              : ""
+          `${watm_location}/translations/${currentCSV}${do_not_cache === true
+            ? "?time=" + Math.round(Date.now() / 1000)
+            : ""
           }`,
           {
             download: true,
@@ -250,6 +247,20 @@ function start(license) {
         );
       }
     };
+
+    // FontAwesome
+    document.querySelectorAll("body *").forEach(function (el) {
+      let regex = /\[fa]{1,}(.*?)\[\/fa]{1,}/gi;
+      let faRegex = /(?<=\[fa])([a-z0-9].*?)(?=\[\/fa])/gi;
+      walkText(el, regex, "icon", function (node, match, offset) {
+        let iconEl = document.createElement("i");
+        iconEl.classList.add("fa-solid")
+        while ((faIcon = faRegex.exec(match)) !== null) {
+          if (faIcon !== undefined) iconEl.classList.add(`fa-${faIcon[0]}`);
+        }
+        return iconEl;
+      });
+    });
   }
 
   const showWATMIcon = (license) => {
@@ -257,7 +268,7 @@ function start(license) {
       appendWATMBtn(
         license,
         !!document.getElementById("idWaAdminSwitcher") ||
-          (enable_public_editor && !isInEditMode())
+        (enable_public_editor && !isInEditMode())
       );
   };
 
