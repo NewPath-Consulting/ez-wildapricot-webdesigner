@@ -269,16 +269,21 @@ Function: googlefont
 # Additional Features
 ## **FontAwesome Icons**
 
-EZ Wild Apricot Web Designer makes it easy to insert FontAwesome icons by using macros. Simply [sign up for FontAwesome](https://fontawesome.com/start) and add the provided JS code to your Wild Apricot Global JavaScript settings.
+EZ Wild Apricot Web Designer makes it easy to insert FontAwesome icons by using macros. Simply [sign up for FontAwesome](https://fontawesome.com/start) and add the provided JavaScript code snippet to your WildApricot Global JavaScript settings.
 
-To insert an icon, first find the name of the icon you wish to use here: [https://fontawesome.com/search?o=r&m=free&s=solid](https://fontawesome.com/search?o=r&m=free&s=solid). Next, add that icon name within the `[fa][/fa]` macro.
+To insert an icon, first find the name of the icon you wish to use here: [https://fontawesome.com/search?o=r&m=free&s=solid](https://fontawesome.com/search?o=r&m=free&s=solid). Next, add that icon name within the `[fa][/fa]` macro to any WildApricot content or headline gadget.
+
+You can copy the name of icon by clicking on the icon and copying the text above the icon:
+
+![image](https://user-images.githubusercontent.com/458134/194419479-4d128d7a-f8ed-4e82-bbc0-603bd2e4a565.png)
+
 
 **EXAMPLE:**
 ```text
 Macro Text: [fa]home[/fa]
 Result: 🏠
 ```
-In this current version, it is not let possible to add icons to menus and buttons via the EZ Editor.
+Currently, it is not yet possible to add FontAwesome icons to menus and buttons via the EZ WildApcito Website Editor inspector.
 
 ---
 # Browser Requirements
@@ -329,10 +334,10 @@ EZ WildApricot Web Designer is supported on the latest versions of Chrome, Safar
 
 2.0b1 - new inspector and configuration file editor, a view properties window including image color picker, support for unlimited languages, easy configuration file upload and preview of changes, rewritten in ECMAScript 6 (no more jQuery!) 8/13/2022
 
-2.0.1 - added a new function for adding a Google font (`googlefont`) and adding a link to a piece of text (`createlink`), added support for cookies to work better
+2.0.1 - added a new function for adding a Google font (`googlefont`) and adding a link to a piece of text (`createlink`), added support for cookies to work better 9/8/2022
 
-2.0.2 - bug fixes
+2.0.2 - bug fixes, minimized french.csv file 9/20/2022
 
-2.0.3 - allow moving of WATM icon to the right or left
+2.0.3 - allow moving of WATM icon to the right or left 10/4/2022
 
-2.0.4 - add macros for FontAwesome
+2.0.4 - add [fa] macro for adding FontAwesome glyphs into a WildApricot page 10/6/2022
