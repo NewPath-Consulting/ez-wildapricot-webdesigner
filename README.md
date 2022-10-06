@@ -271,7 +271,7 @@ Function: googlefont
 
 EZ Wild Apricot Web Designer makes it easy to insert FontAwesome icons by using macros. Simply [sign up for FontAwesome](https://fontawesome.com/start) and add the provided JS code to your Wild Apricot Global JavaScript settings.
 
-To insert and icon, first find the name if the icon you wish to use here: [https://fontawesome.com/search?o=r&m=free&s=solid](https://fontawesome.com/search?o=r&m=free&s=solid). Next, add that icon name within the `[fa][/fa]` macro.
+To insert an icon, first find the name of the icon you wish to use here: [https://fontawesome.com/search?o=r&m=free&s=solid](https://fontawesome.com/search?o=r&m=free&s=solid). Next, add that icon name within the `[fa][/fa]` macro.
 
 **EXAMPLE:**
 ```text
