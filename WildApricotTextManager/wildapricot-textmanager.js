@@ -3,7 +3,7 @@ let watm_location = document.currentScript.src.substring(
   document.currentScript.src.lastIndexOf("/")
 );
 
-let watm_version = "2.03";
+let watm_version = "2.04";
 let watm_styles = "default";
 let watm_info_url = "https://newpathconsulting.com/watm";
 
@@ -242,6 +242,20 @@ function start(license) {
                   log(e, "Error");
                 }
               }
+              // FontAwesome
+              document.querySelectorAll("body *").forEach(function (el) {
+                let regex = /\[ez-fa]{1,}(.*?)\[\/ez-fa]{1,}/gi;
+                let faRegex = /(?<=\[ez-fa])([a-z0-9].*?)(?=\[\/ez-fa])/gi;
+                walkText(el, regex, "icon", function (node, match, offset) {
+                  let iconEl = document.createElement("i");
+                  iconEl.classList.add("fa-solid");
+                  while ((faIcon = faRegex.exec(match)) !== null) {
+                    if (faIcon !== undefined)
+                      iconEl.classList.add(`fa-${faIcon[0]}`);
+                  }
+                  return iconEl;
+                });
+              });
             },
             error: () => {
               log(`"${currentCSV}" not found`, "Error");
