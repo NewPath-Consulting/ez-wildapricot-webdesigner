@@ -271,7 +271,7 @@ Function: googlefont
 
 EZ Wild Apricot Web Designer makes it easy to insert FontAwesome icons by using macros. Simply [sign up for FontAwesome](https://fontawesome.com/start) and add the provided JavaScript code snippet to your WildApricot Global JavaScript settings.
 
-To insert an icon, first find the name of the icon you wish to use here: [https://fontawesome.com/search?o=r&m=free&s=solid](https://fontawesome.com/search?o=r&m=free&s=solid). Next, add that icon name within the `[fa][/fa]` macro to any WildApricot content or headline gadget.
+To insert an icon, first find the name of the icon you wish to use here: [https://fontawesome.com/search?o=r&m=free&s=solid](https://fontawesome.com/search?o=r&m=free&s=solid). Next, add that icon name within the `[ez-fa][/ez-fa]` macro to any WildApricot content or headline gadget.
 
 You can copy the name of icon by clicking on the icon and copying the text above the icon:
 
@@ -280,7 +280,7 @@ You can copy the name of icon by clicking on the icon and copying the text above
 
 **EXAMPLE:**
 ```text
-Macro Text: [fa]home[/fa]
+Macro Text: [[ez-fa]home[/[ez-fa]
 Result: 🏠
 ```
 Currently, it is not yet possible to add FontAwesome icons to menus and buttons via the EZ WildApcito Website Editor inspector.
