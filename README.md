@@ -280,7 +280,7 @@ You can copy the name of icon by clicking on the icon and copying the text above
 
 **EXAMPLE:**
 ```text
-Macro Text: [[ez-fa]home[/[ez-fa]
+Macro Text: [ez-fa]home[/[ez-fa]
 Result: 🏠
 ```
 Currently, it is not yet possible to add FontAwesome icons to menus and buttons via the EZ WildApcito Website Editor inspector.
@@ -340,4 +340,4 @@ EZ WildApricot Web Designer is supported on the latest versions of Chrome, Safar
 
 2.0.3 - allow moving of WATM icon to the right or left 10/4/2022
 
-2.0.4 - add [fa] macro for adding FontAwesome glyphs into a WildApricot page 10/6/2022
+2.0.4 - add [ez-fa] macro for adding FontAwesome glyphs into a WildApricot page 10/6/2022
