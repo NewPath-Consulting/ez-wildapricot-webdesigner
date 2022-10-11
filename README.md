@@ -283,7 +283,7 @@ You can copy the name of icon by clicking on the icon and copying the text above
 Macro Text: [ez-fa]home[/[ez-fa]
 Result: 🏠
 ```
-Currently, it is not yet possible to add FontAwesome icons to menus and buttons via the EZ WildApcito Website Editor inspector.
+Currently, it is not yet possible to add FontAwesome icons to menus and buttons via the EZ WildApricot Web Designer inspector.
 
 ---
 # Browser Requirements
