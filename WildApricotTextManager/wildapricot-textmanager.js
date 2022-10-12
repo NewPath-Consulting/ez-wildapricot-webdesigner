@@ -3,7 +3,6 @@ let watm_location = document.currentScript.src.substring(
   document.currentScript.src.lastIndexOf("/")
 );
 
-
 let watm_version = "2.05";
 let watm_styles = "default";
 let watm_info_url = "https://newpathconsulting.com/watm";
@@ -250,8 +249,9 @@ function start(license) {
               }
 
               // EZ-Addons
-              ez_addons.forEach((ezaddon) => eval(ezaddon + "();"));
-
+              ez_addons.forEach((ezaddon) =>
+                eval(ezaddon.replace(/-/g, "_") + "();")
+              );
             },
             error: () => {
               log(`"${currentCSV}" not found`, "Error");
