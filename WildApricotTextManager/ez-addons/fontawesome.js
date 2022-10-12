@@ -1,3 +1,6 @@
+let addon_version = "1.0";
+log(`FontAwesome EZ-Addon Version ${addon_version} enabled.`);
+
 let fontawesome = () => {
   document.querySelectorAll("body *").forEach(function (el) {
     let regex = /\[ez-fa]{1,}(.*?)\[\/ez-fa]{1,}/gi;
