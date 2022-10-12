@@ -295,6 +295,20 @@ Macro Text: [ez-fa]home[/[ez-fa]
 Result: 🏠
 ```
 
+By default, the FontAwesome macro uses the "Solid" icon styles. To use any of the other styles, add a "style" parameter to the macro like ths:
+
+```
+Macro Text: [ez-fa style="regular"]home[/[ez-fa]
+```
+
+These are the styles currently available through FontAwesome - some require a subscription to FontAwesome:
+* **Regular:** [Free Icons](https://fontawesome.com/search?o=r&m=free&s=regular&f=classic) | [All Icons](https://fontawesome.com/search?o=r&s=regular&f=classic)
+* **Solid:** [Free Icons](https://fontawesome.com/search?o=r&m=free&s=solid&f=classic) | [All Icons](https://fontawesome.com/search?o=r&s=solid&f=classic)
+* **Light:** [All Icons](https://fontawesome.com/search?o=r&s=light&f=sharp%2Cclassic)
+* **Thin:** [All Icons](https://fontawesome.com/search?o=r&s=thin&f=classic)
+* **Duotone:** [All Icons](https://fontawesome.com/search?o=r&s=duotone&f=classic)
+* **Brands:** [Free Icons](https://fontawesome.com/search?o=r&f=brands)
+
 ---
 # Browser Requirements
 EZ WildApricot Web Designer is supported on the latest versions of Chrome, Safari, Firefox and Edge. Older browsers like Internet Explorer on Windows are supported "best effort," without formal testing or 100% compatibility.
