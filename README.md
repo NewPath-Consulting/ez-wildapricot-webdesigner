@@ -309,6 +309,7 @@ These are the styles currently available through FontAwesome - some require a su
 * **Duotone:** [All Icons](https://fontawesome.com/search?o=r&s=duotone&f=classic)
 * **Brands:** [Free Icons](https://fontawesome.com/search?o=r&f=brands)
 
+
 ---
 # Browser Requirements
 EZ WildApricot Web Designer is supported on the latest versions of Chrome, Safari, Firefox and Edge. Older browsers like Internet Explorer on Windows are supported "best effort," without formal testing or 100% compatibility.
