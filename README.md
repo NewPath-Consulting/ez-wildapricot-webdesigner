@@ -141,7 +141,7 @@ Query: .loginBoxChangePassword
 ```text
 Default Text: Home
 Function: replace
-Replacement Text: Home Page
+Replacement Text: Accueil
 Query: .menuInner, .WaGadgetBreadcrumbs > div > ul > li
 ```
 
@@ -267,9 +267,20 @@ Function: googlefont
 
 ---
 # EZ Add-Ons
+
+EZ Wild Apricot Web Designer has a growing number of Add-ons that can be used to extend it's functionality. To install an add-on, simply place the add-on file into the `ez-addons` folder. Next, add the following code to your JavaScript configuration:
+
+`ez_addons = [];`
+
+Within the square brackets, add type the name of the add-ons within quotes. Separate multiple add-ons with a comma, with each add-on name within their own quotation marks.
+
 ## **FontAwesome Icons**
 
-EZ Wild Apricot Web Designer makes it easy to insert FontAwesome icons by using macros. Simply [sign up for FontAwesome](https://fontawesome.com/start) and add the provided JavaScript code snippet to your WildApricot Global JavaScript settings.
+EZ Wild Apricot Web Designer comes with a free Add-on for FontAwesome, making it easy to insert FontAwesome icons by using macros. Simply [sign up for FontAwesome](https://fontawesome.com/start) and add the provided JavaScript code snippet to your WildApricot Global JavaScript settings.
+
+To enable the addon, be sure to include it in your JavaScript configuration like so:
+
+`ez_addons = ["fontawesome"];`
 
 To insert an icon, first find the name of the icon you wish to use here: [https://fontawesome.com/search?o=r&m=free&s=solid](https://fontawesome.com/search?o=r&m=free&s=solid). Next, add that icon name within the `[ez-fa][/ez-fa]` macro to any WildApricot content or headline gadget.
 
@@ -283,7 +294,6 @@ You can copy the name of icon by clicking on the icon and copying the text above
 Macro Text: [ez-fa]home[/[ez-fa]
 Result: 🏠
 ```
-Currently, it is not yet possible to add FontAwesome icons to menus and buttons via the EZ WildApricot Web Designer inspector.
 
 ---
 # Browser Requirements

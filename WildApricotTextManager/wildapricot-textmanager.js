@@ -3,7 +3,7 @@ let watm_location = document.currentScript.src.substring(
   document.currentScript.src.lastIndexOf("/")
 );
 
-let watm_version = "2.04";
+let watm_version = "2.05";
 let watm_styles = "default";
 let watm_info_url = "https://newpathconsulting.com/watm";
 
@@ -19,6 +19,7 @@ window.addEventListener("unhandledrejection", function (e) {
 let watm_language_name = [],
   watm_language_className = [],
   watm_language_csv_file = [],
+  ez_addons = [],
   languages = [],
   currentCSV = "",
   currentLanguage = "",
@@ -38,7 +39,7 @@ let requiredScripts = [
   "inspector.js",
   "csv-parser.js",
   "https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js",
-  "https://unpkg.com/@popperjs/core@2",
+  "https://unpkg.com/@popperjs/core@2.11.6/dist/umd/popper.min.js",
   "https://unpkg.com/tippy.js@6",
 ];
 
@@ -53,17 +54,21 @@ document.addEventListener("DOMContentLoaded", function (event) {
 });
 
 function loadScripts() {
+  let scriptList = requiredScripts.concat(ez_addons);
   let callback;
-  callback =
-    loadedScripts < requiredScripts.length - 1 ? loadScripts : checkLicense;
+  callback = loadedScripts < scriptList.length - 1 ? loadScripts : checkLicense;
   var head = document.head;
   var script = document.createElement("script");
   script.type = "text/javascript";
-  script.src = `${
-    requiredScripts[loadedScripts].includes("http")
-      ? ""
-      : watm_location + "/scripts/"
-  }${requiredScripts[loadedScripts]}`;
+  if (scriptList[loadedScripts].indexOf(".js") === -1) {
+    script.src = `${watm_location}/ez-addons/${scriptList[loadedScripts]}.js`;
+  } else {
+    script.src = `${
+      scriptList[loadedScripts].includes("http")
+        ? ""
+        : watm_location + "/scripts/"
+    }${scriptList[loadedScripts]}`;
+  }
   script.onreadystatechange = callback;
   script.onload = callback;
   loadedScripts++;
@@ -242,20 +247,8 @@ function start(license) {
                   log(e, "Error");
                 }
               }
-              // FontAwesome
-              document.querySelectorAll("body *").forEach(function (el) {
-                let regex = /\[ez-fa]{1,}(.*?)\[\/ez-fa]{1,}/gi;
-                let faRegex = /(?<=\[ez-fa])([a-z0-9].*?)(?=\[\/ez-fa])/gi;
-                walkText(el, regex, "icon", function (node, match, offset) {
-                  let iconEl = document.createElement("i");
-                  iconEl.classList.add("fa-solid");
-                  while ((faIcon = faRegex.exec(match)) !== null) {
-                    if (faIcon !== undefined)
-                      iconEl.classList.add(`fa-${faIcon[0]}`);
-                  }
-                  return iconEl;
-                });
-              });
+              // EZ-Addons
+              ez_addons.forEach((ezaddon) => eval(ezaddon + "();"));
             },
             error: () => {
               log(`"${currentCSV}" not found`, "Error");
