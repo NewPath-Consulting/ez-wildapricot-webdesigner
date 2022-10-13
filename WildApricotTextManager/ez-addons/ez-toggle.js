@@ -46,7 +46,7 @@ let ez_toggle = () => {
   }
 };
 
-const ezstyles = `
+const eztogglestyles = `
 .ezaccordion .eztoggle {
   position: relative;
   display: block;
@@ -101,5 +101,5 @@ const ezstyles = `
 `;
 
 let ezstyleSheet = document.createElement("style");
-ezstyleSheet.innerText = ezstyles;
+ezstyleSheet.innerText = eztogglestyles;
 document.head.appendChild(ezstyleSheet);
