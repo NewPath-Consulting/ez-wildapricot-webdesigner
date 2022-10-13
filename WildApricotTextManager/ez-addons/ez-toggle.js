@@ -100,6 +100,6 @@ const eztogglestyles = `
 }
 `;
 
-let ezstyleSheet = document.createElement("style");
-ezstyleSheet.innerText = eztogglestyles;
-document.head.appendChild(ezstyleSheet);
+let eztogglestyleSheet = document.createElement("style");
+eztogglestyleSheet.innerText = eztogglestyles;
+document.head.appendChild(eztogglestyleSheet);
