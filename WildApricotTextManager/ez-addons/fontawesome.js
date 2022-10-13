@@ -1,5 +1,7 @@
+
 let fa_addon_version = "1.1";
 log(`FontAwesome EZ-Addon Version ${fa_addon_version} enabled.`);
+
 
 let fontawesome = () => {
   document.querySelectorAll("body *").forEach(function (el) {
