@@ -268,7 +268,7 @@ Function: googlefont
 ---
 # EZ Add-Ons
 
-EZ Wild Apricot Web Designer has a growing number of Add-ons that can be used to extend it's functionality. To install an add-on, simply place the add-on file into the `ez-addons` folder. Next, add the following code to your JavaScript configuration:
+EZ WildApricot Web Designer has a growing number of Add-ons that can be used to extend it's functionality. To install an add-on, simply place the add-on file into the `ez-addons` folder. Next, add the following code to your JavaScript configuration:
 
 `ez_addons = [];`
 
@@ -276,7 +276,7 @@ Within the square brackets, add type the name of the add-ons within quotes. Sepa
 
 ## **FontAwesome Icons**
 
-EZ Wild Apricot Web Designer comes with a free Add-on for FontAwesome, making it easy to insert FontAwesome icons by using macros. Simply [sign up for FontAwesome](https://fontawesome.com/start) and add the provided JavaScript code snippet to your WildApricot Global JavaScript settings.
+EZ WildApricot Web Designer comes with a free Add-on for FontAwesome, making it easy to insert FontAwesome icons by using macros. Simply [sign up for FontAwesome](https://fontawesome.com/start) and add the provided JavaScript code snippet to your WildApricot Global JavaScript settings.
 
 To enable the addon, be sure to include it in your JavaScript configuration like so:
 
@@ -366,3 +366,5 @@ EZ WildApricot Web Designer is supported on the latest versions of Chrome, Safar
 2.0.3 - allow moving of WATM icon to the right or left 10/4/2022
 
 2.0.4 - add [ez-fa] macro for adding FontAwesome glyphs into a WildApricot page 10/6/2022
+
+2.0.5 - add [ez-tabs], [ez-notice], [ez-toggle] macros 10/13/2022
