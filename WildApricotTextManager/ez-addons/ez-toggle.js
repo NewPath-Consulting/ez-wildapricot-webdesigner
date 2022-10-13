@@ -4,7 +4,7 @@ log(`EZ-Toggle Addon Version ${ez_toggle_addon_version} enabled.`);
 let ez_toggle = () => {
   document.querySelectorAll("body *").forEach(function (el) {
     let regex = /\[ez-toggle( title="([^"]*)")?]([^*].*?)\[\/ez-toggle]/gi;
-    walkText(el, regex, "icon", function (node, match, offset) {
+    walkText(el, regex, "toggle", function (node, match, offset) {
       let toggleEl = document.createElement("div");
       toggleEl.classList.add("ezaccordion");
 
