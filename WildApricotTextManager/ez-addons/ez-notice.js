@@ -4,7 +4,7 @@ log(`EZ-Notice Addon Version ${ez_notice_addon_version} enabled.`);
 let ez_notice = () => {
   document.querySelectorAll("body *").forEach(function (el) {
     let regex = /\[ez-notice( color="([^"]*)")?]([^*].*?)\[\/ez-notice]/gi;
-    walkText(el, regex, "icon", function (node, match, offset) {
+    walkText(el, regex, "notice", function (node, match, offset) {
       let noticeEl = document.createElement("div");
       noticeEl.style.padding = "15px 20px";
       noticeEl.style.borderWidth = "1px";
