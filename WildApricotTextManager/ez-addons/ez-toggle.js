@@ -4,7 +4,7 @@ log(`EZ-Toggle Addon Version ${ez_toggle_addon_version} enabled.`);
 let ez_toggle = () => {
   document.querySelectorAll("body *").forEach(function (el) {
     let regex = /\[ez-toggle( title="([^"]*)")?]([^*].*?)\[\/ez-toggle]/gi;
-    walkText(el, regex, "icon", function (node, match, offset) {
+    walkText(el, regex, "toggle", function (node, match, offset) {
       let toggleEl = document.createElement("div");
       toggleEl.classList.add("ezaccordion");
 
@@ -46,7 +46,7 @@ let ez_toggle = () => {
   }
 };
 
-const ezstyles = `
+const eztogglestyles = `
 .ezaccordion .eztoggle {
   position: relative;
   display: block;
@@ -100,6 +100,6 @@ const ezstyles = `
 }
 `;
 
-let ezstyleSheet = document.createElement("style");
-ezstyleSheet.innerText = ezstyles;
-document.head.appendChild(ezstyleSheet);
+let eztogglestyleSheet = document.createElement("style");
+eztogglestyleSheet.innerText = eztogglestyles;
+document.head.appendChild(eztogglestyleSheet);
