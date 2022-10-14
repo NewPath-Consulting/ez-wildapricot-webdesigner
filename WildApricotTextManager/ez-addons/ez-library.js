@@ -207,7 +207,8 @@ const ezlibrarystyles = `
 #libraryTable tbody tr:hover {
   background-color: #8f8f8f;
 }
-#libraryTable tbody tr:hover td {
+#libraryTable tbody tr:hover td,
+#libraryTable tbody tr:hover a {
   color: #fff!important;
 }
 #libraryTable {
