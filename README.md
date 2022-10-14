@@ -370,7 +370,7 @@ Within the `[document][/document]` macro, enter the display name to use for the 
 Macro Text:
 
     [ez-library folder="documents/minutes" sort="date" view="list"]
-      [document date="2014-11-01" filename="COFLT Retreat minutes Nov. 1 2014.docx"]November 2014 Minutes[/document]
+      [document date="2014-11-01" filename="minutes Nov. 1 2014.docx"]November 2014 Minutes[/document]
       [document date="2017-04-11" filename="Minutes 11 4 17.pdf"]November 2017 Minutes[/document]
       [document date="2015-11-07" filename="meeting 7 nov 2015.doc"]November 2015 Minutes[/document]
     [/ez-library] 
