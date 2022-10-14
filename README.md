@@ -3,11 +3,11 @@
 
 ## Project Description
 
-Introducing our new [EZ WildApricot Web Designer 2](https://newpathconsulting.com/watm) \(aka WATM\), redesigned from the ground up. The product has been rewritten in JavaScript (ECMAScript 6). 
+[EZ WildApricot Web Designer 2](https://newpathconsulting.com/watm) \(aka WATM\), has been redesigned from scratch. The product has been rewritten in JavaScript (ECMAScript 6) and no longer needs jQuery to operate. 
 
-EZ WildApricot Web Designer will help any administrator with some knowledge of the [Document Object Model (DOM)](https://www.w3schools.com/js/js_htmldom.asp) manage and replace nearly every piece of hard-coded and configurable text in WildApricot.
+EZ WildApricot Web Designer will help any administrator change, replace or translate e nearly every piece of hard-coded and configurable text in WildApricot. It also contains several "macros" that can add new content gadgets and content styling features for your WildApricot website.
 
-You can make a variety of single page, whole site, and WildApricot widget changes such as:
+You can make a variety of single page, whole site, and WildApricot content changes such as:
 
 - search and replace of a particular text string
 - modify field labels on forms, button labels
@@ -15,7 +15,7 @@ You can make a variety of single page, whole site, and WildApricot widget change
 - hide text on any user interface items
 - allow your site to be offered in an unlimited number of languages
 
-EZ WildApricot Web Designer module can be used to make WildApricot sites available in two or more languages by dynamically replacing strings with a translated string. A translator will use a comma separated value (CSV) configuration file that is easily editable, making it easy to maintain hundreds of modifications in a human-readable file. A standard file with over 600 English-to-French WildApricot labels and strings is included.
+EZ WildApricot Web Designer module can be used to make WildApricot sites available in two or more languages by dynamically replacing strings with a translated string. A translator will use a comma separated value (CSV) configuration file that is easily editable, making it easy to maintain hundreds of modifications in a human-readable file.
 
 ---
 # Installation
@@ -69,7 +69,11 @@ The Inspector & Editor are only accessible to logged in WildApricot administrato
 
 `enable_public_editor = true;`
 
+To install an EZ add-on, place the add-on file into the `ez-addons` folder. Next, add the following code to your JavaScript configuration:
 
+`ez_addons = [];`
+
+Within the square brackets, add type the name of the add-ons within quotes. Separate multiple add-ons with a comma, with each add-on name within their own quotation marks.
 
 ---
 # Switching Languages
@@ -268,7 +272,7 @@ Function: googlefont
 ---
 # EZ Add-Ons
 
-EZ WildApricot Web Designer has a growing number of Add-ons that can be used to extend it's functionality. To install an add-on, simply place the add-on file into the `ez-addons` folder. Next, add the following code to your JavaScript configuration:
+EZ WildApricot Web Designer includes a number of add-ons that can be used to extend the capabilities of the WildApricot website module. To install an add-on, place the add-on file into the `ez-addons` folder. Next, add the following code to your JavaScript configuration:
 
 `ez_addons = [];`
 
@@ -308,7 +312,6 @@ These are the styles currently available through FontAwesome - some require a su
 * **Thin:** [All Icons](https://fontawesome.com/search?o=r&s=thin&f=classic)
 * **Duotone:** [All Icons](https://fontawesome.com/search?o=r&s=duotone&f=classic)
 * **Brands:** [Free Icons](https://fontawesome.com/search?o=r&f=brands)
-
 
 ---
 # Browser Requirements
