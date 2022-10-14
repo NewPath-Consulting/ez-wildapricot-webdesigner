@@ -274,7 +274,7 @@ EZ WildApricot Web Designer has a growing number of Add-ons that can be used to 
 
 Within the square brackets, add type the name of the add-ons within quotes. Separate multiple add-ons with a comma, with each add-on name within their own quotation marks.
 
-## **FontAwesome Icons**
+## **FontAwesome Add-On**
 
 EZ WildApricot Web Designer comes with a free Add-on for FontAwesome, making it easy to insert FontAwesome icons by using macros. Simply [sign up for FontAwesome](https://fontawesome.com/start) and add the provided JavaScript code snippet to your WildApricot Global JavaScript settings.
 
@@ -309,6 +309,72 @@ These are the styles currently available through FontAwesome - some require a su
 * **Duotone:** [All Icons](https://fontawesome.com/search?o=r&s=duotone&f=classic)
 * **Brands:** [Free Icons](https://fontawesome.com/search?o=r&f=brands)
 
+## **EZ-Notice Add-On**
+
+The EZ-Notice Add-On introduces a new way to display important messages on your website that you may want to draw attention to. Using this macro, your text will be displayed in a colorful box on your webpage, spanning the width of the layout you place it in. It can be used on any WildApricot content page, page template, or system template.
+
+To use the macro, add the text you wish to hi-light within the `[ez-notice][/ez-notice]` tags. There is an optional `color` parameter that you can add, using a  [color name](https://www.w3schools.com/colors/colors_names.asp) or [HTML color](https://www.w3schools.com/colors/colors_picker.asp) code. EZ-Notice will use your selected color as the text color for the the notice, and automatically set the notice's border and background color to a matching lighter color.
+
+**EXAMPLES:**
+```text
+Macro Text: [ez-notice]Guild renewal fess are due by January 15th.[/ez-notice]
+Macro Text: [ez-notice color="red"]Saturday's potter classes have been cancelled.[/ez-notice]
+```
+
+## **EZ-Toggle Add-On**
+
+The EZ-Toggle Add-On creates expandable and collapsible content sections (also known as accordions) on the page it is inserted on. Users click on the section header to open that section and automatically close the other on that page. This macro can be used to shorten lon pages by initially hiding information that may not be immediately needed, like on a Frequently Asked Questions Page.
+
+The macro has two required components. The first is the `title` parameter - use this to specify what the section title should be. Next, place the content for that section within the `[ez-toggle][/ez-toggle]` macro tags. Add a new macro for each section you wish to have. Each section is not required to be placed next to each other and can be located anywhere on the page.
+
+**EXAMPLE:**
+```text
+Macro Text: [ez-toggle title="How do I join?"]Visit Membership to find and purchase the membership that’s right for you.[/ez-toggle]
+Macro Text: [ez-toggle title="Who can be a member?"]Anyone with an interest in our industry may join.[/ez-toggle]
+Macro Text: [ez-toggle title="What are the benefits for students?"]We have scholarships students can qualify for.[/ez-toggle]
+```
+
+## **EZ-Tabs Add-on**
+
+The EZ-Tabs Add-On creates a tabbed content area on the page it is inserted on. Users click on the tabs header to switch between different content.
+
+The macro has two required components. The first is the `title` parameter - use this to specify what the label on the tab should be. Next, place the content for that tab within the `[ez-tabs][/ez-tabs]` macro tags. Add a new macro for each new tab you wish to include.
+
+**EXAMPLE:**
+```text
+Macro Text: [ez-tabs title="2022 Scholarship Winners"]Khloe Blanchard, Deacon Chang, Aine Kerr[/ez-tabs]
+Macro Text: [ez-tabs title="2021 Scholarship Winners"]Ella-Mai Kramer, Tea Mcfarlane, Kaci Rankin[/ez-tabs]
+Macro Text: [ez-tabs title="2020 Scholarship Winners"]Jennie Miranda, Carina Myers, Ruby-May Waters[/ez-tabs]
+```
+
+## **EZ-Library Add-On v.1**
+
+The EZ-Library Addon makes it easy to insert a document library onto your WildApricot website. The add-on takes care of formatting the presentation of the selected documents, sorting them by title or date, and marks them for download so that they do not open in the browser.
+
+### **USAGE:**
+
+This add-on comes with two macros that must be used together. The first macro is `[ez-library][/ez-library]` and it is used to configure the library. This macro has three mandatory parameters:
+* `folder`: This is the path to the folder where all the files listed will be located. This is the path from the "Resources" folder, so do not include that. If your documents are located in the "Documents" folder, set this to "documents". If they are located in the subfolder called "Minutes" inside of the document folder, set this to "documents/minutes".
+* `sort`: This specifies how to sort the files. Set it to "name" to sort by the display name you assign to the documents in ascending order. Set it to "date" to sort by the date you assign to each document in descending order.
+* `view`: This specifies how the documents are displayed. Currently, there is only one view available: "list".
+* * The "list" view displays the files in a three-column table. The first column contains an image representing the document type, the second column contains the file's display name, and the third column displays the assigned date. Click on the display name to download the file.
+
+The second macro is `[document][/document]` - this is used for each document you wish to include, and must be located within the `[ez-library][/ez-library]` macro. This macro requires two parameters:
+* `date`: This is the date you wish to use for this document. The date is used for sorting and is displayed in the library. The date must be formatted as "YYYY-MM-DD".
+* `filename`: This is the filename that the file is saved as.
+
+Within the `[document][/document]` macro, enter the display name to use for the document link.
+
+**EXAMPLE:**
+```text
+Macro Text:
+
+    [ez-library folder="documents/minutes" sort="date" view="list"]
+      [document date="2014-11-01" filename="minutes Nov. 1 2014.docx"]November 2014 Minutes[/document]
+      [document date="2017-04-11" filename="Minutes 11 4 17.pdf"]November 2017 Minutes[/document]
+      [document date="2015-11-07" filename="meeting 7 nov 2015.doc"]November 2015 Minutes[/document]
+    [/ez-library] 
+```
 
 ---
 # Browser Requirements
