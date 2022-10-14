@@ -321,6 +321,8 @@ These styles are currently available in FontAwesome, and some icon sets require 
 
 The EZ-Notice Add-On enables displaying important, colourful messages on your website. Using this macro, any text is be displayed in a colorful box on a WildApricot web page, spanning the width of the layout that contains the macro. It can be used on any WildApricot content page, page template, or system template.
 
+![EZ-Notice Add-On Screenshot](https://user-images.githubusercontent.com/458134/195765387-0f803900-a6f5-48b6-a37b-98e1fec1b495.png)
+
 To use the macro, insert your notice text inside the `[ez-notice][/ez-notice]` tags. An optional `color` parameter can decorate the notice. You can use a [color name](https://www.w3schools.com/colors/colors_names.asp) or [HTML color](https://www.w3schools.com/colors/colors_picker.asp) code. EZ-Notice will use your selected color as the text color for the the notice, and automatically set the notice's border and background color to a matching lighter color.
 
 **EXAMPLES:**
@@ -332,6 +334,9 @@ Macro Text: [ez-notice color="red"]Saturday's potter classes have been cancelled
 ## **EZ-Toggle Add-On**
 
 The EZ-Toggle Add-On enables expandable and collapsible content sections (also known as "accordions"). Website visitors can click on the section header to open that section and automatically close the other sections on the page. This macro can be used to shorten long content such as a Frequently Asked Questions section.
+
+![EZ-Toggle Add-On Screenshot](https://user-images.githubusercontent.com/458134/195765486-8dd98d59-2717-421d-b19b-1e4976526040.png)
+
 
 The macro has two required components. The first is the `title` parameter - use this to specify what the section title should be. Next, place the content for that section within the `[ez-toggle][/ez-toggle]` macro tags. Add a new macro for each section you wish to have. Each section is not required to be placed next to each other and can be located anywhere on the page.
 
@@ -346,6 +351,9 @@ Macro Text: [ez-toggle title="What are the benefits for students?"]We have schol
 
 The EZ-Tabs Add-On creates a tabbed content area on a page. Website visitors can click on the tabs to switch between different content sections.
 
+![EZ-Tabs Add-on Screenshot](https://user-images.githubusercontent.com/458134/195765556-d1931acf-61a6-4102-b805-840a3c5403b6.png)
+
+
 The macro has two required components. The first is the `title` parameter - use this to specify what the label on the tab should be. Next, place the content for that tab within the `[ez-tabs][/ez-tabs]` macro tags. Add a new macro for each tab you wish to include.
 
 **EXAMPLE:**
@@ -358,6 +366,9 @@ Macro Text: [ez-tabs title="2020 Scholarship Winners"]Jennie Miranda, Carina Mye
 ## **EZ-Library Add-On**
 
 The EZ-Library Addon makes it easy to insert a document library into a WildApricot website. The add-on takes care of formatting the presentation of the selected documents, sorting them by title or date, and makes them available for one-click download.
+
+![EZ-Library Add-On Screenshot with Toggle, Notice and Tabs](https://user-images.githubusercontent.com/458134/195765825-9837bf92-d9af-4b47-842d-5795b0d9115b.png)
+
 
 ### **USAGE:**
 
