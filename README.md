@@ -1,6 +1,5 @@
 # Documentation
 
-
 ## Project Description
 
 [EZ WildApricot Web Designer 2](https://newpathconsulting.com/watm) \(aka WATM\), has been redesigned from scratch. The product has been rewritten in JavaScript (ECMAScript 6) and no longer needs jQuery to operate. 
@@ -32,7 +31,7 @@ The configuration and translation files must be saved as a CSV file format in UT
 
 ## Script Setup
 
-1. In Admin View of Web Apricot, browse to Settings -&gt; Site -&gt; Global JavaScript. More details on inserting JavaScript into WildApricot are available in [WildApricot Documentation](https://gethelp.wildapricot.com/en/articles/212-inserting-and-modifying-html-or-javascript#javascript).
+1. In WildApricot Admin, navigate to Settings -&gt; Site -&gt; Global JavaScript. More details on inserting JavaScript into WildApricot are available in the [WildApricot Documentation](https://gethelp.wildapricot.com/en/articles/212-inserting-and-modifying-html-or-javascript#javascript).
 2. Copy and paste the following lines to the Global JavaScript.
 
 NOTE: this code snippet assumes you have uploaded all files into the folder `/resources/Theme/WildApricotTextManager`
@@ -280,13 +279,17 @@ Within the square brackets, add type the name of the add-ons within quotes. Sepa
 
 ## **FontAwesome Add-On**
 
-EZ WildApricot Web Designer comes with a free Add-on for FontAwesome, making it easy to insert FontAwesome icons by using macros. Simply [sign up for FontAwesome](https://fontawesome.com/start) and add the provided JavaScript code snippet to your WildApricot Global JavaScript settings.
+EZ WildApricot Web Designer comes with a free Add-on for FontAwesome, making it easy to insert FontAwesome icons by using macros. To start, [sign up for FontAwesome](https://fontawesome.com/start) and add the provided JavaScript code snippet to your WildApricot Global JavaScript settings.
 
-To enable the addon, be sure to include it in your JavaScript configuration like so:
+To enable the addon, add this line to your EZ WildApricot Web Designer JavaScript installation script:
 
 `ez_addons = ["fontawesome"];`
 
-To insert an icon, first find the name of the icon you wish to use here: [https://fontawesome.com/search?o=r&m=free&s=solid](https://fontawesome.com/search?o=r&m=free&s=solid). Next, add that icon name within the `[ez-fa][/ez-fa]` macro to any WildApricot content or headline gadget.
+To insert an icon, first [find the name of the icon you wish to use](https://fontawesome.com/search?o=r&m=free&s=solid). Add
+
+`[ez-fa]icon name[/ez-fa]`
+
+to any WildApricot content or headline gadget.
 
 You can copy the name of icon by clicking on the icon and copying the text above the icon:
 
@@ -299,13 +302,14 @@ Macro Text: [ez-fa]home[/[ez-fa]
 Result: 🏠
 ```
 
-By default, the FontAwesome macro uses the "Solid" icon styles. To use any of the other styles, add a "style" parameter to the macro like ths:
+By default, the FontAwesome macro uses the "Solid" icon styles. To use any of the other styles, add a "style" parameter to the macro:
 
 ```
 Macro Text: [ez-fa style="regular"]home[/[ez-fa]
 ```
 
-These are the styles currently available through FontAwesome - some require a subscription to FontAwesome:
+These styles are currently available in FontAwesome, and some icon sets require a paid subscription:
+
 * **Regular:** [Free Icons](https://fontawesome.com/search?o=r&m=free&s=regular&f=classic) | [All Icons](https://fontawesome.com/search?o=r&s=regular&f=classic)
 * **Solid:** [Free Icons](https://fontawesome.com/search?o=r&m=free&s=solid&f=classic) | [All Icons](https://fontawesome.com/search?o=r&s=solid&f=classic)
 * **Light:** [All Icons](https://fontawesome.com/search?o=r&s=light&f=sharp%2Cclassic)
@@ -315,9 +319,9 @@ These are the styles currently available through FontAwesome - some require a su
 
 ## **EZ-Notice Add-On**
 
-The EZ-Notice Add-On introduces a new way to display important messages on your website that you may want to draw attention to. Using this macro, your text will be displayed in a colorful box on your webpage, spanning the width of the layout you place it in. It can be used on any WildApricot content page, page template, or system template.
+The EZ-Notice Add-On enables displaying important, colourful messages on your website. Using this macro, any text is be displayed in a colorful box on a WildApricot web page, spanning the width of the layout that contains the macro. It can be used on any WildApricot content page, page template, or system template.
 
-To use the macro, add the text you wish to hi-light within the `[ez-notice][/ez-notice]` tags. There is an optional `color` parameter that you can add, using a  [color name](https://www.w3schools.com/colors/colors_names.asp) or [HTML color](https://www.w3schools.com/colors/colors_picker.asp) code. EZ-Notice will use your selected color as the text color for the the notice, and automatically set the notice's border and background color to a matching lighter color.
+To use the macro, insert your notice text inside the `[ez-notice][/ez-notice]` tags. An optional `color` parameter can decorate the notice. You can use a [color name](https://www.w3schools.com/colors/colors_names.asp) or [HTML color](https://www.w3schools.com/colors/colors_picker.asp) code. EZ-Notice will use your selected color as the text color for the the notice, and automatically set the notice's border and background color to a matching lighter color.
 
 **EXAMPLES:**
 ```text
@@ -327,7 +331,7 @@ Macro Text: [ez-notice color="red"]Saturday's potter classes have been cancelled
 
 ## **EZ-Toggle Add-On**
 
-The EZ-Toggle Add-On creates expandable and collapsible content sections (also known as accordions) on the page it is inserted on. Users click on the section header to open that section and automatically close the other on that page. This macro can be used to shorten lon pages by initially hiding information that may not be immediately needed, like on a Frequently Asked Questions Page.
+The EZ-Toggle Add-On enables expandable and collapsible content sections (also known as "accordions"). Website visitors can click on the section header to open that section and automatically close the other sections on the page. This macro can be used to shorten long content such as a Frequently Asked Questions section.
 
 The macro has two required components. The first is the `title` parameter - use this to specify what the section title should be. Next, place the content for that section within the `[ez-toggle][/ez-toggle]` macro tags. Add a new macro for each section you wish to have. Each section is not required to be placed next to each other and can be located anywhere on the page.
 
@@ -340,9 +344,9 @@ Macro Text: [ez-toggle title="What are the benefits for students?"]We have schol
 
 ## **EZ-Tabs Add-on**
 
-The EZ-Tabs Add-On creates a tabbed content area on the page it is inserted on. Users click on the tabs header to switch between different content.
+The EZ-Tabs Add-On creates a tabbed content area on a page. Website visitors can click on the tabs to switch between different content sections.
 
-The macro has two required components. The first is the `title` parameter - use this to specify what the label on the tab should be. Next, place the content for that tab within the `[ez-tabs][/ez-tabs]` macro tags. Add a new macro for each new tab you wish to include.
+The macro has two required components. The first is the `title` parameter - use this to specify what the label on the tab should be. Next, place the content for that tab within the `[ez-tabs][/ez-tabs]` macro tags. Add a new macro for each tab you wish to include.
 
 **EXAMPLE:**
 ```text
@@ -351,20 +355,26 @@ Macro Text: [ez-tabs title="2021 Scholarship Winners"]Ella-Mai Kramer, Tea Mcfar
 Macro Text: [ez-tabs title="2020 Scholarship Winners"]Jennie Miranda, Carina Myers, Ruby-May Waters[/ez-tabs]
 ```
 
-## **EZ-Library Add-On v.1**
+## **EZ-Library Add-On**
 
-The EZ-Library Addon makes it easy to insert a document library onto your WildApricot website. The add-on takes care of formatting the presentation of the selected documents, sorting them by title or date, and marks them for download so that they do not open in the browser.
+The EZ-Library Addon makes it easy to insert a document library into a WildApricot website. The add-on takes care of formatting the presentation of the selected documents, sorting them by title or date, and makes them available for one-click download.
 
 ### **USAGE:**
 
-This add-on comes with two macros that must be used together. The first macro is `[ez-library][/ez-library]` and it is used to configure the library. This macro has three mandatory parameters:
-* `folder`: This is the path to the folder where all the files listed will be located. This is the path from the "Resources" folder, so do not include that. If your documents are located in the "Documents" folder, set this to "documents". If they are located in the subfolder called "Minutes" inside of the document folder, set this to "documents/minutes".
-* `sort`: This specifies how to sort the files. Set it to "name" to sort by the display name you assign to the documents in ascending order. Set it to "date" to sort by the date you assign to each document in descending order.
-* `view`: This specifies how the documents are displayed. Currently, there is only one view available: "list".
+This add-on comes with two macros that must be used together. The first macro is `[ez-library][/ez-library]` used to configure the library. This macro has three mandatory parameters:
+
+* `folder`: the path to the WildApricot file manager folder containing all the files to be included in the library. This path is relative to the standard "Resources" folder, and the path should not include "Resources". If your documents are located in the "Documents" folder, set the path to "documents". For example, if they are located in a subfolder called "Minutes" inside of the documents folder, set this to "documents/minutes".
+
+* `sort`:  specifies how to sort the files. Set this option to "name" to sort by the display name you assign to the documents in ascending order. Set it to "date" to sort by the date you assign to each document in descending order.
+
+* `view`: specifies the layout of the document library. Currently, only one view is available: "list".
+
 * * The "list" view displays the files in a three-column table. The first column contains an image representing the document type, the second column contains the file's display name, and the third column displays the assigned date. Click on the display name to download the file.
 
-The second macro is `[document][/document]` - this is used for each document you wish to include, and must be located within the `[ez-library][/ez-library]` macro. This macro requires two parameters:
+The second macro is `[document][/document]` - this is used for each document you wish to include in the library, and must be located within the `[ez-library][/ez-library]` macro. This macro requires two parameters:
+
 * `date`: This is the date you wish to use for this document. The date is used for sorting and is displayed in the library. The date must be formatted as "YYYY-MM-DD".
+
 * `filename`: This is the filename that the file is saved as.
 
 Within the `[document][/document]` macro, enter the display name to use for the document link.
