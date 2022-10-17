@@ -458,4 +458,4 @@ EZ WildApricot Web Designer is supported on the latest versions of Chrome, Safar
 
 2.0.4 - add [ez-fa] macro for adding FontAwesome glyphs into a WildApricot page 10/6/2022
 
-2.0.5 - add [ez-tabs], [ez-notice], [ez-toggle], [ez-library] macros 10/13/2022
+2.0.5 - added "EZ Macro" add-on architecture, and added [ez-tabs], [ez-notice], [ez-toggle], [ez-library] macros 10/13/2022
