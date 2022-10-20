@@ -138,7 +138,7 @@ const process = (row) => {
       });
       break;
     case "buttondelay":
-      setInterval(function () {
+      setTimeout(function () {
         document.querySelectorAll(watmQuery).forEach(function (el) {
           el.value = replacementText;
         });
@@ -150,7 +150,7 @@ const process = (row) => {
       });
       break;
     case "delay":
-      setInterval(function () {
+      setTimeout(function () {
         document.querySelectorAll(watmQuery).forEach(function (el) {
           el.innerText = replacementText;
         });
