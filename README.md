@@ -152,6 +152,9 @@ Query: .menuInner, .WaGadgetBreadcrumbs > div > ul > li
 ## **delay**
 > Changes the text in targeted element(s) after 1 second - used for dynamically generated elements, such as a member directory. Note that the Default Text must match the text that is being replaced.
 
+`delay` function will trigger the `replace` function after a 1 second delay if "Default Text" is present (otherwise it triggers `text` function).
+
+
 **EXAMPLE:**
 ```text
 Replacement Text: Coordonnées
@@ -164,6 +167,15 @@ Query: #membersTable > thead > tr > th:nth-child(1)
 
 **EXAMPLE:**
 ```text
+Default Text: Click here to login
+Function: button
+Query: .loginButton
+```
+## **delaybutton**
+> Changes the text on targeted button(s), after a 1 second delay, useful for widgets that have a JavaScript rendering delay
+
+**EXAMPLE:**
+```delaybutton
 Default Text: Click here to login
 Function: button
 Query: .loginButton
@@ -459,3 +471,5 @@ EZ WildApricot Web Designer is supported on the latest versions of Chrome, Safar
 2.0.4 - add [ez-fa] macro for adding FontAwesome glyphs into a WildApricot page 10/6/2022
 
 2.0.5 - added "EZ Macro" add-on architecture, and added [ez-tabs], [ez-notice], [ez-toggle], [ez-library] macros 10/13/2022
+
+2.0.6 - added `delaybutton` function and changed the `delay` function to use `replace` when default text is present
