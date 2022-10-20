@@ -137,6 +137,13 @@ const process = (row) => {
         el.value = replacementText;
       });
       break;
+    case "buttondelay":
+      setInterval(function () {
+        document.querySelectorAll(watmQuery).forEach(function (el) {
+          el.value = replacementText;
+        });
+      }, 1000);
+      break;
     case "placeholder":
       document.querySelectorAll(watmQuery).forEach(function (el) {
         el.setAttribute("placeholder", replacementText);
