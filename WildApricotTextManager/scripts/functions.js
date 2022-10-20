@@ -137,56 +137,36 @@ const process = (row) => {
         el.value = replacementText;
       });
       break;
+    case "buttondelay":
+      setTimeout(function () {
+        document.querySelectorAll(watmQuery).forEach(function (el) {
+          el.value = replacementText;
+        });
+      }, 1000);
+      break;
     case "placeholder":
       document.querySelectorAll(watmQuery).forEach(function (el) {
         el.setAttribute("placeholder", replacementText);
       });
       break;
     case "delay":
-      setInterval(function () {
-        document.querySelectorAll(watmQuery).forEach(function (el) {
-          el.innerText = replacementText;
-        });
+      setTimeout(function () {
+        if (defaultText.length <= 0) {
+          document.querySelectorAll(watmQuery).forEach(function (el) {
+            el.innerText = replacementText;
+          });
+        } else
+          replace_link_delay(
+            watmQuery,
+            "replace",
+            defaultText,
+            replacementText
+          );
       }, 1000);
       break;
     case "replace":
     case "createlink":
-      if (watmQuery == null || watmQuery == "") watmQuery = "body";
-      let regex = new RegExp(
-        (defaultText.includes("-") ||
-        defaultText.includes(".") ||
-        defaultText.includes("!") ||
-        defaultText.includes("?") ||
-        defaultText.includes(":")
-          ? ""
-          : "\\b") +
-          escapeRegExp(defaultText) +
-          (defaultText.includes("-") ||
-          defaultText.includes(".") ||
-          defaultText.includes("!") ||
-          defaultText.includes("?") ||
-          defaultText.includes(":")
-            ? ""
-            : "\\b"),
-        "gi"
-      );
-      document.querySelectorAll(watmQuery).forEach(function (el) {
-        if (watmFunction === "replace") {
-          walkText(el, regex, watmFunction, function (node, match, offset) {
-            let newText = document.createTextNode(replacementText);
-            return newText;
-          });
-        }
-        if (watmFunction === "createlink") {
-          walkText(el, regex, watmFunction, function (node, match, offset) {
-            let alink = document.createElement("a");
-            alink.href = replacementText;
-            alink.textContent = match;
-            return alink;
-          });
-        }
-      });
-
+      replace_link_delay(watmQuery, watmFunction, defaultText, replacementText);
       break;
     case "attribute":
       document.querySelectorAll(watmQuery).forEach(function (el) {
@@ -223,6 +203,49 @@ const process = (row) => {
     if (watmFunction == "@media") mediaQuery = replacementText;
     processCSS(watmQuery, watmStyle, mediaQuery);
   }
+};
+
+const replace_link_delay = (
+  watmQuery,
+  watmFunction,
+  defaultText,
+  replacementText
+) => {
+  if (watmQuery == null || watmQuery == "") watmQuery = "body";
+  let regex = new RegExp(
+    (defaultText.includes("-") ||
+    defaultText.includes(".") ||
+    defaultText.includes("!") ||
+    defaultText.includes("?") ||
+    defaultText.includes(":")
+      ? ""
+      : "\\b") +
+      escapeRegExp(defaultText) +
+      (defaultText.includes("-") ||
+      defaultText.includes(".") ||
+      defaultText.includes("!") ||
+      defaultText.includes("?") ||
+      defaultText.includes(":")
+        ? ""
+        : "\\b"),
+    "gi"
+  );
+  document.querySelectorAll(watmQuery).forEach(function (el) {
+    if (watmFunction === "replace") {
+      walkText(el, regex, watmFunction, function (node, match, offset) {
+        let newText = document.createTextNode(replacementText);
+        return newText;
+      });
+    }
+    if (watmFunction === "createlink") {
+      walkText(el, regex, watmFunction, function (node, match, offset) {
+        let alink = document.createElement("a");
+        alink.href = replacementText;
+        alink.textContent = match;
+        return alink;
+      });
+    }
+  });
 };
 
 const isInEditMode = () => {

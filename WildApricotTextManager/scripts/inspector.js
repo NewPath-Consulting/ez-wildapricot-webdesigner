@@ -13,6 +13,7 @@ let watmFunctions = [
   "replace",
   "delay",
   "button",
+  "buttondelay",
   "inactive",
   "hide",
   "placeholder",
