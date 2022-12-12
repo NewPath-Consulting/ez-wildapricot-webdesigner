@@ -70,7 +70,7 @@ An Element class describes one or more CSS classes applied to the element. A cla
 
 0.9 - added CSS class/id inspector invoked with `?dev` in URL, added more error/information logging, strip leading/trailing space in "function" field of configuration file 11/20/20
 
-0.91 - Fixed replace\_delay function that works for form dropdowns, added "-n" suffix to the `replace-delay` function. For example, `replace-delay-3` will delay for 3 seconds 11/23/20
+0.91 - Fixed replace\_delay function that works for form dropdowns, added "-n" suffix to the `replace_delay` function. For example, `replace_delay-3` will delay for 3 seconds 11/23/20
 
 0.92 - Fixed bug that prevented text containing HTML and links to be changed with replace or replace_element 3/5/2021
 
