@@ -309,7 +309,7 @@ The following functions expect to use `Default Text` column as the search criter
 
 * `replace` – Searches for `Default Text` column and replaces this sub-string in any element. If `Query` column is blank, the entire page is searched. 
 * `replace_element` – Searches text in `Default Text` column and replaces the text of the entire element. If `Query` column is blank, the entire page is searched.
-* `replace_delay` – Replaces string after one second delay. Add a `_n` suffix after `replace_delay`  to increase delay beyond the default 1 second.  `replace_delay_3`will delay 3 seconds.
+* `replace_delay` – Replaces string after one second delay. Add a `-n` suffix after `replace_delay`  to increase delay beyond the default 1 second.  `replace_delay-3` will delay 3 seconds.
 * `attribute` - Replaces string containted in any HTML `attribute` tag
 
 There is a subtle difference between the `text`, `replace`/`replace_delay` and `replace_element` functions.
