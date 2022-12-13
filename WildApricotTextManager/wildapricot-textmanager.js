@@ -1,18 +1,31 @@
 // Wild Apricot Text Manager Library
 //
 // Licensed under LGPL 3.0
-// Contact NewPath Consulting for support at https://www.newpathconsulting.com/watm
+// Contact NewPath Consulting for support at https://talk.newpathconsulting.com
 
 var list = [];
 var array;
 var scss_dict = {};
 var data_url = "/resources/Theme/WildApricotTextManager/wildapricot-textmanager-config.csv";
-var watm_version = "0.952";
+var watm_version = "0.96";
+var watmlicensestatus = "";
+
 
 // Initialize global clipboard variable
 var clipboardPath;
 var clipboardClass;
 var clipboardId;
+
+// Add WATM styles based on if loading off file system or off a web server
+ if (location.protocol == "file:")
+{
+  $('head').append('<link rel="stylesheet" href="WildApricotTextManager/watm.css" type="text/css" />');
+} else
+{
+  $('head').append('<link rel="stylesheet" href="./watm.css" type="text/css" />');
+
+}
+
 
 /* Polyfills */
 if (!String.prototype.includes) {
@@ -34,6 +47,8 @@ if (!String.prototype.includes) {
 /* App */
 $(document).ready(function () {
   // Set Defaults
+
+  
   textManagerProductionMode = !isInEditMode();
   if (typeof textManagerDataURL !== "undefined") {
     data_url = textManagerDataURL;
@@ -91,7 +106,7 @@ $(document).ready(function () {
 
   // Start Inspector if keyword present
   if (window.location.href.indexOf(inspectorKeyword) > -1) {
-    startDev();
+    startDev(licenseKey);
   }
 
   // Multiligual Mode
@@ -106,9 +121,9 @@ $(document).ready(function () {
   }
 
   if (textManagerProductionMode) {
-    log(`Wild Apricot Text Manager ${watm_version} loaded in production mode`);
+    log(`Wild Apricot Text Manager ${watm_version} loaded in production mode`,"info");
   } else {
-    log(`Wild Apricot Text Manager ${watm_version} loaded in development mode`);
+    log(`Wild Apricot Text Manager ${watm_version} loaded in development mode`,"info");
   }
 
   // Set Cookie for Second Language Replacement
@@ -147,12 +162,14 @@ $(document).ready(function () {
         try {
           array = $.csv.toArrays(csvd);
         } catch (err) {
-          log(`WATM configuration file is not in correct format`, "error");
-          alert(`[watm error] WATM configuration file is not in correct format. ${err.message} Did you Save as .CSV UTF-8?`);
+          log(`WATM configuration file is not in correct format`, "warning");
+          alert(`WATM configuration file is not in correct format. ${err.message} Did you Save as .CSV UTF-8?`);
         }
       },
       error: function (xhr, ajaxOptions, thrownError) {
         log(`WATM configuration file not found`, "error");
+       
+
       },
       dataType: "text",
       complete: function () {
@@ -173,12 +190,12 @@ $(document).ready(function () {
         if (!isInEditMode()) {
           list.map(replaceText);
 
-          // Show Inspector link in footer
+          // Show Inspector link in footer, with a 1 second timeout
           if(showInspectorLink){
             setTimeout(
               function () {
                 $("#idFooterPoweredByWA").prepend( $( "<span><a href='?dev'>Show Inspector</a> | </span>" ) )
-              },3000);
+              },showInspectorLinkDelay);
           }
         }
       },
@@ -254,7 +271,7 @@ function hasFormstack() {
 
 function log(text, logType = "") {
   if (logType) logType = " " + logType;
-  console.log(`[watm${logType}]`, text);
+  console.log(`[watm ${logType}]`, text);
 }
 
 function replaceText(data) {
@@ -435,15 +452,115 @@ function isInternetExplorer() {
   return false;
 }
 
-function startDev() {
+
+function startDev(licenseKey) {
+
+
   // Create inspector container
-  $("body").prepend($("<div>").attr("id", inspectorContainerId).html("<div id='inspectorBody'><h1>Inspector - Click on any page element</h1></div>"));
+  $("body").prepend($("<div>").attr("id", inspectorContainerId)
+                              .html("<div id='inspectorBody'><h1>Inspector - Click on any page element</h1></div>"));
 
   inspectorExitbtn = $("<button>").addClass("inspectorBtn").text("Exit Inspector").css('margin','5px');
   copyPathInspectorBtn = $("<button>").addClass("inspectorBtn").text("Copy CSS Path").css('margin','5px').hide();
   copyIdInspectorBtn = $("<button>").addClass("inspectorBtn").text("Copy Element ID").css('margin','5px').hide();
   copyClassInspectorBtn = $("<button>").addClass("inspectorBtn").text("Copy Classes").css('margin','5px').hide();
+  previewInspectorBtn = $("<button>").addClass("inspectorBtn").text("Preview")
+                        .css({'margin':'5px', 'background-color': 'yellow', 'color': 'grey'});
+  copytoClipBoardInspectorBtn = $("<button>").addClass("inspectorBtn").text("Copy to Clipboard")
+                                .css({'margin':'5px', 'background-color': 'green', 'color': 'white'})
+                                .mouseover(function() { $(this).css({'background-color':'white','color':'green'})})
+                                .mouseout(function() { $(this).css({'background-color':'green','color':'white'})});
+
+  $.get(
+  "https://hook.integromat.com/mauo1z5yn88d94lfvc3wd4qulaqy1tko?json=true&key=" + licenseKey,
   
+  function (recvLicense, status, xhr) {
+
+    if (status == "success") {
+        log(`WATM license checked on host: ` + location.protocol + '//' + location.host, "info");
+      } else
+      {
+        log(`WATM license check failed on host: ` + location.protocol + '//' + location.host, "error"); 
+      }
+    },
+    "json"
+  ).done(function(recvLicense) {
+
+    // empty or key provided that was not found in keystore
+
+    if (recvLicense['license-error'] == "no valid key found")
+    {
+      watmlicensestatus = "INVALID KEY";
+
+      log("License Status: " + watmlicensestatus, "error");
+       $("#inspectorBody").addClass("watm-versionString")
+      .text("EZ WildApricot Web Designer " +
+      watm_version + " | " + "License: " +
+      watmlicensestatus).css('margin','5px');
+      return;
+
+    }
+    expirydate = Date.parse(recvLicense['expiration date']);
+
+    // check if valid, unexpired key is provided for WATM
+
+    if (recvLicense.Products.includes("watm") &&
+          recvLicense['Support Level'] == "support" &&
+          expirydate  >= Date.now() &&
+          (recvLicense['Licensed Wild Apricot URLs'] == location.protocol + '//' + location.host ||
+          location.protocol == "file:")
+        )
+ 
+      {
+
+    watmlicensestatus = "LICENSED";
+
+    log("Is WATM?: " + recvLicense.Products.includes("watm")  + " support level: " + recvLicense['Support Level'] +
+    " expiry: " + expirydate.toLocaleString('en-CA') + " licensedWAURL: " + recvLicense['Licensed Wild Apricot URLs'] );
+
+    log("License Status: " + watmlicensestatus, "info");
+     $("#inspectorBody").addClass("watm-versionString")
+    .text("EZ WildApricot Web Designer " +
+    watm_version + " | " + "License: " +
+    watmlicensestatus).css('margin','5px');
+  } 
+  
+  // check if a valid non-WATM key provided
+  else if (!recvLicense.Products.includes("watm"))
+  {
+    watmlicensestatus = "INVALID KEY";
+
+    log("Is WATM?: " + recvLicense.Products.includes("watm")  + " support level: " + recvLicense['Support Level'] +
+    " expiry: " + expirydate.toLocaleString('en-CA') + " licensedWAURL: " + recvLicense['Licensed Wild Apricot URLs'] );
+
+    log("License Status: " + watmlicensestatus, "error");
+     $("#inspectorBody").addClass("watm-versionString")
+    .text("EZ WildApricot Web Designer " +
+    watm_version + " | " + "License: " +
+    watmlicensestatus).css('margin','5px');
+
+  }
+
+  // key must be a free or trial key
+
+  else
+
+  {
+    watmlicensestatus = "TRIAL";
+    log("Is WATM?: " + recvLicense.Products.includes("watm")  + " support level: " + recvLicense['Support Level'] +
+    " expiry: " + expirydate.toLocaleString('en-CA') + " licensedWAURL: " + recvLicense['Licensed Wild Apricot URLs'] );
+
+    log("License Status: " + watmlicensestatus, "info");
+     $("#inspectorBody").addClass("watm-versionString")
+    .text("EZ WildApricot Web Designer " +
+    watm_version + " | " + "License: " +
+    watmlicensestatus).css('margin','5px');
+
+
+  }
+  });;
+
+
 
   // Add CSS to created container
   setCSS();
@@ -456,7 +573,7 @@ function startDev() {
 
   // Intercept all page clicks
   setTimeout(function () {
-    log(`Element Inspector Active`, "notice");
+    log(`Element Inspector Active`, "info");
     $("body").on("click", "*", function (event) {
       // Remove WATM hover class
       $(this).removeClass("watm-hover");
@@ -468,12 +585,22 @@ function startDev() {
       // Obtain CSS path of clicked element
       completePath = getPath(this);
 
+      // Obtain contents of clicked element
+      if ( $(this).is("input") || $(this).is("textarea") || $(this).is("select") ) {
+      
+      clickedContents = $(this).val();
+    } else
+    
+    {
+      clickedContents = $(this).text();
+    }
+
       // Ensure clicked element is not inspector container
       if (completePath.indexOf("#" + inspectorContainerId) == -1) {
         // Cancel default action for clicked element
         event.preventDefault();
         // Show element information
-        displyPath(completePath, clickedID, clickedClass);
+        displayPath(completePath, clickedID, clickedClass, clickedContents);
       }
 
       // This prevents the function from firing multiple times for nested elements
@@ -481,6 +608,9 @@ function startDev() {
     });
 
     // Append Inspector buttons
+    $("#"+inspectorContainerId).prepend($(previewInspectorBtn).attr("onclick", "copyInspector(this)").attr("id","previewInspectorBtn"));
+    $("#"+inspectorContainerId).prepend($(copytoClipBoardInspectorBtn).attr("onclick", "copyInspector(this)").attr("id","copytoClipBoardInspectorBtn"));
+
     $("#"+inspectorContainerId).prepend($(copyPathInspectorBtn).attr("onclick", "copyInspector(this)").attr("id","copyPathInspector"));
     $("#"+inspectorContainerId).prepend($(copyClassInspectorBtn).attr("onclick", "copyInspector(this)").attr("id","copyClassInspector"));
     $("#"+inspectorContainerId).prepend($(copyIdInspectorBtn).attr("onclick", "copyInspector(this)").attr("id","copyIdInspector"));
@@ -523,16 +653,37 @@ function copyInspector(elm) {
     case "copyIdInspector":
       navigator.clipboard.writeText("#" + clipboardId);
       break;
+    case "previewInspectorBtn":
+      navigator.clipboard.writeText("#" + clipboardId);
+      break;
+    case "copytoClipBoardInspectorBtn":
+      navigator.clipboard.writeText("#" + clipboardId);
+      break;
   }
   displayCopiedMessage(elm.id);
 }
 
 function displayCopiedMessage(btnId) {
   prevMessage = $("#"+btnId).text();
+
+  if (btnId == "previewInspectorBtn")
+  {
+    $("#"+btnId).text("In Preview Mode").attr("disabled",true)
+                .css({'background-color':'white','color':'grey'});
+
+    ;
+    setTimeout(function () {
+      $("#"+btnId).text(prevMessage).attr("disabled",false)
+                 .css({'background-color':'yellow','color':'grey'});
+    }, 10000);
+  } else
+  {
+
   $("#"+btnId).text("Copied to clipboard!").attr("disabled",true);
   setTimeout(function () {
     $("#"+btnId).text(prevMessage).attr("disabled",false);
-  }, 5000);
+  }, 2000);
+  }
 }
 
 // Get full CSS path
@@ -554,7 +705,7 @@ function getPath(el) {
   return path.join(" > ");
 }
 
-function displyPath(cssPath, elID, elClass) {
+function displayPath(cssPath, elID, elClass, elContents) {
   elInfo = "";
   if (cssPath.lastIndexOf("#") > -1) {
     // If the path contains an ID, start path from there
@@ -569,6 +720,7 @@ function displyPath(cssPath, elID, elClass) {
     clipboardId = null;
     $("#copyIdInspector").hide();
   }
+
   if (elClass) {
     // If clicked element has classes, display them
     elClasses = elClass.split(" ").join(" .")
@@ -579,6 +731,19 @@ function displyPath(cssPath, elID, elClass) {
     clipboardClass = null;
     $("#copyClassInspector").hide();
   }
+  
+  if (elContents) {
+    // If clicked element has contents, display them
+    elInfo = elInfo + "<p><b>Element Contents:</b> " + elContents + "</p>";
+    clipboardClass = elContents;
+    $("#copyClassInspector").show();
+  } else {
+    clipboardClass = null;
+    alert("Contents are empty...")
+    $("#copyClassInspector").hide();
+  }
+  
+
   // Display CSS path
   elInfo = elInfo + "<p><b>CSS Path:</b> " + cssPath + "</p>";
   
@@ -590,13 +755,15 @@ function displyPath(cssPath, elID, elClass) {
   // Add to inspector container
   $("#inspectorBody").html(elInfo);
   $(".inspectorBtn").prop('disabled', false);
+
+  blink(cssPath, 3, 500); //blink cssPath
 }
 
 // Set inspector container styling
 function setCSS() {
   $("#" + inspectorContainerId).css({
     border: "5px solid #000",
-    width: "100%",
+    width: "95%",
     background: "#fff",
     color: "#000",
     position: "fixed",
@@ -608,8 +775,32 @@ function setCSS() {
   if (inspectorLocation == "top") {
     $("#" + inspectorContainerId).css({ top: 0 });
     $("#idCustomJsContainer").css({ "padding-top": "150px" });
+    $("body").css({"margin-top": "250px"});
   } else {
     $("#" + inspectorContainerId).css({ bottom: 0 });
     $("#idCustomJsContainer").css({ "padding-bottom": "150px" });
   }
+}
+
+/**
+* Purpose: blink a page element
+* Preconditions: the element you want to apply the blink to, 
+    the number of times to blink the element (or -1 for infinite times),
+    the speed of the blink
+**/
+function blink(elem, times, speed)
+{
+    if (times > 0 || times < 0) { 
+      if ($(elem).hasClass("blink"))
+         $(elem).removeClass("blink");
+      else
+         $(elem).addClass("blink");
+     }
+
+     clearTimeout(function() { blink(elem, times, speed); });
+
+     if (times > 0 || times < 0) {
+       setTimeout(function() { blink(elem, times, speed); }, speed);
+       times-= .5;
+     }
 }

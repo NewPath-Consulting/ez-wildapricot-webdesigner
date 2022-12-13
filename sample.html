@@ -1,0 +1,60 @@
+<title>Sample File for EZ WildApricot Web Designer</title>
+<head>
+
+    <script src="https://code.jquery.com/jquery-1.8.1.js"></script>
+
+ <!-- jQuery-CSV Source: https://github.com/evanplaice/jquery-csv -->
+   <script src="WildApricotTextManager/jquery.csv-0.8.9-mod.js"></script>
+   <script src="WildApricotTextManager/wildapricot-textmanager.js"></script>
+   <script>
+   
+   var textManagerDataURL = "WildApricotTextManager/wildapricot-textmanager-config.csv"; // location of EZ Wild Apricot Web Designer configuration file
+  
+  licenseKey = "UNEXPIRED-KEY-FOR-TESTING";
+
+   var showInspectorLink = true; // this will show the Inspector mode link in the footer of the website, set to false to turn off
+   var showInspectorLinkDelay = 0; // delay in milliseconds to delay showing of inspector link in footer
+
+   var showInspectorHover = true; // this will show the Inspector Hover mode, set to false to turn off
+   var inspectorHoverColor= "red"; // this will change the the Inspector Hover mode outline, set to any CSS color or hex value
+   var inspectorLocation = "top"; //this is the location of the Inspector, can be set to "top" as well
+
+   var inspectorKeyword = "?dev"; // this is the URL keyword that enables Inspector mode
+   var inspectorContainerId = "el-details"; //this is the Element ID that contains the Inspector
+
+   var textManagerMultilingualMode = false; // alternative language button toggle, set to true to turn on multi-lingual mode  
+   var primaryLanguageButtonName = "English"; // default langauge button name
+   var alterativeLanguageButtonName = "Français"; // alternative language button name
+   var languageButtonHtmlID = "languageButton"; // the Element ID of the language button
+   var alterativeLanguageClassName = ".french"; // the CSS class name for all alternative language content gadgets
+   var primaryLanguageClassName = ".english"; // the CSS class name for all default language content gadgets
+
+   $(window).bind("load", function() {$('#textmanager_overlay').css('display', 'none'); });  // Fail-safe to remove white overlay
+   </script>
+</head>
+<body>
+
+    <style>
+
+        .test-class
+        {
+            padding-top: 100px;
+        }
+
+      
+    </style>
+<div id="testID" class="test-class">This is some text</div>    
+
+<div id="test-input" class="test-input">   <label for="fname">First name:</label>
+    <input type="text" id="fname" name="fname" value="this is some text in an input"></div>
+
+    <div id="test-select" class="test-select">   <label for="select1">Select:</label>
+        <input type="select" id="select1" name="select1" value="this is some text in a select"></div>
+
+<div id="test-textarea" class="test-textarea">   <label for="textarea1">Some text:</label>
+    <input type="textarea" id="textarea1" name="textarea1" value="this is some text in a text area"></div>
+    
+    <span id="text-with-link"> Powered by <a href="http://www.wildapricot.com" target="_blank">Wild Apricot</a> Membership Software</span>
+
+    <div id="idFooterPoweredByWA"></div>
+</body>

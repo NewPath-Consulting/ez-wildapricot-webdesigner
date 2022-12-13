@@ -11,11 +11,11 @@ You can make a variety of single page and whole site changes such as:
 - change hard-coded errors and warnings
 - hide text on any user interface items
 
-EZ Wild Apricot Web Designer module can be used to make Wild Apricot sites bi-lingual by dynamically replacing strings with a translated string. A translator will use a comma separated value (CSV)-formatted configuration file that is easily editable, making it easy to maintain hundreds of modifications in a human-readable file. A standard file with over 600 English-to-French  Wild Apricot labels and strings is included.
+EZ Wild Apricot Web Designer module can be used to make Wild Apricot sites multilingual by dynamically replacing standard text messages and labels with a translations. A translator will use a comma separated value (CSV)-formatted configuration file that is easily editable, making it easy to maintain hundreds of translations. A standard file with over 600 standard English-to-French WildApricot text messages and labels is included.
 
 ### Browser Based CSS Inspector
 
-After successful installation, go to the public view of your Wild Apricot website, and  add `?dev` into the URL. This will switch EZ Wild Apricot Web Designer into a "development" mode. You can then click on any element on the page to inspect its CSS naming properties.
+After successful installation, go to the public view of your Wild Apricot website, look for the "Show Inspector" link near the bottom of your WildApricot site. Alternatively you can add `/?dev` into the URL of any WildApricot page in Public View. This will show the Inspector Panel  and allow you to hover over any element. Click on any element or bounding box on the page to identify its CSS properties
 
 There are 3 potential values that will show up when you click on any element on a page:
 - the [Element ID](https://www.w3schools.com/htmL/html_id.asp)
@@ -31,21 +31,18 @@ The CSS Path also can define a particular element using a "chain" of HTML elemen
 #### Element Class
 An Element class describes one or more CSS classes applied to the element. A class can be used by multiple HTML elements, so as a result it is the least specific of all targets. Use he element class when you wish to apply your changes to all elements that share this class. 
 
-**NOTE: The effects of using an Element class can have unintended consequences. When applying changes to an element class be aware that the changes can be applied wherever the class is applied. A change to an Element class change can cascade into multiple places on a page or even across the website. Using an Element ID or CSS Path is always unique to a specific web page.**
+**NOTE: The effects of using an Element class can have unintended consequences. When applying changes to an element class be aware that the changes can be applied wherever the class is used. A change to an Element class change can cascade into multiple places on a page or even across the website. Using an Element ID or CSS Path is always unique to a specific web page.**
 
 ####
 
 **Demo**: [Visit the NewPath Wild Apricot Sandbox in dev mode](https://newpathconsulting.wildapricot.org/?dev). Click on any element to inspect the Element ID, Element Class(es) or CSS Path.
 
-### Using Dev Tools to inspect
-
-[Using Copy Selector and Copy Styles to quickly find a CSS Selector](https://vimeo.com/368823350)
+### More about CSS 
 
 [Learning more about about Cascading Style Sheets \(CSS\)](https://developer.mozilla.org/en-US/docs/Web/CSS)
 
 [How to use Chrome Developer Tools](https://developer.chrome.com/docs/devtools/)
 
-[How to use Chrome Developer Tools to find CSS classes or IDs](https://vimeo.com/253714058)
 
 ## Change History
 
@@ -73,17 +70,21 @@ An Element class describes one or more CSS classes applied to the element. A cla
 
 0.9 - added CSS class/id inspector invoked with `?dev` in URL, added more error/information logging, strip leading/trailing space in "function" field of configuration file 11/20/20
 
-0.91 - Fixed replace\_delay function that works for form dropdowns, added "-n" suffix to the `replace-delay` function. For example, `replace-delay-3` will delay for 3 seconds 11/23/20
+0.91 - Fixed replace\_delay function that works for form dropdowns, added "-n" suffix to the `replace_delay` function. For example, `replace_delay-3` will delay for 3 seconds 11/23/20
 
-0.93 - support for switching languages using embedded WildApricot "widgets" in 3rd party content management system, added a standard French translation file 2/15/22
+0.92 - Fixed bug that prevented text containing HTML and links to be changed with replace or replace_element 3/5/2021
 
-0.94 - added support for entering/exiting Inspect mode, easy copy/paste of elements in the dev mode panel, more details in install script
+0.93 - support for switching languages using embedded WildApricot "widgets" in 3rd party content management system, added a standard French translation file 2/16/22
+
+0.94 - added support for entering/exiting Inspector panel,  copy/paste of element ID, class and CSS path in Inspector panel, more options  added install script 4/19/2022
 
 0.95 - added support for Inspector Hover mode which shows the outlines of each element on a page when using the Inspector
 
-0.951 - fixed translations to be rendered for multi-page widgets embedded with a primary and second language
+0.951 - fixed translations to be rendered for multi-page widgets embedded with a primary and second language 5/17/2022
 
-0.952 - fixed bug on Copy ID button in inspector that adds a # to the id on the clipboard
+0.952 - fixed bug on Copy ID button in inspector that adds a # to the id on the clipboard 5/25/2022
+
+0.96 - added showing the selected text of an element, ability to provide alternative text or translation and a drop down for the function, added license checking, trial mode
 
 ## Installation
 
@@ -100,8 +101,10 @@ NOTE: this code snippet assumes you have uploaded all files into the folder `/re
    <script src="/resources/Theme/WildApricotTextManager/wildapricot-textmanager.js"></script>
    <script>
    
-   var csvFile = "/resources/Theme/WildApricotTextManager/wildapricot-textmanager-config.csv"; // location of EZ Wild Apricot Web Designer configuration file
-      
+   var textManagerDataURL = "/resources/Theme/WildApricotTextManager/wildapricot-textmanager-config.csv"; // location of EZ Wild Apricot Web Designer configuration file
+   
+   licenseKey = "REPLACE-WITH-YOUR-KEY";
+
    var showInspectorLink = true; // this will show the Inspector mode link in the footer of the website, set to false to turn off
 
    var showInspectorHover = true; // this will show the Inspector Hover mode, set to false to turn off
@@ -109,7 +112,7 @@ NOTE: this code snippet assumes you have uploaded all files into the folder `/re
 
    var inspectorKeyword = "?dev"; // this is the URL keyword that enables Inspector mode
    var inspectorContainerId = "el-details"; //this is the Element ID that contains the Inspector
-   var inspectorlocation = "bottom"; //this is the location of the Inspector, can be set to "top" as well
+   var inspectorLocation = "bottom"; //this is the location of the Inspector, can be set to "top" as well
 
    var textManagerMultilingualMode = false; // alternative language button toggle, set to true to turn on multi-lingual mode  
    var primaryLanguageButtonName = "English"; // default langauge button name
@@ -306,7 +309,7 @@ The following functions expect to use `Default Text` column as the search criter
 
 * `replace` – Searches for `Default Text` column and replaces this sub-string in any element. If `Query` column is blank, the entire page is searched. 
 * `replace_element` – Searches text in `Default Text` column and replaces the text of the entire element. If `Query` column is blank, the entire page is searched.
-* `replace_delay` – Replaces string after one second delay. Add a `_n` suffix after `replace_delay`  to increase delay beyond the default 1 second.  `replace_delay_3`will delay 3 seconds.
+* `replace_delay` – Replaces string after one second delay. Add a `-n` suffix after `replace_delay`  to increase delay beyond the default 1 second.  `replace_delay-3` will delay 3 seconds.
 * `attribute` - Replaces string containted in any HTML `attribute` tag
 
 There is a subtle difference between the `text`, `replace`/`replace_delay` and `replace_element` functions.
