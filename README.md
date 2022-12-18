@@ -78,19 +78,19 @@ Within the square brackets, add type the name of the add-ons within quotes. Sepa
 
 WildApricot recently implemented a new [Content Security Policy (CSP)](https://en.wikipedia.org/wiki/Content_Security_Policy) to provide additional protection against data theft, site defacement, malware, and more. CSP works by detecting if custom code is being called from an external URL and then comparing those URLs against a whitelist of verified and approved websites. If the external URL being used is not on the whitelist, the code is then blocked from running. EZ WildApricot Web Designer requires access to certain external URLs in order to function correctly, so these URLs will need to be added to the whitelist. To view and manage your whitelist, navigate to the "Settings" screen from the Website section of the WildApricot backend.
 
-// Add Image Here <<<
+![domain whitelist option-yx4](https://user-images.githubusercontent.com/21189988/208305612-f6395c3d-7838-4110-bd19-d0f0cf6bc701.jpg)
 
 **Adding Detected URLs**
 
 Under the section "Detected domains on account", WildApricot should auto-detect the external URLs being used by your website. Simply click the "Add to whitelist" link next to the ones you wish to allow access to. The list of external URLs used by EZ Designer are listed below.
 
-// Add Image Here <<<
+![detected domains on account-jOk](https://user-images.githubusercontent.com/21189988/208305633-a458c19a-90ec-4d30-8ee9-de50dd0c9014.jpg)
 
 **Adding URLs Manually**
 
 Under the section "Custom whitelisted domains", you can manually add URLs to the whitelist one at a time. Use this method if the above method does not work for you. The list of external URLs used by EZ Designer are listed below.
 
-// Add Image Here <<<
+![custom whitelist-ehE](https://user-images.githubusercontent.com/21189988/208305642-4e44e171-7e74-4089-9106-6befa0397a3f.jpg)
 
 ### External URLs Being Used by EZ Designer
 
