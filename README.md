@@ -74,6 +74,36 @@ To install an EZ add-on, place the add-on file into the `ez-addons` folder. Next
 
 Within the square brackets, add type the name of the add-ons within quotes. Separate multiple add-ons with a comma, with each add-on name within their own quotation marks.
 
+## Domain whitelisting
+
+WildApricot recently implemented a new [Content Security Policy (CSP)](https://en.wikipedia.org/wiki/Content_Security_Policy) to provide additional protection against data theft, site defacement, malware, and more. CSP works by detecting if custom code is being called from an external URL and then comparing those URLs against a whitelist of verified and approved websites. If the external URL being used is not on the whitelist, the code is then blocked from running. EZ WildApricot Web Designer requires access to certain external URLs in order to function correctly, so these URLs will need to be added to the whitelist. To view and manage your whitelist, navigate to the "Settings" screen from the Website section of the WildApricot backend.
+
+// Add Image Here <<<
+
+**Adding Detected URLs**
+
+Under the section "Detected domains on account", WildApricot should auto-detect the external URLs being used by your website. Simply click the "Add to whitelist" link next to the ones you wish to allow access to. The list of external URLs used by EZ Designer are listed below.
+
+// Add Image Here <<<
+
+**Adding URLs Manually**
+
+Under the section "Custom whitelisted domains", you can manually add URLs to the whitelist one at a time. Use this method if the above method does not work for you. The list of external URLs used by EZ Designer are listed below.
+
+// Add Image Here <<<
+
+### External URLs Being Used by EZ Designer
+
+The following is a list of all the external URLs currently being implemented by EZ WildApricot Web Designer:
+
+**Core Plugin**
+* https://unpkg.com
+* https://hook.us1.make.com
+* https://cdnjs.cloudflare.com
+
+**EZ Add-Ons**
+* https://*.fontawesome.com
+
 ---
 # Switching Languages
 
