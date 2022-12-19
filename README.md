@@ -78,19 +78,19 @@ Within the square brackets, add type the name of the add-ons within quotes. Sepa
 
 WildApricot recently implemented a new [Content Security Policy (CSP)](https://en.wikipedia.org/wiki/Content_Security_Policy) to provide additional protection against data theft, site defacement, malware, and more. CSP works by detecting if custom code is being called from an external URL and then comparing those URLs against a whitelist of verified and approved websites. If the external URL being used is not on the whitelist, the code is then blocked from running. EZ WildApricot Web Designer requires access to certain external URLs in order to function correctly, so these URLs will need to be added to the whitelist. To view and manage your whitelist, navigate to the "Settings" screen from the Website section of the WildApricot backend.
 
-![domain whitelist option-yx4](https://user-images.githubusercontent.com/21189988/208305612-f6395c3d-7838-4110-bd19-d0f0cf6bc701.jpg)
+![domain whitelist menu](readme-images/domain-whitelist-menu.jpg)
 
 **Adding Detected URLs**
 
 Under the section "Detected domains on account", WildApricot should auto-detect the external URLs being used by your website. Simply click the "Add to whitelist" link next to the ones you wish to allow access to. The list of external URLs used by EZ Designer are listed below.
 
-![detected domains on account-jOk](https://user-images.githubusercontent.com/21189988/208305633-a458c19a-90ec-4d30-8ee9-de50dd0c9014.jpg)
+![domain whitelist detected domains](readme-images/domain-whitelist-detected-domains.jpg)
 
 **Adding URLs Manually**
 
 Under the section "Custom whitelisted domains", you can manually add URLs to the whitelist one at a time. Use this method if the above method does not work for you. The list of external URLs used by EZ Designer are listed below.
 
-![custom whitelist-ehE](https://user-images.githubusercontent.com/21189988/208305642-4e44e171-7e74-4089-9106-6befa0397a3f.jpg)
+![domain whitelist custom domains](readme-images/domain-whitelist-custom-domains.jpg)
 
 ### External URLs Being Used by EZ Designer
 
@@ -335,7 +335,7 @@ to any WildApricot content or headline gadget.
 
 You can copy the name of icon by clicking on the icon and copying the text above the icon:
 
-![image](https://user-images.githubusercontent.com/458134/194419479-4d128d7a-f8ed-4e82-bbc0-603bd2e4a565.png)
+![fontawsome image name](readme-images/fontawesome-icon-name.png)
 
 
 **EXAMPLE:**
@@ -363,7 +363,7 @@ These styles are currently available in FontAwesome, and some icon sets require 
 
 The EZ-Notice Add-On enables displaying important, colourful messages on your website. Using this macro, any text is be displayed in a colorful box on a WildApricot web page, spanning the width of the layout that contains the macro. It can be used on any WildApricot content page, page template, or system template.
 
-![EZ-Notice Add-On Screenshot](https://user-images.githubusercontent.com/458134/195765387-0f803900-a6f5-48b6-a37b-98e1fec1b495.png)
+![EZ-Notice Add-On Screenshot](readme-images/ez-notice.png)
 
 To use the macro, insert your notice text inside the `[ez-notice][/ez-notice]` tags. An optional `color` parameter can decorate the notice. You can use a [color name](https://www.w3schools.com/colors/colors_names.asp) or [HTML color](https://www.w3schools.com/colors/colors_picker.asp) code. EZ-Notice will use your selected color as the text color for the the notice, and automatically set the notice's border and background color to a matching lighter color.
 
@@ -377,7 +377,7 @@ Macro Text: [ez-notice color="red"]Saturday's potter classes have been cancelled
 
 The EZ-Toggle Add-On enables expandable and collapsible content sections (also known as "accordions"). Website visitors can click on the section header to open that section and automatically close the other sections on the page. This macro can be used to shorten long content such as a Frequently Asked Questions section.
 
-![EZ-Toggle Add-On Screenshot](https://user-images.githubusercontent.com/458134/195765486-8dd98d59-2717-421d-b19b-1e4976526040.png)
+![EZ-Toggle Add-On Screenshot](readme-images/ez-toggle.png)
 
 
 The macro has two required components. The first is the `title` parameter - use this to specify what the section title should be. Next, place the content for that section within the `[ez-toggle][/ez-toggle]` macro tags. Add a new macro for each section you wish to have. Each section is not required to be placed next to each other and can be located anywhere on the page.
@@ -393,7 +393,7 @@ Macro Text: [ez-toggle title="What are the benefits for students?"]We have schol
 
 The EZ-Tabs Add-On creates a tabbed content area on a page. Website visitors can click on the tabs to switch between different content sections.
 
-![EZ-Tabs Add-on Screenshot](https://user-images.githubusercontent.com/458134/195765556-d1931acf-61a6-4102-b805-840a3c5403b6.png)
+![EZ-Tabs Add-on Screenshot](readme-images/ez-tabs.png)
 
 
 The macro has two required components. The first is the `title` parameter - use this to specify what the label on the tab should be. Next, place the content for that tab within the `[ez-tabs][/ez-tabs]` macro tags. Add a new macro for each tab you wish to include.
@@ -409,7 +409,7 @@ Macro Text: [ez-tabs title="2020 Scholarship Winners"]Jennie Miranda, Carina Mye
 
 The EZ-Library Addon makes it easy to insert a document library into a WildApricot website. The add-on takes care of formatting the presentation of the selected documents, sorting them by title or date, and makes them available for one-click download.
 
-![EZ-Library Add-On Screenshot with Toggle, Notice and Tabs](https://user-images.githubusercontent.com/458134/195765825-9837bf92-d9af-4b47-842d-5795b0d9115b.png)
+![EZ-Library Add-On Screenshot with Toggle, Notice and Tabs](readme-images/ez-library.png)
 
 
 ### **USAGE:**
