@@ -3,9 +3,10 @@ let watm_location = document.currentScript.src.substring(
   document.currentScript.src.lastIndexOf("/")
 );
 
-let watm_version = "2.06";
+let watm_version = "2.07";
 let watm_styles = "default";
-let watm_info_url = "https://newpathconsulting.com/watm";
+let watm_info_url =
+  "https://newpathconsulting.com/ez-wildapricot-web-designer-2/";
 
 window.addEventListener("error", function (e) {
   document.body.style.visibility = "visible";
