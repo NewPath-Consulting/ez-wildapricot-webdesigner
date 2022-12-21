@@ -344,6 +344,10 @@ Within the square brackets, add type the name of the add-ons within quotes. Sepa
 
 EZ WildApricot Web Designer comes with a free Add-on for FontAwesome, making it easy to insert FontAwesome icons by using macros. To start, [sign up for FontAwesome](https://fontawesome.com/start) and add the provided JavaScript code snippet to your WildApricot Global JavaScript settings.
 
+Here's an example of the code you may add. Make sure the `YOUR_FONTAWESEOME_KIT_ID` is replaced with the actual ID below.
+
+`<script src="https://kit.fontawesome.com/YOUR_FONTAWESEOME_KIT_ID.js" crossorigin="anonymous"></script>`
+
 To enable the addon, add this line to your EZ WildApricot Web Designer JavaScript installation script:
 
 `ez_addons = ["fontawesome"];`
