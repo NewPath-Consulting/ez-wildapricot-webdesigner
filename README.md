@@ -179,10 +179,31 @@ Query: .menuInner, .WaGadgetBreadcrumbs > div > ul > li
 ```
 
 
-## **delay**
-> Changes the text in targeted element(s) after 1 second - used for dynamically generated elements, such as a member directory. Note that the Default Text must match the text that is being replaced.
+## **shortdelay**
+> Changes the text in targeted element(s) after **n** second - used for dynamically generated elements, such as a member directory. Note that the Default Text must match the text that is being replaced. Default delay time is one second, and you can customize this by adding the following to the JavaScript configuration:
 
-`delay` function will trigger the `replace` function after a 1 second delay if "Default Text" is present (otherwise it triggers `text` function).
+  ```html
+short_delay = 1;
+```
+
+`shortdelay` function will trigger the `replace` function after a ***n*** second delay if "Default Text" is present (otherwise it triggers `text` function).
+
+
+**EXAMPLE:**
+```text
+Replacement Text: Coordonnées
+Function: delay
+Query: #membersTable > thead > tr > th:nth-child(1)
+```
+
+## **longdelay**
+> Changes the text in targeted element(s) after **n** second - used for dynamically generated elements, such as a member directory. Note that the Default Text must match the text that is being replaced. Default delay time is three seconds, and you can customize this by adding the following to the JavaScript configuration:
+
+  ```html
+long_delay = 3;
+```
+
+`longdelay` function will trigger the `replace` function after a ***n*** second delay if "Default Text" is present (otherwise it triggers `text` function).
 
 
 **EXAMPLE:**

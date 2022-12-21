@@ -30,7 +30,9 @@ let watm_language_name = [],
   enable_public_editor = false,
   do_not_cache = false,
   checkCode = "8euj9o9frkj3wz2nqm6xmcp4y1mdy5tp",
-  toggleShowLangName = true;
+  toggleShowLangName = true,
+  short_delay = 1,
+  long_delay = 3;
 
 let loadedScripts = 0;
 let requiredScripts = [

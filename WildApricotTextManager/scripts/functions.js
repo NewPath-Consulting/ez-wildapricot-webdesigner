@@ -163,6 +163,35 @@ const process = (row) => {
             replacementText
           );
       }, 1000);
+    case "shortdelay":
+      setTimeout(function () {
+        if (defaultText.length <= 0) {
+          document.querySelectorAll(watmQuery).forEach(function (el) {
+            el.innerText = replacementText;
+          });
+        } else
+          replace_link_delay(
+            watmQuery,
+            "replace",
+            defaultText,
+            replacementText
+          );
+      }, short_delay * 1000);
+      break;
+    case "longdelay":
+      setTimeout(function () {
+        if (defaultText.length <= 0) {
+          document.querySelectorAll(watmQuery).forEach(function (el) {
+            el.innerText = replacementText;
+          });
+        } else
+          replace_link_delay(
+            watmQuery,
+            "replace",
+            defaultText,
+            replacementText
+          );
+      }, long_delay * 1000);
       break;
     case "replace":
     case "createlink":
