@@ -528,3 +528,5 @@ EZ WildApricot Web Designer is supported on the latest versions of Chrome, Safar
 2.0.5 - added "EZ Macro" add-on architecture, and added [ez-tabs], [ez-notice], [ez-toggle], [ez-library] macros 10/13/2022
 
 2.0.6 - added `delaybutton` function and changed the `delay` function to use `replace` when default text is present
+
+2.0.7 - changed `delay` to `shortdelay` and `longdelay`, the delays are configurable in the documented Javascript variables 01/04/2023
