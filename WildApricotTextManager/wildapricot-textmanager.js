@@ -3,9 +3,10 @@ let watm_location = document.currentScript.src.substring(
   document.currentScript.src.lastIndexOf("/")
 );
 
-let watm_version = "2.06";
+let watm_version = "2.07";
 let watm_styles = "default";
-let watm_info_url = "https://newpathconsulting.com/watm";
+let watm_info_url =
+  "https://newpathconsulting.com/ez-wildapricot-web-designer-2/";
 
 window.addEventListener("error", function (e) {
   document.body.style.visibility = "visible";
@@ -29,7 +30,9 @@ let watm_language_name = [],
   enable_public_editor = false,
   do_not_cache = false,
   checkCode = "8euj9o9frkj3wz2nqm6xmcp4y1mdy5tp",
-  toggleShowLangName = true;
+  toggleShowLangName = true,
+  short_delay = 1,
+  long_delay = 3;
 
 let loadedScripts = 0;
 let requiredScripts = [

@@ -179,10 +179,31 @@ Query: .menuInner, .WaGadgetBreadcrumbs > div > ul > li
 ```
 
 
-## **delay**
-> Changes the text in targeted element(s) after 1 second - used for dynamically generated elements, such as a member directory. Note that the Default Text must match the text that is being replaced.
+## **shortdelay**
+> Changes the text in targeted element(s) after **n** second - used for dynamically generated elements, such as a member directory. Note that the Default Text must match the text that is being replaced. Default delay time is one second, and you can customize this by adding the following to the JavaScript configuration:
 
-`delay` function will trigger the `replace` function after a 1 second delay if "Default Text" is present (otherwise it triggers `text` function).
+  ```html
+short_delay = 1;
+```
+
+`shortdelay` function will trigger the `replace` function after a ***n*** second delay if "Default Text" is present (otherwise it triggers `text` function).
+
+
+**EXAMPLE:**
+```text
+Replacement Text: Coordonnées
+Function: delay
+Query: #membersTable > thead > tr > th:nth-child(1)
+```
+
+## **longdelay**
+> Changes the text in targeted element(s) after **n** second - used for dynamically generated elements, such as a member directory. Note that the Default Text must match the text that is being replaced. Default delay time is three seconds, and you can customize this by adding the following to the JavaScript configuration:
+
+  ```html
+long_delay = 3;
+```
+
+`longdelay` function will trigger the `replace` function after a ***n*** second delay if "Default Text" is present (otherwise it triggers `text` function).
 
 
 **EXAMPLE:**
@@ -322,6 +343,10 @@ Within the square brackets, add type the name of the add-ons within quotes. Sepa
 ## **FontAwesome Add-On**
 
 EZ WildApricot Web Designer comes with a free Add-on for FontAwesome, making it easy to insert FontAwesome icons by using macros. To start, [sign up for FontAwesome](https://fontawesome.com/start) and add the provided JavaScript code snippet to your WildApricot Global JavaScript settings.
+
+Here's an example of the code you may add. Make sure the `YOUR_FONTAWESEOME_KIT_ID` is replaced with the actual ID below.
+
+`<script src="https://kit.fontawesome.com/YOUR_FONTAWESEOME_KIT_ID.js" crossorigin="anonymous"></script>`
 
 To enable the addon, add this line to your EZ WildApricot Web Designer JavaScript installation script:
 
