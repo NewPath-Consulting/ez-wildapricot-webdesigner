@@ -29,6 +29,31 @@ EZ WildApricot Web Designer module can be used to make WildApricot sites availab
 
 The configuration and translation files must be saved as a CSV file format in UTF-8 format.
 
+## Domain whitelisting
+
+WildApricot has implemented a [Content Security Policy (CSP)](https://en.wikipedia.org/wiki/Content_Security_Policy) to provide additional protection against data theft, site defacement, malware, and more. CSP works by detecting if custom code is being called from an external URL and then comparing those URLs against a whitelist of verified and approved websites. If the external URL being used is not on the whitelist, the code is then blocked from running. EZ WildApricot Web Designer requires access to certain external URLs in order to function correctly, so these URLs will need to be added to the whitelist. To view and manage your whitelist, navigate to the "Settings" screen from the Website section of the WildApricot backend.
+
+![domain whitelist menu](readme-images/domain-whitelist-menu.jpg)
+
+
+**Adding EZ WildApricot Web Designer URLs to Custom Whitelisted Domains**
+
+Under the section "Custom whitelisted domains", you must add manually URLs used by EZ WildApricot Webs Designer. This is what the custom domain whitelist will look like once you add all core and add-on required domains.
+
+
+
+![domain whitelist custom domains](readme-images/domain-whitelist-custom-domains.jpg)
+
+The following is a list of all the external URLs currently being implemented by EZ WildApricot Web Designer and can be added manually:
+
+**Core Plugin**
+* unpkg.com
+* hook.us1.make.com
+* cdnjs.cloudflare.com
+
+**EZ Add-Ons**
+* *.fontawesome.com
+
 ## Script Setup
 
 1. In WildApricot Admin, navigate to Settings -&gt; Site -&gt; Global JavaScript. More details on inserting JavaScript into WildApricot are available in the [WildApricot Documentation](https://gethelp.wildapricot.com/en/articles/212-inserting-and-modifying-html-or-javascript#javascript).
@@ -74,35 +99,7 @@ To install an EZ add-on, place the add-on file into the `ez-addons` folder. Next
 
 Within the square brackets, add type the name of the add-ons within quotes. Separate multiple add-ons with a comma, with each add-on name within their own quotation marks.
 
-## Domain whitelisting
 
-WildApricot recently implemented a new [Content Security Policy (CSP)](https://en.wikipedia.org/wiki/Content_Security_Policy) to provide additional protection against data theft, site defacement, malware, and more. CSP works by detecting if custom code is being called from an external URL and then comparing those URLs against a whitelist of verified and approved websites. If the external URL being used is not on the whitelist, the code is then blocked from running. EZ WildApricot Web Designer requires access to certain external URLs in order to function correctly, so these URLs will need to be added to the whitelist. To view and manage your whitelist, navigate to the "Settings" screen from the Website section of the WildApricot backend.
-
-![domain whitelist menu](readme-images/domain-whitelist-menu.jpg)
-
-**Adding Detected URLs**
-
-Under the section "Detected domains on account", WildApricot should auto-detect the external URLs being used by your website. Simply click the "Add to whitelist" link next to the ones you wish to allow access to. The list of external URLs used by EZ Designer are listed below.
-
-![domain whitelist detected domains](readme-images/domain-whitelist-detected-domains.jpg)
-
-**Adding URLs Manually**
-
-Under the section "Custom whitelisted domains", you can manually add URLs to the whitelist one at a time. Use this method if the above method does not work for you. The list of external URLs used by EZ Designer are listed below.
-
-![domain whitelist custom domains](readme-images/domain-whitelist-custom-domains.jpg)
-
-### External URLs Being Used by EZ Designer
-
-The following is a list of all the external URLs currently being implemented by EZ WildApricot Web Designer:
-
-**Core Plugin**
-* https://unpkg.com
-* https://hook.us1.make.com
-* https://cdnjs.cloudflare.com
-
-**EZ Add-Ons**
-* https://*.fontawesome.com
 
 ---
 # Switching Languages
