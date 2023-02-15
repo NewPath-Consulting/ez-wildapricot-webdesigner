@@ -88,10 +88,17 @@ NOTE: this code snippet assumes you have uploaded all files into the folder `/re
    ```
    
    3. Enter your license key in the quotes `""` to apply your license.
+   
+## Extra Install Script Options
 
-The Inspector & Editor are only accessible to logged in WildApricot administrators by default, but you can enable EZ WildApricot Web Designer 2 in the public view using this line in the install script:
-
+### Enablic the Inspector & Editor without Being Logged in as an Admin
+By default, the Inspector & Editor can be used only when logged in as an administrator to the Wild Apricot Admin view. If you'd like to be able to view the Inspector & Editor without being logged in to the Admin view, add this line in the install script
+ 
 `enable_public_editor = true;`
+
+To save any changes you make while in this mode, you will need to provide an administrative username/password during the first save.
+
+### Installing EZ Add-ons
 
 To install an EZ add-on, place the add-on file into the `ez-addons` folder. Next, add the following code to your JavaScript configuration:
 
