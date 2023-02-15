@@ -527,3 +527,5 @@ EZ WildApricot Web Designer is supported on the latest versions of Chrome, Safar
 2.0.6 - added `delaybutton` function and changed the `delay` function to use `replace` when default text is present 12/06/2023
 
 2.0.7 - changed `delay` to `shortdelay` and `longdelay`, the delays are configurable in the documented Javascript variables 01/04/2023
+
+2.0.8 - NO code changes - README.md updated installation instructions (custom domain before script installation) 02/15/2023
