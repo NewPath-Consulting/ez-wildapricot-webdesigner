@@ -49,7 +49,6 @@ The following is a list of all the external URLs currently being implemented by 
 **Core Plugin**
 * unpkg.com
 * hook.us1.make.com
-* cdnjs.cloudflare.com
 
 **EZ Add-Ons**
 * *.fontawesome.com
