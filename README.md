@@ -62,7 +62,6 @@ The following is a list of all the external URLs currently being implemented by 
 NOTE: this code snippet assumes you have uploaded all files into the folder `/resources/Theme/WildApricotTextManager`
 
    ```html
-  <style>body{visibility: hidden;}</style>
   <script src="/resources/Theme/WildApricotTextManager/wildapricot-textmanager.js"></script>
   <script>
 

@@ -94,6 +94,7 @@ function start(license) {
 
   if (textManagerProductionMode) {
     log(`Wild Apricot Text Manager ${watm_version} loaded in production mode`);
+    document.body.style.visibility = "hidden";
   } else {
     log(`Wild Apricot Text Manager ${watm_version} loaded in development mode`);
   }
