@@ -29,7 +29,8 @@ let watm_language_name = [],
   show_watm_overlay = true,
   enable_public_editor = false,
   do_not_cache = false,
-  checkCode = "8euj9o9frkj3wz2nqm6xmcp4y1mdy5tp",
+  checkCode = "8euj9o9frkj3wz2nqm6xmcp4y1mdy5tp", // PRODUCTION License Checker
+  // DEVELOPMENT License Checker 4suuck1up58qja9qfcqyosyhni63jwsn
   toggleShowLangName = true,
   short_delay = 1,
   long_delay = 3;
