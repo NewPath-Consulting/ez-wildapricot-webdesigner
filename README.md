@@ -67,6 +67,22 @@ NOTE: this code snippet assumes you have uploaded all files into the folder `/re
     // Enter your license key if you have one - omit to use a trial that uses the first 10 lines of a config file
     license_key = "";
 
+  </script>
+   ```
+   
+   3. Enter your license key in the quotes `""` to apply your license.
+
+### Multilingual Script Setup
+
+If you want to configure multi-lingual support use this install script instead:
+
+   ```html
+  <script src="/resources/Theme/WildApricotTextManager/wildapricot-textmanager.js"></script>
+  <script>
+
+    // Enter your license key if you have one - omit to use a trial that uses the first 10 lines of a config file
+    license_key = "";
+
     /*
       Array of available languages
       Can omit if site is not multilingual
@@ -81,22 +97,22 @@ NOTE: this code snippet assumes you have uploaded all files into the folder `/re
     watm_language_className[2] = "spanish";   // watm_language_csv_file[2] will default to spanish.csv
     watm_language_name[3] = "日本語";
     watm_language_className[3] = "japanese";  // watm_language_csv_file[3] will default to japanese.csv
-
+    
   </script>
    ```
-   
-   3. Enter your license key in the quotes `""` to apply your license.
-   
-## Extra Install Script Options
 
-### Enablic the Inspector & Editor without Being Logged in as an Admin
+Enter your license key in the quotes `""` to apply your license.
+
+### Extra Install Script Options
+
+#### Enablic the Inspector & Editor without Being Logged in as an Admin
 By default, the Inspector & Editor can be used only when logged in as an administrator to the Wild Apricot Admin view. If you'd like to be able to view the Inspector & Editor without being logged in to the Admin view, add this line in the install script
  
 `enable_public_editor = true;`
 
 To save any changes you make while in this mode, you will need to provide an administrative username/password during the first save.
 
-### Installing EZ Add-ons
+#### Installing EZ Add-ons
 
 To install an EZ add-on, place the add-on file into the `ez-addons` folder. Next, add the following code to your JavaScript configuration:
 
@@ -534,3 +550,5 @@ EZ WildApricot Web Designer is supported on the latest versions of Chrome, Safar
 2.0.7 - changed `delay` to `shortdelay` and `longdelay`, the delays are configurable in the documented Javascript variables 01/04/2023
 
 2.0.8 - NO code changes - README.md updated installation instructions (custom domain before script installation) 02/15/2023
+
+2.0.9 - removed the CSS from install script and added it into the code to ensure no "white screen of death" scenarios if Javascript fails to install
