@@ -3,7 +3,7 @@ let watm_location = document.currentScript.src.substring(
   document.currentScript.src.lastIndexOf("/")
 );
 
-let watm_version = "2.07";
+let watm_version = "2.0.9";
 let watm_styles = "default";
 let watm_info_url =
   "https://newpathconsulting.com/ez-wildapricot-web-designer-2/";
@@ -29,7 +29,8 @@ let watm_language_name = [],
   show_watm_overlay = true,
   enable_public_editor = false,
   do_not_cache = false,
-  checkCode = "8euj9o9frkj3wz2nqm6xmcp4y1mdy5tp",
+  checkCode = "8euj9o9frkj3wz2nqm6xmcp4y1mdy5tp", // PRODUCTION License Checker
+  // DEVELOPMENT License Checker 4suuck1up58qja9qfcqyosyhni63jwsn
   toggleShowLangName = true,
   short_delay = 1,
   long_delay = 3;
@@ -94,6 +95,7 @@ function start(license) {
 
   if (textManagerProductionMode) {
     log(`Wild Apricot Text Manager ${watm_version} loaded in production mode`);
+    document.body.style.visibility = "hidden";
   } else {
     log(`Wild Apricot Text Manager ${watm_version} loaded in development mode`);
   }
