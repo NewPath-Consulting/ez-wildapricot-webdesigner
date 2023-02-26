@@ -169,6 +169,23 @@ If you choose to download the configuration file and edit it outside of the Insp
 
 When you use the Inspector to save the configuration file, the current page will automatically refresh, and your changes should be immediately visible.  If you don't see your changes, you may need to do a hard refresh of your site to see the changes. To do this, exit the inspector/editor and press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> on PC or <kbd>Option</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> on Mac. You may need to do this for each language enabled on your site.
 
+
+---
+
+# Using EZ WildApricot Web Designer with WildApricot iframe Widgets
+
+The EZ WildApricot Web Designer affects any page loaded from a WildApricot website, including the widgets published through the Website Settings. These are implemented as iframes which load the Javascript libary just like any web page. It's best to test the content on a regular WildApricot website before implementing the iframe gadgets to make sure all changes are rendering outside the iframe first.
+
+To reference the widgets in an iframe in a different langauge when mutli-lingual is turned on use the ?watm-<language> query parameter on the iframe src.
+
+Example:
+
+<iframe width='800px' height='4500px' frameborder='no' src=‘https://myseite.wildapricot.org/widget/Sys/Profile/?watm-french'>
+
+Will load the WildApricot profile widget in an iframe and trigger the French version of the profile.
+
+If you omit the ?watm-<language> in the src the widget will load in the current language set previously by the language drop down or the previously loaded langauge.
+
 ---
 
 # EZ WildApricot Web Designer Functions
