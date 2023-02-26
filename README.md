@@ -181,7 +181,7 @@ To reference the widgets in an iframe in a different langauge when mutli-lingual
 Example:
 
 ```html
- <iframe width='800px' height='4500px' frameborder='no' src=‘https://myseite.wildapricot.org/widget/Sys/Profile/?watm-french'>
+ <iframe width='800px' height='4500px' frameborder='no' src='https://myseite.wildapricot.org/widget/Sys/Profile/?watm-french'>
 ```
 
 Will load the WildApricot profile widget in an iframe and trigger the French version of the profile.
