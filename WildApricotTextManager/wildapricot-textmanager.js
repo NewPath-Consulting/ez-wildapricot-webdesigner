@@ -3,7 +3,7 @@ let watm_location = document.currentScript.src.substring(
   document.currentScript.src.lastIndexOf("/")
 );
 
-let watm_version = "2.0.9";
+let watm_version = "2.1";
 let watm_styles = "default";
 let watm_info_url =
   "https://newpathconsulting.com/ez-wildapricot-web-designer-2/";

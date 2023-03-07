@@ -2,6 +2,8 @@ const checkLicense = () => {
   let license;
   let checkUrl = "https://hook.us1.make.com/" + checkCode;
   if (license_key !== "") {
+    let license = getCookie("watmlicense");
+    if (license) {start(license);} else{
     fetch(`${checkUrl}/?json=true&key=${license_key}`)
       .then((response) => response.json())
       .then((data) => {
@@ -31,14 +33,17 @@ const checkLicense = () => {
             );
           }
         }
+        setCookie("watmlicense", license);
         start(license);
       });
+    }
   } else {
     license = "trial";
     log(
       "EZ Designer running in trial mode - Please obtain a valid license key to unlock all features",
       "Notice"
     );
+    setCookie("watmlicense", license);
     start(license);
   }
 };
