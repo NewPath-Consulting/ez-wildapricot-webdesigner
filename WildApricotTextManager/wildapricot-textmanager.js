@@ -305,7 +305,7 @@ const start = (license) => {
       });
 
       // Get the current language
-      currentLanguage = getCurrentLanguage();
+      currentLanguage = getCurrentLanguage(languages);
 
       // Set the default language if no language is selected
       currentLanguage =

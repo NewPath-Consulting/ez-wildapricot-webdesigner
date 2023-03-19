@@ -155,13 +155,24 @@ const setLanguage = (language) => {
 
 /**
  * Reads the selected language from a cookie. If no language is found, sets the currentLanguage to "Default".
+ * @param {Array} languages - An array of language objects that contain a label and className property.
  * @returns {string} - The current language of the webpage.
  */
-const getCurrentLanguage = () => {
+const getCurrentLanguage = (languages) => {
   // Read selected language from cookie
   let currentLanguage = getCookie("currentLanguage");
-  if (!currentLanguage) currentLanguage = "Default";
-
+  if (!currentLanguage) {
+    const browserLanguage = getBrowserLanguage(navigator.language);
+    if (
+      languages.some((language) => {
+        return language.className.includes(browserLanguage);
+      })
+    ) {
+      currentLanguage = browserLanguage;
+    } else {
+      currentLanguage = "Default";
+    }
+  }
   return currentLanguage;
 };
 
@@ -568,4 +579,61 @@ const loadCSS = (cssFiles) => {
  */
 const escapeRegExp = (string) => {
   return string.replace(/[.*+?^${}()|[\]\\\/]/g, "\\$&");
+};
+
+/**
+ * Returns the full English name of a language given its language code.
+ *
+ * @param {string} languageCode - The language code, in the format "xx"
+ * @returns {string} The full English name of the language, or "Unknown" if the language code is not recognized.
+ */
+const getBrowserLanguage = (languageCode) => {
+  // An object that maps language codes to their full English names
+  const languageNames = {
+    en: "English",
+    es: "Spanish",
+    fr: "French",
+    de: "German",
+    it: "Italian",
+    pt: "Portuguese",
+    ru: "Russian",
+    zh: "Chinese",
+    ja: "Japanese",
+    ko: "Korean",
+    ar: "Arabic",
+    hi: "Hindi",
+    bn: "Bengali",
+    id: "Indonesian",
+    ms: "Malay",
+    fil: "Filipino",
+    th: "Thai",
+    vi: "Vietnamese",
+    tr: "Turkish",
+    pl: "Polish",
+    uk: "Ukrainian",
+    ro: "Romanian",
+    nl: "Dutch",
+    sv: "Swedish",
+    no: "Norwegian",
+    fi: "Finnish",
+    da: "Danish",
+    he: "Hebrew",
+    fa: "Persian",
+    cs: "Czech",
+    sk: "Slovak",
+    hu: "Hungarian",
+    hr: "Croatian",
+    sr: "Serbian",
+    sl: "Slovenian",
+    bg: "Bulgarian",
+    mk: "Macedonian",
+    et: "Estonian",
+    lv: "Latvian",
+    lt: "Lithuanian",
+  };
+  // Look up the full English name of the language based on its language code
+  let browserLanguage = languageNames[languageCode.split("-")[0]] || "";
+
+  // Return the full English name of the language
+  return browserLanguage.toLowerCase();
 };
