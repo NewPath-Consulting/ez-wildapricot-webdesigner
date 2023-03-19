@@ -1,87 +1,258 @@
-let watm_location = document.currentScript.src.substring(
+/**
+ * The URL of the current script.
+ * @constant {string}
+ */
+const watm_location = document.currentScript.src.substring(
   0,
   document.currentScript.src.lastIndexOf("/")
 );
 
-let watm_version = "2.1";
-let watm_styles = "default";
-let watm_info_url =
+/**
+ * The version number of the WATM script.
+ * @constant {string}
+ */
+const watm_version = "2.1";
+
+/**
+ * The URL of the WATM information page.
+ * @constant {string}
+ */
+const watm_info_url =
   "https://newpathconsulting.com/ez-wildapricot-web-designer-2/";
 
-window.addEventListener("error", function (e) {
+/**
+ * The default style for the WATM script.
+ * @constant {string}
+ */
+const watm_styles = "default";
+
+/**
+ * Event listener for errors.
+ * @function
+ * @param {ErrorEvent} e - The error event object.
+ * @returns {boolean} - Returns false.
+ */
+window.addEventListener("error", (e) => {
+  // When an error occurs, make the body visible
   document.body.style.visibility = "visible";
+  // Log error
+  log(e, "Error");
   return false;
 });
 
-window.addEventListener("unhandledrejection", function (e) {
+/**
+ * Event listener for unhandled rejections.
+ * @function
+ * @param {PromiseRejectionEvent} e - The promise rejection event object.
+ * @returns {void}
+ */
+window.addEventListener("unhandledrejection", (e) => {
+  // When an unhandled rejection occurs, make the body visible
   document.body.style.visibility = "visible";
+  // Log error
+  log(e, "Error");
 });
 
-let watm_language_name = [],
-  watm_language_className = [],
-  watm_language_csv_file = [],
-  ez_addons = [],
-  languages = [],
-  currentCSV = "",
-  currentLanguage = "",
-  license_key = "",
-  hideWATMIcon = false,
-  show_watm_overlay = true,
-  enable_public_editor = false,
-  do_not_cache = false,
-  checkCode = "8euj9o9frkj3wz2nqm6xmcp4y1mdy5tp", // PRODUCTION License Checker
-  // DEVELOPMENT License Checker 4suuck1up58qja9qfcqyosyhni63jwsn
-  toggleShowLangName = true,
-  short_delay = 1,
-  long_delay = 3;
+/**
+ * Whether site is multilngual
+ * @type {boolean}
+ */
+let isMultilingual = false;
 
+/**
+ * An array of language names.
+ * @type {string[]}
+ */
+let watm_language_name = [];
+
+/**
+ * An array of language class names.
+ * @type {string[]}
+ */
+let watm_language_className = [];
+
+/**
+ * An array of language CSV filenames.
+ * @type {string[]}
+ */
+let watm_language_csv_file = [];
+
+/**
+ * An array of EZ addons to load.
+ * @type {string[]}
+ */
+let ez_addons = [];
+
+/**
+ * The default license checker code.
+ * type {string}
+ */
+let checkCode = "8euj9o9frkj3wz2nqm6xmcp4y1mdy5tp";
+
+/**
+ * An array of language being used
+ * @type {Object[]}
+ */
+let languages = [];
+
+/**
+ * The current CSV file being processed.
+ * @type {string}
+ */
+let currentCSV = "";
+
+/**
+ * The current language being used.
+ * @type {string}
+ */
+let currentLanguage = "";
+
+/**
+ * The license key.
+ * @type {string}
+ */
+let license_key = "";
+
+/**
+ * Whether to hide the WATM icon.
+ * @type {boolean}
+ */
+let hideWATMIcon = false;
+
+/**
+ * Whether to show the WATM overlay.
+ * @type {boolean}
+ */
+let show_watm_overlay = true;
+
+/**
+ * Whether to enable the public editor.
+ * @type {boolean}
+ */
+let enable_public_editor = false;
+
+/**
+ * Whether to disable caching.
+ * @type {boolean}
+ */
+let do_not_cache = false;
+
+/**
+ * Whether to toggle show the language name.
+ * @type {boolean}
+ */
+let toggleShowLangName = true;
+
+/**
+ * The short delay.
+ * @type {number}
+ */
+let short_delay = 1;
+
+/**
+ * The long delay.
+ * @type {number}
+ */
+let long_delay = 3;
+
+/**
+ * The number of scripts that have been loaded.
+ * @type {number}
+ */
 let loadedScripts = 0;
-let requiredScripts = [
+
+/**
+ * An array of required scripts.
+ * @constant {string[]}
+ */
+const requiredScripts = [
   "jspreadsheet.js",
   "jsuites.js",
   "functions.js",
   "inspector.js",
   "csv-parser.js",
-  "https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js",
-  "https://unpkg.com/@popperjs/core@2.11.6/dist/umd/popper.min.js",
-  "https://unpkg.com/tippy.js@6",
+  "color-thief.js",
+  "popper.js",
+  "tippy.js",
 ];
 
-let requiredStyles = [
+/**
+ * An array of required stylesheets.
+ * @constant {string[]}
+ */
+const requiredStyles = [
   `${watm_location}/css/${watm_styles}.css`,
   `${watm_location}/css/jspreadsheet.css`,
   `${watm_location}/css/jsuites.css`,
 ];
 
-document.addEventListener("DOMContentLoaded", function (event) {
+/**
+ * Waits for the DOM to be ready before loading scripts.
+ * @function
+ * @param {Event} event - The DOMContentLoaded event object.
+ * @returns {void}
+ */
+document.addEventListener("DOMContentLoaded", (event) => {
   loadScripts();
 });
 
-function loadScripts() {
-  let scriptList = requiredScripts.concat(ez_addons);
-  let callback;
-  callback = loadedScripts < scriptList.length - 1 ? loadScripts : checkLicense;
-  var head = document.head;
-  var script = document.createElement("script");
+/**
+ * Loads the required scripts.
+ * @function
+ * @returns {void}
+ */
+const loadScripts = () => {
+  const scriptList = requiredScripts.concat(ez_addons);
+
+  /**
+   * Defines a callback function that loads the next script or checks the license.
+   * @function
+   * @returns {void}
+   */
+  const callback =
+    loadedScripts < scriptList.length - 1 ? loadScripts : checkLicense;
+
+  const head = document.head;
+  const script = document.createElement("script");
   script.type = "text/javascript";
+
+  // Check if the script is an addon or a regular script
   if (scriptList[loadedScripts].indexOf(".js") === -1) {
+    // Load the script as an addon
     script.src = `${watm_location}/ez-addons/${scriptList[loadedScripts]}.js`;
   } else {
+    // Load the script as a regular script
     script.src = `${
       scriptList[loadedScripts].includes("http")
         ? ""
         : watm_location + "/scripts/"
     }${scriptList[loadedScripts]}`;
   }
+
+  // Call the callback when the script is loaded
   script.onreadystatechange = callback;
   script.onload = callback;
-  loadedScripts++;
-  head.appendChild(script);
-}
 
-function start(license) {
-  let googlePreconnect1 = document.createElement("link");
-  let googlePreconnect2 = document.createElement("link");
+  // Increment the counter for loaded scripts
+  loadedScripts++;
+
+  // Add the script to the head of the document
+  head.appendChild(script);
+};
+
+/**
+ * Starts the WATM script with the provided license key.
+ * @function
+ * @param {string} license - The license key.
+ * @returns {void}
+ */
+const start = (license) => {
+  // Check if we're in production mode
+  const textManagerProductionMode = !isInEditMode();
+
+  // Creates and adds preconnect links for Google Fonts to the head of the document, then loads the required stylesheets
+  const googlePreconnect1 = document.createElement("link");
+  const googlePreconnect2 = document.createElement("link");
   googlePreconnect1.href = "https://fonts.googleapis.com";
   googlePreconnect2.href = "https://fonts.gstatic.com";
   googlePreconnect1.setAttribute("rel", "preconnect");
@@ -90,90 +261,167 @@ function start(license) {
   document.head.appendChild(googlePreconnect1);
   document.head.appendChild(googlePreconnect2);
 
+  // Load the required stylesheets
   loadCSS(requiredStyles);
-  let textManagerProductionMode = !isInEditMode();
 
+  // Log a message indicating whether we're in production or development mode
   if (textManagerProductionMode) {
-    log(`Wild Apricot Text Manager ${watm_version} loaded in production mode`);
+    console.log(
+      `Wild Apricot Text Manager ${watm_version} loaded in production mode`
+    );
     document.body.style.visibility = "hidden";
   } else {
-    log(`Wild Apricot Text Manager ${watm_version} loaded in development mode`);
+    console.log(
+      `Wild Apricot Text Manager ${watm_version} loaded in development mode`
+    );
   }
 
+  // Check the license
   if (license !== "invalid") {
+    // Check if the site is multilingual
     if (
-      // Check if watm_language_name array exists/is populated
       typeof watm_language_name !== "undefined" &&
       watm_language_name.length > 0
     ) {
-      // Set site as multilingual
-      var isMultilingual = true;
+      // Set the site as multilingual
+      isMultilingual = true;
+      // Loop through the language arrays and create an array of language objects
+      watm_language_name.forEach((value, index) => {
+        // Set the current language label
+        const label = value;
 
-      watm_language_name.forEach(function (value, index) {
-        // Set current language label
-        let label = value;
+        // Set the current language class name
+        const className = watm_language_className[index]
+          ? watm_language_className[index]
+          : value.toLowerCase();
 
-        // Set current language class name
-        let className = watm_language_className[index]
-          ? watm_language_className[index] // Use provided class name if provided
-          : value.toLowerCase(); // Default to label name if not provided
+        // Set the current language CSV filename
+        const filename = watm_language_csv_file[index]
+          ? watm_language_csv_file[index]
+          : `${className}.csv`;
 
-        // Set current language csv name
-        let filename = watm_language_csv_file[index]
-          ? watm_language_csv_file[index] // Use provided filename if provided
-          : className + ".csv"; // Default to class name if not provided
-
-        // Push values to language object
+        // Push the values to the languages array
         languages.push({ label, className, filename });
       });
 
+      // Get the current language
       currentLanguage = getCurrentLanguage();
+
+      // Set the default language if no language is selected
       currentLanguage =
-        currentLanguage == "Default" ||
-        currentLanguage == null ||
-        currentLanguage == ""
+        currentLanguage === "Default" ||
+        currentLanguage === null ||
+        currentLanguage === ""
           ? languages[0].className
           : currentLanguage;
 
-      // Create language toggle
-      let elmId =
+      // Create the language toggle
+      const elmId =
         typeof languageSwitcherId !== "undefined"
-          ? languageSwitcherId // Use provided element ID if provided
-          : "language_switch"; // Default ID to use if one not provided
+          ? languageSwitcherId
+          : "language_switch";
 
-      // Show language toggle if not disabled
+      // Show the language toggle if not disabled and we're in production mode
       if (
         (typeof showLanguageSwitch === "undefined" ||
           showLanguageSwitch !== false) &&
         textManagerProductionMode
-      )
+      ) {
         createToggle(
           languages,
           toggleShowLangName ? currentLanguage : "",
           elmId
         );
-    } else var isMultilingual = false; // Site is not multilingual
+      }
+    } else {
+      // The site is not multilingual
+      isMultilingual = false;
+    }
 
-    // Load default config file
+    /**
+     * The language callback function that loads the selected language CSV file, processes each row in the CSV file, and runs the EZ-Addons.
+     * @function
+     * @returns {void}
+     */
+    const languageCallback = () => {
+      // Load the selected language CSV
+      if (currentCSV) {
+        Papa.parse(
+          `${watm_location}/translations/${currentCSV}${
+            do_not_cache === true
+              ? `?time=${Math.round(Date.now() / 1000)}`
+              : ""
+          }`,
+          {
+            download: true,
+            header: true,
+            skipEmptyLines: "greedy",
+            complete: (results) => {
+              let lineCount = 0;
+              try {
+                // Loop through the rows in the CSV file and process each one
+                results.data.forEach((row) => {
+                  process(row);
 
-    do_not_cache = false;
+                  // Increment the line count
+                  lineCount++;
+
+                  // Throw an error if we're in trial mode and we've exceeded the line limit
+                  if (license == "trial" && lineCount > 10) {
+                    throw "Trial Mode";
+                  }
+                });
+              } catch (e) {
+                // Handle the error by logging an appropriate message
+                if (e == "Trial Mode") {
+                  log(
+                    `Trial only permits loading first 10 lines of ${currentCSV}`,
+                    "Trial Mode"
+                  );
+                } else {
+                  log(e, "Error");
+                }
+              }
+
+              // Run the EZ-Addons
+              ez_addons.forEach((ezaddon) =>
+                eval(`${ezaddon.replace(/-/g, "_")}();`)
+              );
+            },
+            error: () => {
+              // Handle the error by logging an appropriate message
+              log(`"${currentCSV}" not found`, "Error");
+            },
+          }
+        );
+      }
+    };
+
+    // Load the default config file
     Papa.parse(
       `${watm_location}/config.csv${
-        do_not_cache === true ? "?time=" + Math.round(Date.now() / 1000) : ""
+        do_not_cache === true ? `?time=${Math.round(Date.now() / 1000)}` : ""
       }`,
       {
         download: true,
         header: true,
         skipEmptyLines: "greedy",
-        complete: function (results) {
+        complete: (results) => {
           let lineCount = 0;
           try {
+            // Loop through the rows in the CSV file and process each one
             results.data.forEach((row) => {
               process(row);
+              // Increment the line count
               lineCount++;
-              if (license == "trial" && lineCount > 10) throw "Trial Mode";
+
+              // Throw an error if we're in trial mode and we've exceeded the line limit
+              if (license == "trial" && lineCount > 10) {
+                throw "Trial Mode";
+              }
             });
           } catch (e) {
+            // Handle the error by logging an appropriate message
             if (e == "Trial Mode") {
               log(
                 `Trial only permits loading first 10 lines of ${currentCSV}`,
@@ -183,6 +431,8 @@ function start(license) {
               log(e, "Error");
             }
           }
+
+          // Call the language callback
           languageCallback();
         },
       }
@@ -202,91 +452,60 @@ function start(license) {
         });
       }
 
+      // Add the current language class to the body
       document.body.classList.add(`${currentLanguage}-lang`);
 
+      // Log a message indicating which translation we're currently using
       log(`Currently using ${currentLanguage} translation`);
 
-      // Hide classes for unselected language
+      // Hide the classes for unselected languages
       languages.forEach((language, index) => {
         if (language.className !== currentLanguage) {
-          document
-            .querySelectorAll(`.${language.className}`)
-            .forEach(function (el) {
-              el.style.display = "none";
-            });
+          document.querySelectorAll(`.${language.className}`).forEach((el) => {
+            el.style.display = "none";
+          });
         } else {
-          // set language csv
+          // Set the current language CSV
           currentCSV = language.filename;
         }
       });
     }
 
-    const languageCallback = () => {
-      // Load selected language CSV
-      if (currentCSV) {
-        Papa.parse(
-          `${watm_location}/translations/${currentCSV}${
-            do_not_cache === true
-              ? "?time=" + Math.round(Date.now() / 1000)
-              : ""
-          }`,
-          {
-            download: true,
-            header: true,
-            skipEmptyLines: "greedy",
-            complete: function (results) {
-              let lineCount = 0;
-              try {
-                results.data.forEach((row) => {
-                  process(row);
-                  lineCount++;
-                  if (license == "trial" && lineCount > 10) throw "Trial Mode";
-                });
-              } catch (e) {
-                if (e == "Trial Mode") {
-                  log(
-                    `Trial only permits loading first 10 lines of ${currentCSV}`,
-                    "Trial Mode"
-                  );
-                } else {
-                  log(e, "Error");
-                }
-              }
-
-              // EZ-Addons
-              ez_addons.forEach((ezaddon) =>
-                eval(ezaddon.replace(/-/g, "_") + "();")
-              );
-            },
-            error: () => {
-              log(`"${currentCSV}" not found`, "Error");
-            },
-          }
+    /**
+     * Shows the WATM icon if we're not in development mode and if either the admin switcher is present or the public editor is enabled and we're not in edit mode.
+     * @function
+     * @param {string} license - The license key.
+     * @returns {void}
+     */
+    const showWATMIcon = (license) => {
+      if (window.location.href.indexOf("?dev") == -1) {
+        // Append the WATM button if we're not in dev mode
+        appendWATMBtn(
+          license,
+          !!document.getElementById("idWaAdminSwitcher") ||
+            (enable_public_editor && !isInEditMode())
         );
       }
     };
+
+    // Show the WATM icon if it's not hidden
+    if (!hideWATMIcon) {
+      showWATMIcon(license);
+    }
+
+    // Make the body visible if we're not in the language toggle URL
+    if (window.location.href.indexOf("?watm-") == -1) {
+      document.body.style.visibility = "visible";
+    }
+
+    // Launch the inspector if we're in dev mode
+    if (
+      window.location.href.indexOf("?dev") > -1 &&
+      (!!document.getElementById("idWaAdminSwitcher") ||
+        (enable_public_editor && !isInEditMode())) &&
+      license !== "invalid"
+    ) {
+      launchInspector(languages, watm_location);
+    }
   }
-
-  const showWATMIcon = (license) => {
-    if (window.location.href.indexOf("?dev") == -1)
-      appendWATMBtn(
-        license,
-        !!document.getElementById("idWaAdminSwitcher") ||
-          (enable_public_editor && !isInEditMode())
-      );
-  };
-
-  if (!hideWATMIcon) showWATMIcon(license);
-
-  if (window.location.href.indexOf("?watm-") == -1)
-    document.body.style.visibility = "visible";
-
-  if (
-    window.location.href.indexOf("?dev") > -1 &&
-    (!!document.getElementById("idWaAdminSwitcher") ||
-      (enable_public_editor && !isInEditMode())) &&
-    license !== "invalid"
-  ) {
-    launchInspector(languages, watm_location);
-  }
-}
+};
