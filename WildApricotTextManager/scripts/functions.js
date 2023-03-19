@@ -249,6 +249,7 @@ const process = (row) => {
       }, long_delay * 1000);
       break;
     case "replace":
+    case "replace_element":
     case "createlink":
       replace_link_delay(watmQuery, watmFunction, defaultText, replacementText);
       break;
@@ -290,7 +291,7 @@ const process = (row) => {
 };
 
 /**
- * Replace link with a delay.
+ * Replace text / create link with delay
  * @param {string} watmQuery - The CSS selector for the target element(s) to be modified. Default is "body".
  * @param {string} watmFunction - The function to be performed. Must be either "replace" or "createlink".
  * @param {string} defaultText - The default text to be replaced. Can be a plain string or a regex.
@@ -329,13 +330,19 @@ const replace_link_delay = (
         return newText;
       });
     }
-    if (watmFunction === "createlink") {
+    if (watmFunction === "replace_element") {
+      regex = new RegExp(defaultText, "gi");
       walkText(el, regex, watmFunction, function (node, match, offset) {
-        let alink = document.createElement("a");
-        alink.href = replacementText;
-        alink.textContent = match;
-        return alink;
+        return replacementText;
       });
+      if (watmFunction === "createlink") {
+        walkText(el, regex, watmFunction, function (node, match, offset) {
+          let alink = document.createElement("a");
+          alink.href = replacementText;
+          alink.textContent = match;
+          return alink;
+        });
+      }
     }
   });
 };
@@ -431,19 +438,24 @@ const walkText = function (node, regex, watmFunction, callback) {
       break;
     case 3:
       // If node is a text node, replace the matched text content with the returned callback value.
-      var bk = 0;
-      node.data.replace(regex, function (all) {
-        var args = [].slice.call(arguments),
-          offset = args[args.length - 2],
-          newTextNode = node.splitText(offset + bk),
-          tag;
-        bk -= node.data.length + all.length;
+      if (watmFunction === "replace_element" && regex.test(node.data)) {
+        node.parentNode.innerText = callback(node);
+        regex.lastIndex = 0;
+      } else {
+        var bk = 0;
+        node.data.replace(regex, function (all) {
+          var args = [].slice.call(arguments),
+            offset = args[args.length - 2],
+            newTextNode = node.splitText(offset + bk),
+            tag;
+          bk -= node.data.length + all.length;
 
-        newTextNode.data = newTextNode.data.substr(all.length);
-        tag = callback.apply(window, [node].concat(args));
-        node.parentNode.insertBefore(tag, newTextNode);
-        node = newTextNode;
-      });
+          newTextNode.data = newTextNode.data.substr(all.length);
+          tag = callback.apply(window, [node].concat(args));
+          node.parentNode.insertBefore(tag, newTextNode);
+          node = newTextNode;
+        });
+      }
       regex.lastIndex = 0;
       break;
   }

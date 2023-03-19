@@ -225,6 +225,19 @@ Replacement Text: Accueil
 Query: .menuInner, .WaGadgetBreadcrumbs > div > ul > li
 ```
 
+## **replace_element**
+
+> Finds the element(s) containing the specific text and replaces all the text in that element with the Replacement Text
+
+**EXAMPLE:**
+
+```text
+Default Text: Our Address
+Function: replace_element
+Replacement Text: Our offices are currently closed for renovations purposes.
+Query: .menuInner, .WaGadgetBreadcrumbs > div > ul > li
+```
+
 ## **shortdelay**
 
 > Changes the text in targeted element(s) after **n** second - used for dynamically generated elements, such as a member directory. Note that the Default Text must match the text that is being replaced. Default delay time is one second, and you can customize this by adding the following to the JavaScript configuration:

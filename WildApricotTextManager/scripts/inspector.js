@@ -11,6 +11,7 @@ let watmFunctions = [
   "",
   "text",
   "replace",
+  "replace_element",
   "shortdelay",
   "longdelay",
   "button",
