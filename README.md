@@ -626,3 +626,5 @@ EZ WildApricot Web Designer is supported on the latest versions of Chrome, Safar
 2.0.8 - NO code changes - README.md updated installation instructions (custom domain before script installation) 02/15/2023
 
 2.0.9 - removed the CSS from install script and added it into the code to ensure no "white screen of death" scenarios if Javascript fails to install 02/18/2023
+
+2.1.0 - added the `replace_element` function for backwards compatibility to pre-v2 WATM/EZ Website Designer versions 03/19/2023
