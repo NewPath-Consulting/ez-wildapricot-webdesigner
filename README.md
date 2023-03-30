@@ -628,3 +628,47 @@ EZ WildApricot Web Designer is supported on the latest versions of Chrome, Safar
 2.0.9 - removed the CSS from install script and added it into the code to ensure no "white screen of death" scenarios if Javascript fails to install 02/18/2023
 
 2.1.0 - added the `replace_element` function for backwards compatibility to pre-v2 WATM/EZ Website Designer versions 03/19/2023
+      - the EZ license is now checked once per day, rather than on every page load
+      - if the [web browser's language is set](https://www.computerhope.com/issues/ch001904.htm) EZ WildApricot Web Designer will automatically switch to the language, if available.
+  
+ The following language names are supported for automatic language switching based on browser's language:
+ arabic
+ bengali
+ bulgarian
+ chinese
+ croatian
+ czech
+ danish
+ dutch
+ english
+ estonian
+ filipino
+ finnish
+ french
+ german
+ hebrew
+ hindi
+ hungarian
+ indonesian
+ italian
+ japanese
+ korean
+ latvian
+ lithuanian
+ macedonian
+ malay
+ norwegian
+ persian
+ polish
+ portuguese
+ romanian
+ russian
+ serbian
+ slovak
+ slovenian
+ spanish
+ swedish
+ thai
+ turkish
+ ukrainian
+ vietnamese
