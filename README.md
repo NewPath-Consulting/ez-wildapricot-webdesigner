@@ -102,9 +102,51 @@ If you want to configure multi-lingual support use this install script instead:
   watm_language_className[3] = "japanese"; // watm_language_csv_file[3] will default to japanese.csv
 </script>
 ```
-
-Enter your license key in the quotes `""` to apply your license.
-
+### Recommended Language Class Names
+  
+This is the list of recommended class names for each language. If you use these class names in the watm_language_className assignments in the script above, the browser's default language will automatically switch the website into the language selected by the user.
+```
+arabic
+bengali
+bulgarian
+chinese
+croatian
+czech
+danish
+dutch
+english
+estonian
+filipino
+finnish
+french
+german
+hebrew
+hindi
+hungarian
+indonesian
+italian
+japanese
+korean
+latvian
+lithuanian
+macedonian
+malay
+norwegian
+persian
+polish
+portuguese
+romanian
+russian
+serbian
+slovak
+slovenian
+spanish
+swedish
+thai
+turkish
+ukrainian
+vietnamese
+```
 ### Extra Install Script Options
 
 #### Enablic the Inspector & Editor without Being Logged in as an Admin
@@ -629,46 +671,4 @@ EZ WildApricot Web Designer is supported on the latest versions of Chrome, Safar
 
 2.1.0 - added the `replace_element` function for backwards compatibility to pre-v2 WATM/EZ Website Designer versions 03/19/2023
       - the EZ license is now checked once per day, rather than on every page load
-      - if the [web browser's language is set](https://www.computerhope.com/issues/ch001904.htm) EZ WildApricot Web Designer will automatically switch to the language, if available.
-  
- The following language names are supported for automatic language switching based on browser's language:
- arabic
- bengali
- bulgarian
- chinese
- croatian
- czech
- danish
- dutch
- english
- estonian
- filipino
- finnish
- french
- german
- hebrew
- hindi
- hungarian
- indonesian
- italian
- japanese
- korean
- latvian
- lithuanian
- macedonian
- malay
- norwegian
- persian
- polish
- portuguese
- romanian
- russian
- serbian
- slovak
- slovenian
- spanish
- swedish
- thai
- turkish
- ukrainian
- vietnamese
+      - if the [web browser's language is set](https://www.computerhope.com/issues/ch001904.htm) EZ WildApricot Web Designer will automatically switch to the language, if available. 
