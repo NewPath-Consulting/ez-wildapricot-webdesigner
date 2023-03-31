@@ -219,22 +219,17 @@ When you use the Inspector to save the configuration file, the current page will
 
 The EZ WildApricot Web Designer affects any page loaded from a WildApricot website, including the widgets published through the Website Settings. These are implemented as iframes which load the Javascript libary just like any web page. It's best to test the content on a regular WildApricot website before implementing the iframe gadgets to make sure all changes are rendering outside the iframe first.
 
-To reference the widgets in an iframe in a different langauge when mutli-lingual is turned on use the ?watm-<language> query parameter on the iframe src.
+To reference the widgets in an iframe in a different langauge when mutli-lingual mode is turned on use the ?watm-<language> query parameter on the iframe URL in the `src` parameter of the iframe tag.
 
 Example:
 
 ```html
-<iframe
-  width="800px"
-  height="4500px"
-  frameborder="no"
-  src="https://myseite.wildapricot.org/widget/Sys/Profile/?watm-french"
-></iframe>
+ <iframe width='800px' height='4500px' frameborder='no' src='https://mysite.wildapricot.org/widget/Sys/Profile/?watm-french'>
 ```
 
-Will load the WildApricot profile widget in an iframe and trigger the French version of the profile.
+The iframe code above Will load the WildApricot profile widget in an iframe and trigger the French version of the profile.
 
-If you omit the ?watm-<language> in the src the widget will load in the current language set previously by the language drop down or the previously loaded langauge.
+If you omit the ?watm-<language> in the `src` paramater the widget will load in the current language set previously by the language dropdown menu or the previously loaded langauge.
 
 ---
 
