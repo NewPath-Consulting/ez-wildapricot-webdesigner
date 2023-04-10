@@ -81,7 +81,7 @@ const createToggle = (languages, currentLanguage, elm) => {
    */
   if (!document.getElementById(elm)) {
     log(
-      'No language switcher content gadget found. Add a content gadget with class "language_switcher" to all of your page templates or disable the language switcher',
+      'No language switcher content gadget found. Add a content gadget with CSS ID "language_switch" to your page or page template(s) or disable multi-lingual mode.',
       "Warning"
     );
     return false;

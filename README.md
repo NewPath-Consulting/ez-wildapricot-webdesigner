@@ -151,11 +151,19 @@ vietnamese
 
 #### Enablic the Inspector & Editor without Being Logged in as an Admin
 
-By default, the Inspector & Editor can be used only when logged in as an administrator to the Wild Apricot Admin view. If you'd like to be able to view the Inspector & Editor without being logged in to the Admin view, add this line in the install script
+By default, the Inspector & Editor can be used only when logged in as an administrator to the WildApricot Admin view. If you'd like to be able to view the Inspector & Editor without being logged in to the Admin view, add this line in the install script
 
 `enable_public_editor = true;`
 
 To save any changes you make while in this mode, you will need to provide an administrative username/password during the first save.
+
+#### Hiding the EZ WildApricot Web Designer Icon
+
+By default the EZ WildApricot Web Desginer icon appears in the bottom left corner of all pages even if you are not logged in as an admin. In this mode, clicking on the icon will *not* bring up the Inspector. 
+
+To hide the EZ WildApricot Web Designer icon add this line to the install script:
+
+`hideWATMIcon = false;`
 
 #### Installing EZ Add-ons
 
@@ -618,9 +626,9 @@ EZ WildApricot Web Designer is supported on the latest versions of Chrome, Safar
 
 0.7 - Now managed in GitHub, fixed issues related to Internet Explorer 11 support in the CSV parser and in the WATM library 2/23/19
 
-0.71 - The Wild Apricot Text Manger config file is not cached while in testing mode 2/6/20
+0.71 - The WildApricot Text Manger config file is not cached while in testing mode 2/6/20
 
-0.8 - WATM will now automatically enable when it goes into public view in Wild Apricot, new `attribute` function has been added 6/15/20
+0.8 - WATM will now automatically enable when it goes into public view in WildApricot, new `attribute` function has been added 6/15/20
 
 0.81 - fixed code typo in wildapricot-textmanager.js due to reformatting 6/29/20
 
