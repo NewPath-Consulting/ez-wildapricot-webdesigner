@@ -36,6 +36,7 @@ window.addEventListener("error", (e) => {
   // When an error occurs, make the body visible
   document.body.style.visibility = "visible";
   // Log error
+  storeError(e);
   log(e, "Error");
   return false;
 });
@@ -50,6 +51,7 @@ window.addEventListener("unhandledrejection", (e) => {
   // When an unhandled rejection occurs, make the body visible
   document.body.style.visibility = "visible";
   // Log error
+  storeError(e);
   log(e, "Error");
 });
 
@@ -361,7 +363,7 @@ const start = (license) => {
               try {
                 // Loop through the rows in the CSV file and process each one
                 results.data.forEach((row) => {
-                  process(row);
+                  safeExecute(process, row);
 
                   // Increment the line count
                   lineCount++;
@@ -390,6 +392,7 @@ const start = (license) => {
             },
             error: () => {
               // Handle the error by logging an appropriate message
+              storeError(`"${currentCSV}" not found`);
               log(`"${currentCSV}" not found`, "Error");
             },
           }
@@ -411,7 +414,7 @@ const start = (license) => {
           try {
             // Loop through the rows in the CSV file and process each one
             results.data.forEach((row) => {
-              process(row);
+              safeExecute(process, row);
               // Increment the line count
               lineCount++;
 
@@ -428,6 +431,7 @@ const start = (license) => {
                 "Trial Mode"
               );
             } else {
+              storeError(e);
               log(e, "Error");
             }
           }

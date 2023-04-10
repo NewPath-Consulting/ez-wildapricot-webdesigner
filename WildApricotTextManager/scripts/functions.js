@@ -293,6 +293,11 @@ const process = (row) => {
         });
       });
       break;
+    case "inactive":
+    case "":
+      break;
+    default:
+      storeError(`"${watmFunction}" is not a valid EZ function`);
   }
   if (watmFunction !== "inactive" && watmStyle !== null && watmStyle !== "") {
     let mediaQuery = "";
@@ -636,4 +641,92 @@ const getBrowserLanguage = (languageCode) => {
 
   // Return the full English name of the language
   return browserLanguage.toLowerCase();
+};
+
+/**
+ * Stores an error message into the localStorage.
+ * @param {string} error - The error message to store.
+ */
+const storeError = (error) => {
+  const storedErrors = JSON.parse(localStorage.getItem("WATM")) || [];
+  storedErrors.push({ error, timestamp: new Date().toISOString() });
+  localStorage.setItem("WATM", JSON.stringify(storedErrors));
+};
+
+/**
+ * Executes the provided function, catching any errors and storing them using the storeError function.
+ * @param {Function} func - The function to execute.
+ */
+const safeExecute = (func, ...args) => {
+  if (typeof func !== "function") {
+    console.error("safeExecute: Provided argument is not a function");
+    return;
+  }
+
+  try {
+    func(...args);
+  } catch (error) {
+    storeError(error.message);
+    console.error(error);
+  }
+};
+
+/**
+ * Retrieves stored errors from localStorage.
+ * @returns {Array} An array of stored error objects.
+ */
+const getStoredErrors = () => {
+  return JSON.parse(localStorage.getItem("WATM")) || [];
+};
+
+/**
+ * Deletes a specific error from localStorage by index and updates the table.
+ * @param {number} index - The index of the error to delete.
+ */
+const deleteError = (index) => {
+  const storedErrors = getStoredErrors();
+  storedErrors.splice(index, 1);
+  localStorage.setItem("WATM", JSON.stringify(storedErrors));
+  displayErrors(); // Update the table
+};
+
+/**
+ * Creates an HTML table and displays the stored errors.
+ */
+const displayErrors = () => {
+  const errors = JSON.parse(localStorage.getItem("WATM")) || [];
+  let tableHTML =
+    "<table><tr><th>Error Message</th><th>Timestamp</th><th>Action</th></tr>";
+
+  errors.forEach((errorObj, index) => {
+    const date = new Date(errorObj.timestamp);
+    const formatter = new Intl.DateTimeFormat("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    });
+    const formattedTimestamp = formatter.format(date);
+
+    tableHTML += `
+      <tr>
+        <td>${errorObj.error}</td>
+        <td>${formattedTimestamp}</td>
+        <td><button onclick="deleteError(${index})">Delete</button></td>
+      </tr>
+    `;
+  });
+
+  tableHTML += "</table>";
+  document.getElementById("errorTableContainer").innerHTML = tableHTML;
+};
+
+/**
+ * Clears all stored errors from localStorage and updates the table.
+ */
+const clearAllErrors = () => {
+  localStorage.removeItem("WATM");
+  displayErrors();
 };
