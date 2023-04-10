@@ -14,7 +14,7 @@ You can make a variety of single page, whole site, and WildApricot content chang
 - hide text on any user interface items
 - allow your site to be offered in an unlimited number of languages
 
-EZ WildApricot Web Designer module can be used to make WildApricot sites available in two or more languages by dynamically replacing strings with a translated string. A translator will use a comma separated value (CSV) configuration file that is easily editable, making it easy to maintain hundreds of modifications in a human-readable file.
+EZ WildApricot Web Designer module can be used to make WildApricot sites available in two or more languages by dynamically replacing content gadgets and hard-coded strings with a translations. The translations are all stored in CSV files in WildApricot File Managers and can be edited from a visual inspector and editor as well.
 
 ---
 
@@ -175,11 +175,26 @@ Within the square brackets, add type the name of the add-ons within quotes. Sepa
 
 ---
 
-# Switching Languages
+# Switching and Maintaining Languages
 
 ## Using the Language Toggle
 
 EZ WildApricot Web Designer provides an easy to install toggle for switching between the various languages on your site. To add it to your site, simply add a Content Gadget to your page template in the location you would like the toggle to appear. Set the ID of this gadget to `language_switch`. This gadget will now be replaced with the language toggle when viewed from the frontend.
+
+## Adding translations to content gadgets
+
+There are 2 categories of text that can be translated in WildApricot:
+
+- text and images placed on pages or page templates using WildApricot's Content Gadget
+- hard coded text that appears in other WildApricot dynamic gadgets such as the name of pages in a menu bar, membership applications and membership directories.
+
+EZ WildApricot Web Designer can translate both types of content.
+
+To translate a content gadget you simple must add the language class name (eg "english" or "french") to the class settings of the gadget. The assigned class(es) are found in the "Advanced" settings on every content gadget added to a page or page template.
+
+![setting class name for for content gadgets](readme-images/advanced-setting-content-gadget.png)
+
+Translating the hard coded text in WildApricot dynamic gadgets requires identifying the CSS ID or CSS Path and targeting each element with an appropriate translation. There are hundreds of pieces of hard coded text throughout a WildApricot site. Thankfully NewPath has identified the hard coded elements and offers a translation file for hard coded elements in multiple languages with [WildApricot Translation Support Service & Training](https://newpathconsulting.com/wild-apricot-translation-support/).
 
 ## Using the Language Switch Hook
 
