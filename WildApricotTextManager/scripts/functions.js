@@ -235,7 +235,7 @@ const getCurrentLanguage = (languages) => {
  */
 const process = (row) => {
   let defaultText = row["Default Text"]?.trim() ?? "";
-  let watmFunction = row["Function"]?.trim() ?? "";
+  let watmFunction = row["Function"]?.trim().toLowerCase() ?? "";
   let watmQuery = row["Query"]?.trim() ?? "body";
   let replacementText = row["Replacement Text"]?.trim() ?? "";
   let watmStyle = row["Style"]?.trim() ?? "";
