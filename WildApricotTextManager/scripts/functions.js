@@ -236,86 +236,110 @@ const getCurrentLanguage = (languages) => {
 const process = (row) => {
   let defaultText = row["Default Text"]?.trim() ?? "";
   let watmFunction = row["Function"]?.trim().toLowerCase() ?? "";
-  let watmQuery = row["Query"]?.trim() ?? "body";
+  let watmQuery = row["Query"]?.trim() ?? "";
   let replacementText = row["Replacement Text"]?.trim() ?? "";
   let watmStyle = row["Style"]?.trim() ?? "";
 
   switch (watmFunction) {
     case "hide":
-      document.querySelectorAll(watmQuery).forEach(function (el) {
-        el.style.display = "none";
-      });
+      if (watmQuery !== "") {
+        document.querySelectorAll(watmQuery).forEach(function (el) {
+          el.style.display = "none";
+        });
+      }
       break;
     case "text":
-      document.querySelectorAll(watmQuery).forEach(function (el) {
-        el.innerText = replacementText;
-      });
+      if (watmQuery !== "") {
+        document.querySelectorAll(watmQuery).forEach(function (el) {
+          el.innerText = replacementText;
+        });
+      }
       break;
     case "button":
-      document.querySelectorAll(watmQuery).forEach(function (el) {
-        el.value = replacementText;
-      });
-      break;
-    case "buttondelay":
-      setTimeout(function () {
+      if (watmQuery !== "") {
         document.querySelectorAll(watmQuery).forEach(function (el) {
           el.value = replacementText;
         });
-      }, 1000);
+      }
+      break;
+    case "buttondelay":
+      if (watmQuery !== "") {
+        setTimeout(function () {
+          document.querySelectorAll(watmQuery).forEach(function (el) {
+            el.value = replacementText;
+          });
+        }, 1000);
+      }
       break;
     case "placeholder":
-      document.querySelectorAll(watmQuery).forEach(function (el) {
-        el.setAttribute("placeholder", replacementText);
-      });
+      if (watmQuery !== "") {
+        document.querySelectorAll(watmQuery).forEach(function (el) {
+          el.setAttribute("placeholder", replacementText);
+        });
+      }
       break;
     case "delay":
-      setTimeout(function () {
-        if (defaultText.length <= 0) {
-          document.querySelectorAll(watmQuery).forEach(function (el) {
-            el.innerText = replacementText;
-          });
-        } else
-          replace_link_delay(
-            watmQuery,
-            "replace",
-            defaultText,
-            replacementText
-          );
-      }, 1000);
+      if (watmQuery !== "") {
+        setTimeout(function () {
+          if (defaultText.length <= 0) {
+            document.querySelectorAll(watmQuery).forEach(function (el) {
+              el.innerText = replacementText;
+            });
+          } else
+            replace_link_delay(
+              watmQuery,
+              "replace",
+              defaultText,
+              replacementText
+            );
+        }, 1000);
+      }
+      break;
     case "shortdelay":
-      setTimeout(function () {
-        if (defaultText.length <= 0) {
-          document.querySelectorAll(watmQuery).forEach(function (el) {
-            el.innerText = replacementText;
-          });
-        } else
-          replace_link_delay(
-            watmQuery,
-            "replace",
-            defaultText,
-            replacementText
-          );
-      }, short_delay * 1000);
+      if (watmQuery !== "") {
+        setTimeout(function () {
+          if (defaultText.length <= 0) {
+            document.querySelectorAll(watmQuery).forEach(function (el) {
+              el.innerText = replacementText;
+            });
+          } else
+            replace_link_delay(
+              watmQuery,
+              "replace",
+              defaultText,
+              replacementText
+            );
+        }, short_delay * 1000);
+      }
       break;
     case "longdelay":
-      setTimeout(function () {
-        if (defaultText.length <= 0) {
-          document.querySelectorAll(watmQuery).forEach(function (el) {
-            el.innerText = replacementText;
-          });
-        } else
-          replace_link_delay(
-            watmQuery,
-            "replace",
-            defaultText,
-            replacementText
-          );
-      }, long_delay * 1000);
+      if (watmQuery !== "") {
+        setTimeout(function () {
+          if (defaultText.length <= 0) {
+            document.querySelectorAll(watmQuery).forEach(function (el) {
+              el.innerText = replacementText;
+            });
+          } else
+            replace_link_delay(
+              watmQuery,
+              "replace",
+              defaultText,
+              replacementText
+            );
+        }, long_delay * 1000);
+      }
       break;
     case "replace":
     case "replace_element":
     case "createlink":
-      replace_link_delay(watmQuery, watmFunction, defaultText, replacementText);
+      if (watmQuery !== "") {
+        replace_link_delay(
+          watmQuery,
+          watmFunction,
+          defaultText,
+          replacementText
+        );
+      }
       break;
     case "attribute":
       document.querySelectorAll(watmQuery).forEach(function (el) {
@@ -330,21 +354,27 @@ const process = (row) => {
       document.head.appendChild(fontLink);
       break;
     case "link":
-      document.querySelectorAll(watmQuery).forEach(function (el) {
-        if (el.hasAttribute("href")) el.setAttribute("href", replacementText);
-      });
+      if (watmQuery !== "") {
+        document.querySelectorAll(watmQuery).forEach(function (el) {
+          if (el.hasAttribute("href")) el.setAttribute("href", replacementText);
+        });
+      }
       break;
     case "source":
-      document.querySelectorAll(watmQuery).forEach(function (el) {
-        if (el.hasAttribute("src")) el.setAttribute("src", replacementText);
-      });
+      if (watmQuery !== "") {
+        document.querySelectorAll(watmQuery).forEach(function (el) {
+          if (el.hasAttribute("src")) el.setAttribute("src", replacementText);
+        });
+      }
       break;
     case "tooltip":
-      document.querySelectorAll(watmQuery).forEach(function (el) {
-        tippy(el, {
-          content: replacementText,
+      if (watmQuery !== "") {
+        document.querySelectorAll(watmQuery).forEach(function (el) {
+          tippy(el, {
+            content: replacementText,
+          });
         });
-      });
+      }
       break;
     case "inactive":
     case "":
