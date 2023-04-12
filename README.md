@@ -102,9 +102,11 @@ If you want to configure multi-lingual support use this install script instead:
   watm_language_className[3] = "japanese"; // watm_language_csv_file[3] will default to japanese.csv
 </script>
 ```
+
 ### Recommended Language Class Names
-  
+
 This is the list of recommended class names for each language. If you use these class names in the watm_language_className assignments in the script above, the browser's default language will automatically switch the website into the language selected by the user.
+
 ```
 arabic
 bengali
@@ -147,6 +149,7 @@ turkish
 ukrainian
 vietnamese
 ```
+
 ### Extra Install Script Options
 
 #### Enablic the Inspector & Editor without Being Logged in as an Admin
@@ -159,7 +162,7 @@ To save any changes you make while in this mode, you will need to provide an adm
 
 #### Hiding the EZ WildApricot Web Designer Icon
 
-By default the EZ WildApricot Web Desginer icon appears in the bottom left corner of all pages even if you are not logged in as an admin. In this mode, clicking on the icon will *not* bring up the Inspector. 
+By default the EZ WildApricot Web Desginer icon appears in the bottom left corner of all pages even if you are not logged in as an admin. In this mode, clicking on the icon will _not_ bring up the Inspector.
 
 To hide the EZ WildApricot Web Designer icon add this line to the install script:
 
@@ -247,7 +250,12 @@ To reference the widgets in an iframe in a different langauge when mutli-lingual
 Example:
 
 ```html
- <iframe width='800px' height='4500px' frameborder='no' src='https://mysite.wildapricot.org/widget/Sys/Profile/?watm-french'>
+<iframe
+  width="800px"
+  height="4500px"
+  frameborder="no"
+  src="https://mysite.wildapricot.org/widget/Sys/Profile/?watm-french"
+></iframe>
 ```
 
 The iframe code above Will load the WildApricot profile widget in an iframe and trigger the French version of the profile.
@@ -469,7 +477,7 @@ Query: .loginBoxProfileLink
 
 ## **googlefont**
 
-> Installs a Google font that can be used throughout other CSS property declarations. Place the font family name to use in the "Replacement Text" field. THe font family name can be obtained from the [Google Fonts](https://fonts.google.com/) website
+> Installs a Google font that can be used throughout other CSS property declarations. Place the font family name to use in the "Replacement Text" field. The font family name can be obtained from the [Google Fonts](https://fonts.google.com/) website
 
 **EXAMPLE:**
 
@@ -688,8 +696,10 @@ EZ WildApricot Web Designer is supported on the latest versions of Chrome, Safar
 2.0.9 - removed the CSS from install script and added it into the code to ensure no "white screen of death" scenarios if Javascript fails to install 02/18/2023
 
 2.1.0 - added the `replace_element` function for backwards compatibility to pre-v2 WATM/EZ Website Designer versions 04/09/2023
+
 - the EZ license is now checked once per day, rather than on every page load
 - if the [web browser's language is set](https://www.computerhope.com/issues/ch001904.htm) EZ WildApricot Web Designer will automatically switch to the language, if available.
 - added an error log and a "View Error Log" button to the inspector
 - when an error is encountered while parsing the CSV file the error is logged, and parsing continues with the next line
+- third-party script files are now included, removing requirement for domain whitelisting
 - added instructions on adding translated content gadgets
