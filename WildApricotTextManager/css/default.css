@@ -372,3 +372,11 @@ table.jexcel {
 .watm-log-btn:focus {
   outline: none;
 }
+
+#logFile .hidden-row {
+  display: none;
+}
+
+#logFile .expand-collapse-btn {
+  font-weight: bold;
+}

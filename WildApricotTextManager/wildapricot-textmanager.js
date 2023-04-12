@@ -359,17 +359,13 @@ const start = (license) => {
             header: true,
             skipEmptyLines: "greedy",
             complete: (results) => {
-              let lineCount = 0;
               try {
                 // Loop through the rows in the CSV file and process each one
-                results.data.forEach((row) => {
-                  safeExecute(process, row);
-
-                  // Increment the line count
-                  lineCount++;
+                results.data.forEach((row, lineNumber) => {
+                  safeExecute(process, row, lineNumber, currentCSV);
 
                   // Throw an error if we're in trial mode and we've exceeded the line limit
-                  if (license == "trial" && lineCount > 10) {
+                  if (license == "trial" && lineNumber > 10) {
                     throw "Trial Mode";
                   }
                 });
@@ -410,16 +406,13 @@ const start = (license) => {
         header: true,
         skipEmptyLines: "greedy",
         complete: (results) => {
-          let lineCount = 0;
           try {
             // Loop through the rows in the CSV file and process each one
-            results.data.forEach((row) => {
-              safeExecute(process, row);
-              // Increment the line count
-              lineCount++;
+            results.data.forEach((row, lineNumber) => {
+              safeExecute(process, row, lineNumber, "config.csv");
 
               // Throw an error if we're in trial mode and we've exceeded the line limit
-              if (license == "trial" && lineCount > 10) {
+              if (license == "trial" && lineNumber > 10) {
                 throw "Trial Mode";
               }
             });

@@ -233,155 +233,145 @@ const getCurrentLanguage = (languages) => {
  * Processes a row of data and executes the specified function on selected webpage elements.
  * @param {Object} row - An object representing a row of data, with properties "Default Text", "Function", "Query", "Replacement Text", and "Style".
  */
-const process = (row) => {
+const process = (row, lineNumber, csvFileName) => {
   let defaultText = row["Default Text"]?.trim() ?? "";
   let watmFunction = row["Function"]?.trim().toLowerCase() ?? "";
   let watmQuery = row["Query"]?.trim() ?? "";
   let replacementText = row["Replacement Text"]?.trim() ?? "";
   let watmStyle = row["Style"]?.trim() ?? "";
 
-  switch (watmFunction) {
-    case "hide":
-      if (watmQuery !== "") {
-        document.querySelectorAll(watmQuery).forEach(function (el) {
-          el.style.display = "none";
-        });
-      }
-      break;
-    case "text":
-      if (watmQuery !== "") {
-        document.querySelectorAll(watmQuery).forEach(function (el) {
-          el.innerText = replacementText;
-        });
-      }
-      break;
-    case "button":
-      if (watmQuery !== "") {
-        document.querySelectorAll(watmQuery).forEach(function (el) {
-          el.value = replacementText;
-        });
-      }
-      break;
-    case "buttondelay":
-      if (watmQuery !== "") {
-        setTimeout(function () {
-          document.querySelectorAll(watmQuery).forEach(function (el) {
+  let elements = [];
+  if (watmFunction !== "googlefont") {
+    elements = safeQuerySelectorAll(watmQuery, lineNumber, csvFileName);
+  }
+
+  if (watmFunction == "googlefont") {
+    let fontUrl = `https://fonts.googleapis.com/css2?family=${replacementText.trim()}:wght@200;300;400;600;700;800;900&display=swap`;
+    let fontLink = document.createElement("link");
+    fontLink.href = fontUrl;
+    fontLink.setAttribute("rel", "stylesheet");
+    document.head.appendChild(fontLink);
+  } else if (watmQuery !== "") {
+    switch (watmFunction) {
+      case "hide":
+        if (elements) {
+          elements.forEach((el) => {
+            el.style.display = "none";
+          });
+        }
+        break;
+      case "text":
+        if (elements) {
+          elements.forEach((el) => {
+            el.innerText = replacementText;
+          });
+        }
+        break;
+      case "button":
+        if (elements) {
+          elements.forEach((el) => {
             el.value = replacementText;
           });
+        }
+        break;
+      case "buttondelay":
+        setTimeout(function () {
+          if (elements) {
+            elements.forEach((el) => {
+              el.value = replacementText;
+            });
+          }
         }, 1000);
-      }
-      break;
-    case "placeholder":
-      if (watmQuery !== "") {
-        document.querySelectorAll(watmQuery).forEach(function (el) {
-          el.setAttribute("placeholder", replacementText);
-        });
-      }
-      break;
-    case "delay":
-      if (watmQuery !== "") {
+        break;
+      case "placeholder":
+        if (elements) {
+          elements.forEach((el) => {
+            el.setAttribute("placeholder", replacementText);
+          });
+        }
+        break;
+      case "delay":
         setTimeout(function () {
           if (defaultText.length <= 0) {
-            document.querySelectorAll(watmQuery).forEach(function (el) {
-              el.innerText = replacementText;
-            });
-          } else
-            replace_link_delay(
-              watmQuery,
-              "replace",
-              defaultText,
-              replacementText
-            );
+            if (elements) {
+              elements.forEach((el) => {
+                el.innerText = replacementText;
+              });
+            }
+          } else replace_link_delay(watmQuery, "replace", defaultText, replacementText);
         }, 1000);
-      }
-      break;
-    case "shortdelay":
-      if (watmQuery !== "") {
+        break;
+      case "shortdelay":
         setTimeout(function () {
           if (defaultText.length <= 0) {
-            document.querySelectorAll(watmQuery).forEach(function (el) {
-              el.innerText = replacementText;
-            });
-          } else
-            replace_link_delay(
-              watmQuery,
-              "replace",
-              defaultText,
-              replacementText
-            );
+            if (elements) {
+              elements.forEach((el) => {
+                el.innerText = replacementText;
+              });
+            }
+          } else replace_link_delay(watmQuery, "replace", defaultText, replacementText);
         }, short_delay * 1000);
-      }
-      break;
-    case "longdelay":
-      if (watmQuery !== "") {
+        break;
+      case "longdelay":
         setTimeout(function () {
           if (defaultText.length <= 0) {
-            document.querySelectorAll(watmQuery).forEach(function (el) {
-              el.innerText = replacementText;
-            });
-          } else
-            replace_link_delay(
-              watmQuery,
-              "replace",
-              defaultText,
-              replacementText
-            );
+            if (elements) {
+              elements.forEach((el) => {
+                el.innerText = replacementText;
+              });
+            }
+          } else replace_link_delay(watmQuery, "replace", defaultText, replacementText);
         }, long_delay * 1000);
-      }
-      break;
-    case "replace":
-    case "replace_element":
-    case "createlink":
-      if (watmQuery !== "") {
+        break;
+      case "replace":
+      case "replace_element":
+      case "createlink":
         replace_link_delay(
           watmQuery,
           watmFunction,
           defaultText,
           replacementText
         );
-      }
-      break;
-    case "attribute":
-      document.querySelectorAll(watmQuery).forEach(function (el) {
-        el.setAttribute(defaultText, replacementText);
-      });
-      break;
-    case "googlefont":
-      let fontUrl = `https://fonts.googleapis.com/css2?family=${replacementText.trim()}:wght@200;300;400;600;700;800;900&display=swap`;
-      let fontLink = document.createElement("link");
-      fontLink.href = fontUrl;
-      fontLink.setAttribute("rel", "stylesheet");
-      document.head.appendChild(fontLink);
-      break;
-    case "link":
-      if (watmQuery !== "") {
-        document.querySelectorAll(watmQuery).forEach(function (el) {
-          if (el.hasAttribute("href")) el.setAttribute("href", replacementText);
-        });
-      }
-      break;
-    case "source":
-      if (watmQuery !== "") {
-        document.querySelectorAll(watmQuery).forEach(function (el) {
-          if (el.hasAttribute("src")) el.setAttribute("src", replacementText);
-        });
-      }
-      break;
-    case "tooltip":
-      if (watmQuery !== "") {
-        document.querySelectorAll(watmQuery).forEach(function (el) {
-          tippy(el, {
-            content: replacementText,
+        break;
+      case "attribute":
+        if (elements) {
+          elements.forEach((el) => {
+            el.setAttribute(defaultText, replacementText);
           });
-        });
-      }
-      break;
-    case "inactive":
-    case "":
-      break;
-    default:
-      storeError(`"${watmFunction}" is not a valid EZ function`);
+        }
+        break;
+      case "link":
+        if (elements) {
+          elements.forEach((el) => {
+            if (el.hasAttribute("href"))
+              el.setAttribute("href", replacementText);
+          });
+        }
+        break;
+      case "source":
+        if (elements) {
+          elements.forEach((el) => {
+            if (el.hasAttribute("src")) el.setAttribute("src", replacementText);
+          });
+        }
+        break;
+      case "tooltip":
+        if (elements) {
+          elements.forEach((el) => {
+            tippy(el, {
+              content: replacementText,
+            });
+          });
+        }
+        break;
+      case "inactive":
+      case "":
+        break;
+      default:
+        storeError(`"${watmFunction}" is not a valid EZ function`);
+    }
   }
+
   if (watmFunction !== "inactive" && watmStyle !== null && watmStyle !== "") {
     let mediaQuery = "";
     if (watmFunction == "@media") mediaQuery = replacementText;
@@ -727,12 +717,51 @@ const getBrowserLanguage = (languageCode) => {
 };
 
 /**
+ * Returns a NodeList of elements that match the specified CSS selector. If the selector
+ * is invalid, logs an error to the console and returns null.
+ *
+ * @param {string} selector - The CSS selector to search for.
+ * @returns {NodeList|null} A NodeList of matching elements, or null if the selector is invalid.
+ */
+function safeQuerySelectorAll(selector, lineNumber, csvFileName) {
+  try {
+    const elements = document.querySelectorAll(selector);
+    return elements;
+  } catch (error) {
+    storeError(
+      `Invalid query on line ${lineNumber + 1} of ${csvFileName}: ${selector}`
+    );
+    log(error.message, "Error");
+    return null;
+  }
+}
+
+/**
  * Stores an error message into the localStorage.
  * @param {string} error - The error message to store.
  */
-const storeError = (error) => {
+const storeError = (errorMessage, url = window.location.href) => {
   const storedErrors = JSON.parse(localStorage.getItem("WATM")) || [];
-  storedErrors.push({ error, timestamp: new Date().toISOString() });
+  let errorExists = false;
+
+  storedErrors.forEach((errorObj) => {
+    if (errorObj.error === errorMessage) {
+      errorExists = true;
+      if (!errorObj.urls.includes(url)) {
+        errorObj.urls.push(url);
+        errorObj.timestamp = new Date().toISOString();
+      }
+    }
+  });
+
+  if (!errorExists) {
+    const errorObj = {
+      error: errorMessage,
+      timestamp: new Date().toISOString(),
+      urls: [url],
+    };
+    storedErrors.push(errorObj);
+  }
   localStorage.setItem("WATM", JSON.stringify(storedErrors));
 };
 
@@ -779,7 +808,7 @@ const deleteError = (index) => {
 const displayErrors = () => {
   const errors = JSON.parse(localStorage.getItem("WATM")) || [];
   let tableHTML =
-    "<table><tr><th>Error Message</th><th>Timestamp</th><th>Action</th></tr>";
+    "<table><tr><th>Error Message</th><th>Timestamp</th><th>Action</th><th></th></tr>";
 
   errors.forEach((errorObj, index) => {
     const date = new Date(errorObj.timestamp);
@@ -798,12 +827,33 @@ const displayErrors = () => {
         <td>${errorObj.error}</td>
         <td>${formattedTimestamp}</td>
         <td><button onclick="deleteError(${index})">Delete</button></td>
+        <td><button class="expand-collapse-btn" onclick="toggleErrorPageURL(${index})">+</button></td>
+      </tr>
+      <tr id="urlRow${index}" class="hidden-row">
+        <td colspan="4">
+          ${errorObj.urls
+            .map(
+              (url) => `<div><a href="${url}" target="_blank">${url}</a></div>`
+            )
+            .join("")}
+        </td>
       </tr>
     `;
   });
 
   tableHTML += "</table>";
   document.getElementById("errorTableContainer").innerHTML = tableHTML;
+};
+
+const toggleErrorPageURL = (index) => {
+  const urlRow = document.getElementById(`urlRow${index}`);
+  urlRow.classList.toggle("hidden-row");
+
+  const expandCollapseBtn = urlRow.previousElementSibling.querySelector(
+    ".expand-collapse-btn"
+  );
+  expandCollapseBtn.textContent =
+    expandCollapseBtn.textContent === "+" ? "-" : "+";
 };
 
 /**
