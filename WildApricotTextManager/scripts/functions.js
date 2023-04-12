@@ -234,11 +234,11 @@ const getCurrentLanguage = (languages) => {
  * @param {Object} row - An object representing a row of data, with properties "Default Text", "Function", "Query", "Replacement Text", and "Style".
  */
 const process = (row) => {
-  let defaultText = row["Default Text"].trim();
-  let watmFunction = row["Function"].trim();
-  let watmQuery = row["Query"].trim();
-  let replacementText = row["Replacement Text"].trim();
-  let watmStyle = row["Style"].trim();
+  let defaultText = row["Default Text"]?.trim() ?? "";
+  let watmFunction = row["Function"]?.trim() ?? "";
+  let watmQuery = row["Query"]?.trim() ?? "body";
+  let replacementText = row["Replacement Text"]?.trim() ?? "";
+  let watmStyle = row["Style"]?.trim() ?? "";
 
   switch (watmFunction) {
     case "hide":
