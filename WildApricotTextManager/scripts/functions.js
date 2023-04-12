@@ -3,7 +3,7 @@
  * @function
  * @returns {void}
  */
-const checkLicense = () => {
+const checkLicense = async () => {
   // Declare two variables, `license` and `checkUrl`
   let license;
   let checkUrl = "https://hook.us1.make.com/" + checkCode;
@@ -15,48 +15,90 @@ const checkLicense = () => {
     if (license) {
       start(license);
     } else {
-      // Otherwise, make an HTTP GET request to the `checkUrl` URL and include the `license_key` as a query parameter
-      fetch(`${checkUrl}/?json=true&key=${license_key}`)
+      // Use a try-catch block to handle fetch request errors
+      try {
+        // Make an HTTP GET request to the `checkUrl` URL
+        // Include the `license_key` as a query parameter
+        // Race the fetch request against the timeout promise
+        const response = await Promise.race([
+          fetch(`${checkUrl}/?json=true&key=${license_key}`),
+          timeout(3000),
+        ]);
+
+        // If the response status is not ok, throw an error
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
         // Parse the response data as JSON
-        .then((response) => response.json())
-        .then((data) => {
-          // If the response data contains an error or the product is not "watm", set `license` to "invalid" and log an error message
+        const data = await response.json();
+
+        // Check if the response data contains an error or the product is not "watm"
+        if (
+          data["license-error"] == "no valid key found" ||
+          !data.Products.includes("watm")
+        ) {
+          // Set `license` to "invalid" and log an error message
+          license = "invalid";
+          storeError(
+            `Invalid License Key for EZ Designer - Plugin is now disabled`
+          );
+          log(
+            "Invalid License Key for EZ Designer - Plugin is now disabled",
+            "Error"
+          );
+        } else {
+          // Parse the expiration date from the response data
+          let expiryDate = Date.parse(data["expiration date"]);
+
+          // Check if the product is "watm", the support level is "support", and the expiration date is in the future
           if (
-            data["license-error"] == "no valid key found" ||
-            !data.Products.includes("watm")
+            data.Products.includes("watm") &&
+            data["Support Level"] == "support" &&
+            expiryDate >= Date.now()
           ) {
-            license = "invalid";
-            log(
-              "Invalid License Key for EZ Designer - Plugin is now disabled",
-              "Error"
-            );
-          } else {
-            // Otherwise, parse the expiration date from the response data and compare it to the current date
-            let expiryDate = Date.parse(data["expiration date"]);
-            // If the product is "watm", the support level is "support", and the expiration date is in the future, set `license` to "active"
-            if (
-              data.Products.includes("watm") &&
-              data["Support Level"] == "support" &&
-              expiryDate >= Date.now()
-            ) {
-              license = "active";
-            }
-            // If the product is "watm" and the expiration date is in the past, set `license` to "expired" and log a notice message
-            if (data.Products.includes("watm") && expiryDate < Date.now()) {
-              license = "expired";
-              log(
-                "License Key for EZ Designer - Running in trial mode. Please renew your license to unlock all features",
-                "Notice"
-              );
-            }
+            // Set `license` to "active"
+            license = "active";
           }
-          // Set the `watmlicense` cookie to the value of `license` and call the `start` function, passing `license` as an argument
-          setCookie("watmlicense", license);
+
+          // Check if the product is "watm" and the expiration date is in the past
+          if (data.Products.includes("watm") && expiryDate < Date.now()) {
+            // Set `license` to "expired" and log a notice message
+            license = "expired";
+            storeError(
+              `License Key for EZ Designer expired - Running in trial mode. Please renew your license to unlock all features`
+            );
+            log(
+              "License Key for EZ Designer expired - Running in trial mode. Please renew your license to unlock all features",
+              "Notice"
+            );
+          }
+        }
+
+        // Set the `watmlicense` cookie to the value of `license` and call the `start` function, passing `license` as an argument
+        setCookie("watmlicense", license);
+        start(license);
+      } catch (error) {
+        // Check if the error message is "Request timed out"
+        if (error.message === "Request timed out") {
+          // Perform the desired action when the request times out
+          storeError("EZ Web Designer License Server took too long to respond");
+          log(
+            "EZ Web Designer License Server took too long to respond - loading in Trial mode.",
+            "Error"
+          );
+          license = "trial";
+          log("EZ Designer running in trial mode", "Notice");
           start(license);
-        });
+        } else {
+          // Handle other fetch request errors
+          storeError(`Fetch request error:  ${error}`);
+          log(`Fetch request error: ${error}`, "Error");
+        }
+      }
     }
   } else {
-    // If `license_key` is an empty string, set `license` to "trial" and log a notice message
+    // If license_key is an empty string, set license to "trial" and log a notice message
     license = "trial";
     log(
       "EZ Designer running in trial mode - Please obtain a valid license key to unlock all features",
@@ -67,6 +109,17 @@ const checkLicense = () => {
     start(license);
   }
 };
+
+/**
+ * Returns a promise that rejects after the specified delay.
+ * @param {number} delay - The delay in milliseconds before the promise rejects.
+ * @returns {Promise} A promise that rejects with an Error after the specified delay.
+ */
+function timeout(delay) {
+  return new Promise((_, reject) =>
+    setTimeout(() => reject(new Error("Request timed out")), delay)
+  );
+}
 
 /**
  * Creates a language toggle switcher for a webpage.
