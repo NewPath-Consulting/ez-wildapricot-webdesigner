@@ -477,22 +477,22 @@ const setupEditor = (languages, watm_location) => {
 
     var xhr = new XMLHttpRequest();
     xhr.open("POST", filePath, true);
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState == 4) console.log(xhr.responseText);
-      window.location.href =
-        window.location.href.split("?")[0] +
-        "?dev&f=" +
-        filename +
-        "&t=" +
-        Date.now();
-    };
     xhr.onload = function (e) {
       if (xhr.status == 200) {
-        console.log("uploaded"); //(correctly uploaded)
-      } else
-        console.log(
-          "Error " + e.status + " occurred uploading your file.<br />"
+        window.location.href =
+          window.location.href.split("?")[0] +
+          "?dev&f=" +
+          filename +
+          "&t=" +
+          Date.now();
+      } else {
+        storeError(`Error saving ${filename} - ${xhr.statusText}`);
+        log(
+          `Error saving ${filename} - ${xhr.responseText} ${xhr.statusText}`,
+          "Error"
         );
+        alert(`Could not save file ${filename} - please try again.`);
+      }
     };
 
     var formData = new FormData();
