@@ -241,7 +241,11 @@ const process = (row, lineNumber, csvFileName) => {
   let watmStyle = row["Style"]?.trim() ?? "";
 
   let elements = [];
-  if (watmFunction !== "googlefont") {
+  if (
+    watmFunction !== "googlefont" &&
+    watmFunction !== "inactive" &&
+    watmFunction !== ""
+  ) {
     elements = safeQuerySelectorAll(watmQuery, lineNumber, csvFileName);
   }
 
