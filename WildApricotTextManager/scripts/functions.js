@@ -302,7 +302,7 @@ const process = (row, lineNumber, csvFileName) => {
                 el.innerText = replacementText;
               });
             }
-          } else replace_link_delay(watmQuery, "replace", defaultText, replacementText);
+          } else replace_link_delay(watmQuery, "replace", defaultText, replacementText, lineNumber, csvFileName);
         }, 1000);
         break;
       case "shortdelay":
@@ -313,7 +313,7 @@ const process = (row, lineNumber, csvFileName) => {
                 el.innerText = replacementText;
               });
             }
-          } else replace_link_delay(watmQuery, "replace", defaultText, replacementText);
+          } else replace_link_delay(watmQuery, "replace", defaultText, replacementText, lineNumber, csvFileName);
         }, short_delay * 1000);
         break;
       case "longdelay":
@@ -324,7 +324,7 @@ const process = (row, lineNumber, csvFileName) => {
                 el.innerText = replacementText;
               });
             }
-          } else replace_link_delay(watmQuery, "replace", defaultText, replacementText);
+          } else replace_link_delay(watmQuery, "replace", defaultText, replacementText, lineNumber, csvFileName);
         }, long_delay * 1000);
         break;
       case "replace":
@@ -334,14 +334,22 @@ const process = (row, lineNumber, csvFileName) => {
           watmQuery,
           watmFunction,
           defaultText,
-          replacementText
+          replacementText,
+          lineNumber,
+          csvFileName
         );
         break;
       case "attribute":
         if (elements) {
-          elements.forEach((el) => {
-            el.setAttribute(defaultText, replacementText);
-          });
+          if (defaultText !== "") {
+            elements.forEach((el) => {
+              el.setAttribute(defaultText, replacementText);
+            });
+          } else {
+            storeError(
+              `Attribute name (defaultText) is missing for "attribute" function on line ${lineNumber} of ${csvFileName}`
+            );
+          }
         }
         break;
       case "link":
@@ -372,7 +380,9 @@ const process = (row, lineNumber, csvFileName) => {
       case "":
         break;
       default:
-        storeError(`"${watmFunction}" is not a valid EZ function`);
+        storeError(
+          `"${watmFunction}" is not a valid EZ function on line ${lineNumber} of ${csvFileName}`
+        );
     }
   }
 
@@ -385,59 +395,73 @@ const process = (row, lineNumber, csvFileName) => {
 
 /**
  * Replace text / create link with delay
- * @param {string} watmQuery - The CSS selector for the target element(s) to be modified. Default is "body".
+ * @param {string} watmQuery - The CSS selector for the target element(s) to be modified.
  * @param {string} watmFunction - The function to be performed. Must be either "replace" or "createlink".
  * @param {string} defaultText - The default text to be replaced. Can be a plain string or a regex.
  * @param {string} replacementText - The text or URL to replace the defaultText with.
  * @returns {undefined} - This function does not return anything.
  */
 const replace_link_delay = (
-  watmQuery,
+  watmQuery = "body",
   watmFunction,
   defaultText,
-  replacementText
+  replacementText,
+  lineNumber,
+  csvFileName
 ) => {
-  if (watmQuery == null || watmQuery == "") watmQuery = "body";
   let regex = new RegExp(
-    (defaultText.includes("-") ||
-    defaultText.includes(".") ||
-    defaultText.includes("!") ||
-    defaultText.includes("?") ||
-    defaultText.includes(":")
-      ? ""
-      : "\\b") +
+    (defaultText.match(/[.\-!?:]/) ? "" : "\\b") +
       escapeRegExp(defaultText) +
-      (defaultText.includes("-") ||
-      defaultText.includes(".") ||
-      defaultText.includes("!") ||
-      defaultText.includes("?") ||
-      defaultText.includes(":")
-        ? ""
-        : "\\b"),
+      (defaultText.match(/[.\-!?:]/) ? "" : "\\b"),
     "gi"
   );
-  document.querySelectorAll(watmQuery).forEach(function (el) {
-    if (watmFunction === "replace") {
+
+  if (defaultText === "" && watmFunction !== "createlink") {
+    storeError(
+      `defaultText is missing for "${watmFunction}" function on line ${lineNumber} of ${csvFileName}`
+    );
+    return;
+  }
+  if (
+    !replacementText.toLowerCase().includes(defaultText.toLowerCase()) &&
+    watmFunction === "replace"
+  ) {
+    document.querySelectorAll(watmQuery).forEach(function (el) {
       walkText(el, regex, watmFunction, function (node, match, offset) {
         let newText = document.createTextNode(replacementText);
         return newText;
       });
-    }
-    if (watmFunction === "replace_element") {
+    });
+  } else if (
+    replacementText.toLowerCase().includes(defaultText.toLowerCase()) &&
+    watmFunction === "replace"
+  ) {
+    storeError(
+      `Recursion error possible for "${watmFunction}" function on line ${lineNumber} of ${csvFileName} - skipped`
+    );
+  }
+  if (
+    !replacementText.toLowerCase().includes(defaultText.toLowerCase()) &&
+    watmFunction === "replace_element"
+  ) {
+    document.querySelectorAll(watmQuery).forEach(function (el) {
       regex = new RegExp(defaultText, "gi");
       walkText(el, regex, watmFunction, function (node, match, offset) {
         return replacementText;
       });
-      if (watmFunction === "createlink") {
-        walkText(el, regex, watmFunction, function (node, match, offset) {
-          let alink = document.createElement("a");
-          alink.href = replacementText;
-          alink.textContent = match;
-          return alink;
-        });
-      }
-    }
-  });
+    });
+  }
+
+  if (watmFunction === "createlink") {
+    document.querySelectorAll(watmQuery).forEach(function (el) {
+      walkText(el, regex, watmFunction, function (node, match, offset) {
+        let alink = document.createElement("a");
+        alink.href = replacementText;
+        alink.textContent = match;
+        return alink;
+      });
+    });
+  }
 };
 
 /**
