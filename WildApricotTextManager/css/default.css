@@ -380,3 +380,13 @@ table.jexcel {
 #logFile .expand-collapse-btn {
   font-weight: bold;
 }
+
+#logFile table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#logFile .error-row:nth-child(4n + 1),
+#logFile .error-row:nth-child(4n + 2) {
+  background-color: #f2f2f2;
+}

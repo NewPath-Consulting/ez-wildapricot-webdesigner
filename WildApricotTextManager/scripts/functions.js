@@ -733,7 +733,11 @@ function safeQuerySelectorAll(selector, lineNumber, csvFileName) {
     return elements;
   } catch (error) {
     storeError(
-      `Invalid query on line ${lineNumber + 1} of ${csvFileName}: ${selector}`
+      selector !== ""
+        ? `Invalid query selector on line ${
+            lineNumber + 1
+          } of ${csvFileName}: ${selector}`
+        : `Query selector missing on line ${lineNumber + 1} of ${csvFileName}`
     );
     log(error.message, "Error");
     return null;
@@ -827,7 +831,7 @@ const displayErrors = () => {
     const formattedTimestamp = formatter.format(date);
 
     tableHTML += `
-      <tr>
+      <tr class="error-row">
         <td>${errorObj.error}</td>
         <td>${formattedTimestamp}</td>
         <td><button onclick="deleteError(${index})">Delete</button></td>
