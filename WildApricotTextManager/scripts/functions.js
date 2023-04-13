@@ -399,6 +399,8 @@ const process = (row, lineNumber, csvFileName) => {
  * @param {string} watmFunction - The function to be performed. Must be either "replace" or "createlink".
  * @param {string} defaultText - The default text to be replaced. Can be a plain string or a regex.
  * @param {string} replacementText - The text or URL to replace the defaultText with.
+ * @param {number} lineNumber - The line number where the function is called.
+ * @param {string} csvFileName - The name of the CSV file where the function is called.
  * @returns {undefined} - This function does not return anything.
  */
 const replace_link_delay = (
