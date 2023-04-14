@@ -402,12 +402,12 @@ const start = (license) => {
                   await new Promise((resolve) => {
                     setTimeout(
                       () => {
-                        safeExecute(process, row, lineNumber, currentCSV);
                         if (stepThrough === true) {
                           console.log(
                             `${currentCSV} Line: #${lineNumber} | Function: ${row["Function"]}`
                           );
                         }
+                        safeExecute(process, row, lineNumber, currentCSV);
                         resolve();
                       },
                       stepThrough === true && lineNumber >= stepThroughFrom
@@ -471,12 +471,12 @@ const start = (license) => {
               await new Promise((resolve) => {
                 setTimeout(
                   () => {
-                    safeExecute(process, row, lineNumber, "config.csv");
                     if (stepThrough === true) {
                       console.log(
                         `config.csv Line: #${lineNumber} | Function: ${row["Function"]}`
                       );
                     }
+                    safeExecute(process, row, lineNumber, "config.csv");
                     resolve();
                   },
                   stepThroughConfig === true &&
