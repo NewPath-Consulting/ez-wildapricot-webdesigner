@@ -56,6 +56,36 @@ window.addEventListener("unhandledrejection", (e) => {
 });
 
 /**
+ * Whether to step through CSV
+ * @type {boolean}
+ */
+let stepThrough = false;
+
+/**
+ * Whether to step through config.csv
+ * @type {boolean}
+ */
+let stepThroughConfig = false;
+
+/**
+ * Step through starting point
+ * @type {number}
+ */
+let stepThroughFrom = 0;
+
+/**
+ * config.csv step through starting point
+ * @type {number}
+ */
+let stepThroughConfigFrom = 0;
+
+/**
+ * Step through speed
+ * @type {boolean}
+ */
+let stepThroughSpeed = 5;
+
+/**
  * Whether site is multilngual
  * @type {boolean}
  */
@@ -358,17 +388,39 @@ const start = (license) => {
             download: true,
             header: true,
             skipEmptyLines: "greedy",
-            complete: (results) => {
+            complete: async (results) => {
               try {
                 // Loop through the rows in the CSV file and process each one
-                results.data.forEach((row, lineNumber) => {
-                  safeExecute(process, row, lineNumber, currentCSV);
+                for (
+                  let lineNumber = 0;
+                  lineNumber < results.data.length;
+                  lineNumber++
+                ) {
+                  const row = results.data[lineNumber];
+
+                  // Wrap safeExecute in an async function to allow using await with setTimeout
+                  await new Promise((resolve) => {
+                    setTimeout(
+                      () => {
+                        safeExecute(process, row, lineNumber, currentCSV);
+                        if (stepThrough === true) {
+                          console.log(
+                            `${currentCSV} Line: #${lineNumber} | Function: ${row["Function"]}`
+                          );
+                        }
+                        resolve();
+                      },
+                      stepThrough === true && lineNumber >= stepThroughFrom
+                        ? stepThroughSpeed * 1000
+                        : 0
+                    );
+                  });
 
                   // Throw an error if we're in trial mode and we've exceeded the line limit
                   if (license == "trial" && lineNumber > 10) {
                     throw "Trial Mode";
                   }
-                });
+                }
               } catch (e) {
                 // Handle the error by logging an appropriate message
                 if (e == "Trial Mode") {
@@ -405,22 +457,45 @@ const start = (license) => {
         download: true,
         header: true,
         skipEmptyLines: "greedy",
-        complete: (results) => {
+        complete: async (results) => {
           try {
             // Loop through the rows in the CSV file and process each one
-            results.data.forEach((row, lineNumber) => {
-              safeExecute(process, row, lineNumber, "config.csv");
+            for (
+              let lineNumber = 0;
+              lineNumber < results.data.length;
+              lineNumber++
+            ) {
+              const row = results.data[lineNumber];
+
+              // Wrap safeExecute in an async function to allow using await with setTimeout
+              await new Promise((resolve) => {
+                setTimeout(
+                  () => {
+                    safeExecute(process, row, lineNumber, "config.csv");
+                    if (stepThrough === true) {
+                      console.log(
+                        `config.csv Line: #${lineNumber} | Function: ${row["Function"]}`
+                      );
+                    }
+                    resolve();
+                  },
+                  stepThroughConfig === true &&
+                    lineNumber >= stepThroughConfigFrom
+                    ? stepThroughSpeed * 1000
+                    : 0
+                );
+              });
 
               // Throw an error if we're in trial mode and we've exceeded the line limit
               if (license == "trial" && lineNumber > 10) {
                 throw "Trial Mode";
               }
-            });
+            }
           } catch (e) {
             // Handle the error by logging an appropriate message
             if (e == "Trial Mode") {
               log(
-                `Trial only permits loading first 10 lines of ${currentCSV}`,
+                `Trial only permits loading first 10 lines of config.csv`,
                 "Trial Mode"
               );
             } else {
