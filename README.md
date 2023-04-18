@@ -239,6 +239,38 @@ If you choose to download the configuration file and edit it outside of the Insp
 
 When you use the Inspector to save the configuration file, the current page will automatically refresh, and your changes should be immediately visible. If you don't see your changes, you may need to do a hard refresh of your site to see the changes. To do this, exit the inspector/editor and press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> on PC or <kbd>Option</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> on Mac. You may need to do this for each language enabled on your site.
 
+# Debugging the configuration or translation files by "stepping through"
+
+You can debug the processing of the config.csv or the language.csv files by enabling a step-though debugger in EZ WildApricot Web Designer.
+
+To enable the debugger add these lines to the EZ WildApricot Web Designer install JavaScript:
+
+```html
+// Enable step-thgouh debugging of config.csv:
+stepThroughConfig = true;
+
+// Enable step-though debugging of selected language:
+stepThrough = true;
+```
+
+When step-through debugging is enabled, you can open the development console  to view the processing of the config.csv or language.csv files. The console will display what file and line number it is processing, and the EZ WildApricot Web Designer function being processed on that line. It will then pause for 5 seconds and then more to the next line. You can watch the web page to see how the changes are occuring, and see what line in the file may be causing errors.
+
+To change the delay time, add this to the EZ WildApricot Web Designer install JavaScript:
+
+```html
+// Step-through delay in seconds:
+stepThroughSpeed = <seconds>;
+```
+
+If you want the processing display to start after a certain line in the csv, add this to the EZ WildApricot Web Designer install JavaScript:
+
+```html
+// Start config.csv step-through at a certain line:
+stepThroughConfigFrom = <linenumber>;
+
+// Start current language step-through at a certain line:
+stepThroughFrom = <linenumber>;
+```
 ---
 
 # Using EZ WildApricot Web Designer with WildApricot iframe Widgets
@@ -703,3 +735,4 @@ EZ WildApricot Web Designer is supported on the latest versions of Chrome, Safar
 - when an error is encountered while parsing the CSV file the error is logged, and parsing continues with the next line
 - third-party script files are now included, removing requirement for domain whitelisting
 - added instructions on adding translated content gadgets
+- added "step through" debugging mechanism to process config and language files line by line with delay
