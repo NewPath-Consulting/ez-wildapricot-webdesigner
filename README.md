@@ -239,7 +239,7 @@ If you choose to download the configuration file and edit it outside of the Insp
 
 When you use the Inspector to save the configuration file, the current page will automatically refresh, and your changes should be immediately visible. If you don't see your changes, you may need to do a hard refresh of your site to see the changes. To do this, exit the inspector/editor and press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> on PC or <kbd>Option</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> on Mac. You may need to do this for each language enabled on your site.
 
-# Debugging the configuration or translation files by "stepping through"
+## Debugging the configuration or translation files by "stepping through"
 
 You can debug the processing of the config.csv or the language.csv files by enabling a step-though debugger in EZ WildApricot Web Designer.
 
@@ -286,8 +286,8 @@ Example:
   width="800px"
   height="4500px"
   frameborder="no"
-  src="https://mysite.wildapricot.org/widget/Sys/Profile/?watm-french"
-></iframe>
+  src="https://mysite.wildapricot.org/widget/Sys/Profile/?watm-french">
+</iframe>
 ```
 
 The iframe code above Will load the WildApricot profile widget in an iframe and trigger the French version of the profile.
