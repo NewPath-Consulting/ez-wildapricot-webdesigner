@@ -215,7 +215,13 @@ You are not limited to using the EZ WildApricot Web Designer Language Toggle. Yo
 
 Using the Inspector & Editor, you can use to view the styling and targeting information of the various elements on your website, as well as make modifications to your EZ WildApricot Web Designer configuration files. This information is necessary when updating your configuration and translation files.
 
-When logged in as a WildApricot administrator, an icon will appear at the bottom-left of your screen. Click on the icon to launch the inspector and editor. While in Editor mode, you will not be able to follow any links on the web page. Click the Exit Editor button in the inspector to return to normal browsing. When you hover over an element a red outline will appear around the element. You can right click on the icon to move the icon to the left or right side for the screen.
+When logged in as a WildApricot administrator, an icon will appear at the bottom-left of the browser window. You can move the location of the icon by right clicking on it to move it to the bottom-right of the browser window, and right clicking again will move it back to the bottom-left.
+
+To launch the EZ WildApricot inspector and editor click on the icon. While in Editor mode, you will not be able to follow any links on the web page. Instead you will be able to hover over every element on the web page to inspect it for modification.
+
+When you hover over an element a red outline will appear around the element ready for inspection. Click on the element to open the inspector.
+
+Click the `Exit Editor` button in the inspector to return to normal browsing. 
 
 # Inspector
 
@@ -223,9 +229,14 @@ The top half of the panel that appears is the Inspector. Clicking on the element
 
 The `Copy Element Class`, and `Copy CSS Path` buttons will copy the related information to the clipboard. You can use either one for the Query part of the configuration. CSS Path is always more specific and usually the best Query to use. The CSS Element Class can have unintended consequences on other elements that share the same CSS Class, but sometimes using a CSS Class is a good fallback if the CSS Path is not working to change the site.
 
+The CSS Path or CSS Element Class must be placed into the Query column in the Editor to "target" the element you wish to modify with one of the [functions](#ez-wildapricot-web-designer-functions) available in EZ WildApricot Web Designer.
+
 _COMPATIBILITY NOTE:_ The Copy Element Class and Copy CSS Path buttons only work on secure (https) websites. If your website is running insecurely, we recommend adding a [free SSL certificate to your custom domain](https://gethelp.wildapricot.com/en/articles/555).
 
 The `View Properties` button will display the details about that element, such as the text it contains, styling, and any resource links.
+
+The `View Error Log` button will open a new window and display any errors that have been encountered in the currently loaded configuration file (config.csv, english.csv or language.csv).
+
 
 ---
 
@@ -238,6 +249,16 @@ Once you are finished making your changes, save the file back to your website by
 If you choose to download the configuration file and edit it outside of the Inspector, the changes will be applied only when you manually upload the configuration file. The configuration file is a comma-separated file that can be edited in any spreadsheet. If you decide to edit in a spreadsheet, ensure you save in UTF-8 format to preserve any international characters.
 
 When you use the Inspector to save the configuration file, the current page will automatically refresh, and your changes should be immediately visible. If you don't see your changes, you may need to do a hard refresh of your site to see the changes. To do this, exit the inspector/editor and press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> on PC or <kbd>Option</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> on Mac. You may need to do this for each language enabled on your site.
+
+## The Error Log
+
+As EZ WildApricot Web Designer parses each configuration file it may encounter an error while processing a configuration row. If it does encounter an error, the error will be logged into the Error Log, and EZ WildApricot Web Designer willproceed to process the next configuration row in the configuration line. The configuration row with the error will not be proceessed until the error has been resolved.
+
+The `View Error Log` button in the inspector opens the error log and displays the error message, timestamp and the ability to delete the error from the log. The error message will contain information about which line created an error and the error message. Currently correctly-formatted CSS Paths or CSS Element IDs that are not found on the page will *not* be logged as errors, as they will be simply skipped.
+
+Note that blank lines in the configuration files are not counted and may throw off the line counter in the error message. It is recommended that configuration files have no empty lines to ensure any error messages point to the correct line number.
+
+You can clear the error log by clicking `Clear All Errors` button.
 
 ## Debugging the configuration or translation files by "stepping through"
 
