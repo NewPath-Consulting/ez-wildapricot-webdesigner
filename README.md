@@ -319,7 +319,7 @@ If you omit the ?watm-<language> in the `src` paramater the widget will load in 
 
 # EZ WildApricot Web Designer Functions
 
-When editing the EZ WildApricot Web Designer configuration and translation files, the following functions are available: Ech function operates in a specific way to modify, hide or translate parts of your website.
+When editing the EZ WildApricot Web Designer configuration and translation files, the following functions are available: Each function operates in a specific way to modify, style, hide or translate parts of your website.
 
 ## **text**
 
@@ -335,7 +335,7 @@ Query: .loginBoxChangePassword
 
 ## **replace**
 
-> Finds and replaces specific text in targeted element(s). Note that the Default Text must match the text that is being replaced.
+> Finds and replaces specific text in targeted element(s). Note that the Default Text must match the text that is being replaced. The search is done without case sensitivity.
 
 **EXAMPLE:**
 
@@ -348,7 +348,7 @@ Query: .menuInner, .WaGadgetBreadcrumbs > div > ul > li
 
 ## **replace_element**
 
-> Finds the element(s) containing the specific text and replaces all the text in that element with the Replacement Text
+> Finds the element(s) containing the specific text and replaces all the text in that element with the Replacement Text. The search is done without case sensitivity.
 
 **EXAMPLE:**
 
@@ -361,7 +361,7 @@ Query: .menuInner, .WaGadgetBreadcrumbs > div > ul > li
 
 ## **shortdelay**
 
-> Changes the text in targeted element(s) after **n** second - used for dynamically generated elements, such as a member directory. Note that the Default Text must match the text that is being replaced. Default delay time is one second, and you can customize this by adding the following to the JavaScript configuration:
+> Changes the text in targeted element(s) after **n** second - used for dynamically generated elements, such as a member directory. Note that the Default Text must match the text that is being replaced. The search is done without case sensitivity. Default delay time is one second, and you can customize this by adding the following to the JavaScript configuration:
 
 ```html
 short_delay = 1;
@@ -373,13 +373,13 @@ short_delay = 1;
 
 ```text
 Replacement Text: Coordonnées
-Function: delay
+Function: shortdelay
 Query: #membersTable > thead > tr > th:nth-child(1)
 ```
 
 ## **longdelay**
 
-> Changes the text in targeted element(s) after **n** second - used for dynamically generated elements, such as a member directory. Note that the Default Text must match the text that is being replaced. Default delay time is three seconds, and you can customize this by adding the following to the JavaScript configuration:
+> Changes the text in targeted element(s) after **n** second - used for dynamically generated elements, such as a member directory. Note that the Default Text must match the text that is being replaced. The search is done without case sensitivity. Default delay time is three seconds, and you can customize this by adding the following to the JavaScript configuration:
 
 ```html
 long_delay = 3;
@@ -391,18 +391,18 @@ long_delay = 3;
 
 ```text
 Replacement Text: Coordonnées
-Function: delay
+Function: longdelay
 Query: #membersTable > thead > tr > th:nth-child(1)
 ```
 
 ## **button**
 
-> Changes the text on targeted button(s)
+> Changes the text on targeted button(s). The search is done without case sensitivity.
 
 **EXAMPLE:**
 
 ```text
-Default Text: Click here to login
+Replacement Text:  Click here to login
 Function: button
 Query: .loginButton
 ```
@@ -413,9 +413,9 @@ Query: .loginButton
 
 **EXAMPLE:**
 
-```delaybutton
-Default Text: Click here to login
-Function: button
+```text
+Replacement Text:  Click here to login
+Function: delaybutton
 Query: .loginButton
 ```
 
@@ -423,7 +423,7 @@ Query: .loginButton
 
 > Ignores the configuration row. This is useful when troubleshooting an item or you wish to save details in the configuration file, but not activate it.
 
-## The style column can be used in conjunction with a function, or on it's own.
+## The style column can be used in conjunction with a function, or on its own.
 
 **EXAMPLE:**
 
