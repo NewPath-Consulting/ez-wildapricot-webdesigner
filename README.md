@@ -166,7 +166,7 @@ By default the EZ WildApricot Web Desginer icon appears in the bottom left corne
 
 To hide the EZ WildApricot Web Designer icon add this line to the install script:
 
-`hideWATMIcon = false;`
+`hideWATMIcon = true;`
 
 #### Installing EZ Add-ons
 
@@ -221,7 +221,7 @@ To launch the EZ WildApricot inspector and editor click on the icon. While in Ed
 
 When you hover over an element a red outline will appear around the element ready for inspection. Click on the element to open the inspector.
 
-Click the `Exit Editor` button in the inspector to return to normal browsing. 
+Click the `Exit Editor` button in the inspector to return to normal browsing.
 
 # Inspector
 
@@ -236,7 +236,6 @@ _COMPATIBILITY NOTE:_ The Copy Element Class and Copy CSS Path buttons only work
 The `View Properties` button will display the details about that element, such as the text it contains, styling, and any resource links.
 
 The `View Error Log` button will open a new window and display any errors that have been encountered in the currently loaded configuration file (config.csv, english.csv or language.csv).
-
 
 ---
 
@@ -254,7 +253,7 @@ When you use the Inspector to save the configuration file, the current page will
 
 As EZ WildApricot Web Designer parses each configuration file it may encounter an error while processing a configuration row. If it does encounter an error, the error will be logged into the Error Log, and EZ WildApricot Web Designer willproceed to process the next configuration row in the configuration line. The configuration row with the error will not be proceessed until the error has been resolved.
 
-The `View Error Log` button in the inspector opens the error log and displays the error message, timestamp and the ability to delete the error from the log. The error message will contain information about which line created an error and the error message. Currently correctly-formatted CSS Paths or CSS Element IDs that are not found on the page will *not* be logged as errors, as they will be simply skipped.
+The `View Error Log` button in the inspector opens the error log and displays the error message, timestamp and the ability to delete the error from the log. The error message will contain information about which line created an error and the error message. Currently correctly-formatted CSS Paths or CSS Element IDs that are not found on the page will _not_ be logged as errors, as they will be simply skipped.
 
 Note that blank lines in the configuration files are not counted and may throw off the line counter in the error message. It is recommended that configuration files have no empty lines to ensure any error messages point to the correct line number.
 
@@ -267,31 +266,28 @@ You can debug the processing of the config.csv or the language.csv files by enab
 To enable the debugger add these lines to the EZ WildApricot Web Designer install JavaScript:
 
 ```html
-// Enable step-thgouh debugging of config.csv:
-stepThroughConfig = true;
-
-// Enable step-though debugging of selected language:
-stepThrough = true;
+// Enable step-thgouh debugging of config.csv: stepThroughConfig = true; //
+Enable step-though debugging of selected language: stepThrough = true;
 ```
 
-When step-through debugging is enabled, you can open the development console  to view the processing of the config.csv or language.csv files. The console will display what file and line number it is processing, and the EZ WildApricot Web Designer function being processed on that line. It will then pause for 5 seconds and then more to the next line. You can watch the web page to see how the changes are occuring, and see what line in the file may be causing errors.
+When step-through debugging is enabled, you can open the development console to view the processing of the config.csv or language.csv files. The console will display what file and line number it is processing, and the EZ WildApricot Web Designer function being processed on that line. It will then pause for 5 seconds and then more to the next line. You can watch the web page to see how the changes are occuring, and see what line in the file may be causing errors.
 
 To change the delay time, add this to the EZ WildApricot Web Designer install JavaScript:
 
 ```html
-// Step-through delay in seconds:
-stepThroughSpeed = <seconds>;
+// Step-through delay in seconds: stepThroughSpeed = <seconds>;</seconds>
 ```
 
 If you want the processing display to start after a certain line in the csv, add this to the EZ WildApricot Web Designer install JavaScript:
 
 ```html
-// Start config.csv step-through at a certain line:
-stepThroughConfigFrom = <linenumber>;
-
-// Start current language step-through at a certain line:
-stepThroughFrom = <linenumber>;
+// Start config.csv step-through at a certain line: stepThroughConfigFrom =
+<linenumber
+  >; // Start current language step-through at a certain line: stepThroughFrom =
+  <linenumber>;</linenumber></linenumber
+>
 ```
+
 ---
 
 # Using EZ WildApricot Web Designer with WildApricot iframe Widgets
@@ -307,7 +303,8 @@ Example:
   width="800px"
   height="4500px"
   frameborder="no"
-  src="https://mysite.wildapricot.org/widget/Sys/Profile/?watm-french">
+  src="https://mysite.wildapricot.org/widget/Sys/Profile/?watm-french"
+>
 </iframe>
 ```
 
