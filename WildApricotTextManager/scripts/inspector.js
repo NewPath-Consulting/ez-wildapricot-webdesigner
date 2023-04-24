@@ -11,6 +11,7 @@ let watmFunctions = [
   "",
   "text",
   "replace",
+  "replace_element",
   "shortdelay",
   "longdelay",
   "button",
@@ -46,12 +47,12 @@ const fileSelecter = document.createElement("div");
 const launchInspector = (languages, watm_location) => {
   createModal();
   interceptClicks();
-  createInspectorBar();
+  createInspectorBar(watm_location);
   setupEditor(languages, watm_location);
 };
 
 // Attach inspector to footer of website
-const createInspectorBar = () => {
+const createInspectorBar = (watm_location) => {
   // add padding to bottom of page
   //document.body.firstElementChild.style.paddingBottom = "50vh";
 
@@ -76,6 +77,12 @@ const createInspectorBar = () => {
   exitbtn.classList.add("watm-inspector-btn");
   exitbtn.innerText = "Exit Editor";
   exitbtn.style.display = "block";
+
+  // create log button
+  const logbtn = document.createElement("button");
+  logbtn.classList.add("watm-log-btn", "watm-inspector-btn");
+  logbtn.innerText = "View Error Log";
+  logbtn.style.display = "block";
 
   // create path clipboard button
   const copyPathBtn = document.createElement("button");
@@ -109,6 +116,7 @@ const createInspectorBar = () => {
   inspectorBar.appendChild(copyClassBtn);
   inspectorBar.appendChild(copyPathBtn);
   inspectorBar.appendChild(viewPropsBtn);
+  inspectorBar.appendChild(logbtn);
   inspectorBar.appendChild(inspectorBody);
   inspectorBar.appendChild(editorBody);
 
@@ -116,6 +124,11 @@ const createInspectorBar = () => {
   exitbtn.addEventListener("click", () => {
     window.location.href =
       window.location.href.split("?")[0] + "?t=" + Date.now();
+  });
+
+  // open log file
+  logbtn.addEventListener("click", () => {
+    window.open(`${watm_location}/error-log.html`);
   });
 
   // attach inspector barr to screen
@@ -464,22 +477,22 @@ const setupEditor = (languages, watm_location) => {
 
     var xhr = new XMLHttpRequest();
     xhr.open("POST", filePath, true);
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState == 4) console.log(xhr.responseText);
-      window.location.href =
-        window.location.href.split("?")[0] +
-        "?dev&f=" +
-        filename +
-        "&t=" +
-        Date.now();
-    };
     xhr.onload = function (e) {
       if (xhr.status == 200) {
-        console.log("uploaded"); //(correctly uploaded)
-      } else
-        console.log(
-          "Error " + e.status + " occurred uploading your file.<br />"
+        window.location.href =
+          window.location.href.split("?")[0] +
+          "?dev&f=" +
+          filename +
+          "&t=" +
+          Date.now();
+      } else {
+        storeError(`Error saving ${filename} - ${xhr.statusText}`);
+        log(
+          `Error saving ${filename} - ${xhr.responseText} ${xhr.statusText}`,
+          "Error"
         );
+        alert(`Could not save file ${filename} - please try again.`);
+      }
     };
 
     var formData = new FormData();

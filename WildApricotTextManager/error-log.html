@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EZ-Designer Error Log</title>
+    <link rel="stylesheet" href="css/default.css" />
+  </head>
+  <body id="logFile">
+    <div class="container">
+      <h1>EZ-Designer Error Log</h1>
+      <div id="errorTableContainer"></div>
+      <button id="clearErrorsBtn">Clear All Errors</button>
+    </div>
+    <script src="scripts/functions.js"></script>
+    <script>
+      document
+        .getElementById("clearErrorsBtn")
+        .addEventListener("click", clearAllErrors);
+
+      // Call the displayErrors function when the page loads
+      displayErrors();
+    </script>
+  </body>
+</html>
