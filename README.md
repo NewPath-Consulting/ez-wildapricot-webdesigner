@@ -266,8 +266,11 @@ You can debug the processing of the config.csv or the language.csv files by enab
 To enable the debugger add these lines to the EZ WildApricot Web Designer install JavaScript:
 
 ```html
-// Enable step-thgouh debugging of config.csv: stepThroughConfig = true; //
-Enable step-though debugging of selected language: stepThrough = true;
+// Enable step-through debugging of config.csv:
+stepThroughConfig = true;
+
+// Enable step-though debugging of selected language:
+stepThrough = true;
 ```
 
 When step-through debugging is enabled, you can open the development console to view the processing of the config.csv or language.csv files. The console will display what file and line number it is processing, and the EZ WildApricot Web Designer function being processed on that line. It will then pause for 5 seconds and then more to the next line. You can watch the web page to see how the changes are occuring, and see what line in the file may be causing errors.
@@ -275,17 +278,18 @@ When step-through debugging is enabled, you can open the development console to 
 To change the delay time, add this to the EZ WildApricot Web Designer install JavaScript:
 
 ```html
-// Step-through delay in seconds: stepThroughSpeed = <seconds>;</seconds>
+// Step-through delay in seconds:
+stepThroughSpeed = <seconds>;
 ```
 
 If you want the processing display to start after a certain line in the csv, add this to the EZ WildApricot Web Designer install JavaScript:
 
 ```html
-// Start config.csv step-through at a certain line: stepThroughConfigFrom =
-<linenumber
-  >; // Start current language step-through at a certain line: stepThroughFrom =
-  <linenumber>;</linenumber></linenumber
->
+// Start config.csv step-through at a certain line:
+stepThroughConfigFrom = <linenumber>;
+
+// Start current language step-through at a certain line:
+stepThroughFrom = <linenumber>;
 ```
 
 ---
@@ -303,8 +307,7 @@ Example:
   width="800px"
   height="4500px"
   frameborder="no"
-  src="https://mysite.wildapricot.org/widget/Sys/Profile/?watm-french"
->
+  src="https://mysite.wildapricot.org/widget/Sys/Profile/?watm-french">
 </iframe>
 ```
 
