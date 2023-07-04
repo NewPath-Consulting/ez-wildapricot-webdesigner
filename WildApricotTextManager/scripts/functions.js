@@ -426,7 +426,7 @@ const replace_link_delay = (
   }
   if (
     (!replacementText.toLowerCase().includes(defaultText.toLowerCase()) ||
-      !defaultText.toLowerCase() == replacementText.toLowerCase()) &&
+      !defaultText.toLowerCase() === replacementText.toLowerCase()) &&
     watmFunction === "replace"
   ) {
     document.querySelectorAll(watmQuery).forEach(function (el) {
