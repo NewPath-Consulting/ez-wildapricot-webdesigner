@@ -425,7 +425,8 @@ const replace_link_delay = (
     return;
   }
   if (
-    !replacementText.toLowerCase().includes(defaultText.toLowerCase()) &&
+    (!replacementText.toLowerCase().includes(defaultText.toLowerCase()) ||
+      !defaultText.toLowerCase() == replacementText.toLowerCase()) &&
     watmFunction === "replace"
   ) {
     document.querySelectorAll(watmQuery).forEach(function (el) {
@@ -435,7 +436,8 @@ const replace_link_delay = (
       });
     });
   } else if (
-    replacementText.toLowerCase().includes(defaultText.toLowerCase()) &&
+    (replacementText.toLowerCase().includes(defaultText.toLowerCase()) ||
+      defaultText.toLowerCase() == replacementText.toLowerCase()) &&
     watmFunction === "replace"
   ) {
     storeError(
