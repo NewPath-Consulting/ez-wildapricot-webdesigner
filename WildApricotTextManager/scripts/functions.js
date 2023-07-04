@@ -437,7 +437,7 @@ const replace_link_delay = (
     });
   } else if (
     (replacementText.toLowerCase().includes(defaultText.toLowerCase()) ||
-      defaultText.toLowerCase() == replacementText.toLowerCase()) &&
+      defaultText.toLowerCase() === replacementText.toLowerCase()) &&
     watmFunction === "replace"
   ) {
     storeError(
