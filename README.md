@@ -63,7 +63,11 @@ NOTE: this code snippet assumes you have uploaded all files into the folder `/re
 ```html
 <script src="/resources/Theme/WildApricotTextManager/wildapricot-textmanager.js"></script>
 <script>
-  // Enter your license key if you have one - omit to use a trial that uses the first 10 lines of a config file
+/*  Add your license key between the "" on the license_key variable.
+    To use a trial version that executes first 10 lines
+    omit the license key.
+*/
+
   license_key = "";
 </script>
 ```
@@ -83,8 +87,8 @@ If you want to configure multi-lingual support use this install script instead:
 ```html
 <script src="/resources/Theme/WildApricotTextManager/wildapricot-textmanager.js"></script>
 <script>
-  // Enter your license key if you have one - omit to use a trial that uses the first 10 lines of a config file
-  license_key = "";
+
+   license_key = "";
 
   /*
    Array of available languages
@@ -92,14 +96,23 @@ If you want to configure multi-lingual support use this install script instead:
    Use "watm_language_name" to assign the language name displayed to the user
    Use "watm_language_className" to assign the language slug used on your site
  */
-  watm_language_name[0] = "English"; // Default language
-  watm_language_className[0] = "english"; // watm_language_csv_file[0] will default to english.csv
+
+// Default language
+  watm_language_name[0] = "English";
+// watm_language_csv_file[0] will default to english.csv
+  watm_language_className[0] = "english"; 
+
   watm_language_name[1] = "Français";
-  watm_language_className[1] = "french"; // watm_language_csv_file[1] will default to french.csv
+ // watm_language_csv_file[1] will default to french.csv
+  watm_language_className[1] = "french";
+
   watm_language_name[2] = "Español";
-  watm_language_className[2] = "spanish"; // watm_language_csv_file[2] will default to spanish.csv
+// watm_language_csv_file[2] will default to spanish.csv
+  watm_language_className[2] = "spanish";
+
   watm_language_name[3] = "日本語";
-  watm_language_className[3] = "japanese"; // watm_language_csv_file[3] will default to japanese.csv
+// watm_language_csv_file[3] will default to japanese.csv
+  watm_language_className[3] = "japanese";
 </script>
 ```
 
