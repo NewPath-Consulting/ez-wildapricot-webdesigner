@@ -70,7 +70,7 @@ NOTE: this code snippet assumes you have uploaded all files into the folder `/re
 
 3.  Enter your license key in the quotes `""` to apply your license.
 
-NOTE: to use the development license key database add this to the <script> tag:
+NOTE: to use the development license key database add this to the `<script>` tag:
 
 ```html
 checkCode = "4suuck1up58qja9qfcqyosyhni63jwsn";
