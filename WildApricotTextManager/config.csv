@@ -1,6 +1,6 @@
 ﻿Wild Apricot Reference,Default Text,Replacement Text,Function,Query,Style,Notes
 POWERED BY,,,,#idFooterPoweredByContainer,text-align:center;,Center text
-POWERED BY,,https://register.wildapricot.com/?refcode=S8H3M,link,#idFooterPoweredByWA a,,Update WA link
+POWERED BY,,https://register.wildapricot.com/?refcode=M6QF7KFQ6M,link,#idFooterPoweredByWA a,,Update WA link
 POWERED BY,Powered by,Built on,replace,#idFooterPoweredByWA,,Update Powered By Text
 POWERED BY,Membership Software,• Designed with EZ Web Designer,replace,#idFooterPoweredByWA,,Update Designer EZ Text
 POWERED BY,EZ Web Designer,https://newpathconsulting.com/watm,createlink,#idFooterPoweredByWA,,Create link for EZ Designer
