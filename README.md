@@ -35,13 +35,13 @@ The configuration and translation files must be saved as a CSV file format in UT
 
 WildApricot has implemented a [Content Security Policy (CSP)](https://en.wikipedia.org/wiki/Content_Security_Policy) to provide additional protection against data theft, site defacement, malware, and more. CSP works by detecting if custom code is being called from an external URL and then comparing those URLs against a whitelist of verified and approved websites. If the external URL being used is not on the whitelist, the code is then blocked from running. EZ WildApricot Web Designer requires access to certain external URLs in order to function correctly, so these URLs will need to be added to the whitelist. To view and manage your whitelist, navigate to the "Settings" screen from the Website section of the WildApricot backend.
 
-![domain whitelist menu](readme-images/domain-whitelist-menu.jpg)
+![domain whitelist menu](https://github.com/NewPath-Consulting/ez-wildapricot-webdesigner/blob/master/readme-images/domain-whitelist-menu.jpg?raw=true)
 
 **Adding EZ WildApricot Web Designer URLs to Custom Whitelisted Domains**
 
 Under the section "Custom whitelisted domains", you must add manually URLs used by EZ WildApricot Webs Designer. This is what the custom domain whitelist will look like once you add all core and add-on required domains.
 
-![domain whitelist custom domains](readme-images/domain-whitelist-custom-domains.jpg)
+![domain whitelist custom domains](https://github.com/NewPath-Consulting/ez-wildapricot-webdesigner/blob/master/readme-images/domain-whitelist-custom-domains.jpg?raw=true)
 
 The following is a list of all the external URLs currently being implemented by EZ WildApricot Web Designer and can be added manually:
 
@@ -195,7 +195,7 @@ EZ WildApricot Web Designer can translate both types of content.
 
 To translate a content gadget you simple must add the language class name (eg "english" or "french") to the class settings of the gadget. The assigned class(es) are found in the "Advanced" settings on every content gadget added to a page or page template.
 
-![setting class name for for content gadgets](readme-images/advanced-setting-content-gadget.png)
+![setting class name for for content gadgets](https://github.com/NewPath-Consulting/ez-wildapricot-webdesigner/blob/master/readme-images/advanced-setting-content-gadget.png?raw=true)
 
 Translating the hard coded text in WildApricot dynamic gadgets requires identifying the CSS ID or CSS Path and targeting each element with an appropriate translation. There are hundreds of pieces of hard coded text throughout a WildApricot site. Thankfully NewPath has identified the hard coded elements and offers a translation file for hard coded elements in multiple languages with [WildApricot Translation Support Service & Training](https://newpathconsulting.com/wild-apricot-translation-support/).
 
@@ -571,7 +571,7 @@ to any WildApricot content or headline gadget.
 
 You can copy the name of icon by clicking on the icon and copying the text above the icon:
 
-![fontawsome image name](readme-images/fontawesome-icon-name.png)
+![fontawsome image name](https://github.com/NewPath-Consulting/ez-wildapricot-webdesigner/blob/master/readme-images/fontawesome-icon-name.png?raw=true)
 
 **EXAMPLE:**
 
@@ -599,7 +599,7 @@ These styles are currently available in FontAwesome, and some icon sets require 
 
 The EZ-Notice Add-On enables displaying important, colourful messages on your website. Using this macro, any text is be displayed in a colorful box on a WildApricot web page, spanning the width of the layout that contains the macro. It can be used on any WildApricot content page, page template, or system template.
 
-![EZ-Notice Add-On Screenshot](readme-images/ez-notice.png)
+![EZ-Notice Add-On Screenshot](https://github.com/NewPath-Consulting/ez-wildapricot-webdesigner/blob/master/readme-images/ez-notice.png?raw=true)
 
 To use the macro, insert your notice text inside the `[ez-notice][/ez-notice]` tags. An optional `color` parameter can decorate the notice. You can use a [color name](https://www.w3schools.com/colors/colors_names.asp) or [HTML color](https://www.w3schools.com/colors/colors_picker.asp) code. EZ-Notice will use your selected color as the text color for the the notice, and automatically set the notice's border and background color to a matching lighter color.
 
@@ -614,7 +614,7 @@ Macro Text: [ez-notice color="red"]Saturday's potter classes have been cancelled
 
 The EZ-Toggle Add-On enables expandable and collapsible content sections (also known as "accordions"). Website visitors can click on the section header to open that section and automatically close the other sections on the page. This macro can be used to shorten long content such as a Frequently Asked Questions section.
 
-![EZ-Toggle Add-On Screenshot](readme-images/ez-toggle.png)
+![EZ-Toggle Add-On Screenshot](https://github.com/NewPath-Consulting/ez-wildapricot-webdesigner/blob/master/readme-images/ez-toggle.png?raw=true)
 
 The macro has two required components. The first is the `title` parameter - use this to specify what the section title should be. Next, place the content for that section within the `[ez-toggle][/ez-toggle]` macro tags. Add a new macro for each section you wish to have. Each section is not required to be placed next to each other and can be located anywhere on the page.
 
@@ -630,7 +630,7 @@ Macro Text: [ez-toggle title="What are the benefits for students?"]We have schol
 
 The EZ-Tabs Add-On creates a tabbed content area on a page. Website visitors can click on the tabs to switch between different content sections.
 
-![EZ-Tabs Add-on Screenshot](readme-images/ez-tabs.png)
+![EZ-Tabs Add-on Screenshot](https://github.com/NewPath-Consulting/ez-wildapricot-webdesigner/blob/master/readme-images/ez-tabs.png?raw=true)
 
 The macro has two required components. The first is the `title` parameter - use this to specify what the label on the tab should be. Next, place the content for that tab within the `[ez-tabs][/ez-tabs]` macro tags. Add a new macro for each tab you wish to include.
 
@@ -646,7 +646,7 @@ Macro Text: [ez-tabs title="2020 Scholarship Winners"]Jennie Miranda, Carina Mye
 
 The EZ-Library Addon makes it easy to insert a document library into a WildApricot website. The add-on takes care of formatting the presentation of the selected documents, sorting them by title or date, and makes them available for one-click download.
 
-![EZ-Library Add-On Screenshot with Toggle, Notice and Tabs](readme-images/ez-library.png)
+![EZ-Library Add-On Screenshot with Toggle, Notice and Tabs](https://github.com/NewPath-Consulting/ez-wildapricot-webdesigner/blob/master/readme-images/ez-library.png?raw=true)
 
 ### **USAGE:**
 
