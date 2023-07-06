@@ -372,6 +372,7 @@ short_delay = 1;
 **EXAMPLE:**
 
 ```text
+Default Text: Home
 Replacement Text: Coordonnées
 Function: shortdelay
 Query: #membersTable > thead > tr > th:nth-child(1)
@@ -390,6 +391,7 @@ long_delay = 3;
 **EXAMPLE:**
 
 ```text
+Default Text: Home
 Replacement Text: Coordonnées
 Function: longdelay
 Query: #membersTable > thead > tr > th:nth-child(1)
@@ -397,7 +399,7 @@ Query: #membersTable > thead > tr > th:nth-child(1)
 
 ## **button**
 
-> Changes the text on targeted button(s). The search is done without case sensitivity.
+> Changes the text on targeted button(s). Note that the Default Text is empty (and ignored if filled) when using the button function.
 
 **EXAMPLE:**
 
@@ -409,7 +411,7 @@ Query: .loginButton
 
 ## **delaybutton**
 
-> Changes the text on targeted button(s), after a 1 second delay, useful for widgets that have a JavaScript rendering delay
+> Changes the text on targeted button(s), after a 1 second delay, useful for widgets that have a JavaScript rendering delay. Note that the Default Text is empty (and ignored if filled) when using the delaybutton function.
 
 **EXAMPLE:**
 
@@ -757,3 +759,5 @@ EZ WildApricot Web Designer is supported on the latest versions of Chrome, Safar
 - third-party script files are now included, removing requirement for domain whitelisting
 - added instructions on adding translated content gadgets
 - added "step through" debugging mechanism to process config and language files line by line with delay
+
+2.1.1 - fixed infinite loop bug that was encountered when the default text contained a substring or the an identical string in the replacement text 07/06/2023

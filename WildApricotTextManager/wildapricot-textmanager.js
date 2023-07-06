@@ -11,7 +11,7 @@ const watm_location = document.currentScript.src.substring(
  * The version number of the WATM script.
  * @constant {string}
  */
-const watm_version = "2.1.0";
+const watm_version = "2.1.1";
 
 /**
  * The URL of the WATM information page.
