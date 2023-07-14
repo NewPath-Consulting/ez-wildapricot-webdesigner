@@ -563,7 +563,10 @@ Function: googlefont
 
 EZ WildApricot Web Designer includes a number of add-ons that can be used to extend the capabilities of the WildApricot website module. To install an add-on, place the add-on file into the `ez-addons` folder. Next, add the following code to your JavaScript configuration:
 
-`ez_addons = [];`
+```javascript
+ez_addons = [];
+watm_language_name[0] = "English";
+```
 
 Within the square brackets, add type the name of the add-ons within quotes. Separate multiple add-ons with a comma, with each add-on name within their own quotation marks.
 
