@@ -185,7 +185,10 @@ To hide the EZ WildApricot Web Designer icon add this line to the install script
 
 To install an EZ add-on, place the add-on file into the `ez-addons` folder. Next, add the following code to your JavaScript configuration:
 
-`ez_addons = [];`
+```javascript
+ez_addons = [];
+watm_language_name[0] = "English";
+```
 
 Within the square brackets, add type the name of the add-ons within quotes. Separate multiple add-ons with a comma, with each add-on name within their own quotation marks.
 
