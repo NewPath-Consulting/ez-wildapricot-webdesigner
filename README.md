@@ -625,7 +625,7 @@ To use the macro, insert your notice text inside the `[ez-notice][/ez-notice]` t
 **EXAMPLES:**
 
 ```text
-Macro Text: [ez-notice]Guild renewal fess are due by January 15th.[/ez-notice]
+Macro Text: [ez-notice]Guild renewal fees are due by January 15th.[/ez-notice]
 Macro Text: [ez-notice color="red"]Saturday's potter classes have been cancelled.[/ez-notice]
 ```
 
