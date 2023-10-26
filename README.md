@@ -53,7 +53,7 @@ The following is a list of all the external URLs currently being implemented by 
 
 - \*.fontawesome.com
 
-## Script Setup
+## Adding the install script
 
 1. In WildApricot Admin, navigate to Settings -&gt; Site -&gt; Global JavaScript. More details on inserting JavaScript into WildApricot are available in the [WildApricot Documentation](https://gethelp.wildapricot.com/en/articles/212-inserting-and-modifying-html-or-javascript#javascript).
 2. Copy and paste the following lines to the Global JavaScript.
@@ -183,14 +183,14 @@ To hide the EZ WildApricot Web Designer icon add this line to the install script
 
 #### Installing EZ Add-ons
 
-To install an EZ add-on, place the add-on file into the `ez-addons` folder. Next, add the following code to your JavaScript configuration:
+To install an EZ add-on, place the add-on file into the `ez-addons` folder. Next, add the following code to the install script:
 
 ```javascript
 ez_addons = [];
 watm_language_name[0] = "English";
 ```
 
-Within the square brackets, add type the name of the add-ons within quotes. Separate multiple add-ons with a comma, with each add-on name within their own quotation marks.
+Within the square brackets, add type the name of the add-ons within quotes. Separate multiple add-ons with a comma, with each add-on name within their own quotation marks. The add-ons should be already installed in the add-ons folder.
 
 ---
 
