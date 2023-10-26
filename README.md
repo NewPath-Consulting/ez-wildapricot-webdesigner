@@ -23,7 +23,7 @@ EZ WildApricot Web Designer module can be used to make WildApricot sites availab
 ## Files Setup
 
 1. Follow these [instructions to connect to your WildApricot file folder](https://gethelp.wildapricot.com/en/articles/198-uploading-and-downloading-files-using-webdav) or go to the Website -> Files manager.
-2. Unzip the downloaded zip file and upload the folder `WildApricotTextManager`into /Theme/WildApricotTextManager.
+2. Unzip the downloaded zip file and upload the contents of folder `WildApricotTextManager` into /Theme/WildApricotTextManager. Note you will need to make the necessary subfolders manually in the Files manager in WildApricot as you cannot upload a full folder with subfolders at one time. You can upload multiple files into each subfolder at one time in the Files manager.
 3. If you are setting up a multilingual site:
 
 - Add a Content Gadget to your page template in the location you would like the language toggle to appear. Set the ID of this gadget to `language_switch`
@@ -31,15 +31,15 @@ EZ WildApricot Web Designer module can be used to make WildApricot sites availab
 
 The configuration and translation files must be saved as a CSV file format in UTF-8 format.
 
-## Domain whitelisting
+## Javascript whitelisting
 
 WildApricot has implemented a [Content Security Policy (CSP)](https://en.wikipedia.org/wiki/Content_Security_Policy) to provide additional protection against data theft, site defacement, malware, and more. CSP works by detecting if custom code is being called from an external URL and then comparing those URLs against a whitelist of verified and approved websites. If the external URL being used is not on the whitelist, the code is then blocked from running. EZ WildApricot Web Designer requires access to certain external URLs in order to function correctly, so these URLs will need to be added to the whitelist. To view and manage your whitelist, navigate to the "Settings" screen from the Website section of the WildApricot backend.
 
 ![domain whitelist menu](https://github.com/NewPath-Consulting/ez-wildapricot-webdesigner/blob/master/readme-images/domain-whitelist-menu.jpg?raw=true)
 
-**Adding EZ WildApricot Web Designer URLs to Custom Whitelisted Domains**
+**Adding EZ WildApricot Web Designer URLs to the JavaScript whitelist**
 
-Under the section "Custom whitelisted domains", you must add manually URLs used by EZ WildApricot Webs Designer. This is what the custom domain whitelist will look like once you add all core and add-on required domains.
+Under the Wild Apricot Website settings section "JavaScript whitelist", you must add manually URLs used by EZ WildApricot Webs Designer. This is what the custom domain whitelist will look like once you add all core and add-on required domains.
 
 ![domain whitelist custom domains](https://github.com/NewPath-Consulting/ez-wildapricot-webdesigner/blob/master/readme-images/domain-whitelist-custom-domains.jpg?raw=true)
 
