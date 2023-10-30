@@ -77,7 +77,7 @@ let ez_library = () => {
           );
           if (libraryTable == null) {
             libraryTable = document.createElement("table");
-            libraryTable.id = "libraryTable";
+            libraryTable.id = "libraryTable" + index;
           }
           if (libraryTableHeader == null) {
             libraryTableHeader = document.createElement("thead");
@@ -205,45 +205,48 @@ const libraryIcons = {
 };
 
 const ezlibrarystyles = `
-#libraryTable tr th {
+[id^="libraryTable"] tr th {
   width: auto;
 }
-#libraryTable tr th:nth-child(2) {
+[id^="libraryTable"] tr th:nth-child(2) {
   text-align: left;
 }
-#libraryTable tr td:nth-child(1),
-#libraryTable tr td:nth-child(3) {
+[id^="libraryTable"] tr td:nth-child(1),
+[id^="libraryTable"] tr td:nth-child(3) {
   width: 1%;
   text-align: center;
 }
-#libraryTable tr:nth-child(even) {
+[id^="libraryTable"] tr td img {
+  max-width: unset;
+}
+[id^="libraryTable"] tr:nth-child(even) {
   background-color: whitesmoke;
 }
-#libraryTable tbody tr {
+[id^="libraryTable"] tbody tr {
   border: solid 1px #d8d8d8;
   border-left: 0;
   border-right: 0;
 }
-#libraryTable th, #libraryTable td {
+[id^="libraryTable"] th, [id^="libraryTable"] td {
   padding: 10px 15px;
 }
-#libraryTable tbody tr:hover {
+[id^="libraryTable"] tbody tr:hover {
   background-color: #8f8f8f;
 }
-#libraryTable tbody tr:hover td,
-#libraryTable tbody tr:hover a {
+[id^="libraryTable"] tbody tr:hover td,
+[id^="libraryTable"] tbody tr:hover a {
   color: #fff!important;
 }
-#libraryTable {
+[id^="libraryTable"] {
   border-collapse: collapse;
 }
-#libraryTable thead tr {
+[id^="libraryTable"] thead tr {
   background-color: #2f2f2f;
 }
-#libraryTable thead tr th {
+[id^="libraryTable"] thead tr th {
   color: #ccc;
 }
-#libraryTable a {
+[id^="libraryTable"] a {
   text-decoration: none;
   color: #2f2f2f;
 }
