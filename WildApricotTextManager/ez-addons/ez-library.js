@@ -1,113 +1,136 @@
-let ez_library_addon_version = "1.0";
+let ez_library_addon_version = "1.1";
 log(`EZ-Library Addon Version ${ez_library_addon_version} enabled.`);
 
 let ez_library = () => {
-  document.querySelectorAll("body *").forEach(function (el) {
-    let regex =
-      /\[ez-library( folder="([^"]*)")?( sort="([^"]*)")?( view="([^"]*)")?]([\s\S]*)\[\/ez-library]/gi;
-    let documentRegex =
-      /\[document( date="([^"]*)")? filename="([^"]*)"]([^*].*?)\[\/document]/gi;
+  const ezLibraries = [];
+  let regex =
+    /\[ez-library( folder="([^"]*)")?( sort="([^"]*)")?( view="([^"]*)")?]([\s\S]*?)\[\/ez-library]/gi;
 
-    walkText(el, regex, "library", function (node, match, offset) {
-      var documents = [];
-      let libraryContainer = document.getElementById("ezLibraryContainer");
-      if (libraryContainer == null) {
-        libraryContainer = document.createElement("div");
-        libraryContainer.id = "ezLibraryContainer";
+  let documentRegex =
+    /\[document( date="([^"]*)")? filename="([^"]*)"]([^*].*?)\[\/document]/gi;
+
+  const findLibraries = (element) => {
+    for (let child of element.children) {
+      if (child.children.length === 0) {
+        const libraryMatches = child.innerHTML.match(regex);
+        if (libraryMatches) {
+          ezLibraries.push(child);
+        }
+      } else {
+        findLibraries(child);
       }
+    }
+  };
 
-      let matches = match.matchAll(regex);
-      for (const library_match of matches) {
-        if (library_match[7]) {
-          var documentFolder = library_match[2];
-          var documentSort = library_match[4];
-          var documentView = library_match[6];
-          var documentCollection = library_match[7];
+  findLibraries(document.body);
+  console.log(ezLibraries);
+  if (ezLibraries) {
+    ezLibraries.forEach(function (el, index) {
+      walkText(el, regex, "library", function (node, match, offset) {
+        var documents = [];
+        let libraryContainer = document.getElementById(
+          "ezLibraryContainer" + index
+        );
+        if (libraryContainer == null) {
+          libraryContainer = document.createElement("div");
+          libraryContainer.id = "ezLibraryContainer" + index;
+        }
 
-          let document_matches = documentCollection.matchAll(documentRegex);
-          for (const document_match of document_matches) {
-            if (document_match[4]) {
-              let documentName = document_match[4];
-              let documentDate = document_match[2];
-              let documentFilename = document_match[3];
+        let matches = match.matchAll(regex);
+        for (const library_match of matches) {
+          if (library_match[7]) {
+            var documentFolder = library_match[2];
+            var documentSort = library_match[4];
+            var documentView = library_match[6];
+            var documentCollection = library_match[7];
 
-              let docObj = {
-                name: documentName,
-                date: Date.parse(documentDate),
-                filename: documentFilename,
-                type: documentFilename.split(".").pop(),
-              };
+            let document_matches = documentCollection.matchAll(documentRegex);
+            for (const document_match of document_matches) {
+              if (document_match[4]) {
+                let documentName = document_match[4];
+                let documentDate = document_match[2];
+                let documentFilename = document_match[3];
 
-              documents.push(docObj);
+                let docObj = {
+                  name: documentName,
+                  date: Date.parse(documentDate),
+                  filename: documentFilename,
+                  type: documentFilename.split(".").pop(),
+                };
+
+                documents.push(docObj);
+              }
             }
           }
         }
-      }
 
-      if (documentSort == "name")
-        documents.sort((a, b) =>
-          a.name > b.name ? 1 : b.name > a.name ? -1 : 0
-        );
-      if (documentSort == "date") documents.sort((a, b) => b.date - a.date);
+        if (documentSort == "name")
+          documents.sort((a, b) =>
+            a.name > b.name ? 1 : b.name > a.name ? -1 : 0
+          );
+        if (documentSort == "date") documents.sort((a, b) => b.date - a.date);
 
-      if (documentView.toLowerCase() == "list") {
-        var libraryTable = document.getElementById("libraryTable");
-        let libraryTableHeader = document.getElementById("libraryTableHeader");
-        if (libraryTable == null) {
-          libraryTable = document.createElement("table");
-          libraryTable.id = "libraryTable";
+        if (documentView.toLowerCase() == "list") {
+          var libraryTable = document.getElementById("libraryTable" + index);
+          let libraryTableHeader = document.getElementById(
+            "libraryTableHeader" + index
+          );
+          if (libraryTable == null) {
+            libraryTable = document.createElement("table");
+            libraryTable.id = "libraryTable";
+          }
+          if (libraryTableHeader == null) {
+            libraryTableHeader = document.createElement("thead");
+            libraryTableHeader.id = "libraryTableHeader" + index;
+            libraryTable.appendChild(libraryTableHeader);
+
+            var temptr = document.createElement("tr");
+            var tempth = document.createElement("th");
+            temptr.appendChild(tempth);
+            tempth = document.createElement("th");
+            tempth.innerText = "Document";
+            temptr.appendChild(tempth);
+            tempth = document.createElement("th");
+            tempth.innerText = "Date";
+            temptr.appendChild(tempth);
+
+            libraryTableHeader.appendChild(temptr);
+          }
+
+          let libraryBody = document.getElementById("libraryTableBody" + index);
+          if (libraryBody == null) {
+            libraryBody = document.createElement("tbody");
+            libraryBody.id = "libraryTableBody" + index;
+            libraryTable.appendChild(libraryBody);
+          }
+
+          for (let doc of documents) {
+            var temptr = document.createElement("tr");
+            var temptd = document.createElement("td");
+            temptd.appendChild(getLibraryIcon(doc.type));
+            temptr.appendChild(temptd);
+            temptd = document.createElement("td");
+            tempLibLink = document.createElement("a");
+            tempLibLink.innerText = doc.name;
+            tempLibLink.href = `/resources/${documentFolder}/${doc.filename}`;
+            tempLibLink.setAttribute("target", "_blank");
+            tempLibLink.setAttribute("download", "download");
+            temptd.appendChild(tempLibLink);
+            temptr.appendChild(temptd);
+            temptd = document.createElement("td");
+            temptd.innerText = new Date(doc.date).toLocaleDateString("en-US");
+            temptr.appendChild(temptd);
+
+            libraryBody.appendChild(temptr);
+          }
         }
-        if (libraryTableHeader == null) {
-          libraryTableHeader = document.createElement("thead");
-          libraryTableHeader.id = "libraryTableHeader";
-          libraryTable.appendChild(libraryTableHeader);
 
-          var temptr = document.createElement("tr");
-          var tempth = document.createElement("th");
-          temptr.appendChild(tempth);
-          tempth = document.createElement("th");
-          tempth.innerText = "Document";
-          temptr.appendChild(tempth);
-          tempth = document.createElement("th");
-          tempth.innerText = "Date";
-          temptr.appendChild(tempth);
+        libraryContainer.appendChild(libraryTable);
 
-          libraryTableHeader.appendChild(temptr);
-        }
-
-        let libraryBody = document.getElementById("libraryTableBody");
-        if (libraryBody == null) {
-          libraryBody = document.createElement("tbody");
-          libraryBody.id = "libraryTableBody";
-          libraryTable.appendChild(libraryBody);
-        }
-
-        for (let doc of documents) {
-          var temptr = document.createElement("tr");
-          var temptd = document.createElement("td");
-          temptd.appendChild(getLibraryIcon(doc.type));
-          temptr.appendChild(temptd);
-          temptd = document.createElement("td");
-          tempLibLink = document.createElement("a");
-          tempLibLink.innerText = doc.name;
-          tempLibLink.href = `/resources/${documentFolder}/${doc.filename}`;
-          tempLibLink.setAttribute("target", "_blank");
-          tempLibLink.setAttribute("download", "download");
-          temptd.appendChild(tempLibLink);
-          temptr.appendChild(temptd);
-          temptd = document.createElement("td");
-          temptd.innerText = new Date(doc.date).toLocaleDateString("en-US");
-          temptr.appendChild(temptd);
-
-          libraryBody.appendChild(temptr);
-        }
-      }
-
-      libraryContainer.appendChild(libraryTable);
-
-      return libraryContainer;
+        return libraryContainer;
+      });
     });
-  });
+  }
 };
 
 const getLibraryIcon = (fileType) => {
