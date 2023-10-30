@@ -667,8 +667,9 @@ The EZ-Library Addon makes it easy to insert a document library into a WildApric
 
 ![EZ-Library Add-On Screenshot with Toggle, Notice and Tabs](https://github.com/NewPath-Consulting/ez-wildapricot-webdesigner/blob/master/readme-images/ez-library.png?raw=true)
 
-### **USAGE:**
+NOTE: You can have one ez-library tag inside one content gadget. If you'd like to add multiple document libraries on one page (or one or more for each language) make sure you place each ez-library macro text into a separate content gadget on the WildApricot website page.
 
+### **USAGE:**
 This add-on comes with two macros that must be used together. The first macro is `[ez-library][/ez-library]` used to configure the library. This macro has three mandatory parameters:
 
 - `folder`: the path to the WildApricot file manager folder containing all the files to be included in the library. This path is relative to the standard "Resources" folder, and the path should not include "Resources". If your documents are located in the "Documents" folder, set the path to "documents". For example, if they are located in a subfolder called "Minutes" inside of the documents folder, set this to "documents/minutes".
