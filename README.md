@@ -667,7 +667,7 @@ The EZ-Library Addon makes it easy to insert a document library into a WildApric
 
 ![EZ-Library Add-On Screenshot with Toggle, Notice and Tabs](https://github.com/NewPath-Consulting/ez-wildapricot-webdesigner/blob/master/readme-images/ez-library.png?raw=true)
 
-NOTE: You can have one ez-library tag inside one content gadget. If you'd like to add multiple document libraries on one page (or one or more for each language) make sure you place each ez-library macro text into a separate content gadget on the WildApricot website page.
+NOTE: You can have one ez-library tag inside one custom html gadget. If you'd like to add multiple document libraries on one page (or one or more for each language) make sure you place each ez-library macro text into a separate custom html gadget on the WildApricot website page.
 
 ### **USAGE:**
 This add-on comes with two macros that must be used together. The first macro is `[ez-library][/ez-library]` used to configure the library. This macro has three mandatory parameters:
@@ -690,14 +690,16 @@ Within the `[document][/document]` macro, enter the display name to use for the 
 
 **EXAMPLE:**
 
-```text
-Macro Text:
+Place this into a Custom HTML gadget.
 
+```text
+<pre>
     [ez-library folder="documents/minutes" sort="date" view="list"]
       [document date="2014-11-01" filename="minutes Nov. 1 2014.docx"]November 2014 Minutes[/document]
       [document date="2017-04-11" filename="Minutes 11 4 17.pdf"]November 2017 Minutes[/document]
       [document date="2015-11-07" filename="meeting 7 nov 2015.doc"]November 2015 Minutes[/document]
     [/ez-library]
+</pre>
 ```
 
 ---
