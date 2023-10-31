@@ -93,6 +93,15 @@ const createInspectorBar = (watm_location) => {
     copyInspector(copyPathBtn);
   });
 
+  // create ID clipboard button
+  const copyIdBtn = document.createElement("button");
+  copyIdBtn.id = "watm-inspector-copy-id-btn";
+  copyIdBtn.classList.add("watm-inspector-btn");
+  copyIdBtn.innerText = "Copy Parent ID";
+  copyIdBtn.addEventListener("click", () => {
+    copyInspector(copyIdBtn);
+  });
+
   // create class clipboard button
   const copyClassBtn = document.createElement("button");
   copyClassBtn.id = "watm-inspector-copy-class-btn";
@@ -113,6 +122,7 @@ const createInspectorBar = (watm_location) => {
 
   // add buttons to inspector bar
   inspectorBar.appendChild(exitbtn);
+  inspectorBar.appendChild(copyIdBtn);
   inspectorBar.appendChild(copyClassBtn);
   inspectorBar.appendChild(copyPathBtn);
   inspectorBar.appendChild(viewPropsBtn);
@@ -231,6 +241,14 @@ const displyPath = (cssPath, elID, elClass) => {
   if (cssPath.lastIndexOf("#") > -1) {
     // If the path contains an ID, start path from there
     cssPath = cssPath.substring(cssPath.lastIndexOf("#"));
+
+    clipboardId = cssPath.split(" ")[0].slice(1);
+
+    document.getElementById("watm-inspector-copy-id-btn").style.display =
+      "block";
+  } else {
+    document.getElementById("watm-inspector-copy-id-btn").style.display =
+      "none";
   }
 
   if (elClass) {
