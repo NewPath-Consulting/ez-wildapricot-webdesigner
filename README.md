@@ -783,3 +783,5 @@ EZ WildApricot Web Designer is supported on the latest versions of Chrome, Safar
 - added "step through" debugging mechanism to process config and language files line by line with delay
 
 2.1.1 - fixed infinite loop bug that was encountered when the default text contained a substring or the an identical string in the replacement text 07/06/2023
+
+2.1.2 - updated ez-library add on to support multiple library instances in separate custom html content gadgets on the same WA page and in different languages 10/31/2023
