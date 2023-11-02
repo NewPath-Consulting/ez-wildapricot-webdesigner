@@ -23,7 +23,6 @@ let ez_library = () => {
   };
 
   findLibraries(document.body);
-  console.log(ezLibraries);
   if (ezLibraries) {
     ezLibraries.forEach(function (el, index) {
       walkText(el, regex, "library", function (node, match, offset) {
