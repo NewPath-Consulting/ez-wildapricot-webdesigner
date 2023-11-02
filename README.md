@@ -241,13 +241,13 @@ Click the `Exit Editor` button in the inspector to return to normal browsing.
 
 # Inspector
 
-The top half of the panel that appears is the Inspector. Clicking on the element will display the element's CSS Class (if a class has been set), as well as the CSS path to the element.
+The top half of the panel that appears is the Inspector. Clicking on the element will display the element's CSS Class (if a class has been set), as well as the CSS Path to the element.
 
-The `Copy Element Class`, and `Copy CSS Path` buttons will copy the related information to the clipboard. You can use either one for the Query part of the configuration. CSS Path is always more specific and usually the best Query to use. The CSS Element Class can have unintended consequences on other elements that share the same CSS Class, but sometimes using a CSS Class is a good fallback if the CSS Path is not working to change the site.
+The `Copy Element Class` (if available), `Copy Parent ID` and `Copy CSS Path` buttons will copy the related information to the clipboard. CSS Path is always more specific and usually the most specific and ideal Query to use to target the element. The CSS Parent ID targets the top level ID of the selected element, and this selector is more generic than the CSS Path but it still targets one element on the page. The CSS Parent ID will not have any descendent sub elements, so if you believe the structure or order of the elements may change in the ID, the CSS Parent ID may be more ideal to target. Using the CSS Element Class can have unintended consequences on other elements that share the same CSS Class, but sometimes using a CSS Class is a good fallback if the CSS Path or CSS Parent ID is not working to alter the targeted element.
 
-The CSS Path or CSS Element Class must be placed into the Query column in the Editor to "target" the element you wish to modify with one of the [functions](#ez-wildapricot-web-designer-functions) available in EZ WildApricot Web Designer.
+The CSS Path, CSS Parent ID or CSS Element Class must be placed into the Query column in the Editor to "target" the element you wish to modify with one of the [functions](#ez-wildapricot-web-designer-functions) available in EZ WildApricot Web Designer.
 
-_COMPATIBILITY NOTE:_ The Copy Element Class and Copy CSS Path buttons only work on secure (https) websites. If your website is running insecurely, we recommend adding a [free SSL certificate to your custom domain](https://gethelp.wildapricot.com/en/articles/555).
+_COMPATIBILITY NOTE:_ The Copy Element Class, Copy Parent ID and Copy CSS Path buttons only work on secure (https) websites. If your website is running insecurely, we recommend adding a [free SSL certificate to your custom domain](https://gethelp.wildapricot.com/en/articles/555).
 
 The `View Properties` button will display the details about that element, such as the text it contains, styling, and any resource links.
 
@@ -785,3 +785,4 @@ EZ WildApricot Web Designer is supported on the latest versions of Chrome, Safar
 2.1.1 - fixed infinite loop bug that was encountered when the default text contained a substring or the an identical string in the replacement text 07/06/2023
 
 2.1.2 - updated ez-library add on to support multiple library instances in separate custom html content gadgets on the same WA page and in different languages 10/31/2023
+      - added the Copy Parent ID button to select the ID of the element without the full CSS Path
