@@ -234,11 +234,75 @@ const getCurrentLanguage = (languages) => {
  * @param {Object} row - An object representing a row of data, with properties "Default Text", "Function", "Query", "Replacement Text", and "Style".
  */
 const process = (row, lineNumber, csvFileName) => {
-  let defaultText = row["Default Text"]?.trim() ?? "";
-  let watmFunction = row["Function"]?.trim().toLowerCase() ?? "";
-  let watmQuery = row["Query"]?.trim() ?? "";
-  let replacementText = row["Replacement Text"]?.trim() ?? "";
-  let watmStyle = row["Style"]?.trim() ?? "";
+  let columnNameError = false;
+  if ("Default Text" in row) {
+    defaultText = row["Default Text"].trim();
+  } else {
+    storeError(
+      "Cannot find column labelled 'Default Text'\nEnsure your CSV have the correct column labels"
+    );
+    log(
+      "Cannot find column labelled 'Default Text'\nEnsure your CSV have the correct column labels",
+      "Error"
+    );
+    columnNameError = true;
+  }
+
+  if ("Function" in row) {
+    watmFunction = row["Function"].trim().toLowerCase();
+  } else {
+    storeError(
+      "Cannot find column labelled 'Function'\nEnsure your CSV have the correct column labels"
+    );
+    log(
+      "Cannot find column labelled 'Function'\nEnsure your CSV have the correct column labels",
+      "Error"
+    );
+    columnNameError = true;
+  }
+
+  if ("Query" in row) {
+    watmQuery = row["Query"].trim();
+  } else {
+    storeError(
+      "Cannot find column labelled 'Query'\nEnsure your CSV have the correct column labels"
+    );
+    log(
+      "Cannot find column labelled 'Query'\nEnsure your CSV have the correct column labels",
+      "Error"
+    );
+    columnNameError = true;
+  }
+
+  if ("Replacement Text" in row) {
+    replacementText = row["Replacement Text"].trim();
+  } else {
+    storeError(
+      "Cannot find column labelled 'Replacement Text'\nEnsure your CSV have the correct column labels"
+    );
+    log(
+      "Cannot find column labelled 'Replacement Text'\nEnsure your CSV have the correct column labels",
+      "Error"
+    );
+    columnNameError = true;
+  }
+
+  if ("Style" in row) {
+    watmStyle = row["Style"].trim();
+  } else {
+    storeError(
+      "Cannot find column labelled 'Style'\nEnsure your CSV have the correct column labels"
+    );
+    log(
+      "Cannot find column labelled 'Style'\nEnsure your CSV have the correct column labels",
+      "Error"
+    );
+    columnNameError = true;
+  }
+
+  if (columnNameError) {
+    return;
+  }
 
   let elements = [];
   if (
