@@ -63,7 +63,7 @@ NOTE: this code snippet assumes you have uploaded all files into the folder `/re
 ```html
 <script src="/resources/Theme/WildApricotTextManager/wildapricot-textmanager.js"></script>
 <script>
-/*  Add your license key between the "" on the license_key variable.
+  /*  Add your license key between the "" on the license_key variable.
     To use a trial version that executes first 10 lines
     omit the license key.
 */
@@ -87,8 +87,7 @@ If you want to configure multi-lingual support use this install script instead:
 ```html
 <script src="/resources/Theme/WildApricotTextManager/wildapricot-textmanager.js"></script>
 <script>
-
-   license_key = "";
+  license_key = "";
 
   /*
    Array of available languages
@@ -97,21 +96,21 @@ If you want to configure multi-lingual support use this install script instead:
    Use "watm_language_className" to assign the language slug used on your site
  */
 
-// Default language
+  // Default language
   watm_language_name[0] = "English";
-// watm_language_csv_file[0] will default to english.csv
-  watm_language_className[0] = "english"; 
+  // watm_language_csv_file[0] will default to english.csv
+  watm_language_className[0] = "english";
 
   watm_language_name[1] = "Français";
- // watm_language_csv_file[1] will default to french.csv
+  // watm_language_csv_file[1] will default to french.csv
   watm_language_className[1] = "french";
 
   watm_language_name[2] = "Español";
-// watm_language_csv_file[2] will default to spanish.csv
+  // watm_language_csv_file[2] will default to spanish.csv
   watm_language_className[2] = "spanish";
 
   watm_language_name[3] = "日本語";
-// watm_language_csv_file[3] will default to japanese.csv
+  // watm_language_csv_file[3] will default to japanese.csv
   watm_language_className[3] = "japanese";
 </script>
 ```
@@ -175,11 +174,21 @@ To save any changes you make while in this mode, you will need to provide an adm
 
 #### Hiding the EZ WildApricot Web Designer Icon
 
-By default the EZ WildApricot Web Desginer icon appears in the bottom left corner of all pages even if you are not logged in as an admin. In this mode, clicking on the icon will _not_ bring up the Inspector.
+By default the EZ WildApricot Web Designer icon appears in the bottom left corner of all pages even if you are not logged in as an admin. In this mode, clicking on the icon will _not_ bring up the Inspector.
 
 To hide the EZ WildApricot Web Designer icon add this line to the install script:
 
 `hideWATMIcon = true;`
+
+#### Automatic CSV Backups
+
+By default the EZ WildApricot Web Designer will backup you the previous version of your CSV file on very 20th save. You can find the backup in the corresponding folder (`WildApricotTextManager` folder for `config.csv`, and `translations` folder for the language specific CSVs). Backup files have he same name as the original CSV file appended with the date and time.
+
+You can adjust how many saves are made before a backup is created by adding the following to the install script:
+
+```javascript
+watm_saves_before_backup = 5; // set to desired number, or to 0 to turn off automatic backups
+```
 
 #### Installing EZ Add-ons
 
@@ -282,11 +291,8 @@ You can debug the processing of the config.csv or the language.csv files by enab
 To enable the debugger add these lines to the EZ WildApricot Web Designer install JavaScript:
 
 ```html
-// Enable step-through debugging of config.csv:
-stepThroughConfig = true;
-
-// Enable step-though debugging of selected language:
-stepThrough = true;
+// Enable step-through debugging of config.csv: stepThroughConfig = true; //
+Enable step-though debugging of selected language: stepThrough = true;
 ```
 
 When step-through debugging is enabled, you can open the development console to view the processing of the config.csv or language.csv files. The console will display what file and line number it is processing, and the EZ WildApricot Web Designer function being processed on that line. It will then pause for 5 seconds and then more to the next line. You can watch the web page to see how the changes are occuring, and see what line in the file may be causing errors.
@@ -294,18 +300,17 @@ When step-through debugging is enabled, you can open the development console to 
 To change the delay time, add this to the EZ WildApricot Web Designer install JavaScript:
 
 ```html
-// Step-through delay in seconds:
-stepThroughSpeed = <seconds>;
+// Step-through delay in seconds: stepThroughSpeed = <seconds>;</seconds>
 ```
 
 If you want the processing display to start after a certain line in the csv, add this to the EZ WildApricot Web Designer install JavaScript:
 
 ```html
-// Start config.csv step-through at a certain line:
-stepThroughConfigFrom = <linenumber>;
-
-// Start current language step-through at a certain line:
-stepThroughFrom = <linenumber>;
+// Start config.csv step-through at a certain line: stepThroughConfigFrom =
+<linenumber
+  >; // Start current language step-through at a certain line: stepThroughFrom =
+  <linenumber>;</linenumber></linenumber
+>
 ```
 
 ---
@@ -323,7 +328,8 @@ Example:
   width="800px"
   height="4500px"
   frameborder="no"
-  src="https://mysite.wildapricot.org/widget/Sys/Profile/?watm-french">
+  src="https://mysite.wildapricot.org/widget/Sys/Profile/?watm-french"
+>
 </iframe>
 ```
 
@@ -670,6 +676,7 @@ The EZ-Library Addon makes it easy to insert a document library into a WildApric
 NOTE: You can have one ez-library tag inside one custom html gadget. If you'd like to add multiple document libraries on one page (or one or more for each language) make sure you place each ez-library macro text into a separate custom html gadget on the WildApricot website page.
 
 ### **USAGE:**
+
 This add-on comes with two macros that must be used together. The first macro is `[ez-library][/ez-library]` used to configure the library. This macro has three mandatory parameters:
 
 - `folder`: the path to the WildApricot file manager folder containing all the files to be included in the library. This path is relative to the standard "Resources" folder, and the path should not include "Resources". If your documents are located in the "Documents" folder, set the path to "documents". For example, if they are located in a subfolder called "Minutes" inside of the documents folder, set this to "documents/minutes".
@@ -782,7 +789,6 @@ EZ WildApricot Web Designer is supported on the latest versions of Chrome, Safar
 - added instructions on adding translated content gadgets
 - added "step through" debugging mechanism to process config and language files line by line with delay
 
-2.1.1 - fixed infinite loop bug that was encountered when the default text contained a substring or the an identical string in the replacement text 07/06/2023
+  2.1.1 - fixed infinite loop bug that was encountered when the default text contained a substring or the an identical string in the replacement text 07/06/2023
 
-2.1.2 - updated ez-library add on to support multiple library instances in separate custom html content gadgets on the same WA page and in different languages 10/31/2023
-      - added the Copy Parent ID button to select the ID of the element without the full CSS Path
+  2.1.2 - updated ez-library add on to support multiple library instances in separate custom html content gadgets on the same WA page and in different languages 10/31/2023 - added the Copy Parent ID button to select the ID of the element without the full CSS Path
