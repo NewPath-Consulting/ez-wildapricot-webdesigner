@@ -194,6 +194,12 @@ let long_delay = 3;
 let loadedScripts = 0;
 
 /**
+ * Backup on save number
+ * @type {number}
+ */
+let watm_saves_before_backup = 20;
+
+/**
  * An array of required scripts.
  * @constant {string[]}
  */
