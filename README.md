@@ -183,9 +183,9 @@ To hide the EZ WildApricot Web Designer icon add this line to the install script
 
 #### Automatic CSV Backups
 
-By default the EZ WildApricot Web Designer will backup you the previous version of your CSV file on very 20th save. You can find the backup in the corresponding folder (`WildApricotTextManager` folder for `config.csv`, and `translations` folder for the language specific CSVs). Backup files have he same name as the original CSV file appended with the date and time.
+By default the EZ WildApricot Web Designer will backup the previous version of your CSV file on every 20th save. You will find the configuration file backups in the corresponding folder (`WildApricotTextManager` folder for `config.csv`, and `translations` subfolder for the language specific CSVs). Backup files have the same name as the original CSV file appended with the date and time of the backup.
 
-You can adjust how many saves are made before a backup is created by adding the following to the install script:
+You can turn off automatica backups or adjust how many saves are made before a backup is created by adding the following to the install script:
 
 ```javascript
 watm_saves_before_backup = 5; // set to desired number, or to 0 to turn off automatic backups
