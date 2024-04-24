@@ -290,27 +290,31 @@ You can debug the processing of the config.csv or the language.csv files by enab
 
 To enable the debugger add these lines to the EZ WildApricot Web Designer install JavaScript:
 
-```html
-// Enable step-through debugging of config.csv: stepThroughConfig = true; //
-Enable step-though debugging of selected language: stepThrough = true;
+```javascript
+// Enable step-through debugging of config.csv
+stepThroughConfig = true;
+
+//Enable step-though debugging of selected language
+stepThrough = true;
 ```
 
 When step-through debugging is enabled, you can open the development console to view the processing of the config.csv or language.csv files. The console will display what file and line number it is processing, and the EZ WildApricot Web Designer function being processed on that line. It will then pause for 5 seconds and then more to the next line. You can watch the web page to see how the changes are occuring, and see what line in the file may be causing errors.
 
 To change the delay time, add this to the EZ WildApricot Web Designer install JavaScript:
 
-```html
-// Step-through delay in seconds: stepThroughSpeed = <seconds>;</seconds>
+```javascript
+// Step-through delay in seconds
+stepThroughSpeed = 1;
 ```
 
 If you want the processing display to start after a certain line in the csv, add this to the EZ WildApricot Web Designer install JavaScript:
 
-```html
-// Start config.csv step-through at a certain line: stepThroughConfigFrom =
-<linenumber
-  >; // Start current language step-through at a certain line: stepThroughFrom =
-  <linenumber>;</linenumber></linenumber
->
+```javascript
+// Start config.csv step-through at a certain line
+stepThroughConfigFrom = 10;
+
+// Start current language step-through at a certain line
+stepThroughFrom = 20;
 ```
 
 ---
@@ -780,7 +784,6 @@ EZ WildApricot Web Designer is supported on the latest versions of Chrome, Safar
 2.0.9 - removed the CSS from install script and added it into the code to ensure no "white screen of death" scenarios if Javascript fails to install 02/18/2023
 
 2.1.0 - added the `replace_element` function for backwards compatibility to pre-v2 WATM/EZ Website Designer versions 04/09/2023
-
 - the EZ license is now checked once per day, rather than on every page load
 - if the [web browser's language is set](https://www.computerhope.com/issues/ch001904.htm) EZ WildApricot Web Designer will automatically switch to the language, if available.
 - added an error log and a "View Error Log" button to the inspector
@@ -789,6 +792,10 @@ EZ WildApricot Web Designer is supported on the latest versions of Chrome, Safar
 - added instructions on adding translated content gadgets
 - added "step through" debugging mechanism to process config and language files line by line with delay
 
-  2.1.1 - fixed infinite loop bug that was encountered when the default text contained a substring or the an identical string in the replacement text 07/06/2023
+2.1.1 - fixed infinite loop bug that was encountered when the default text contained a substring or the an identical string in the replacement text 07/06/2023
 
-  2.1.2 - updated ez-library add on to support multiple library instances in separate custom html content gadgets on the same WA page and in different languages 10/31/2023 - added the Copy Parent ID button to select the ID of the element without the full CSS Path
+2.1.2 - updated ez-library add on to support multiple library instances in separate custom html content gadgets on the same WA page and in different languages 10/31/2023
+- added the Copy Parent ID button to select the ID of the element without the full CSS Path 
+
+2.1.3 - added configurable automatic file backup support of all configuration files
+- added check to see if configuration file has the right column headers 04/24/2024
