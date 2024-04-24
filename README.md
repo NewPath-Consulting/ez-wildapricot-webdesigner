@@ -69,6 +69,7 @@ NOTE: this code snippet assumes you have uploaded all files into the folder `/re
 */
 
   license_key = "";
+  watm_saves_before_backup = 20; // number of saves before backup is made, set to 0 to turn off automatic backups
 </script>
 ```
 
