@@ -427,7 +427,7 @@ const start = (license) => {
                     );
                   });
 
-                  if (!continueProcess) {
+                  if (continueProcess === false) {
                     break;
                   }
 
