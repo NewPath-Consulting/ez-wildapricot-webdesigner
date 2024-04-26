@@ -301,7 +301,7 @@ const process = (row, lineNumber, csvFileName) => {
   }
 
   if (columnNameError) {
-    return;
+    return false;
   }
 
   let elements = [];
