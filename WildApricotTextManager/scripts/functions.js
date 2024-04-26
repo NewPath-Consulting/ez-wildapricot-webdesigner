@@ -239,10 +239,10 @@ const process = (row, lineNumber, csvFileName) => {
     defaultText = row["Default Text"].trim();
   } else {
     storeError(
-      "Cannot find column labelled 'Default Text'\nEnsure your CSV have the correct column labels"
+      "Cannot find column labelled 'Default Text'<br />Ensure your CSV has the correct column labels"
     );
     log(
-      "Cannot find column labelled 'Default Text'\nEnsure your CSV have the correct column labels",
+      "Cannot find column labelled 'Default Text'\nEnsure your CSV has the correct column labels",
       "Error"
     );
     columnNameError = true;
@@ -252,10 +252,10 @@ const process = (row, lineNumber, csvFileName) => {
     watmFunction = row["Function"].trim().toLowerCase();
   } else {
     storeError(
-      "Cannot find column labelled 'Function'\nEnsure your CSV have the correct column labels"
+      "Cannot find column labelled 'Function'<br />Ensure your CSV has the correct column labels"
     );
     log(
-      "Cannot find column labelled 'Function'\nEnsure your CSV have the correct column labels",
+      "Cannot find column labelled 'Function'\nEnsure your CSV has the correct column labels",
       "Error"
     );
     columnNameError = true;
@@ -265,7 +265,7 @@ const process = (row, lineNumber, csvFileName) => {
     watmQuery = row["Query"].trim();
   } else {
     storeError(
-      "Cannot find column labelled 'Query'\nEnsure your CSV have the correct column labels"
+      "Cannot find column labelled 'Query'<br />Ensure your CSV have the correct column labels"
     );
     log(
       "Cannot find column labelled 'Query'\nEnsure your CSV have the correct column labels",
@@ -278,7 +278,7 @@ const process = (row, lineNumber, csvFileName) => {
     replacementText = row["Replacement Text"].trim();
   } else {
     storeError(
-      "Cannot find column labelled 'Replacement Text'\nEnsure your CSV have the correct column labels"
+      "Cannot find column labelled 'Replacement Text'<br />Ensure your CSV have the correct column labels"
     );
     log(
       "Cannot find column labelled 'Replacement Text'\nEnsure your CSV have the correct column labels",
@@ -291,7 +291,7 @@ const process = (row, lineNumber, csvFileName) => {
     watmStyle = row["Style"].trim();
   } else {
     storeError(
-      "Cannot find column labelled 'Style'\nEnsure your CSV have the correct column labels"
+      "Cannot find column labelled 'Style'<br />Ensure your CSV have the correct column labels"
     );
     log(
       "Cannot find column labelled 'Style'\nEnsure your CSV have the correct column labels",
