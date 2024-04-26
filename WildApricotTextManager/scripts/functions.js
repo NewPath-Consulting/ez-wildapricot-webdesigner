@@ -876,7 +876,7 @@ const safeExecute = (func, ...args) => {
   }
 
   try {
-    func(...args);
+    return func(...args);
   } catch (error) {
     storeError(error.message);
     console.error(error);

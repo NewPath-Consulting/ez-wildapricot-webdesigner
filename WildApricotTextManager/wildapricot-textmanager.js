@@ -413,7 +413,12 @@ const start = (license) => {
                             `${currentCSV} Line: #${lineNumber} | Function: ${row["Function"]}`
                           );
                         }
-                        safeExecute(process, row, lineNumber, currentCSV);
+                        continueProcess = safeExecute(
+                          process,
+                          row,
+                          lineNumber,
+                          currentCSV
+                        );
                         resolve();
                       },
                       stepThrough === true && lineNumber >= stepThroughFrom
@@ -421,6 +426,10 @@ const start = (license) => {
                         : 0
                     );
                   });
+
+                  if (!continueProcess) {
+                    break;
+                  }
 
                   // Throw an error if we're in trial mode and we've exceeded the line limit
                   if (license == "trial" && lineNumber > 10) {
@@ -482,7 +491,12 @@ const start = (license) => {
                         `config.csv Line: #${lineNumber} | Function: ${row["Function"]}`
                       );
                     }
-                    safeExecute(process, row, lineNumber, "config.csv");
+                    continueProcess = safeExecute(
+                      process,
+                      row,
+                      lineNumber,
+                      "config.csv"
+                    );
                     resolve();
                   },
                   stepThroughConfig === true &&
@@ -491,6 +505,10 @@ const start = (license) => {
                     : 0
                 );
               });
+
+              if (!continueProcess) {
+                break;
+              }
 
               // Throw an error if we're in trial mode and we've exceeded the line limit
               if (license == "trial" && lineNumber > 10) {
