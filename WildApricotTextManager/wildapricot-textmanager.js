@@ -472,6 +472,10 @@ const start = (license) => {
         download: true,
         header: true,
         skipEmptyLines: "greedy",
+        error: function (err) {
+          storeError(`"config.csv" not found`);
+          log(`"config.csv" not found`, "Error");
+        },
         complete: async (results) => {
           try {
             // Loop through the rows in the CSV file and process each one
