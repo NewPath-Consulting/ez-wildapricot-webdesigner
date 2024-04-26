@@ -11,7 +11,7 @@ const watm_location = document.currentScript.src.substring(
  * The version number of the WATM script.
  * @constant {string}
  */
-const watm_version = "2.1.2";
+const watm_version = "2.1.3";
 
 /**
  * The URL of the WATM information page.
@@ -192,6 +192,12 @@ let long_delay = 3;
  * @type {number}
  */
 let loadedScripts = 0;
+
+/**
+ * Backup on save number
+ * @type {number}
+ */
+let watm_saves_before_backup = 20;
 
 /**
  * An array of required scripts.
@@ -407,7 +413,12 @@ const start = (license) => {
                             `${currentCSV} Line: #${lineNumber} | Function: ${row["Function"]}`
                           );
                         }
-                        safeExecute(process, row, lineNumber, currentCSV);
+                        continueProcess = safeExecute(
+                          process,
+                          row,
+                          lineNumber,
+                          currentCSV
+                        );
                         resolve();
                       },
                       stepThrough === true && lineNumber >= stepThroughFrom
@@ -415,6 +426,10 @@ const start = (license) => {
                         : 0
                     );
                   });
+
+                  if (continueProcess === false) {
+                    break;
+                  }
 
                   // Throw an error if we're in trial mode and we've exceeded the line limit
                   if (license == "trial" && lineNumber > 10) {
@@ -457,6 +472,10 @@ const start = (license) => {
         download: true,
         header: true,
         skipEmptyLines: "greedy",
+        error: function (err) {
+          storeError(`"config.csv" not found`);
+          log(`"config.csv" not found`, "Error");
+        },
         complete: async (results) => {
           try {
             // Loop through the rows in the CSV file and process each one
@@ -476,7 +495,12 @@ const start = (license) => {
                         `config.csv Line: #${lineNumber} | Function: ${row["Function"]}`
                       );
                     }
-                    safeExecute(process, row, lineNumber, "config.csv");
+                    continueProcess = safeExecute(
+                      process,
+                      row,
+                      lineNumber,
+                      "config.csv"
+                    );
                     resolve();
                   },
                   stepThroughConfig === true &&
@@ -485,6 +509,10 @@ const start = (license) => {
                     : 0
                 );
               });
+
+              if (continueProcess === false) {
+                break;
+              }
 
               // Throw an error if we're in trial mode and we've exceeded the line limit
               if (license == "trial" && lineNumber > 10) {

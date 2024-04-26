@@ -483,41 +483,108 @@ const setupEditor = (languages, watm_location) => {
       csvTable.options.csv.lastIndexOf("/") + 1
     );
 
-    let csv = csvTable.copy(
-      false,
-      csvTable.options.csvDelimiter,
-      true,
-      true,
-      true
-    );
-
-    let csvData = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", filePath, true);
-    xhr.onload = function (e) {
-      if (xhr.status == 200) {
-        window.location.href =
-          window.location.href.split("?")[0] +
-          "?dev&f=" +
-          filename +
-          "&t=" +
-          Date.now();
+    if (watm_saves_before_backup > 0) {
+      let saveCount = getCookie(filename);
+      if (!saveCount) {
+        setCookie(filename, 1);
       } else {
-        storeError(`Error saving ${filename} - ${xhr.statusText}`);
-        log(
-          `Error saving ${filename} - ${xhr.responseText} ${xhr.statusText}`,
-          "Error"
-        );
-        alert(`Could not save file ${filename} - please try again.`);
-      }
-    };
+        if (saveCount >= watm_saves_before_backup) {
+          setCookie(filename, 0);
+          const backupDate = new Date();
+          const year = backupDate.getFullYear();
+          const month = (backupDate.getMonth() + 1).toString().padStart(2, "0");
+          const day = backupDate.getDate().toString().padStart(2, "0");
+          const hours = backupDate.getHours().toString().padStart(2, "0");
+          const minutes = backupDate.getMinutes().toString().padStart(2, "0");
+          const seconds = backupDate.getSeconds().toString().padStart(2, "0");
+          let backupFilename =
+            filename.split(".")[0] +
+            "_" +
+            `${year}-${month}-${day}_${hours}.${minutes}.${seconds}` +
+            ".csv";
 
-    var formData = new FormData();
-    formData.append("localfile", csvData, filename);
-    formData.append("filetype", "csv");
-    formData.append("source", "SOFT");
-    xhr.send(formData);
+          var xhrBackup = new XMLHttpRequest();
+          xhrBackup.open("GET", `${filePath}/${filename}`, true);
+          xhrBackup.responseType = "blob";
+
+          xhrBackup.onload = function () {
+            if (xhrBackup.status === 200) {
+              const blob = xhrBackup.response;
+              var formData = new FormData();
+              formData.append("file", blob, backupFilename); // Append the file as "backup.csv"
+
+              var xhrUpload = new XMLHttpRequest();
+              xhrUpload.open("POST", filePath, true);
+              xhrUpload.onload = function () {
+                if (xhrUpload.status === 200) {
+                  console.log("Backup saved successfully");
+                } else {
+                  storeError(
+                    "Failed creating backup file:",
+                    xhrUpload.statusText
+                  );
+                }
+                saveCSV();
+              };
+
+              xhrUpload.onerror = function () {
+                storeError(
+                  "Failed creating backup file:",
+                  xhrUpload.statusText
+                );
+              };
+
+              xhrUpload.send(formData);
+            }
+          };
+
+          xhrBackup.send();
+        } else {
+          setCookie(filename, saveCount + 1);
+          saveCSV();
+        }
+      }
+    } else {
+      saveCSV();
+    }
+
+    function saveCSV() {
+      let csv = csvTable.copy(
+        false,
+        csvTable.options.csvDelimiter,
+        true,
+        true,
+        true
+      );
+
+      let csvData = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", filePath, true);
+      xhr.onload = function (e) {
+        if (xhr.status == 200) {
+          window.location.href =
+            window.location.href.split("?")[0] +
+            "?dev&f=" +
+            filename +
+            "&t=" +
+            Date.now();
+        } else {
+          storeError(`Error saving ${filename} - ${xhr.statusText}`);
+          log(
+            `Error saving ${filename} - ${xhr.responseText} ${xhr.statusText}`,
+            "Error"
+          );
+          alert(`Could not save file ${filename} - please try again.`);
+        }
+      };
+
+      var formData = new FormData();
+      formData.append("localfile", csvData, filename);
+      formData.append("filetype", "csv");
+      formData.append("source", "SOFT");
+      xhr.send(formData);
+    }
   });
 
   const fileSelecterSpan = document.createElement("span");
