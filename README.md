@@ -722,6 +722,17 @@ EZ WildApricot Web Designer is supported on the latest versions of Chrome, Safar
 
 ---
 
+# Third-party open-source modules in use by EZ WildApricot Web Designer
+
+The following open-source code libraries are used by this product. All the libraries use the MIT open source license.
+
+- The inspector's spreadsheet user interface is powered by [Jspreadsheet CE](https://bossanova.uk/jspreadsheet)
+- View Properties button features the ability to extract the primary colors used by an image. The [Color Thief](https://lokeshdhakar.com/projects/color-thief/) JavaScript library is used to extract colors of an image.
+- Drawing the UI to get into the inspector and adding tooltips to elements is handled by [Tippy JS](https://atomiks.github.io/tippyjs/)
+- Parsing the CSV configuration files is handled by [Papa Parse](https://www.papaparse.com/)
+
+---
+
 # Release History
 
 0.1 - Initial Release 11/19/18
