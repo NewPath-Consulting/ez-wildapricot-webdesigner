@@ -259,7 +259,7 @@ The CSS Path, CSS Parent ID or CSS Element Class must be placed into the Query c
 
 _COMPATIBILITY NOTE:_ The Copy Element Class, Copy Parent ID and Copy CSS Path buttons only work on secure (https) websites. If your website is running insecurely, we recommend adding a [free SSL certificate to your custom domain](https://gethelp.wildapricot.com/en/articles/555).
 
-The `View Properties` button will display the details about that element, such as the text it contains, styling, and any resource links.
+The `View Properties` button will display the details about that element, such as the text it contains, styling, and any resource links. If you target an image with the inspector tool, the View Properties tab will show the primary colors of that image and the related hexadecimal color codes.
 
 The `View Error Log` button will open a new window and display any errors that have been encountered in the currently loaded configuration file (config.csv, english.csv or language.csv).
 
@@ -269,11 +269,21 @@ The `View Error Log` button will open a new window and display any errors that h
 
 The bottom half of the panel displays the configuration file Editor. In the editor you can select the file you wish to update from the dropdown. Selecting the file will automatically load the configuration file editor. You can resize the columns as needed by dragging on the divider on the right hand side of the panel. You can also drag the rows to rearrange them. Right clicking on a row will give you the options to create and delete rows, and download the currently saved configuration file
 
-Once you are finished making your changes, save the file back to your website by clicking on `Save changes to site`. You will need to authenticate once with your administrative WildApricot account.
+Once you are finished making your changes, save the file back to your website by clicking on `Save changes to site`. You will need to authenticate once with your full administrator WildApricot accounts.
 
 If you choose to download the configuration file and edit it outside of the Inspector, the changes will be applied only when you manually upload the configuration file. The configuration file is a comma-separated file that can be edited in any spreadsheet. If you decide to edit in a spreadsheet, ensure you save in UTF-8 format to preserve any international characters.
 
 When you use the Inspector to save the configuration file, the current page will automatically refresh, and your changes should be immediately visible. If you don't see your changes, you may need to do a hard refresh of your site to see the changes. To do this, exit the inspector/editor and press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> on PC or <kbd>Option</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> on Mac. You may need to do this for each language enabled on your site.
+
+Note: When the EZ WildApricot Designer runs through the configuration files the header (row 1) of each file must match the names in the editor. If there is an inconsistency an error will be recorded in the error console.
+
+## Configuration File Editor
+
+ The following columns of data are available in the editor:
+
+
+![ez editor user interface](https://github.com/NewPath-Consulting/ez-wildapricot-webdesigner/blob/master/readme-images/ez-editor.png?raw=true)
+
 
 ## The Error Log
 
