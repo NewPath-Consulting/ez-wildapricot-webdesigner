@@ -284,6 +284,16 @@ Note: When the EZ WildApricot Designer runs through the configuration files the 
 
 ![ez editor user interface](https://github.com/NewPath-Consulting/ez-wildapricot-webdesigner/blob/master/readme-images/ez-editor.png?raw=true)
 
+- Wild Apricot Reference
+
+This field can be used to group various lines together. It is not used by the software in anyway, and
+- Default Text
+- Replacement Text
+- Function
+- Query
+- Style
+- Notes
+
 
 ## The Error Log
 
