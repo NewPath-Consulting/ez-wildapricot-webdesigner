@@ -1,4 +1,4 @@
-- [Project Description](#project-description)
+- [About the EZ WildApricot Web Designer](#about-the-ez-wildapricot-web-designer)
 - [Installation](#installation)
   - [Files Setup](#files-setup)
   - [JavaScript whitelisting](#javascript-whitelisting)
@@ -47,19 +47,19 @@
   - [**tooltip**](#tooltip)
   - [**googlefont**](#googlefont)
 - [EZ Add-Ons](#ez-add-ons)
-  - [**FontAwesome Add-On**](#fontawesome-add-on)
-  - [**EZ-Notice Add-On**](#ez-notice-add-on)
-  - [**EZ-Toggle Add-On**](#ez-toggle-add-on)
-  - [**EZ-Tabs Add-on**](#ez-tabs-add-on)
-  - [**EZ-Library Add-On**](#ez-library-add-on)
+  - [FontAwesome Add-On](#fontawesome-add-on)
+  - [EZ-Notice Add-On](#ez-notice-add-on)
+  - [EZ-Toggle Add-On](#ez-toggle-add-on)
+  - [EZ-Tabs Add-on](#ez-tabs-add-on)
+  - [EZ-Library Add-On](#ez-library-add-on)
 - [Browser Requirements](#browser-requirements)
 - [Third-party open-source modules in use by EZ WildApricot Web Designer](#third-party-open-source-modules-in-use-by-ez-wildapricot-web-designer)
 - [Release History](#release-history)
 
 
-# Project Description
+# About the EZ WildApricot Web Designer
 
-[EZ WildApricot Web Designer 2](https://newpathconsulting.com/watm) \(aka WATM\), has been redesigned from scratch. The product has been rewritten in JavaScript (ECMAScript 6) and no longer needs jQuery to operate.
+[EZ WildApricot Web Designer](https://newpathconsulting.com/watm) \(aka WATM\), has been redesigned from scratch for version 2. The product has been rewritten in JavaScript (ECMAScript 6) and no longer needs jQuery to operate.
 
 EZ WildApricot Web Designer will help any administrator change, replace or translate e nearly every piece of hard-coded and configurable text in WildApricot. It also contains several "add-ons" that can add new content gadgets and content styling features for your WildApricot website.
 
@@ -689,7 +689,7 @@ watm_language_name[0] = "English";
 
 Within the square brackets, add type the name of the add-ons within quotes. Separate multiple add-ons with a comma, with each add-on name within their own quotation marks.
 
-## **FontAwesome Add-On**
+## FontAwesome Add-On
 
 EZ WildApricot Web Designer comes with a free Add-on for FontAwesome, making it easy to insert FontAwesome icons by using macros. To start, [sign up for FontAwesome](https://fontawesome.com/start) and add the provided JavaScript code snippet to your WildApricot Global JavaScript settings.
 
@@ -733,7 +733,7 @@ These styles are currently available in FontAwesome, and some icon sets require 
 - **Duotone:** [All Icons](https://fontawesome.com/search?o=r&s=duotone&f=classic)
 - **Brands:** [Free Icons](https://fontawesome.com/search?o=r&f=brands)
 
-## **EZ-Notice Add-On**
+## EZ-Notice Add-On
 
 The EZ-Notice Add-On enables displaying important, colourful messages on your website. Using this macro, any text is be displayed in a colorful box on a WildApricot web page, spanning the width of the layout that contains the macro. It can be used on any WildApricot content page, page template, or system template.
 
@@ -748,7 +748,7 @@ Macro Text: [ez-notice]Guild renewal fees are due by January 15th.[/ez-notice]
 Macro Text: [ez-notice color="red"]Saturday's potter classes have been cancelled.[/ez-notice]
 ```
 
-## **EZ-Toggle Add-On**
+## EZ-Toggle Add-On
 
 The EZ-Toggle Add-On enables expandable and collapsible content sections (also known as "accordions"). Website visitors can click on the section header to open that section and automatically close the other sections on the page. This macro can be used to shorten long content such as a Frequently Asked Questions section.
 
@@ -764,7 +764,7 @@ Macro Text: [ez-toggle title="Who can be a member?"]Anyone with an interest in o
 Macro Text: [ez-toggle title="What are the benefits for students?"]We have scholarships students can qualify for.[/ez-toggle]
 ```
 
-## **EZ-Tabs Add-on**
+## EZ-Tabs Add-on
 
 The EZ-Tabs Add-On creates a tabbed content area on a page. Website visitors can click on the tabs to switch between different content sections.
 
@@ -780,7 +780,7 @@ Macro Text: [ez-tabs title="2021 Scholarship Winners"]Ella-Mai Kramer, Tea Mcfar
 Macro Text: [ez-tabs title="2020 Scholarship Winners"]Jennie Miranda, Carina Myers, Ruby-May Waters[/ez-tabs]
 ```
 
-## **EZ-Library Add-On**
+## EZ-Library Add-On
 
 The EZ-Library Addon makes it easy to insert a document library into a WildApricot website. The add-on takes care of formatting the presentation of the selected documents, sorting them by title or date, and makes them available for one-click download.
 
