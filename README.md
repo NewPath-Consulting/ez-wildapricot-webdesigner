@@ -1,6 +1,63 @@
-# Documentation
+- [Project Description](#project-description)
+- [Installation](#installation)
+  - [Files Setup](#files-setup)
+  - [JavaScript whitelisting](#javascript-whitelisting)
+  - [Adding the install script](#adding-the-install-script)
+    - [Multilingual Script Setup](#multilingual-script-setup)
+    - [Recommended Language Class Names](#recommended-language-class-names)
+    - [Extra Install Script Options](#extra-install-script-options)
+      - [Enablic the Inspector \& Editor without Being Logged in as an Admin](#enablic-the-inspector--editor-without-being-logged-in-as-an-admin)
+      - [Hiding the EZ WildApricot Web Designer Icon](#hiding-the-ez-wildapricot-web-designer-icon)
+      - [Automatic CSV Backups](#automatic-csv-backups)
+      - [Installing EZ Add-ons](#installing-ez-add-ons)
+- [Switching and Maintaining Languages](#switching-and-maintaining-languages)
+  - [Using the Language Toggle](#using-the-language-toggle)
+  - [Adding translations to content gadgets](#adding-translations-to-content-gadgets)
+  - [Using the Language Switch Hook](#using-the-language-switch-hook)
+- [EZ WildApricot Inspector \& Editor](#ez-wildapricot-inspector--editor)
+- [Inspector](#inspector)
+- [Editor](#editor)
+  - [Configuration File Editor](#configuration-file-editor)
+    - [Wild Apricot Reference](#wild-apricot-reference)
+    - [Default Text](#default-text)
+    - [Replacement Text](#replacement-text)
+    - [Function](#function)
+    - [Query](#query)
+    - [Style](#style)
+    - [Notes](#notes)
+  - [The Error Log](#the-error-log)
+  - [Debugging the configuration or translation files by "stepping through"](#debugging-the-configuration-or-translation-files-by-stepping-through)
+- [Using EZ WildApricot Web Designer with WildApricot iframe Widgets](#using-ez-wildapricot-web-designer-with-wildapricot-iframe-widgets)
+- [EZ WildApricot Web Designer Functions](#ez-wildapricot-web-designer-functions)
+  - [**text**](#text)
+  - [**replace**](#replace)
+  - [**replace\_element**](#replace_element)
+  - [**shortdelay**](#shortdelay)
+  - [**longdelay**](#longdelay)
+  - [**button**](#button)
+  - [**delaybutton**](#delaybutton)
+  - [**inactive**](#inactive)
+  - [**hide**](#hide)
+  - [**placeholder**](#placeholder)
+  - [**attribute**](#attribute)
+  - [**@media**](#media)
+  - [**link**](#link)
+  - [**createlink**](#createlink)
+  - [**source**](#source)
+  - [**tooltip**](#tooltip)
+  - [**googlefont**](#googlefont)
+- [EZ Add-Ons](#ez-add-ons)
+  - [**FontAwesome Add-On**](#fontawesome-add-on)
+  - [**EZ-Notice Add-On**](#ez-notice-add-on)
+  - [**EZ-Toggle Add-On**](#ez-toggle-add-on)
+  - [**EZ-Tabs Add-on**](#ez-tabs-add-on)
+  - [**EZ-Library Add-On**](#ez-library-add-on)
+- [Browser Requirements](#browser-requirements)
+- [Third-party open-source modules in use by EZ WildApricot Web Designer](#third-party-open-source-modules-in-use-by-ez-wildapricot-web-designer)
+- [Release History](#release-history)
 
-## Project Description
+
+# Project Description
 
 [EZ WildApricot Web Designer 2](https://newpathconsulting.com/watm) \(aka WATM\), has been redesigned from scratch. The product has been rewritten in JavaScript (ECMAScript 6) and no longer needs jQuery to operate.
 
@@ -31,9 +88,9 @@ EZ WildApricot Web Designer module can be used to make WildApricot sites availab
 
 The configuration and translation files must be saved as a CSV file format in UTF-8 format.
 
-## Javascript whitelisting
+## JavaScript whitelisting
 
-WildApricot has implemented a [Content Security Policy (CSP)](https://en.wikipedia.org/wiki/Content_Security_Policy) to provide additional protection against data theft, site defacement, malware, and more. CSP works by detecting if custom code is being called from an external URL and then comparing those URLs against a whitelist of verified and approved websites. If the external URL being used is not on the whitelist, the code is then blocked from running. EZ WildApricot Web Designer requires access to certain external URLs in order to function correctly, so these URLs will need to be added to the whitelist. To view and manage your whitelist, navigate to the "Settings" screen from the Website section of the WildApricot backend.
+WildApricot has implemented a [Content Security Policy (CSP)](https://en.wikipedia.org/wiki/Content_Security_Policy) to provide additional protection against data theft, site defacement, malware, and more. CSP works by detecting if custom code is being called from an external URL and then comparing those URLs against a whitelist of verified and approved websites. If the external URL being used is not on the whitelist, the code is then blocked from running. EZ WildApricot Web Designer requires access to certain external URLs in order to function correctly, so these URLs will need to be added to the whitelist. To view and manage your whitelist, navigate to the "Settings" screen from the Website module in the WildApricot administrative system
 
 ![domain whitelist menu](https://github.com/NewPath-Consulting/ez-wildapricot-webdesigner/blob/master/readme-images/domain-whitelist-menu.jpg?raw=true)
 
@@ -300,7 +357,7 @@ This field is used as the replacement text for functions that use this field lik
 
 This is an optional field that specifies what function to call when processing a configuration file. If this field is empty, then the Query field and Style field will be used to apply a style to an element of the page.
 
-The [functions are all defined](https://github.com/NewPath-Consulting/ez-wildapricot-webdesigner?tab=readme-ov-file#ez-wildapricot-web-designer-functions) in this README file.
+The [functions are all defined](#ez-wildapricot-web-designer-functions) in this README file.
 
 
 ### Query
@@ -321,6 +378,15 @@ The Query field also can accept a comma-delimited list of IDs, CSS Paths and CSS
 ### Style
 
 This is an optional field that can be used to apply a set of CSS properties and values to a targeted element. You can see a list of existing properties applied to an element by clicking the View Properties button when an element has been selected in the Inspector. CSS Properties are formatted as `property: value`. An example CSS property is `background-color: red;`. Multiple properties can be set by delimiting the property/value pair with a `;` (eg `background-color: red; font-size: 18px;`)
+
+The style column can be used in conjunction with a function, or on its own.
+
+**EXAMPLE:**
+
+```text
+Query: h3
+Style: color: blue;font-style: italic
+```
 
 ### Notes
 
@@ -373,7 +439,7 @@ stepThroughFrom = 20;
 
 # Using EZ WildApricot Web Designer with WildApricot iframe Widgets
 
-The EZ WildApricot Web Designer affects any page loaded from a WildApricot website, including the widgets published through the Website Settings. These are implemented as iframes which load the Javascript libary just like any web page. It's best to test the content on a regular WildApricot website before implementing the iframe gadgets to make sure all changes are rendering outside the iframe first.
+The EZ WildApricot Web Designer affects any page loaded from a WildApricot website, including the widgets published through the Website Settings. These are implemented as iframes which load the JavaScript libary just like any web page. It's best to test the content on a regular WildApricot website before implementing the iframe gadgets to make sure all changes are rendering outside the iframe first.
 
 To reference the widgets in an iframe in a different langauge when mutli-lingual mode is turned on use the ?watm-<language> query parameter on the iframe URL in the `src` parameter of the iframe tag.
 
@@ -502,15 +568,6 @@ Query: .loginButton
 ## **inactive**
 
 > Ignores the configuration row. This is useful when troubleshooting an item or you wish to save details in the configuration file, but not activate it.
-
-## The style column can be used in conjunction with a function, or on its own.
-
-**EXAMPLE:**
-
-```text
-Query: h3
-Style: color: blue;font-style: italic
-```
 
 ## **hide**
 
@@ -731,7 +788,7 @@ The EZ-Library Addon makes it easy to insert a document library into a WildApric
 
 NOTE: You can have one ez-library tag inside one custom html gadget. If you'd like to add multiple document libraries on one page (or one or more for each language) make sure you place each ez-library macro text into a separate custom html gadget on the WildApricot website page.
 
-### **USAGE:**
+**Using the EZ-Library Add-on**
 
 This add-on comes with two macros that must be used together. The first macro is `[ez-library][/ez-library]` used to configure the library. This macro has three mandatory parameters:
 
@@ -840,11 +897,11 @@ The following open-source code libraries are used by this product. All the libra
 
 2.0.6 - added `delaybutton` function and changed the `delay` function to use `replace` when default text is present 12/06/2023
 
-2.0.7 - changed `delay` to `shortdelay` and `longdelay`, the delays are configurable in the documented Javascript variables 01/04/2023
+2.0.7 - changed `delay` to `shortdelay` and `longdelay`, the delays are configurable in the documented JavaScript variables 01/04/2023
 
 2.0.8 - NO code changes - README.md updated installation instructions (custom domain before script installation) 02/15/2023
 
-2.0.9 - removed the CSS from install script and added it into the code to ensure no "white screen of death" scenarios if Javascript fails to install 02/18/2023
+2.0.9 - removed the CSS from install script and added it into the code to ensure no "white screen of death" scenarios if JavaScript fails to install 02/18/2023
 
 2.1.0 - added the `replace_element` function for backwards compatibility to pre-v2 WATM/EZ Website Designer versions 04/09/2023
 - the EZ license is now checked once per day, rather than on every page load
