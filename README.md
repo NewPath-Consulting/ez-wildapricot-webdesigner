@@ -284,32 +284,31 @@ Note: When the EZ WildApricot Designer runs through the configuration files the 
 
 ![ez editor user interface](https://github.com/NewPath-Consulting/ez-wildapricot-webdesigner/blob/master/readme-images/ez-editor.png?raw=true)
 
-- Wild Apricot Reference
+### Wild Apricot Reference
 
 This is an optional field can be used to group various lines together. It is not used by the software in anyway, and any information placed in this column is for user reference only.
 
-- Default Text
+### Default Text
 
 This is an optional field can be used to define a string to search for the in the content when using the `replace`, `replace_element`, `shortdelay`, `longdelay`, `attribute` and `createlink` functions. Not all functions use this field, and this field is ignored for those functions during processing of the configuration file.
 
-- Replacement Text
+### Replacement Text
 
 This field is used as the replacement text for functions that use this field like `replace` and `replace_element`. In some cases this field is used to specify input into a function like `createlink`.
 
-- Function
+### Function
 
 This is an optional field that specifies what function to call when processing a configuration file. If this field is empty, then the Query field and Style field will be used to apply a style to an element of the page.
 
 The [functions are all defined](https://github.com/NewPath-Consulting/ez-wildapricot-webdesigner?tab=readme-ov-file#ez-wildapricot-web-designer-functions) in this README file.
 
 
-- Query
+### Query
 
 This field is a required field that specifies which CSS ID, CSS Class or CSS Path is to be targeted when processing the current configuration line. It can be obtained a variety of ways, but the easiest is to click on an element while using the Inspector. You can hover over a field, label, button or just about any pixel on a page and retrieve the CSS Path and/or CSS class that has been highlighted.
 
-It is important to understand that a particular element can be targeted a myriad of ways. Based on experience of using this product we recommend the following preference when choosing how to target an element
+It is important to understand that a particular element can be targeted using different ways. Based on experience of using this product we recommend the following preference when choosing how to target an element:
 
-- Order of Preference when choosing a Query
   - if an ID is available for an element, us the ID directly (eg #ElementID)
   - if a CSS Path is available for an element, use the Parent ID of the CSS Path (eg for CSS Path `#ElementID > div > table > nth-child` the Parent ID is `#ElementID`)
   - use the CSS Path directly (eg `#ElementID > div > table > nth-child`)
@@ -319,11 +318,11 @@ A CSS class could be used when styling various parts of a site, so use classes a
 
 The Query field also can accept a comma-delimited list of IDs, CSS Paths and CSS classes. This can be useful when translating or modifying a set of values in mutliple places on a website. A good example if a list of Month names to be translated into another language can be stored as 12 lines in a file. The query field could then contain a list of IDs, Paths or classes that need to be changed (eg #ElementID, #AnotherElementID, .aCSSClass)
 
-- Style
+### Style
 
 This is an optional field that can be used to apply a set of CSS properties and values to a targeted element. You can see a list of existing properties applied to an element by clicking the View Properties button when an element has been selected in the Inspector. CSS Properties are formatted as `property: value`. An example CSS property is `background-color: red;`. Multiple properties can be set by delimiting the property/value pair with a `;` (eg `background-color: red; font-size: 18px;`)
 
-- Notes
+### Notes
 
 This is an optional field that is updated automatically when a line is updated with a current date and time. You can put notes into this field, but note that if a configuration row is updated his field is overwritten with the current date and time of the change to help you keep track of which rows have been modified and when.
 
