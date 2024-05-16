@@ -4,7 +4,7 @@
 
 [EZ WildApricot Web Designer 2](https://newpathconsulting.com/watm) \(aka WATM\), has been redesigned from scratch. The product has been rewritten in JavaScript (ECMAScript 6) and no longer needs jQuery to operate.
 
-EZ WildApricot Web Designer will help any administrator change, replace or translate e nearly every piece of hard-coded and configurable text in WildApricot. It also contains several "macros" that can add new content gadgets and content styling features for your WildApricot website.
+EZ WildApricot Web Designer will help any administrator change, replace or translate e nearly every piece of hard-coded and configurable text in WildApricot. It also contains several "add-ons" that can add new content gadgets and content styling features for your WildApricot website.
 
 You can make a variety of single page, whole site, and WildApricot content changes such as:
 
@@ -12,9 +12,9 @@ You can make a variety of single page, whole site, and WildApricot content chang
 - modify field labels on forms, button labels
 - change hard-coded text, errors, and warnings
 - hide text on any user interface items
-- allow your site to be offered in an unlimited number of languages
+- enable multi-lingual support on your website so it can be read in an unlimited number of languages
 
-EZ WildApricot Web Designer module can be used to make WildApricot sites available in two or more languages by dynamically replacing content gadgets and hard-coded strings with a translations. The translations are all stored in CSV files in WildApricot File Managers and can be edited from a visual inspector and editor as well.
+EZ WildApricot Web Designer module can be used to make WildApricot sites available in two or more languages by dynamically replacing content gadgets and hard-coded strings with a translations. The translations are all stored in CSV files in the WildApricot File Manager and can be edited using a visual inspector and editor as well.
 
 ---
 
@@ -304,9 +304,27 @@ The [functions are all defined](https://github.com/NewPath-Consulting/ez-wildapr
 
 
 - Query
+
+This field is a required field that specifies which CSS ID, CSS Class or CSS Path is to be targeted when processing the current configuration line. It can be obtained a variety of ways, but the easiest is to click on an element while using the Inspector. You can hover over a field, label, button or just about any pixel on a page and retrieve the CSS Path and/or CSS class that has been highlighted.
+
+It is important to understand that a particular element can be targeted a myriad of ways. Based on experience of using this product we recommend the following preference when choosing how to target an element
+
+-- if an ID is available for an element, us the ID directly (eg #ElementID)
+-- if a CSS Path is available for an element, use the Parent ID of the CSS Path (eg for CSS Path #ElementID > div > table > nth-child #ElementID is the Parent ID)
+-- use the CSS Path directly
+-- use the CSS class
+
+A CSS class could be used when styling various parts of a site, so use classes as sparingly as possible *unless* you specifically wish to apply a change on a sitewide basis whereever the CSS class is used.
+
+The Query field also can accept a comma-delimited list of IDs, CSS Paths and CSS classes. This can be useful when translating or modifying a set of values in mutliple places on a website. A good example if a list of Month names to be translated into another language can be stored as 12 lines in a file. The query field could then contain a list of IDs, Paths or classes that need to be changed (eg #ElementID, #AnotherElementID, .aCSSClass)
+
 - Style
+
+This is an optional field that can be used to apply a set of CSS properties and values to a targeted element. You can see a list of existing properties applied to an element by clicking the View Properties button when an element has been selected in the Inspector. CSS Properties are formatted as `property: value`. An example CSS property is `background-color: red;`. Multiple properties can be set by delimiting the property/value pair with a `;` (eg `background-color: red; font-size: 18px;`)
+
 - Notes
 
+This is an optional field that is updated automatically when a line is updated with a current date and time. You can put notes into this field, but note that if a configuration row is updated his field is overwritten with the current date and time of the change to help you keep track of which rows have been modified and when.
 
 ## The Error Log
 
