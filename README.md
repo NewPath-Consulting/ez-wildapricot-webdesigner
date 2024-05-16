@@ -309,10 +309,11 @@ This field is a required field that specifies which CSS ID, CSS Class or CSS Pat
 
 It is important to understand that a particular element can be targeted a myriad of ways. Based on experience of using this product we recommend the following preference when choosing how to target an element
 
+- Order of Preference when choosing a Query
   - if an ID is available for an element, us the ID directly (eg #ElementID)
-  - if a CSS Path is available for an element, use the Parent ID of the CSS Path (eg for CSS Path #ElementID > div > table > nth-child #ElementID is the Parent ID)
-  - use the CSS Path directly
-  - use the CSS class
+  - if a CSS Path is available for an element, use the Parent ID of the CSS Path (eg for CSS Path `#ElementID > div > table > nth-child` the Parent ID is `#ElementID`)
+  - use the CSS Path directly (eg `#ElementID > div > table > nth-child`)
+  - use the CSS class (eg `.aClassName`)
 
 A CSS class could be used when styling various parts of a site, so use classes as sparingly as possible *unless* you specifically wish to apply a change on a sitewide basis whereever the CSS class is used.
 
