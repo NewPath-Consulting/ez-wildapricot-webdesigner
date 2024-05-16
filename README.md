@@ -286,10 +286,23 @@ Note: When the EZ WildApricot Designer runs through the configuration files the 
 
 - Wild Apricot Reference
 
-This field can be used to group various lines together. It is not used by the software in anyway, and
+This is an optional field can be used to group various lines together. It is not used by the software in anyway, and any information placed in this column is for user reference only.
+
 - Default Text
+
+This is an optional field can be used to define a string to search for the in the content when using the `replace`, `replace_element`, `shortdelay`, `longdelay`, `attribute` and `createlink` functions. Not all functions use this field, and this field is ignored for those functions during processing of the configuration file.
+
 - Replacement Text
+
+This field is used as the replacement text for functions that use this field like `replace` and `replace_element`. In some cases this field is used to specify input into a function like `createlink`.
+
 - Function
+
+This is an optional field that specifies what function to call when processing a configuration file. If this field is empty, then the Query field and Style field will be used to apply a style to an element of the page.
+
+The [functions are all defined](https://github.com/NewPath-Consulting/ez-wildapricot-webdesigner?tab=readme-ov-file#ez-wildapricot-web-designer-functions) in this README file.
+
+
 - Query
 - Style
 - Notes
