@@ -14,20 +14,19 @@
   - [Using the Language Toggle](#using-the-language-toggle)
   - [Adding translations to content gadgets](#adding-translations-to-content-gadgets)
   - [Using the Language Switch Hook](#using-the-language-switch-hook)
-- [EZ WildApricot Inspector \& Editor](#ez-wildapricot-inspector--editor)
-- [Inspector](#inspector)
-- [Editor](#editor)
-  - [Configuration File Editor](#configuration-file-editor)
-    - [Wild Apricot Reference](#wild-apricot-reference)
-    - [Default Text](#default-text)
-    - [Replacement Text](#replacement-text)
-    - [Function](#function)
-    - [Query](#query)
-    - [Style](#style)
-    - [Notes](#notes)
+- [Using the Inspector \& Editor](#using-the-inspector--editor)
+  - [Inspector](#inspector)
+  - [Editor](#editor)
+    - [What's in the Configuration File?](#whats-in-the-configuration-file)
+      - [Wild Apricot Reference](#wild-apricot-reference)
+      - [Default Text](#default-text)
+      - [Replacement Text](#replacement-text)
+      - [Function](#function)
+      - [Query](#query)
+      - [Style](#style)
+      - [Notes](#notes)
   - [The Error Log](#the-error-log)
   - [Debugging the configuration or translation files by "stepping through"](#debugging-the-configuration-or-translation-files-by-stepping-through)
-- [Using EZ WildApricot Web Designer with WildApricot iframe Widgets](#using-ez-wildapricot-web-designer-with-wildapricot-iframe-widgets)
 - [EZ WildApricot Web Designer Functions](#ez-wildapricot-web-designer-functions)
   - [**text**](#text)
   - [**replace**](#replace)
@@ -46,6 +45,7 @@
   - [**source**](#source)
   - [**tooltip**](#tooltip)
   - [**googlefont**](#googlefont)
+- [Using EZ WildApricot Web Designer with WildApricot iframe Widgets](#using-ez-wildapricot-web-designer-with-wildapricot-iframe-widgets)
 - [EZ Add-Ons](#ez-add-ons)
   - [FontAwesome Add-On](#fontawesome-add-on)
   - [EZ-Notice Add-On](#ez-notice-add-on)
@@ -294,7 +294,7 @@ You are not limited to using the EZ WildApricot Web Designer Language Toggle. Yo
 
 ---
 
-# EZ WildApricot Inspector & Editor
+# Using the Inspector & Editor
 
 Using the Inspector & Editor, you can use to view the styling and targeting information of the various elements on your website, as well as make modifications to your EZ WildApricot Web Designer configuration files. This information is necessary when updating your configuration and translation files.
 
@@ -306,7 +306,7 @@ When you hover over an element a red outline will appear around the element read
 
 Click the `Exit Editor` button in the inspector to return to normal browsing.
 
-# Inspector
+## Inspector
 
 The top half of the panel that appears is the Inspector. Clicking on the element will display the element's CSS Class (if a class has been set), as well as the CSS Path to the element.
 
@@ -322,7 +322,7 @@ The `View Error Log` button will open a new window and display any errors that h
 
 ---
 
-# Editor
+## Editor
 
 The bottom half of the panel displays the configuration file Editor. In the editor you can select the file you wish to update from the dropdown. Selecting the file will automatically load the configuration file editor. You can resize the columns as needed by dragging on the divider on the right hand side of the panel. You can also drag the rows to rearrange them. Right clicking on a row will give you the options to create and delete rows, and download the currently saved configuration file
 
@@ -334,33 +334,33 @@ When you use the Inspector to save the configuration file, the current page will
 
 Note: When the EZ WildApricot Designer runs through the configuration files the header (row 1) of each file must match the names in the editor. If there is an inconsistency an error will be recorded in the error console.
 
-## Configuration File Editor
+### What's in the Configuration File?
 
  The following columns of data are available in the editor:
 
 
 ![ez editor user interface](https://github.com/NewPath-Consulting/ez-wildapricot-webdesigner/blob/master/readme-images/ez-editor.png?raw=true)
 
-### Wild Apricot Reference
+#### Wild Apricot Reference
 
 This is an optional field can be used to group various lines together. It is not used by the software in anyway, and any information placed in this column is for user reference only.
 
-### Default Text
+#### Default Text
 
 This is an optional field can be used to define a string to search for the in the content when using the `replace`, `replace_element`, `shortdelay`, `longdelay`, `attribute` and `createlink` functions. Not all functions use this field, and this field is ignored for those functions during processing of the configuration file.
 
-### Replacement Text
+#### Replacement Text
 
 This field is used as the replacement text for functions that use this field like `replace` and `replace_element`. In some cases this field is used to specify input into a function like `createlink`.
 
-### Function
+#### Function
 
 This is an optional field that specifies what function to call when processing a configuration file. If this field is empty, then the Query field and Style field will be used to apply a style to an element of the page.
 
 The [functions are all defined](#ez-wildapricot-web-designer-functions) in this README file.
 
 
-### Query
+#### Query
 
 This field is a required field that specifies which CSS ID, CSS Class or CSS Path is to be targeted when processing the current configuration line. It can be obtained a variety of ways, but the easiest is to click on an element while using the Inspector. You can hover over a field, label, button or just about any pixel on a page and retrieve the CSS Path and/or CSS class that has been highlighted.
 
@@ -375,7 +375,7 @@ A CSS class could be used when styling various parts of a site, so use classes a
 
 The Query field also can accept a comma-delimited list of IDs, CSS Paths and CSS classes. This can be useful when translating or modifying a set of values in mutliple places on a website. A good example if a list of Month names to be translated into another language can be stored as 12 lines in a file. The query field could then contain a list of IDs, Paths or classes that need to be changed (eg #ElementID, #AnotherElementID, .aCSSClass)
 
-### Style
+#### Style
 
 This is an optional field that can be used to apply a set of CSS properties and values to a targeted element. You can see a list of existing properties applied to an element by clicking the View Properties button when an element has been selected in the Inspector. CSS Properties are formatted as `property: value`. An example CSS property is `background-color: red;`. Multiple properties can be set by delimiting the property/value pair with a `;` (eg `background-color: red; font-size: 18px;`)
 
@@ -388,7 +388,7 @@ Query: h3
 Style: color: blue;font-style: italic
 ```
 
-### Notes
+#### Notes
 
 This is an optional field that is updated automatically when a line is updated with a current date and time. You can put notes into this field, but note that if a configuration row is updated his field is overwritten with the current date and time of the change to help you keep track of which rows have been modified and when.
 
@@ -435,29 +435,6 @@ stepThroughConfigFrom = 10;
 stepThroughFrom = 20;
 ```
 
----
-
-# Using EZ WildApricot Web Designer with WildApricot iframe Widgets
-
-The EZ WildApricot Web Designer affects any page loaded from a WildApricot website, including the widgets published through the Website Settings. These are implemented as iframes which load the JavaScript libary just like any web page. It's best to test the content on a regular WildApricot website before implementing the iframe gadgets to make sure all changes are rendering outside the iframe first.
-
-To reference the widgets in an iframe in a different langauge when mutli-lingual mode is turned on use the ?watm-<language> query parameter on the iframe URL in the `src` parameter of the iframe tag.
-
-Example:
-
-```html
-<iframe
-  width="800px"
-  height="4500px"
-  frameborder="no"
-  src="https://mysite.wildapricot.org/widget/Sys/Profile/?watm-french"
->
-</iframe>
-```
-
-The iframe code above Will load the WildApricot profile widget in an iframe and trigger the French version of the profile.
-
-If you omit the ?watm-<language> in the `src` paramater the widget will load in the current language set previously by the language dropdown menu or the previously loaded langauge.
 
 ---
 
@@ -675,6 +652,30 @@ Query: .loginBoxProfileLink
 Replacement Text: Lobster
 Function: googlefont
 ```
+
+---
+
+# Using EZ WildApricot Web Designer with WildApricot iframe Widgets
+
+The EZ WildApricot Web Designer affects any page loaded from a WildApricot website, including the widgets published through the Website Settings. These are implemented as iframes which load the JavaScript libary just like any web page. It's best to test the content on a regular WildApricot website before implementing the iframe gadgets to make sure all changes are rendering outside the iframe first.
+
+To reference the widgets in an iframe in a different langauge when mutli-lingual mode is turned on use the ?watm-<language> query parameter on the iframe URL in the `src` parameter of the iframe tag.
+
+Example:
+
+```html
+<iframe
+  width="800px"
+  height="4500px"
+  frameborder="no"
+  src="https://mysite.wildapricot.org/widget/Sys/Profile/?watm-french"
+>
+</iframe>
+```
+
+The iframe code above Will load the WildApricot profile widget in an iframe and trigger the French version of the profile.
+
+If you omit the ?watm-<language> in the `src` paramater the widget will load in the current language set previously by the language dropdown menu or the previously loaded langauge.
 
 ---
 
@@ -919,3 +920,5 @@ The following open-source code libraries are used by this product. All the libra
 
 2.1.3 - added configurable automatic file backup support of all configuration files
 - added check to see if configuration file has the right column headers 04/24/2024
+
+2.2 - added Table of Contents to README and description of the configuration file columns and how they are used
