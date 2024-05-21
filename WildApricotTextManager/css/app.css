@@ -1,0 +1,289 @@
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons+Outlined");
+
+body {
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+}
+
+body > div:first-of-type {
+  transition: 0.5s;
+}
+
+[class^="watm_"] {
+  box-sizing: border-box;
+}
+
+.watm_actionbar {
+  width: calc(100% - 10px);
+  height: 60px;
+  background-color: #080c15;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: -70px;
+  z-index: 1000;
+  border-radius: 10px;
+  border: solid 3px #111c31;
+  transition: 0.5s;
+  margin: 5px;
+  padding: 0 10px;
+  gap: 10px;
+}
+
+.watm_actionbar > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.watm_actionbar img {
+  height: 100%;
+}
+
+#watm_actionbar_logo {
+  justify-content: flex-start;
+  flex-grow: 1;
+}
+
+#watm_actionbar button {
+  color: white;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.5s, transform 0.3s;
+}
+
+#watm_save_button {
+  background-color: #111c31;
+  border: 2px solid #117a3b;
+}
+
+#watm_save_button:before {
+  font-family: "Material Icons Outlined";
+  content: "\eb60";
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#watm_save_button:hover {
+  background-color: #10b653;
+}
+
+#watm_exit_button {
+  background-color: #111c31;
+  border: 2px solid #a12c2c;
+}
+
+#watm_exit_button:before {
+  font-family: "Material Icons Outlined";
+  content: "\effd";
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#watm_exit_button:hover {
+  background-color: #b61010;
+}
+
+.watm_sidebar {
+  height: calc(100% - 80px);
+  width: 400px;
+  background-color: #080c15;
+  color: white;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding: 15px;
+  padding-top: 40px;
+  position: fixed;
+  right: -500px;
+  top: 70px;
+  margin: 5px;
+  border-radius: 10px;
+  border: solid 3px #111c31;
+}
+
+.watm_active > div:first-of-type {
+  margin-right: 410px;
+  margin-top: 70px;
+}
+
+.watm_active .watm_actionbar {
+  top: 0;
+}
+.watm_active .watm_sidebar {
+  right: 0;
+}
+
+.watm_active #idWaAdminSwitcher {
+  display: none;
+}
+
+.watm_editable_hover {
+  outline: 1px dashed blue !important;
+  outline-offset: -1px;
+  cursor: pointer;
+}
+
+.watm_hover {
+  outline: 1px dashed red !important;
+  outline-offset: -1px;
+  cursor: pointer;
+}
+
+.watm_editable_tag_box {
+  position: fixed;
+  padding: 5px;
+  background-color: blue;
+  color: white;
+  font-weight: bold;
+  z-index: 999999 !important;
+  pointer-events: none;
+  font-size: 11px !important;
+  transform: translate(-50%, "20px");
+}
+
+.watm_tag_box {
+  position: fixed;
+  padding: 5px;
+  background-color: red;
+  color: white;
+  font-weight: bold;
+  z-index: 999999 !important;
+  pointer-events: none;
+  font-size: 11px !important;
+  transform: translate(-50%, "20px");
+}
+
+@keyframes pulseEditable {
+  0% {
+    outline-width: 2px;
+    outline-offset: -2px;
+  }
+  50% {
+    outline-width: 3px;
+    outline-offset: -3px;
+  }
+  100% {
+    outline-width: 2px;
+    outline-offset: -2px;
+  }
+}
+
+@keyframes pulseSelected {
+  0% {
+    outline-width: 2px;
+    outline-offset: -2px;
+  }
+  50% {
+    outline-width: 3px;
+    outline-offset: -3px;
+  }
+  100% {
+    outline-width: 2px;
+    outline-offset: -2px;
+  }
+}
+
+.watm_editable_selected {
+  outline: 1px dashed blue;
+  outline-offset: -1px;
+  cursor: pointer;
+  animation: pulseEditable 2s infinite;
+}
+
+.watm_selected {
+  outline: 1px dashed red;
+  outline-offset: -1px;
+  cursor: pointer;
+  animation: pulseSelected 2s infinite;
+}
+
+#watm_selected_element {
+  margin-bottom: 20px;
+}
+
+#watm_selected_element_tag {
+  background-color: #111c31;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-weight: bold;
+}
+
+#watm_selected_element_id {
+  padding: 5px 10px;
+  color: #777;
+  margin-left: 5px;
+  font-weight: bold;
+}
+
+#watm_selected_element_type {
+  color: #7eaae1 !important;
+  border-top: 2px solid #fff;
+  padding: 5px 0 0 0 !important;
+  margin: 7px 0 0 0 !important;
+  text-transform: capitalize;
+}
+
+#watm_selected_element_text {
+  background: #111c31;
+  border: 4px solid #111c31;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.watmModifyMenu {
+  position: relative;
+  display: inline-block;
+}
+
+.watmModifyMenu_button {
+  border: 1px solid hsl(240, 3.7%, 15.9%);
+  background-color: transparent;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.5s, transform 0.3s;
+}
+
+.watmModifyMenu_button:hover {
+  background-color: #111c31;
+}
+
+.watmModifyMenu_button:before {
+  font-family: "Material Icons Outlined";
+  content: "\e147";
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+.watmModifyMenu_content {
+  display: none;
+  position: absolute;
+  border-radius: 5px;
+  background: hsl(240, 3.7%, 15.9%);
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.watmModifyMenu_content a {
+  color: #fff;
+  padding: 5px 16px;
+  text-decoration: none;
+  display: block;
+  border-radius: 5px;
+}
+
+.watmModifyMenu_content a:hover {
+  background-color: #111c31;
+}
+
+.watmModifyMenu.show .watmModifyMenu_content {
+  display: block;
+}
