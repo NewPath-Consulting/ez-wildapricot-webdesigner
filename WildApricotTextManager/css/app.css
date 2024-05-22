@@ -46,6 +46,9 @@ body > div:first-of-type {
 
 #watm_actionbar_logo {
   justify-content: flex-start;
+}
+
+#watm_actionbar_screen {
   flex-grow: 1;
 }
 
@@ -87,6 +90,52 @@ body > div:first-of-type {
 
 #watm_exit_button:hover {
   background-color: #b61010;
+}
+
+#watm_palette_button {
+  background-color: #111c31;
+  border: 2px solid transparent;
+  border-image: linear-gradient(
+    to bottom right,
+    #b827fc 0%,
+    #2c90fc 25%,
+    #b8fd33 50%,
+    #fec837 75%,
+    #fd1892 100%
+  );
+  border-image-slice: 1;
+}
+
+#watm_palette_button:before {
+  font-family: "Material Icons Outlined";
+  content: "\e40a";
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#watm_actionbar_screen button {
+  margin: 0;
+  background-color: #111c31;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#watm_actionbar_screen button:hover {
+  background-color: #3a4f6e;
+}
+
+#watm_actionbar_screen button.active {
+  outline: none;
+  background-color: #3a4f6e;
+}
+
+#watm_currentScreen_button {
+  border-radius: 5px 0 0 5px !important;
+}
+#watm_missingScreen_button {
+  border-radius: 0 5px 5px 0 !important;
 }
 
 .watm_sidebar {
@@ -286,4 +335,43 @@ body > div:first-of-type {
 
 .watmModifyMenu.show .watmModifyMenu_content {
   display: block;
+}
+
+.watmModCard {
+  border: 1px solid hsl(240, 3.7%, 15.9%);
+  background-color: #0e1627;
+  color: white;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: background-color 0.5s, transform 0.3s;
+  margin-top: 10px;
+}
+
+.watmModCardHeader {
+  background-color: #111c31;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px 5px 0 0;
+  font-size: 14px;
+  transition: background-color 0.5s, transform 0.3s;
+  margin-bottom: 5px;
+}
+
+.modCardRow {
+  padding: 5px 10px;
+}
+
+.modCardRow label {
+  width: 30%;
+  min-width: 100px;
+  margin-right: 10px;
+}
+
+.modCardRow input,
+.modCardRow select {
+  width: 120px;
+  height: 14px;
+  float: right;
+  font-size: 12px;
+  padding: 3px;
 }

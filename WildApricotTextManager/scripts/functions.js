@@ -19,14 +19,15 @@ let removeListeners;
 
 const watmModifyOptions = [
   { type: "text", value: "text", text: "Change Text" },
-  { type: "image", value: "size", text: "Image Size" },
-  { type: "image", value: "border", text: "Set Border" },
-  { type: "container", value: "replace", text: "Replace Text" },
-  { type: "container", value: "regex", text: "Pattern Replace" },
-  { type: "container", value: "border", text: "Set Border" },
+  { type: "text", value: "replace", text: "Replace Text" },
+  { type: "text", value: "regex", text: "Pattern Replace" },
+  { type: "menu", value: "replace", text: "Replace Text" },
+  { type: "menu", value: "regex", text: "Pattern Replace" },
   { type: "link", value: "innerText", text: "Change Link Text" },
   { type: "link", value: "url", text: "Change Link URL" },
   { type: "button", value: "innerText", text: "Change Button Text" },
+  { type: "input", value: "value", text: "Set Value" },
+  { type: "button", value: "placeholder", text: "Change Change Placeholder" },
 ];
 
 /**
@@ -49,6 +50,26 @@ const loadWATM = () => {
     alt: "WATM",
   });
   watmActionbarLogo.appendChild(logoImage);
+
+  /**
+   * Creates screen buttons appends them to the action bar.
+   */
+
+  const watmActionbarScreen = createElementWithAttributes("div", {
+    id: "watm_actionbar_screen",
+  });
+  const watmActionbarScreenCurrent = createElementWithAttributes("button", {
+    id: "watm_currentScreen_button",
+    innerText: "Current Page",
+    className: "active",
+  });
+  const watmActionbarScreenMissing = createElementWithAttributes("button", {
+    id: "watm_missingScreen_button",
+    innerText: "Missing Elements",
+  });
+
+  watmActionbarScreen.appendChild(watmActionbarScreenCurrent);
+  watmActionbarScreen.appendChild(watmActionbarScreenMissing);
 
   /**
    * Creates a save button element and appends it to the action bar.
@@ -78,11 +99,30 @@ const loadWATM = () => {
   watmActionbarExit.appendChild(watmExitButton);
 
   /**
+   * Creates a colour palette button element and appends it to the action bar.
+   */
+
+  const watmActionbarPalette = createElementWithAttributes("div", {
+    id: "watm_actionbar_exit",
+  });
+  const watmActionbarPaletteButton = createElementWithAttributes("button", {
+    id: "watm_palette_button",
+    innerText: "Color Palette",
+  });
+  watmActionbarPalette.appendChild(watmActionbarPaletteButton);
+
+  /**
    * Appends the logo, save button, and exit button to the main action bar.
    */
 
   const watmActionbar = document.getElementById("watm_actionbar");
-  watmActionbar.append(watmActionbarLogo, watmActionbarSave, watmActionbarExit);
+  watmActionbar.append(
+    watmActionbarLogo,
+    watmActionbarScreen,
+    watmActionbarPalette,
+    watmActionbarSave,
+    watmActionbarExit
+  );
 
   /**
    * Creates an instruction element and appends it to the sidebar.
@@ -344,14 +384,14 @@ const outlineElements = () => {
     if (target.hasAttribute("data-watm-id")) {
       const tagName = target.tagName;
 
-      if (!tagBox) {
-        tagBox = document.createElement("div");
-        tagBox.classList.add("watm_tag_box");
-        document.body.appendChild(tagBox);
-      }
+      // if (!tagBox) {
+      //   tagBox = document.createElement("div");
+      //   tagBox.classList.add("watm_tag_box");
+      //   document.body.appendChild(tagBox);
+      // }
 
-      tagBox.textContent = tagName;
-      tagBox.className = "watm_tag_box";
+      // tagBox.textContent = tagName;
+      // tagBox.className = "watm_tag_box";
 
       const hasText = Array.from(target.childNodes).some(
         (node) =>
@@ -359,9 +399,15 @@ const outlineElements = () => {
       );
 
       if (hasText) {
-        tagBox.classList.add("watm_editable_tag_box");
+        //tagBox.classList.add("watm_editable_tag_box");
         target.classList.add("watm_editable_hover");
-      } else {
+      } else if (
+        target.tagName.toLowerCase() === "input" ||
+        target.tagName.toLowerCase() === "select" ||
+        target.tagName.toLowerCase() === "option" ||
+        target.tagName.toLowerCase() === "textarea" ||
+        target.classList.contains("menuInner")
+      ) {
         target.classList.add("watm_hover");
       }
 
@@ -370,20 +416,20 @@ const outlineElements = () => {
   };
 
   const mousemoveHandler = (event) => {
-    if (tagBox) {
-      const left = event.clientX - cursorOffset;
-      const top = event.clientY - cursorOffset;
-      tagBox.style.left = `${left}px`;
-      tagBox.style.top = `${top}px`;
-    }
+    // if (tagBox) {
+    //   const left = event.clientX - cursorOffset;
+    //   const top = event.clientY - cursorOffset;
+    //   tagBox.style.left = `${left}px`;
+    //   tagBox.style.top = `${top}px`;
+    // }
   };
 
   const mouseoutHandler = (event) => {
     const target = event.target;
-    if (tagBox) {
-      tagBox.remove();
-      tagBox = null;
-    }
+    // if (tagBox) {
+    //   tagBox.remove();
+    //   tagBox = null;
+    // }
     target.classList.remove("watm_hover", "watm_editable_hover");
     document.removeEventListener("mousemove", mousemoveHandler);
   };
@@ -437,6 +483,7 @@ const watmInspect = (element) => {
     elType = element.type === "text" ? "Textbox" : element.type;
   if (element.tagName === "TEXTAREA") elType = "Textarea";
   if (element.tagName === "SELECT") elType = "Select";
+  if (element.classList.contains("menuInner")) elType = "Menu";
 
   const watmSelectedElement = document.getElementById("watm_selected_element");
   watmSelectedElement.innerHTML = "";
@@ -458,10 +505,10 @@ const watmInspect = (element) => {
     watmSelectedElementType
   );
 
-  createModifyMenu(elType.toLowerCase());
+  createModifyMenu(elType.toLowerCase(), element.dataset.watmId);
 };
 
-const createModifyMenu = (elType) => {
+const createModifyMenu = (elType, watmId) => {
   const existingWatmModifyMenu = document.querySelector(".watmModifyMenu");
   if (existingWatmModifyMenu) existingWatmModifyMenu.remove();
 
@@ -490,8 +537,7 @@ const createModifyMenu = (elType) => {
       dataset: { value: option.value },
     });
     a.addEventListener("click", (event) => {
-      event.preventDefault();
-      console.log(`Selected: ${option.text} (value: ${option.value})`);
+      addModCard(option.value, option.text, watmId);
     });
     watmModifyMenuContent.appendChild(a);
   });
@@ -520,9 +566,102 @@ const createElementWithAttributes = (tag, attributes) => {
   for (const [key, value] of Object.entries(attributes)) {
     if (key === "dataset") {
       Object.assign(element.dataset, value);
-    } else {
+    } else if (key in element) {
       element[key] = value;
+    } else {
+      element.setAttribute(key, value);
     }
   }
   return element;
+};
+
+const addModCard = (modType, modText, watmId) => {
+  let currTime = Date.now();
+  const watmModCard = createElementWithAttributes("div", {
+    className: "watmModCard",
+    "data-watm-mod-id": `${watmId}_${modType}_${currTime}`,
+  });
+  const watmModCardHeader = createElementWithAttributes("div", {
+    className: "watmModCardHeader",
+    innerText: `${modText}`,
+  });
+
+  const scopeLanguages = ["english", "french"];
+
+  watmModCard.appendChild(watmModCardHeader);
+
+  switch (modType) {
+    case "replace":
+      // Create label and dropdown div
+      const scopeDiv = createElementWithAttributes("div", {
+        className: "modCardRow",
+      });
+      const scopeLabel = createElementWithAttributes("label", {
+        innerText: "Language:",
+        htmlFor: `${watmId}_${modType}_${currTime}_language`,
+      });
+      const scopeDropdown = createElementWithAttributes("select", {
+        id: `${watmId}_${modType}_${currTime}_language`,
+      });
+
+      // Add "All" option separately
+      const allOption = createElementWithAttributes("option", {
+        value: "all",
+        innerText: "All",
+      });
+      scopeDropdown.appendChild(allOption);
+
+      // Populate dropdown with options from array
+      scopeLanguages.forEach((optionText) => {
+        const option = createElementWithAttributes("option", {
+          value: optionText.toLowerCase().replace(/\s+/g, ""),
+          innerText: optionText,
+        });
+        scopeDropdown.appendChild(option);
+      });
+
+      scopeDiv.appendChild(scopeLabel);
+      scopeDiv.appendChild(scopeDropdown);
+
+      // Create first label and textbox div
+      const originalTextDiv = createElementWithAttributes("div", {
+        className: "modCardRow",
+      });
+      const originalTextLabel = createElementWithAttributes("label", {
+        innerText: "Original Text:",
+        htmlFor: `${watmId}_${modType}_${currTime}_OriginalText`,
+      });
+      const originalText = createElementWithAttributes("input", {
+        type: "text",
+        id: `${watmId}_${modType}_${currTime}_OriginalText`,
+      });
+
+      originalTextDiv.appendChild(originalTextLabel);
+      originalTextDiv.appendChild(originalText);
+
+      // Create second label and textbox div
+      const replacementTextDiv = createElementWithAttributes("div", {
+        className: "modCardRow",
+      });
+      const replacementTextLabel = createElementWithAttributes("label", {
+        innerText: "Replacement Text:",
+        htmlFor: `${watmId}_${modType}_${currTime}_ReplacementText`,
+      });
+      const replacementText = createElementWithAttributes("input", {
+        type: "text",
+        id: `${watmId}_${modType}_${currTime}_ReplacementText`,
+      });
+
+      replacementTextDiv.appendChild(replacementTextLabel);
+      replacementTextDiv.appendChild(replacementText);
+
+      // Append all divs to watmModCard
+      watmModCard.appendChild(scopeDiv);
+      watmModCard.appendChild(originalTextDiv);
+      watmModCard.appendChild(replacementTextDiv);
+
+      break;
+  }
+
+  document.getElementById("watm_sidebar").appendChild(watmModCard);
 };
