@@ -1,21 +1,6 @@
-/**
- * Offset for tagbox positioning.
- * @constant {number}
- */
-
 const cursorOffset = -20;
-
-/**
- * Variable to store the function for removing event listeners.
- * @type {Function|undefined}
- */
-
 let removeListeners;
-
-/**
- * Array of modification options for different element types
- * @type {Array<{type: string, value: string, text: string}>}
- */
+let pageCapture;
 
 const watmModifyOptions = [
   { type: "text", value: "text", text: "Change Text" },
@@ -27,21 +12,10 @@ const watmModifyOptions = [
   { type: "link", value: "url", text: "Change Link URL" },
   { type: "button", value: "innerText", text: "Change Button Text" },
   { type: "input", value: "value", text: "Set Value" },
-  { type: "button", value: "placeholder", text: "Change Change Placeholder" },
+  { type: "button", value: "placeholder", text: "Change Placeholder" },
 ];
 
-/**
- * Initializes and loads the editor/inspector
- * This function sets up the action bar with a logo, save button, and exit button,
- * and adds an instruction message to the sidebar. It also sets up event listeners
- * for element outlining and click interception on the webpage.
- */
-
 const loadWATM = () => {
-  /**
-   * Creates a logo element and appends it to the action bar.
-   */
-
   const watmActionbarLogo = createElementWithAttributes("div", {
     id: "watm_actionbar_logo",
   });
@@ -49,11 +23,12 @@ const loadWATM = () => {
     src: `${watmLocation}/css/logo.png`,
     alt: "WATM",
   });
-  watmActionbarLogo.appendChild(logoImage);
+  watmActionbarLogo.append(logoImage);
 
-  /**
-   * Creates screen buttons appends them to the action bar.
-   */
+  const watmActionbarAppName = createElementWithAttributes("div", {
+    id: "watm_actionbar_title",
+    innerText: `EZ WildApricot Designer ${watm_version}`,
+  });
 
   const watmActionbarScreen = createElementWithAttributes("div", {
     id: "watm_actionbar_screen",
@@ -68,12 +43,10 @@ const loadWATM = () => {
     innerText: "Missing Elements",
   });
 
-  watmActionbarScreen.appendChild(watmActionbarScreenCurrent);
-  watmActionbarScreen.appendChild(watmActionbarScreenMissing);
-
-  /**
-   * Creates a save button element and appends it to the action bar.
-   */
+  watmActionbarScreen.append(
+    watmActionbarScreenCurrent,
+    watmActionbarScreenMissing
+  );
 
   const watmActionbarSave = createElementWithAttributes("div", {
     id: "watm_actionbar_save",
@@ -82,11 +55,7 @@ const loadWATM = () => {
     id: "watm_save_button",
     innerText: "Save",
   });
-  watmActionbarSave.appendChild(watmSaveButton);
-
-  /**
-   * Creates an exit button element and appends it to the action bar.
-   */
+  watmActionbarSave.append(watmSaveButton);
 
   const watmActionbarExit = createElementWithAttributes("div", {
     id: "watm_actionbar_exit",
@@ -96,37 +65,93 @@ const loadWATM = () => {
     innerText: "Exit Editor",
   });
   watmExitButton.addEventListener("click", exitEditor);
-  watmActionbarExit.appendChild(watmExitButton);
-
-  /**
-   * Creates a colour palette button element and appends it to the action bar.
-   */
+  watmActionbarExit.append(watmExitButton);
 
   const watmActionbarPalette = createElementWithAttributes("div", {
-    id: "watm_actionbar_exit",
+    id: "watm_actionbar_palette",
   });
   const watmActionbarPaletteButton = createElementWithAttributes("button", {
     id: "watm_palette_button",
-    innerText: "Color Palette",
+    innerText: "Colour Palette",
   });
-  watmActionbarPalette.appendChild(watmActionbarPaletteButton);
 
-  /**
-   * Appends the logo, save button, and exit button to the main action bar.
-   */
+  const watmActionbarPaletteContent = createElementWithAttributes("div", {
+    id: "watm_palette_content",
+  });
+
+  const watmActionbarPaletteContentTop = createElementWithAttributes("div", {
+    className: "watm_palette_top",
+  });
+
+  const watmActionbarPaletteContentInfo = createElementWithAttributes("p", {
+    className: "watm_palette_info",
+    innerText:
+      "Below are the most common colors found on this page. Click on a color to copy it's hex code to the clipboard.",
+  });
+
+  watmActionbarPaletteButton.addEventListener("click", function (event) {
+    watmActionbarPaletteContent.style.display =
+      watmActionbarPaletteContent.style.display === "block" ? "none" : "block";
+    event.stopPropagation();
+  });
+
+  document.addEventListener("click", function (event) {
+    if (
+      event.target !== watmActionbarPaletteButton &&
+      !watmActionbarPaletteContent.contains(event.target)
+    ) {
+      watmActionbarPaletteContent.style.display = "none";
+    }
+  });
+
+  watmActionbarPaletteContent.addEventListener("click", function (event) {
+    event.stopPropagation();
+  });
+
+  watmActionbarPaletteContent.append(
+    watmActionbarPaletteContentTop,
+    watmActionbarPaletteContentInfo
+  );
+
+  const palette = getColorPalette(pageCapture, 9);
+
+  palette.forEach((color) => {
+    const box = document.createElement("div");
+    box.className = "watm_palette_box";
+    box.style.backgroundColor = color.rgb;
+
+    const hexCode = document.createElement("span");
+    hexCode.innerText = color.hex;
+    box.appendChild(hexCode);
+
+    box.addEventListener("click", () => {
+      navigator.clipboard
+        .writeText(color.hex)
+        .then(() => {
+          showWATMToast("Color code copied to clipboard");
+        })
+        .catch((err) => {
+          console.error("Failed to copy text: ", err);
+        });
+    });
+
+    watmActionbarPaletteContent.appendChild(box);
+  });
+
+  watmActionbarPalette.append(
+    watmActionbarPaletteButton,
+    watmActionbarPaletteContent
+  );
 
   const watmActionbar = document.getElementById("watm_actionbar");
   watmActionbar.append(
     watmActionbarLogo,
+    watmActionbarAppName,
     watmActionbarScreen,
     watmActionbarPalette,
     watmActionbarSave,
     watmActionbarExit
   );
-
-  /**
-   * Creates an instruction element and appends it to the sidebar.
-   */
 
   const watmSelectedElement = createElementWithAttributes("div", {
     id: "watm_selected_element",
@@ -135,22 +160,13 @@ const loadWATM = () => {
     id: "watm_selected_element_text",
     innerText: "Click an item on the webpage to inspect and modify it.",
   });
-  watmSelectedElement.appendChild(selectElementText);
+  watmSelectedElement.append(selectElementText);
 
-  document.getElementById("watm_sidebar").appendChild(watmSelectedElement);
-
-  /**
-   * Sets up element outlining and click interception on the webpage.
-   */
+  document.getElementById("watm_sidebar").append(watmSelectedElement);
 
   removeListeners = outlineElements();
   interceptClicks();
 };
-
-/**
- * Handles the 'keydown' event to activate the WATM editor when Ctrl+Shift+E or Cmd+Shift+E is pressed.
- * @param {KeyboardEvent} event - The keyboard event object.
- */
 
 const handleKeydown = (event) => {
   if ((event.ctrlKey || event.metaKey) && event.shiftKey && event.key === "E") {
@@ -161,10 +177,6 @@ const handleKeydown = (event) => {
     }
   }
 };
-
-/**
- * Exits the WATM editor mode, removing the 'watm_active' class and clearing related elements.
- */
 
 const exitEditor = () => {
   document.body.classList.remove("watm_active");
@@ -177,12 +189,6 @@ const exitEditor = () => {
     });
   removeListeners();
 };
-
-/**
- * Generates a CSS selector path for a given HTML element.
- * @param {Element} element - The HTML element for which to generate the CSS path.
- * @returns {string} The CSS path of the element.
- */
 
 const getCssPath = (element) => {
   if (element.tagName === "HTML") return "HTML";
@@ -208,31 +214,8 @@ const getCssPath = (element) => {
   return path.join(" > ");
 };
 
-/**
- * Computes the SHA-1 hash of a given string and returns the first 6 characters of the hash.
- *
- * @param {string} str - The input string to hash.
- * @returns {string} The first 6 characters of the SHA-1 hash of the input string.
- */
-
 const sha1 = (str) => {
-  /**
-   * Rotates a 32-bit number to the left by a given number of bits.
-   *
-   * @param {number} n - The 32-bit number to rotate.
-   * @param {number} s - The number of bits to rotate.
-   * @returns {number} The rotated number.
-   */
-
   const rotate_left = (n, s) => (n << s) | (n >>> (32 - s));
-
-  /**
-   * Converts a 32-bit number to a hexadecimal string.
-   *
-   * @param {number} val - The 32-bit number to convert.
-   * @returns {string} The hexadecimal string representation of the number.
-   */
-
   const cvt_hex = (val) => {
     let str = "";
     for (let i = 7; i >= 0; i--) {
@@ -361,7 +344,7 @@ const sha1 = (str) => {
 
   const hash =
     cvt_hex(H0) + cvt_hex(H1) + cvt_hex(H2) + cvt_hex(H3) + cvt_hex(H4);
-  return hash.slice(0, 6); // Take the first 6 characters to keep it short
+  return hash.slice(0, 6);
 };
 
 const processElements = (rootElement) => {
@@ -383,23 +366,12 @@ const outlineElements = () => {
     const target = event.target;
     if (target.hasAttribute("data-watm-id")) {
       const tagName = target.tagName;
-
-      // if (!tagBox) {
-      //   tagBox = document.createElement("div");
-      //   tagBox.classList.add("watm_tag_box");
-      //   document.body.appendChild(tagBox);
-      // }
-
-      // tagBox.textContent = tagName;
-      // tagBox.className = "watm_tag_box";
-
       const hasText = Array.from(target.childNodes).some(
         (node) =>
           node.nodeType === Node.TEXT_NODE && node.textContent.trim() !== ""
       );
 
       if (hasText) {
-        //tagBox.classList.add("watm_editable_tag_box");
         target.classList.add("watm_editable_hover");
       } else if (
         target.tagName.toLowerCase() === "input" ||
@@ -415,21 +387,10 @@ const outlineElements = () => {
     }
   };
 
-  const mousemoveHandler = (event) => {
-    // if (tagBox) {
-    //   const left = event.clientX - cursorOffset;
-    //   const top = event.clientY - cursorOffset;
-    //   tagBox.style.left = `${left}px`;
-    //   tagBox.style.top = `${top}px`;
-    // }
-  };
+  const mousemoveHandler = (event) => {};
 
   const mouseoutHandler = (event) => {
     const target = event.target;
-    // if (tagBox) {
-    //   tagBox.remove();
-    //   tagBox = null;
-    // }
     target.classList.remove("watm_hover", "watm_editable_hover");
     document.removeEventListener("mousemove", mousemoveHandler);
   };
@@ -471,6 +432,18 @@ const interceptClicks = () => {
 };
 
 const watmInspect = (element) => {
+  const watmSidebar = document.querySelector("#watm_sidebar");
+  const watmModifyMenu = watmSidebar.querySelector(".watmModifyMenu");
+
+  if (watmModifyMenu) {
+    let nextElement = watmModifyMenu.nextElementSibling;
+    while (nextElement) {
+      const elementToRemove = nextElement;
+      nextElement = nextElement.nextElementSibling;
+      watmSidebar.removeChild(elementToRemove);
+    }
+  }
+
   const hasText = Array.from(element.childNodes).some(
     (node) => node.nodeType === Node.TEXT_NODE && node.textContent.trim() !== ""
   );
@@ -490,14 +463,18 @@ const watmInspect = (element) => {
   const watmSelectedElementTag = createElementWithAttributes("span", {
     id: "watm_selected_element_tag",
     innerText: `<${element.tagName}>`,
+    title: "Type of selected element",
   });
   const watmSelectedElementId = createElementWithAttributes("span", {
     id: "watm_selected_element_id",
     innerText: `@${element.dataset.watmId}`,
+    title: "EZ-Tag ID",
   });
   const watmSelectedElementType = createElementWithAttributes("h1", {
     id: "watm_selected_element_type",
     innerText: elType,
+    contenteditable: true,
+    title: "Click to rename",
   });
   watmSelectedElement.append(
     watmSelectedElementTag,
@@ -519,27 +496,26 @@ const createModifyMenu = (elType, watmId) => {
     className: "watmModifyMenu_button",
     textContent: "Add a modification",
   });
-  watmModifyMenuContainer.appendChild(watmModifyMenuButton);
+  watmModifyMenuContainer.append(watmModifyMenuButton);
 
   const watmModifyMenuContent = createElementWithAttributes("div", {
     className: "watmModifyMenu_content",
     id: "watmModifyMenu_content",
   });
-  watmModifyMenuContainer.appendChild(watmModifyMenuContent);
+  watmModifyMenuContainer.append(watmModifyMenuContent);
 
   const filteredOptions = watmModifyOptions.filter(
     (option) => option.type === elType
   );
   filteredOptions.forEach((option) => {
     const a = createElementWithAttributes("a", {
-      href: "#",
       textContent: option.text,
       dataset: { value: option.value },
     });
-    a.addEventListener("click", (event) => {
-      addModCard(option.value, option.text, watmId);
-    });
-    watmModifyMenuContent.appendChild(a);
+    a.addEventListener("click", () =>
+      addModCard(option.value, option.text, watmId)
+    );
+    watmModifyMenuContent.append(a);
   });
 
   const watmSelectedElement = document.getElementById("watm_selected_element");
@@ -559,6 +535,82 @@ const createModifyMenu = (elType, watmId) => {
         .forEach((menu) => menu.classList.remove("show"));
     }
   });
+
+  const watmModCardVisibility = createElementWithAttributes("div", {
+    className: "watmModCardVisibility",
+  });
+  const watmModCardVisibilityShow = createElementWithAttributes("div", {
+    className: "watmModCardVisibilityToggle",
+  });
+  const watmModCardVisibilityHide = createElementWithAttributes("div", {
+    className: "watmModCardVisibilityToggle",
+  });
+
+  const watmModCardVisibilityShowRadio = createElementWithAttributes("input", {
+    id: `${watmId}_show_toggle`,
+    name: `${watmId}_toggle`,
+    type: "radio",
+    checked: true,
+    value: "show",
+  });
+
+  const watmModCardVisibilityHideRadio = createElementWithAttributes("input", {
+    id: `${watmId}_hide_toggle`,
+    name: `${watmId}_toggle`,
+    type: "radio",
+    value: "hide",
+  });
+
+  const watmModCardVisibilityShowLabel = createElementWithAttributes("label", {
+    for: `${watmId}_show_toggle`,
+    innerText: "Show",
+    title: "Show this element",
+  });
+
+  const watmModCardVisibilityHideLabel = createElementWithAttributes("label", {
+    for: `${watmId}_hide_toggle`,
+    innerText: "Hide",
+    title: "Hide this element",
+  });
+
+  watmModCardVisibilityShow.append(
+    watmModCardVisibilityShowRadio,
+    watmModCardVisibilityShowLabel
+  );
+  watmModCardVisibilityHide.append(
+    watmModCardVisibilityHideRadio,
+    watmModCardVisibilityHideLabel
+  );
+  watmModCardVisibility.append(
+    watmModCardVisibilityShow,
+    watmModCardVisibilityHide
+  );
+
+  const watmVisibilityRadios = watmModCardVisibility.querySelectorAll(
+    `input[type=radio][name="${watmId}_toggle"]`
+  );
+  watmVisibilityRadios.forEach((radio) => {
+    radio.addEventListener("change", function () {
+      if (this.value === "show") {
+        document
+          .querySelectorAll("#watm_sidebar .watmModCard")
+          .forEach((card) => {
+            card.classList.remove("watm_element_hidden");
+          });
+      } else {
+        document
+          .querySelectorAll("#watm_sidebar .watmModCard")
+          .forEach((card) => {
+            card.classList.add("watm_element_hidden");
+          });
+      }
+    });
+  });
+
+  watmModifyMenuContainer.insertAdjacentElement(
+    "afterend",
+    watmModCardVisibility
+  );
 };
 
 const createElementWithAttributes = (tag, attributes) => {
@@ -586,82 +638,284 @@ const addModCard = (modType, modText, watmId) => {
     innerText: `${modText}`,
   });
 
-  const scopeLanguages = ["english", "french"];
+  const watmModCardHelpButton = createElementWithAttributes("button", {
+    className: "watmModCardHeaderButton watmModCardHelp",
+    innerHTML: '<i class="material-symbols-outlined">help</i>',
+    title: "View Documentation",
+  });
 
-  watmModCard.appendChild(watmModCardHeader);
+  const watmModCardDeleteButton = createElementWithAttributes("button", {
+    className: "watmModCardHeaderButton watmModCardDelete",
+    innerHTML: '<i class="material-symbols-outlined">delete</i>',
+    title: "Remove Modification",
+  });
+  watmModCardDeleteButton.addEventListener("click", () => {
+    const divToRemove = document.querySelector(
+      `div[data-watm-mod-id="${watmId}_${modType}_${currTime}"]`
+    );
+    if (divToRemove) {
+      const parentContainer = divToRemove.parentElement;
+      let found = false;
+
+      parentContainer.querySelectorAll(".watmModCard").forEach((card) => {
+        if (card === divToRemove) {
+          found = true;
+        } else if (found) {
+          card.classList.add("watm_slide_up");
+        }
+      });
+
+      divToRemove.classList.add("watm_slide_up_delete");
+
+      setTimeout(() => {
+        divToRemove.remove();
+        parentContainer.querySelectorAll(".watmModCard").forEach((card) => {
+          card.classList.remove("watm_slide_up");
+        });
+      }, 500);
+    }
+  });
+
+  const watmModCardEnabled = createElementWithAttributes("label", {
+    className: "watmModCardEnabled",
+  });
+  const watmModCardEnabledToggle = createElementWithAttributes("input", {
+    type: "checkbox",
+    id: `${watmId}_${modType}_${currTime}_enabled`,
+    checked: true,
+  });
+  const watmModCardEnabledToggleIcon = createElementWithAttributes("i", {
+    className: "material-symbols-outlined watm_toggle_on",
+    id: `${watmId}_${modType}_${currTime}_enabled_icon`,
+    innerText: "toggle_on",
+    title: "Set as Active or Inactive",
+  });
+
+  watmModCardEnabledToggle.addEventListener("change", () => {
+    const watm_card_inputs = watmModCard.querySelectorAll(
+      `.modCardRow input,.modCardRow select`
+    );
+    if (watmModCardEnabledToggle.checked) {
+      watmModCardEnabledToggleIcon.classList.remove("watm_toggle_off");
+      watmModCardEnabledToggleIcon.classList.add("watm_toggle_on");
+      watmModCardEnabledToggleIcon.textContent = "toggle_on";
+      watm_card_inputs.forEach((input) => {
+        input.disabled = false;
+      });
+    } else {
+      watmModCardEnabledToggleIcon.classList.remove("watm_toggle_on");
+      watmModCardEnabledToggleIcon.classList.add("watm_toggle_off");
+      watmModCardEnabledToggleIcon.textContent = "toggle_off";
+      watm_card_inputs.forEach((input) => {
+        input.disabled = true;
+      });
+    }
+  });
+
+  watmModCardEnabled.append(
+    watmModCardEnabledToggle,
+    watmModCardEnabledToggleIcon
+  );
+  watmModCardHeader.append(
+    watmModCardEnabled,
+    watmModCardDeleteButton,
+    watmModCardHelpButton
+  );
+  watmModCard.append(watmModCardHeader);
+
+  const scopeLanguages = ["english", "french"];
 
   switch (modType) {
     case "replace":
-      // Create label and dropdown div
-      const scopeDiv = createElementWithAttributes("div", {
-        className: "modCardRow",
-      });
-      const scopeLabel = createElementWithAttributes("label", {
-        innerText: "Language:",
-        htmlFor: `${watmId}_${modType}_${currTime}_language`,
-      });
-      const scopeDropdown = createElementWithAttributes("select", {
-        id: `${watmId}_${modType}_${currTime}_language`,
-      });
-
-      // Add "All" option separately
-      const allOption = createElementWithAttributes("option", {
-        value: "all",
-        innerText: "All",
-      });
-      scopeDropdown.appendChild(allOption);
-
-      // Populate dropdown with options from array
-      scopeLanguages.forEach((optionText) => {
-        const option = createElementWithAttributes("option", {
-          value: optionText.toLowerCase().replace(/\s+/g, ""),
-          innerText: optionText,
-        });
-        scopeDropdown.appendChild(option);
-      });
-
-      scopeDiv.appendChild(scopeLabel);
-      scopeDiv.appendChild(scopeDropdown);
-
-      // Create first label and textbox div
-      const originalTextDiv = createElementWithAttributes("div", {
-        className: "modCardRow",
-      });
-      const originalTextLabel = createElementWithAttributes("label", {
-        innerText: "Original Text:",
-        htmlFor: `${watmId}_${modType}_${currTime}_OriginalText`,
-      });
-      const originalText = createElementWithAttributes("input", {
-        type: "text",
-        id: `${watmId}_${modType}_${currTime}_OriginalText`,
-      });
-
-      originalTextDiv.appendChild(originalTextLabel);
-      originalTextDiv.appendChild(originalText);
-
-      // Create second label and textbox div
-      const replacementTextDiv = createElementWithAttributes("div", {
-        className: "modCardRow",
-      });
-      const replacementTextLabel = createElementWithAttributes("label", {
-        innerText: "Replacement Text:",
-        htmlFor: `${watmId}_${modType}_${currTime}_ReplacementText`,
-      });
-      const replacementText = createElementWithAttributes("input", {
-        type: "text",
-        id: `${watmId}_${modType}_${currTime}_ReplacementText`,
-      });
-
-      replacementTextDiv.appendChild(replacementTextLabel);
-      replacementTextDiv.appendChild(replacementText);
-
-      // Append all divs to watmModCard
-      watmModCard.appendChild(scopeDiv);
-      watmModCard.appendChild(originalTextDiv);
-      watmModCard.appendChild(replacementTextDiv);
-
+    case "text":
+      appendTextReplaceElements(
+        watmModCard,
+        watmId,
+        modType,
+        currTime,
+        scopeLanguages
+      );
+      break;
+    case "regex":
+      appendRegexReplaceElements(
+        watmModCard,
+        watmId,
+        modType,
+        currTime,
+        scopeLanguages
+      );
       break;
   }
 
-  document.getElementById("watm_sidebar").appendChild(watmModCard);
+  document.getElementById("watm_sidebar").append(watmModCard);
 };
+
+const appendTextReplaceElements = (
+  watmModCard,
+  watmId,
+  modType,
+  currTime,
+  scopeLanguages
+) => {
+  appendLanguageDropdown(
+    watmModCard,
+    watmId,
+    modType,
+    currTime,
+    scopeLanguages
+  );
+  appendInputField(
+    watmModCard,
+    "Original Text:",
+    `${watmId}_${modType}_${currTime}_OriginalText`
+  );
+  appendInputField(
+    watmModCard,
+    "Replacement Text:",
+    `${watmId}_${modType}_${currTime}_ReplacementText`
+  );
+};
+
+const appendRegexReplaceElements = (
+  watmModCard,
+  watmId,
+  modType,
+  currTime,
+  scopeLanguages
+) => {
+  appendLanguageDropdown(
+    watmModCard,
+    watmId,
+    modType,
+    currTime,
+    scopeLanguages
+  );
+  appendInputField(
+    watmModCard,
+    "Regex Pattern:",
+    `${watmId}_${modType}_${currTime}_Pattern`
+  );
+  appendInputField(
+    watmModCard,
+    "Replacement Text:",
+    `${watmId}_${modType}_${currTime}_ReplacementText`
+  );
+};
+
+const appendLanguageDropdown = (
+  watmModCard,
+  watmId,
+  modType,
+  currTime,
+  scopeLanguages
+) => {
+  const scopeDiv = createElementWithAttributes("div", {
+    className: "modCardRow",
+  });
+  const scopeLabel = createElementWithAttributes("label", {
+    innerText: "Language:",
+    htmlFor: `${watmId}_${modType}_${currTime}_language`,
+  });
+  const scopeDropdown = createElementWithAttributes("select", {
+    id: `${watmId}_${modType}_${currTime}_language`,
+  });
+
+  const allOption = createElementWithAttributes("option", {
+    value: "all",
+    innerText: "All",
+  });
+  scopeDropdown.append(allOption);
+
+  scopeLanguages.forEach((optionText) => {
+    const option = createElementWithAttributes("option", {
+      value: optionText.toLowerCase().replace(/\s+/g, ""),
+      innerText: optionText,
+    });
+    scopeDropdown.append(option);
+  });
+
+  scopeDiv.append(scopeLabel, scopeDropdown);
+  watmModCard.append(scopeDiv);
+};
+
+const appendInputField = (watmModCard, labelText, inputId) => {
+  const inputDiv = createElementWithAttributes("div", {
+    className: "modCardRow",
+  });
+  const inputLabel = createElementWithAttributes("label", {
+    innerText: labelText,
+    htmlFor: inputId,
+  });
+  const inputField = createElementWithAttributes("input", {
+    type: "text",
+    id: inputId,
+  });
+  inputDiv.append(inputLabel, inputField);
+  watmModCard.append(inputDiv);
+};
+
+const getColorPalette = (imageData, numColors = 6) => {
+  const colorMap = {};
+  const totalPixels = imageData.data.length / 4;
+
+  for (let i = 0; i < totalPixels; i++) {
+    const r = imageData.data[i * 4];
+    const g = imageData.data[i * 4 + 1];
+    const b = imageData.data[i * 4 + 2];
+    const a = imageData.data[i * 4 + 3];
+
+    if (a < 255) continue; // Ignore transparent pixels
+
+    // Ignore white and black colors
+    if (
+      (r === 255 && g === 255 && b === 255) ||
+      (r === 0 && g === 0 && b === 0)
+    )
+      continue;
+
+    const rgb = `${r},${g},${b}`;
+
+    if (!colorMap[rgb]) {
+      colorMap[rgb] = 0;
+    }
+
+    colorMap[rgb]++;
+  }
+
+  const sortedColors = Object.keys(colorMap).sort(
+    (a, b) => colorMap[b] - colorMap[a]
+  );
+  const palette = sortedColors.slice(0, numColors).map((rgb) => {
+    const [r, g, b] = rgb.split(",").map(Number);
+    return { rgb: `rgb(${r},${g},${b})`, hex: rgbToHex(r, g, b) };
+  });
+
+  return palette;
+};
+const rgbToHex = (r, g, b) => {
+  return (
+    "#" +
+    ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase()
+  );
+};
+
+function showWATMToast(message) {
+  const toasterContainer = document.getElementById("watm_toaster_container");
+
+  const toast = document.createElement("div");
+  toast.className = "watm_toaster";
+  toast.textContent = message;
+
+  toasterContainer.appendChild(toast);
+
+  setTimeout(() => {
+    toast.classList.add("show");
+  }, 10);
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+    toast.addEventListener("transitionend", () => {
+      toast.remove();
+    });
+  }, 3000);
+}
