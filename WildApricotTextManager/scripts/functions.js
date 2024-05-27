@@ -1,6 +1,15 @@
-const cursorOffset = -20;
+let draftJSON;
 let removeListeners;
 let pageCapture;
+
+if (typeof checkCode == "undefined") {
+  let checkCode = "8euj9o9frkj3wz2nqm6xmcp4y1mdy5tp";
+}
+if (typeof license_key == "undefined") {
+  let license_key = "";
+}
+
+const scopeLanguages = ["english", "french"];
 
 const watmModifyOptions = [
   { type: "text", value: "text", text: "Change Text" },
@@ -16,6 +25,7 @@ const watmModifyOptions = [
 ];
 
 const loadWATM = () => {
+  draftJSON = {};
   const watmActionbarLogo = createElementWithAttributes("div", {
     id: "watm_actionbar_logo",
   });
@@ -86,7 +96,7 @@ const loadWATM = () => {
   const watmActionbarPaletteContentInfo = createElementWithAttributes("p", {
     className: "watm_palette_info",
     innerText:
-      "Below are the most common colors found on this page. Click on a color to copy it's hex code to the clipboard.",
+      "Below are the most common colours found on this page. Click on a colour to copy its hex code to the clipboard.",
   });
 
   watmActionbarPaletteButton.addEventListener("click", function (event) {
@@ -115,20 +125,20 @@ const loadWATM = () => {
 
   const palette = getColorPalette(pageCapture, 9);
 
-  palette.forEach((color) => {
+  palette.forEach((colour) => {
     const box = document.createElement("div");
     box.className = "watm_palette_box";
-    box.style.backgroundColor = color.rgb;
+    box.style.backgroundColor = colour.rgb;
 
     const hexCode = document.createElement("span");
-    hexCode.innerText = color.hex;
+    hexCode.innerText = colour.hex;
     box.appendChild(hexCode);
 
     box.addEventListener("click", () => {
       navigator.clipboard
-        .writeText(color.hex)
+        .writeText(colour.hex)
         .then(() => {
-          showWATMToast("Color code copied to clipboard");
+          showWATMToast("Colour code copied to clipboard");
         })
         .catch((err) => {
           console.error("Failed to copy text: ", err);
@@ -164,6 +174,29 @@ const loadWATM = () => {
 
   document.getElementById("watm_sidebar").append(watmSelectedElement);
 
+  document
+    .getElementById("watm_sidebar")
+    .addEventListener("change", function (event) {
+      if (
+        event.target.tagName === "INPUT" ||
+        event.target.tagName === "SELECT"
+      ) {
+        saveWATMDraft(event.target.id);
+      }
+    });
+
+  const debouncedToast = WATMdebounce((WATMtag) => {
+    saveWATMDraft(WATMtag);
+  }, 1000);
+
+  document
+    .getElementById("watm_sidebar")
+    .addEventListener("input", function (event) {
+      if (event.target.isContentEditable) {
+        debouncedToast(event.target.id);
+      }
+    });
+
   removeListeners = outlineElements();
   interceptClicks();
 };
@@ -187,7 +220,9 @@ const exitEditor = () => {
     .forEach((element) => {
       element.classList.remove("watm_selected", "watm_editable_selected");
     });
-  removeListeners();
+  if (typeof removeListeners === "function") {
+    removeListeners();
+  }
 };
 
 const getCssPath = (element) => {
@@ -471,8 +506,11 @@ const watmInspect = (element) => {
     title: "EZ-Tag ID",
   });
   const watmSelectedElementType = createElementWithAttributes("h1", {
-    id: "watm_selected_element_type",
-    innerText: elType,
+    id: `${element.dataset.watmId}_elementname`,
+    className: "watm_selected_element_type",
+    innerText: draftJSON[element.dataset.watmId]
+      ? draftJSON[element.dataset.watmId].elementName
+      : elType,
     contenteditable: true,
     title: "Click to rename",
   });
@@ -483,6 +521,17 @@ const watmInspect = (element) => {
   );
 
   createModifyMenu(elType.toLowerCase(), element.dataset.watmId);
+
+  if (draftJSON[element.dataset.watmId]) {
+    const modifications = draftJSON[element.dataset.watmId].modifications;
+    for (const watm_key in modifications) {
+      if (modifications.hasOwnProperty(watm_key)) {
+        const modType = modifications[watm_key][0].modType;
+        const modText = watmModifyOptions.find((opt) => opt.value === modType);
+        addModCard(modType, modText.text, element.dataset.watmId, watm_key);
+      }
+    }
+  }
 };
 
 const createModifyMenu = (elType, watmId) => {
@@ -627,15 +676,22 @@ const createElementWithAttributes = (tag, attributes) => {
   return element;
 };
 
-const addModCard = (modType, modText, watmId) => {
-  let currTime = Date.now();
+const addModCard = (modType, modText, watmId, watm_key = Date.now()) => {
+  const modId = `${watmId}_${modType}_${watm_key}`;
+  const currentModification =
+    draftJSON[watmId] && draftJSON[watmId].modifications[watm_key]
+      ? draftJSON[watmId].modifications[watm_key][0]
+      : {};
+
   const watmModCard = createElementWithAttributes("div", {
     className: "watmModCard",
-    "data-watm-mod-id": `${watmId}_${modType}_${currTime}`,
+    id: modId,
+    dataset: { watmModId: modId },
   });
+
   const watmModCardHeader = createElementWithAttributes("div", {
     className: "watmModCardHeader",
-    innerText: `${modText}`,
+    innerText: modText,
   });
 
   const watmModCardHelpButton = createElementWithAttributes("button", {
@@ -649,9 +705,10 @@ const addModCard = (modType, modText, watmId) => {
     innerHTML: '<i class="material-symbols-outlined">delete</i>',
     title: "Remove Modification",
   });
+
   watmModCardDeleteButton.addEventListener("click", () => {
     const divToRemove = document.querySelector(
-      `div[data-watm-mod-id="${watmId}_${modType}_${currTime}"]`
+      `div[data-watm-mod-id="${modId}"]`
     );
     if (divToRemove) {
       const parentContainer = divToRemove.parentElement;
@@ -664,6 +721,10 @@ const addModCard = (modType, modText, watmId) => {
           card.classList.add("watm_slide_up");
         }
       });
+
+      if (draftJSON[watmId] && draftJSON[watmId].modifications[watm_key]) {
+        delete draftJSON[watmId].modifications[watm_key];
+      }
 
       divToRemove.classList.add("watm_slide_up_delete");
 
@@ -679,37 +740,35 @@ const addModCard = (modType, modText, watmId) => {
   const watmModCardEnabled = createElementWithAttributes("label", {
     className: "watmModCardEnabled",
   });
+
   const watmModCardEnabledToggle = createElementWithAttributes("input", {
     type: "checkbox",
-    id: `${watmId}_${modType}_${currTime}_enabled`,
+    id: `${modId}_enabled`,
     checked: true,
   });
+
   const watmModCardEnabledToggleIcon = createElementWithAttributes("i", {
     className: "material-symbols-outlined watm_toggle_on",
-    id: `${watmId}_${modType}_${currTime}_enabled_icon`,
+    id: `${modId}_enabled_icon`,
     innerText: "toggle_on",
     title: "Set as Active or Inactive",
   });
 
   watmModCardEnabledToggle.addEventListener("change", () => {
     const watm_card_inputs = watmModCard.querySelectorAll(
-      `.modCardRow input,.modCardRow select`
+      ".modCardRow input, .modCardRow select"
     );
-    if (watmModCardEnabledToggle.checked) {
-      watmModCardEnabledToggleIcon.classList.remove("watm_toggle_off");
-      watmModCardEnabledToggleIcon.classList.add("watm_toggle_on");
-      watmModCardEnabledToggleIcon.textContent = "toggle_on";
-      watm_card_inputs.forEach((input) => {
-        input.disabled = false;
-      });
-    } else {
-      watmModCardEnabledToggleIcon.classList.remove("watm_toggle_on");
-      watmModCardEnabledToggleIcon.classList.add("watm_toggle_off");
-      watmModCardEnabledToggleIcon.textContent = "toggle_off";
-      watm_card_inputs.forEach((input) => {
-        input.disabled = true;
-      });
-    }
+    const isEnabled = watmModCardEnabledToggle.checked;
+
+    watmModCardEnabledToggleIcon.classList.toggle(
+      "watm_toggle_off",
+      !isEnabled
+    );
+    watmModCardEnabledToggleIcon.classList.toggle("watm_toggle_on", isEnabled);
+    watmModCardEnabledToggleIcon.textContent = isEnabled
+      ? "toggle_on"
+      : "toggle_off";
+    watm_card_inputs.forEach((input) => (input.disabled = !isEnabled));
   });
 
   watmModCardEnabled.append(
@@ -723,26 +782,78 @@ const addModCard = (modType, modText, watmId) => {
   );
   watmModCard.append(watmModCardHeader);
 
-  const scopeLanguages = ["english", "french"];
+  const appendInputFields = (fields, values = {}) => {
+    fields.forEach(({ label, type, idSuffix, json_key }) => {
+      const div = createElementWithAttributes("div", {
+        className: "modCardRow",
+      });
+      const labelElem = createElementWithAttributes("label", {
+        innerText: label,
+        htmlFor: `${modId}_${idSuffix}`,
+      });
+      const input = createElementWithAttributes("input", {
+        type,
+        id: `${modId}_${idSuffix}`,
+        value: values[json_key] || "",
+      });
+      div.append(labelElem, input);
+      watmModCard.append(div);
+    });
+  };
 
+  appendLanguageDropdown(modId, watmModCard, currentModification);
+
+  const modValues = currentModification;
   switch (modType) {
     case "replace":
+      appendInputFields(
+        [
+          {
+            label: "Original Text:",
+            type: "text",
+            idSuffix: "OriginalText",
+            json_key: "originalText",
+          },
+          {
+            label: "Replacement Text:",
+            type: "text",
+            idSuffix: "ReplacementText",
+            json_key: "replacementText",
+          },
+        ],
+        modValues
+      );
+      break;
     case "text":
-      appendTextReplaceElements(
-        watmModCard,
-        watmId,
-        modType,
-        currTime,
-        scopeLanguages
+      appendInputFields(
+        [
+          {
+            label: "Replacement Text:",
+            type: "text",
+            idSuffix: "ReplacementText",
+            json_key: "replacementText",
+          },
+        ],
+        modValues
       );
       break;
     case "regex":
-      appendRegexReplaceElements(
-        watmModCard,
-        watmId,
-        modType,
-        currTime,
-        scopeLanguages
+      appendInputFields(
+        [
+          {
+            label: "Regex Pattern:",
+            type: "text",
+            idSuffix: "Pattern",
+            json_key: "pattern",
+          },
+          {
+            label: "Replacement Text:",
+            type: "text",
+            idSuffix: "ReplacementText",
+            json_key: "replacementText",
+          },
+        ],
+        modValues
       );
       break;
   }
@@ -750,74 +861,21 @@ const addModCard = (modType, modText, watmId) => {
   document.getElementById("watm_sidebar").append(watmModCard);
 };
 
-const appendTextReplaceElements = (
-  watmModCard,
-  watmId,
-  modType,
-  currTime,
-  scopeLanguages
-) => {
-  appendLanguageDropdown(
-    watmModCard,
-    watmId,
-    modType,
-    currTime,
-    scopeLanguages
-  );
-  appendInputField(
-    watmModCard,
-    "Original Text:",
-    `${watmId}_${modType}_${currTime}_OriginalText`
-  );
-  appendInputField(
-    watmModCard,
-    "Replacement Text:",
-    `${watmId}_${modType}_${currTime}_ReplacementText`
-  );
-};
-
-const appendRegexReplaceElements = (
-  watmModCard,
-  watmId,
-  modType,
-  currTime,
-  scopeLanguages
-) => {
-  appendLanguageDropdown(
-    watmModCard,
-    watmId,
-    modType,
-    currTime,
-    scopeLanguages
-  );
-  appendInputField(
-    watmModCard,
-    "Regex Pattern:",
-    `${watmId}_${modType}_${currTime}_Pattern`
-  );
-  appendInputField(
-    watmModCard,
-    "Replacement Text:",
-    `${watmId}_${modType}_${currTime}_ReplacementText`
-  );
-};
-
 const appendLanguageDropdown = (
   watmModCard,
-  watmId,
-  modType,
-  currTime,
-  scopeLanguages
+  watmModCardEl,
+  currentModification = {}
 ) => {
   const scopeDiv = createElementWithAttributes("div", {
     className: "modCardRow",
   });
+
   const scopeLabel = createElementWithAttributes("label", {
     innerText: "Language:",
-    htmlFor: `${watmId}_${modType}_${currTime}_language`,
+    htmlFor: `${watmModCard}_language`,
   });
   const scopeDropdown = createElementWithAttributes("select", {
-    id: `${watmId}_${modType}_${currTime}_language`,
+    id: `${watmModCard}_language`,
   });
 
   const allOption = createElementWithAttributes("option", {
@@ -834,8 +892,13 @@ const appendLanguageDropdown = (
     scopeDropdown.append(option);
   });
 
+  // Set the dropdown value based on currentModification
+  if (currentModification.language) {
+    scopeDropdown.value = currentModification.language;
+  }
+
   scopeDiv.append(scopeLabel, scopeDropdown);
-  watmModCard.append(scopeDiv);
+  watmModCardEl.append(scopeDiv);
 };
 
 const appendInputField = (watmModCard, labelText, inputId) => {
@@ -854,8 +917,8 @@ const appendInputField = (watmModCard, labelText, inputId) => {
   watmModCard.append(inputDiv);
 };
 
-const getColorPalette = (imageData, numColors = 6) => {
-  const colorMap = {};
+const getColorPalette = (imageData, numColours = 6) => {
+  const colourMap = {};
   const totalPixels = imageData.data.length / 4;
 
   for (let i = 0; i < totalPixels; i++) {
@@ -864,9 +927,8 @@ const getColorPalette = (imageData, numColors = 6) => {
     const b = imageData.data[i * 4 + 2];
     const a = imageData.data[i * 4 + 3];
 
-    if (a < 255) continue; // Ignore transparent pixels
+    if (a < 255) continue;
 
-    // Ignore white and black colors
     if (
       (r === 255 && g === 255 && b === 255) ||
       (r === 0 && g === 0 && b === 0)
@@ -875,23 +937,24 @@ const getColorPalette = (imageData, numColors = 6) => {
 
     const rgb = `${r},${g},${b}`;
 
-    if (!colorMap[rgb]) {
-      colorMap[rgb] = 0;
+    if (!colourMap[rgb]) {
+      colourMap[rgb] = 0;
     }
 
-    colorMap[rgb]++;
+    colourMap[rgb]++;
   }
 
-  const sortedColors = Object.keys(colorMap).sort(
-    (a, b) => colorMap[b] - colorMap[a]
+  const sortedColours = Object.keys(colourMap).sort(
+    (a, b) => colourMap[b] - colourMap[a]
   );
-  const palette = sortedColors.slice(0, numColors).map((rgb) => {
+  const palette = sortedColours.slice(0, numColours).map((rgb) => {
     const [r, g, b] = rgb.split(",").map(Number);
     return { rgb: `rgb(${r},${g},${b})`, hex: rgbToHex(r, g, b) };
   });
 
   return palette;
 };
+
 const rgbToHex = (r, g, b) => {
   return (
     "#" +
@@ -918,4 +981,270 @@ function showWATMToast(message) {
       toast.remove();
     });
   }, 3000);
+}
+
+function WATMdebounce(func, delay) {
+  let timeoutId;
+  return function (...args) {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      func.apply(this, args);
+    }, delay);
+  };
+}
+
+function initializeDraftID(watm_id, elementType, elementName, isVisible) {
+  if (!draftJSON[watm_id]) {
+    draftJSON[watm_id] = {
+      type: elementType,
+      elementName: elementName,
+      isVisible: isVisible,
+      modifications: {},
+    };
+  } else {
+    draftJSON[watm_id].isVisible = isVisible;
+    draftJSON[watm_id].elementName = elementName;
+  }
+}
+
+function buildWATMDraft(
+  watm_id,
+  watm_key,
+  modType,
+  enabled,
+  language,
+  originalText = "",
+  replacementText = "",
+  pattern = ""
+) {
+  const modification = {
+    modType: modType,
+    language: language,
+    enabled: enabled,
+  };
+
+  switch (modType) {
+    case "text":
+      if (replacementText) {
+        modification.replacementText = replacementText;
+      } else {
+        return;
+      }
+      break;
+    case "replace":
+      if (originalText) {
+        modification.originalText = originalText;
+        modification.replacementText = replacementText;
+      } else {
+        return;
+      }
+
+      break;
+    case "regex":
+      if (pattern) {
+        modification.pattern = pattern;
+        modification.replacementText = replacementText;
+      } else {
+        return;
+      }
+
+      break;
+    case "button":
+      break;
+    case "input":
+      break;
+    case "menu":
+      break;
+  }
+
+  draftJSON[watm_id].modifications[watm_key] = [];
+
+  draftJSON[watm_id].modifications[watm_key].push(modification);
+}
+
+const saveWATMDraft = (WATMtag) => {
+  let watm_id = WATMtag.split("_")[0];
+  let watm_name = document.getElementById(`${watm_id}_elementname`).innerText;
+  let elementType = document.getElementById(`${watm_id}_elementname`).tagName;
+  let isVisibleRadio = document.querySelector(
+    `input[name="${watm_id}_toggle"]:checked`
+  );
+  let isVisible = isVisibleRadio.value === "show";
+
+  initializeDraftID(watm_id, elementType, watm_name, isVisible);
+
+  let sidebar = document.getElementById("watm_sidebar");
+  sidebar.querySelectorAll(".watmModCard").forEach((mod) => {
+    let watm_type = mod.id.split("_")[1];
+    let watm_key = mod.id.split("_")[2];
+    let language, originalText, replacementText, pattern;
+    switch (watm_type) {
+      case "text":
+        language = document.getElementById(`${mod.id}_language`).value;
+        replacementText = document.getElementById(
+          `${mod.id}_ReplacementText`
+        ).value;
+        break;
+      case "replace":
+        language = document.getElementById(`${mod.id}_language`).value;
+        originalText = document.getElementById(`${mod.id}_OriginalText`).value;
+        replacementText = document.getElementById(
+          `${mod.id}_ReplacementText`
+        ).value;
+        break;
+      case "regex":
+        language = document.getElementById(`${mod.id}_language`).value;
+        pattern = document.getElementById(`${mod.id}_Pattern`).value;
+        replacementText = document.getElementById(
+          `${mod.id}_ReplacementText`
+        ).value;
+        break;
+      case "button":
+        break;
+      case "input":
+        break;
+      case "menu":
+        break;
+    }
+
+    enabled = document.getElementById(`${mod.id}_enabled`).checked;
+
+    buildWATMDraft(
+      watm_id,
+      watm_key,
+      watm_type,
+      enabled,
+      language,
+      originalText,
+      replacementText,
+      pattern
+    );
+  });
+  console.log(draftJSON);
+  showWATMToast("Draft changes saved");
+};
+
+const checkLicense = async () => {
+  let license;
+
+  const checkUrl = `https://hook.us1.make.com/${checkCode}`;
+
+  if (license_key !== "") {
+    license = getCookie("watmlicense");
+    if (license) {
+      if (license == "trial") {
+        showWATMToast("EZ Designer running in trial mode");
+        console.log("EZ Designer running in trial mode");
+        loadWATM(license);
+      } else if (license == "invalid") {
+        showWATMToast("Invalid License Key for EZ Designer");
+        console.log("Invalid License Key for EZ Designer");
+        exitEditor();
+      } else {
+        console.log("EZ Designer is running");
+        loadWATM(license);
+      }
+    } else {
+      try {
+        const response = await Promise.race([
+          fetch(`${checkUrl}/?json=true&key=${license_key}`),
+          watmTimeout(3000),
+        ]);
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (
+          data["license-error"] === "no valid key found" ||
+          !data.Products.includes("watm")
+        ) {
+          license = "invalid";
+          showWATMToast("Invalid License Key for EZ Designer");
+          exitEditor();
+        } else {
+          const expiryDate = Date.parse(data["expiration date"]);
+
+          if (
+            data.Products.includes("watm") &&
+            data["Support Level"] === "support" &&
+            expiryDate >= Date.now()
+          ) {
+            license = "active";
+          }
+
+          if (data.Products.includes("watm") && expiryDate < Date.now()) {
+            license = "expired";
+            showWATMToast("License Key for EZ Designer expired");
+            exitEditor();
+          }
+        }
+
+        setCookie("watmlicense", license);
+        console.log("EZ Designer is running");
+        loadWATM(license);
+      } catch (error) {
+        if (error.message === "Request timed out") {
+          showWATMToast(
+            "EZ Web Designer License Server took too long to respond"
+          );
+          console.log(
+            "EZ Web Designer License Server took too long to respond - loading in Trial mode."
+          );
+          license = "trial";
+          showWATMToast("EZ Designer running in trial mode");
+          console.log("EZ Designer running in trial mode");
+          loadWATM(license);
+        } else {
+          showWATMToast(
+            "Could not verify license - Please check CORS settings"
+          );
+          console.log(`EZ Web Designer License Fetch request error: ${error}`);
+          exitEditor();
+        }
+      }
+    }
+  } else {
+    license = "trial";
+    showWATMToast("EZ Designer running in trial mode");
+    console.log("EZ Designer running in trial mode");
+    setCookie("watmlicense", license);
+    loadWATM(license);
+  }
+};
+
+const setCookie = (key, value) => {
+  var expires = new Date();
+  expires.setTime(expires.getTime() + 1 * 24 * 60 * 60 * 1000);
+  document.cookie =
+    key +
+    "=" +
+    value +
+    ";path=/;expires=" +
+    expires.toUTCString() +
+    "; SameSite=None; Secure";
+};
+
+const getCookie = (key) => {
+  var keyValue = document.cookie.match("(^|;) ?" + key + "=([^;]*)(;|$)");
+  if (keyValue && keyValue.length > 0) {
+    keyValue = keyValue[2];
+
+    if (!isNaN(keyValue)) {
+      keyValue = Number(keyValue);
+    } else if (keyValue.toLowerCase() == "true") {
+      keyValue = true;
+    } else if (keyValue.toLowerCase() == "false") {
+      keyValue = false;
+    }
+  }
+  return keyValue;
+};
+
+function watmTimeout(delay) {
+  return new Promise((_, reject) =>
+    setTimeout(() => reject(new Error("Request timed out")), delay)
+  );
 }

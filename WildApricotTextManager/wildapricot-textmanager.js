@@ -90,17 +90,19 @@ const startWATM = () => {
 const toggleWATM = () => {
   if (!document.body.classList.contains("watm_active")) {
     document.body.classList.add("watm_active");
-    loadWATM();
+    checkLicense();
   }
 };
 
-const createAdminLink = (innerText, href = "#") => {
+const createAdminLink = (innerText, href) => {
   const container = document.createElement("div");
   container.className = "-wa-admin-switcher_admin-view-link-container";
 
   const link = document.createElement("a");
   link.target = "_blank";
-  link.href = href;
+  if (href) {
+    link.href = href;
+  }
   link.innerText = innerText;
   link.className = "-wa-admin-switcher_link";
 

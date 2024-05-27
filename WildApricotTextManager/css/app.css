@@ -120,6 +120,10 @@ body > div:first-of-type {
   vertical-align: top;
 }
 
+#watm_palette_button:hover {
+  background-color: #3a4f6e;
+}
+
 #watm_actionbar_screen button {
   margin: 0;
   background-color: #111c31;
@@ -291,7 +295,7 @@ body > div:first-of-type {
   font-weight: bold;
 }
 
-#watm_selected_element_type {
+.watm_selected_element_type {
   color: #7eaae1 !important;
   border-top: 2px solid #fff;
   padding: 5px 0 0 0 !important;
