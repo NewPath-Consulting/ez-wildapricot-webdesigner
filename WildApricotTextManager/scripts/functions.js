@@ -1,6 +1,7 @@
 let draftJSON;
-let removeListeners;
+let removeListeners = [];
 let pageCapture;
+let editorLoaded = false;
 
 if (typeof checkCode == "undefined") {
   let checkCode = "8euj9o9frkj3wz2nqm6xmcp4y1mdy5tp";
@@ -21,11 +22,15 @@ const watmModifyOptions = [
   { type: "link", value: "url", text: "Change Link URL" },
   { type: "button", value: "innerText", text: "Change Button Text" },
   { type: "input", value: "value", text: "Set Value" },
-  { type: "button", value: "placeholder", text: "Change Placeholder" },
+  { type: "input", value: "placeholder", text: "Change Placeholder" },
+  { type: "input", value: "innerText", text: "Change Text" },
 ];
 
 const loadWATM = () => {
+  if (editorLoaded) return;
+
   draftJSON = {};
+
   const watmActionbarLogo = createElementWithAttributes("div", {
     id: "watm_actionbar_logo",
   });
@@ -105,14 +110,19 @@ const loadWATM = () => {
     event.stopPropagation();
   });
 
-  document.addEventListener("click", function (event) {
+  const documentClickHandler = function (event) {
     if (
       event.target !== watmActionbarPaletteButton &&
       !watmActionbarPaletteContent.contains(event.target)
     ) {
       watmActionbarPaletteContent.style.display = "none";
     }
-  });
+  };
+
+  document.addEventListener("click", documentClickHandler);
+  removeListeners.push(() =>
+    document.removeEventListener("click", documentClickHandler)
+  );
 
   watmActionbarPaletteContent.addEventListener("click", function (event) {
     event.stopPropagation();
@@ -174,31 +184,46 @@ const loadWATM = () => {
 
   document.getElementById("watm_sidebar").append(watmSelectedElement);
 
+  const watmSidebarChangeHandler = function (event) {
+    if (event.target.tagName === "INPUT" || event.target.tagName === "SELECT") {
+      saveWATMDraft(event.target.id);
+    }
+  };
+
   document
     .getElementById("watm_sidebar")
-    .addEventListener("change", function (event) {
-      if (
-        event.target.tagName === "INPUT" ||
-        event.target.tagName === "SELECT"
-      ) {
-        saveWATMDraft(event.target.id);
-      }
-    });
+    .addEventListener("change", watmSidebarChangeHandler);
+  removeListeners.push(() =>
+    document
+      .getElementById("watm_sidebar")
+      .removeEventListener("change", watmSidebarChangeHandler)
+  );
 
   const debouncedToast = WATMdebounce((WATMtag) => {
     saveWATMDraft(WATMtag);
   }, 1000);
 
+  const watmSidebarInputHandler = function (event) {
+    if (event.target.isContentEditable) {
+      debouncedToast(event.target.id);
+    }
+  };
+
   document
     .getElementById("watm_sidebar")
-    .addEventListener("input", function (event) {
-      if (event.target.isContentEditable) {
-        debouncedToast(event.target.id);
-      }
-    });
+    .addEventListener("input", watmSidebarInputHandler);
+  removeListeners.push(() =>
+    document
+      .getElementById("watm_sidebar")
+      .removeEventListener("input", watmSidebarInputHandler)
+  );
 
-  removeListeners = outlineElements();
+  const outlineRemoveListeners = outlineElements();
+  removeListeners.push(outlineRemoveListeners);
+
   interceptClicks();
+
+  editorLoaded = true;
 };
 
 const handleKeydown = (event) => {
@@ -220,9 +245,11 @@ const exitEditor = () => {
     .forEach((element) => {
       element.classList.remove("watm_selected", "watm_editable_selected");
     });
-  if (typeof removeListeners === "function") {
-    removeListeners();
-  }
+
+  removeListeners.forEach((removeListener) => removeListener());
+  removeListeners = [];
+
+  editorLoaded = false;
 };
 
 const getCssPath = (element) => {
@@ -892,7 +919,6 @@ const appendLanguageDropdown = (
     scopeDropdown.append(option);
   });
 
-  // Set the dropdown value based on currentModification
   if (currentModification.language) {
     scopeDropdown.value = currentModification.language;
   }
