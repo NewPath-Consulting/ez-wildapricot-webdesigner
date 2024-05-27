@@ -445,10 +445,6 @@ body > div:first-of-type {
   left: -70px;
 }
 
-#idWaAdminSwitcher {
-  width: 345px !important;
-}
-
 .-wa-admin-switcher_link {
   cursor: pointer;
 }

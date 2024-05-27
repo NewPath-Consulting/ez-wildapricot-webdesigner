@@ -1,5 +1,6 @@
 const watm_version = 3.0;
 
+let ezAdminLink = [];
 const currentScript = document.currentScript;
 const watmLocation = currentScript.src.substring(
   0,
@@ -72,17 +73,15 @@ const startWATM = () => {
 
   watmIcon.addEventListener("click", toggleWATM);
 
-  const watmHero = createAdminLink(
-    "Hero Call",
-    "https://newpathconsulting.com/wildapricot-hero/"
-  );
   const watmInspect = createAdminLink("EZ Designer");
+
+  ezAdminLink.forEach((entry, index) => {
+    createAdminLink(entry[0], (URL = entry[1]));
+  });
 
   watmInspect.querySelector("a").addEventListener("click", toggleWATM);
 
   document.body.append(watmToaster, watmSidebar, watmActionbar, watmIcon);
-  insertAdminLink(watmHero);
-  insertAdminLink(watmInspect);
 
   document.addEventListener("keydown", handleKeydown);
 };
@@ -96,7 +95,8 @@ const toggleWATM = () => {
 
 const createAdminLink = (innerText, href) => {
   const container = document.createElement("div");
-  container.className = "-wa-admin-switcher_admin-view-link-container";
+  container.className =
+    "-wa-admin-switcher_admin-view-link-container watm_admin_link";
 
   const link = document.createElement("a");
   link.target = "_blank";
@@ -107,13 +107,28 @@ const createAdminLink = (innerText, href) => {
   link.className = "-wa-admin-switcher_link";
 
   container.appendChild(link);
-  return container;
+  return insertAdminLink(container);
 };
 
 const insertAdminLink = (linkContainer) => {
   const parentElement = document.getElementById("idWaAdminSwitcher");
   if (parentElement) {
-    const firstChild = parentElement.firstChild;
-    parentElement.insertBefore(linkContainer, firstChild);
+    const adminLinks = parentElement.querySelectorAll(".watm_admin_link");
+    if (adminLinks.length > 0) {
+      const lastAdminLink = adminLinks[adminLinks.length - 1];
+      if (lastAdminLink.nextSibling) {
+        parentElement.insertBefore(linkContainer, lastAdminLink.nextSibling);
+      } else {
+        parentElement.appendChild(linkContainer);
+      }
+    } else {
+      // If no .watm_admin_link elements, insert at the beginning
+      const firstChild = parentElement.firstChild;
+      parentElement.insertBefore(linkContainer, firstChild);
+    }
+    // Update the width of the parent element to accommodate the new linkContainer
+    parentElement.style.width =
+      parentElement.offsetWidth + linkContainer.offsetWidth + "px";
   }
+  return linkContainer;
 };
