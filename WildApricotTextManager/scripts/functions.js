@@ -943,7 +943,11 @@ const appendInputField = (watmModCard, labelText, inputId) => {
   watmModCard.append(inputDiv);
 };
 
-const getColorPalette = (imageData, numColours = 6) => {
+const getColorPalette = (
+  imageData,
+  numColours = 6,
+  similarityThreshold = 30
+) => {
   const colourMap = {};
   const totalPixels = imageData.data.length / 4;
 
@@ -973,10 +977,25 @@ const getColorPalette = (imageData, numColours = 6) => {
   const sortedColours = Object.keys(colourMap).sort(
     (a, b) => colourMap[b] - colourMap[a]
   );
-  const palette = sortedColours.slice(0, numColours).map((rgb) => {
+
+  const palette = [];
+
+  for (const rgb of sortedColours) {
+    if (palette.length >= numColours) break;
+
     const [r, g, b] = rgb.split(",").map(Number);
-    return { rgb: `rgb(${r},${g},${b})`, hex: rgbToHex(r, g, b) };
-  });
+    const isTooSimilar = palette.some((colour) => {
+      const [pr, pg, pb] = colour.rgb.slice(4, -1).split(",").map(Number);
+      const distance = Math.sqrt(
+        Math.pow(r - pr, 2) + Math.pow(g - pg, 2) + Math.pow(b - pb, 2)
+      );
+      return distance < similarityThreshold;
+    });
+
+    if (!isTooSimilar) {
+      palette.push({ rgb: `rgb(${r},${g},${b})`, hex: rgbToHex(r, g, b) });
+    }
+  }
 
   return palette;
 };
