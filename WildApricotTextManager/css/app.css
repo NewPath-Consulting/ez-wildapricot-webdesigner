@@ -610,3 +610,27 @@ body > div:first-of-type {
   opacity: 1;
   transform: translateX(0);
 }
+
+#watmDebugWindow {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 100%);
+  width: 70%;
+  height: 60%;
+  background-color: #111c31;
+  border: 1px solid #080c15;
+  color: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 1s ease;
+  opacity: 0;
+  z-index: 99999999999;
+  overflow: auto;
+}
+
+#watmDebugWindow.show {
+  opacity: 1;
+  transform: translate(-50%, -40%);
+}

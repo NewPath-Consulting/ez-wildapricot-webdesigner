@@ -1,6 +1,8 @@
 const watm_version = 3.0;
 
 let ezAdminLink = [];
+let watm_languages = [];
+let debugMode = false;
 const currentScript = document.currentScript;
 const watmLocation = currentScript.src.substring(
   0,
@@ -15,7 +17,7 @@ const initializeWATM = () => {
   loadCSS(`${watmLocation}/css/app.css`);
   loadScript(`${watmLocation}/scripts/functions.js`, () => {
     loadScript(
-      "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js",
+      "https://cdn.jsdelivr.net/npm/html2canvas-pro@1.5.0/dist/html2canvas-pro.min.js",
       startWATM
     );
   });

@@ -2,6 +2,7 @@ let draftJSON;
 let removeListeners = [];
 let pageCapture;
 let editorLoaded = false;
+let debugVisible = false;
 
 if (typeof checkCode == "undefined") {
   let checkCode = "8euj9o9frkj3wz2nqm6xmcp4y1mdy5tp";
@@ -10,20 +11,15 @@ if (typeof license_key == "undefined") {
   let license_key = "";
 }
 
-const scopeLanguages = ["english", "french"];
+const scopeLanguages = watm_languages;
 
 const watmModifyOptions = [
   { type: "text", value: "text", text: "Change Text" },
-  { type: "text", value: "replace", text: "Replace Text" },
-  { type: "text", value: "regex", text: "Pattern Replace" },
-  { type: "menu", value: "replace", text: "Replace Text" },
-  { type: "menu", value: "regex", text: "Pattern Replace" },
-  { type: "link", value: "innerText", text: "Change Link Text" },
+  { type: "link", value: "linkText", text: "Change Link Text" },
   { type: "link", value: "url", text: "Change Link URL" },
-  { type: "button", value: "innerText", text: "Change Button Text" },
-  { type: "input", value: "value", text: "Set Value" },
-  { type: "input", value: "placeholder", text: "Change Placeholder" },
-  { type: "input", value: "innerText", text: "Change Text" },
+  { type: "button", value: "buttonValue", text: "Change Button Text" },
+  { type: "textbox", value: "placeholder", text: "Change Placeholder Text" },
+  { type: "dropdown", value: "dropdown", text: "Change Dropdown Value" },
 ];
 
 const loadWATM = () => {
@@ -48,19 +44,32 @@ const loadWATM = () => {
   const watmActionbarScreen = createElementWithAttributes("div", {
     id: "watm_actionbar_screen",
   });
-  const watmActionbarScreenCurrent = createElementWithAttributes("button", {
-    id: "watm_currentScreen_button",
-    innerText: "Current Page",
-    className: "active",
+
+  const watmActionbarExportPage = createElementWithAttributes("button", {
+    id: "watm_exportPage_button",
+    innerText: "Export Current Page",
   });
-  const watmActionbarScreenMissing = createElementWithAttributes("button", {
-    id: "watm_missingScreen_button",
-    innerText: "Missing Elements",
+
+  const watmActionbarExportAll = createElementWithAttributes("button", {
+    id: "watm_exportAll_button",
+    innerText: "Export All Site Mods",
+  });
+
+  const watmActionbarExportMissing = createElementWithAttributes("button", {
+    id: "watm_exportMissing_button",
+    innerText: "Export Missing Mods",
+  });
+
+  const watmActionbarImportMods = createElementWithAttributes("button", {
+    id: "watm_importMods_button",
+    innerText: "Import Mods",
   });
 
   watmActionbarScreen.append(
-    watmActionbarScreenCurrent,
-    watmActionbarScreenMissing
+    watmActionbarExportPage,
+    watmActionbarExportMissing,
+    watmActionbarExportAll,
+    watmActionbarImportMods
   );
 
   const watmActionbarSave = createElementWithAttributes("div", {
@@ -233,6 +242,56 @@ const handleKeydown = (event) => {
       document.body.classList.add("watm_active");
       loadWATM();
     }
+  }
+  if (
+    debugMode &&
+    editorLoaded &&
+    !debugVisible &&
+    (event.ctrlKey || event.metaKey) &&
+    event.shiftKey &&
+    event.key === "Z"
+  ) {
+    debugVisible = true;
+    var webpageContentContainer = document.querySelector(
+      "body > div:first-of-type"
+    );
+
+    const watmDebugWindow = createElementWithAttributes("div", {
+      id: "watmDebugWindow",
+    });
+
+    webpageContentContainer.appendChild(watmDebugWindow);
+    setTimeout(function () {
+      document.getElementById("watmDebugWindow").classList.add("show");
+    }, 100);
+
+    debugClose = createElementWithAttributes("button", {
+      innerText: "Close",
+      onclick: () => {
+        watmDebugWindow.remove();
+        debugVisible = false;
+      },
+    });
+
+    debugExport = createElementWithAttributes("button", {
+      innerText: "Export Page",
+      onclick: () => {
+        exportFilename = `EZ-Designer - ${document.title} (${Date.now()}).csv`;
+        watmExportPage(exportFilename);
+      },
+    });
+
+    watmDebugWindow.append(
+      createElementWithAttributes("h1", {
+        innerText: "Debug Window: Draft JSON",
+      }),
+      document.createElement("hr"),
+      debugClose,
+      debugExport,
+      createElementWithAttributes("pre", {
+        innerText: JSON.stringify(draftJSON, null, 2),
+      })
+    );
   }
 };
 
@@ -422,8 +481,6 @@ const processElements = (rootElement) => {
 };
 
 const outlineElements = () => {
-  let tagBox = null;
-
   const mouseoverHandler = (event) => {
     const target = event.target;
     if (target.hasAttribute("data-watm-id")) {
@@ -435,14 +492,12 @@ const outlineElements = () => {
 
       if (hasText) {
         target.classList.add("watm_editable_hover");
-      } else if (
-        target.tagName.toLowerCase() === "input" ||
-        target.tagName.toLowerCase() === "select" ||
-        target.tagName.toLowerCase() === "option" ||
-        target.tagName.toLowerCase() === "textarea" ||
-        target.classList.contains("menuInner")
-      ) {
+      } else if (target.tagName.toLowerCase() === "input") {
         target.classList.add("watm_hover");
+      } else if (target.tagName.toLowerCase() === "select") {
+        target.classList.add("watm_hover");
+      } else {
+        target.classList.add("watm_uneditable");
       }
 
       document.addEventListener("mousemove", mousemoveHandler);
@@ -490,6 +545,9 @@ const interceptClicks = () => {
       }
       watmInspect(clickedElement);
     }
+    if (clickedElement.classList.contains("watm_uneditable")) {
+      event.preventDefault();
+    }
   });
 };
 
@@ -513,11 +571,15 @@ const watmInspect = (element) => {
   if (hasText) elType = "Text";
   if (element.tagName === "IMG") elType = "Image";
   if (element.tagName === "A") elType = "Link";
-  if (element.tagName === "BUTTON") elType = "Button";
-  if (element.tagName === "INPUT")
-    elType = element.type === "text" ? "Textbox" : element.type;
-  if (element.tagName === "TEXTAREA") elType = "Textarea";
-  if (element.tagName === "SELECT") elType = "Select";
+  if (element.tagName === "SELECT") elType = "Dropdown";
+  if (element.tagName === "INPUT") {
+    elType =
+      element.type === "submit"
+        ? "Button"
+        : element.type === "text"
+        ? "Textbox"
+        : element.type;
+  }
   if (element.classList.contains("menuInner")) elType = "Menu";
 
   const watmSelectedElement = document.getElementById("watm_selected_element");
@@ -532,19 +594,64 @@ const watmInspect = (element) => {
     innerText: `@${element.dataset.watmId}`,
     title: "EZ-Tag ID",
   });
-  const watmSelectedElementType = createElementWithAttributes("h1", {
-    id: `${element.dataset.watmId}_elementname`,
+
+  customLabel = draftJSON[element.dataset.watmId]
+    ? draftJSON[element.dataset.watmId].originalContent
+    : document.querySelector(`[data-watm-id="${element.dataset.watmId}"]`)
+        .tagName === "SELECT"
+    ? (() => {
+        const labelElement = document.querySelector(
+          `#${document
+            .querySelector(`[data-watm-id="${element.dataset.watmId}"]`)
+            .id.substring(
+              0,
+              document
+                .querySelector(`[data-watm-id="${element.dataset.watmId}"]`)
+                .id.lastIndexOf("_")
+            )}_titleLabel`
+        );
+        return labelElement ? labelElement.innerText + " Dropdown" : "Dropdown";
+      })()
+    : document.querySelector(`[data-watm-id="${element.dataset.watmId}"]`)
+        .type === "submit"
+    ? document.querySelector(`[data-watm-id="${element.dataset.watmId}"]`)
+        .value + " Button"
+    : document.querySelector(`[data-watm-id="${element.dataset.watmId}"]`)
+        .type === "text"
+    ? (() => {
+        const labelElement = document.querySelector(
+          `#${document
+            .querySelector(`[data-watm-id="${element.dataset.watmId}"]`)
+            .id.substring(
+              0,
+              document
+                .querySelector(`[data-watm-id="${element.dataset.watmId}"]`)
+                .id.lastIndexOf("_")
+            )}_titleLabel`
+        );
+        return labelElement ? labelElement.innerText + " Textbox" : "Textbox";
+      })()
+    : document.querySelector(`[data-watm-id="${element.dataset.watmId}"]`)
+        .innerText.length > 20
+    ? document
+        .querySelector(`[data-watm-id="${element.dataset.watmId}"]`)
+        .innerText.slice(0, 20) + "..."
+    : document.querySelector(`[data-watm-id="${element.dataset.watmId}"]`)
+        .innerText;
+
+  const watmSelectedCustomLabel = createElementWithAttributes("h1", {
+    id: `${element.dataset.watmId}_customLabel`,
     className: "watm_selected_element_type",
     innerText: draftJSON[element.dataset.watmId]
-      ? draftJSON[element.dataset.watmId].elementName
-      : elType,
+      ? draftJSON[element.dataset.watmId].customLabel
+      : customLabel,
     contenteditable: true,
     title: "Click to rename",
   });
   watmSelectedElement.append(
     watmSelectedElementTag,
     watmSelectedElementId,
-    watmSelectedElementType
+    watmSelectedCustomLabel
   );
 
   createModifyMenu(elType.toLowerCase(), element.dataset.watmId);
@@ -883,6 +990,77 @@ const addModCard = (modType, modText, watmId, watm_key = Date.now()) => {
         modValues
       );
       break;
+    case "linkText":
+      appendInputFields(
+        [
+          {
+            label: "Replacement Text:",
+            type: "link",
+            idSuffix: "linkText",
+            json_key: "linkText",
+          },
+        ],
+        modValues
+      );
+      break;
+    case "url":
+      appendInputFields(
+        [
+          {
+            label: "New URL:",
+            type: "link",
+            idSuffix: "linkUrl",
+            json_key: "linkUrl",
+          },
+        ],
+        modValues
+      );
+      break;
+    case "buttonValue":
+      appendInputFields(
+        [
+          {
+            label: "Button Text:",
+            type: "button",
+            idSuffix: "buttonValue",
+            json_key: "buttonValue",
+          },
+        ],
+        modValues
+      );
+      break;
+    case "placeholder":
+      appendInputFields(
+        [
+          {
+            label: "Placeholder Text:",
+            type: "textbox",
+            idSuffix: "placeholder",
+            json_key: "placeholder",
+          },
+        ],
+        modValues
+      );
+      break;
+    case "dropdown":
+      appendInputFields(
+        [
+          {
+            label: "Original Option:",
+            type: "dropdown",
+            idSuffix: "optionOriginal",
+            json_key: "optionOriginal",
+          },
+          {
+            label: "Replacement Option:",
+            type: "dropdown",
+            idSuffix: "optionReplacement",
+            json_key: "optionReplacement",
+          },
+        ],
+        modValues
+      );
+      break;
   }
 
   document.getElementById("watm_sidebar").append(watmModCard);
@@ -913,8 +1091,8 @@ const appendLanguageDropdown = (
 
   scopeLanguages.forEach((optionText) => {
     const option = createElementWithAttributes("option", {
-      value: optionText.toLowerCase().replace(/\s+/g, ""),
-      innerText: optionText,
+      value: optionText[1].toLowerCase().replace(/\s+/g, ""),
+      innerText: optionText[0],
     });
     scopeDropdown.append(option);
   });
@@ -1038,17 +1216,22 @@ function WATMdebounce(func, delay) {
   };
 }
 
-function initializeDraftID(watm_id, elementType, elementName, isVisible) {
+function initializeDraftID(watm_id, elementType, customLabel, isVisible) {
   if (!draftJSON[watm_id]) {
+    let originalContent = document.querySelector(
+      `[data-watm-id="${watm_id}"]`
+    ).innerText;
+
     draftJSON[watm_id] = {
       type: elementType,
-      elementName: elementName,
+      customLabel: customLabel,
       isVisible: isVisible,
+      originalContent: originalContent,
       modifications: {},
     };
   } else {
     draftJSON[watm_id].isVisible = isVisible;
-    draftJSON[watm_id].elementName = elementName;
+    draftJSON[watm_id].customLabel = customLabel;
   }
 }
 
@@ -1060,7 +1243,13 @@ function buildWATMDraft(
   language,
   originalText = "",
   replacementText = "",
-  pattern = ""
+  pattern = "",
+  linkText = "",
+  linkUrl = "",
+  buttonValue = "",
+  placeholder = "",
+  optionOriginal = "",
+  optionReplacement = ""
 ) {
   const modification = {
     modType: modType,
@@ -1092,13 +1281,42 @@ function buildWATMDraft(
       } else {
         return;
       }
-
+      break;
+    case "linkText":
+      if (linkText) {
+        modification.innerText = innerText;
+      } else {
+        return;
+      }
+      break;
+    case "url":
+      if (linkUrl) {
+        modification.linkUrl = linkUrl;
+      } else {
+        return;
+      }
       break;
     case "button":
+      if (buttonValue) {
+        modification.buttonValue = buttonValue;
+      } else {
+        return;
+      }
       break;
-    case "input":
+    case "textbox":
+      if (placeholder) {
+        modification.placeholder = placeholder;
+      } else {
+        return;
+      }
       break;
-    case "menu":
+    case "dropdown":
+      if (optionOriginal && optionReplacement) {
+        modification.optionOriginal = optionOriginal;
+        modification.optionReplacement = optionReplacement;
+      } else {
+        return;
+      }
       break;
   }
 
@@ -1109,8 +1327,10 @@ function buildWATMDraft(
 
 const saveWATMDraft = (WATMtag) => {
   let watm_id = WATMtag.split("_")[0];
-  let watm_name = document.getElementById(`${watm_id}_elementname`).innerText;
-  let elementType = document.getElementById(`${watm_id}_elementname`).tagName;
+  let watm_name = document.getElementById(`${watm_id}_customLabel`).innerText;
+  let elementType = document.querySelector(
+    `[data-watm-id="${watm_id}"]`
+  ).tagName;
   let isVisibleRadio = document.querySelector(
     `input[name="${watm_id}_toggle"]:checked`
   );
@@ -1122,13 +1342,24 @@ const saveWATMDraft = (WATMtag) => {
   sidebar.querySelectorAll(".watmModCard").forEach((mod) => {
     let watm_type = mod.id.split("_")[1];
     let watm_key = mod.id.split("_")[2];
-    let language, originalText, replacementText, pattern;
+    let language,
+      originalText,
+      replacementText,
+      pattern,
+      linkText,
+      linkUrl,
+      buttonValue,
+      placeholder,
+      optionOriginal,
+      optionReplacement;
     switch (watm_type) {
       case "text":
         language = document.getElementById(`${mod.id}_language`).value;
         replacementText = document.getElementById(
           `${mod.id}_ReplacementText`
         ).value;
+        document.querySelector(`[data-watm-id="${watm_id}"]`).innerText =
+          replacementText;
         break;
       case "replace":
         language = document.getElementById(`${mod.id}_language`).value;
@@ -1144,11 +1375,47 @@ const saveWATMDraft = (WATMtag) => {
           `${mod.id}_ReplacementText`
         ).value;
         break;
+      case "linkText":
+        language = document.getElementById(`${mod.id}_language`).value;
+        linkText = document.getElementById(`${mod.id}_linkText`).value;
+        document.querySelector(`[data-watm-id="${watm_id}"]`).innerText =
+          linkText;
+        break;
+      case "url":
+        language = document.getElementById(`${mod.id}_language`).value;
+        linkUrl = document.getElementById(`${mod.id}_linkUrl`).value;
+        document.querySelector(`[data-watm-id="${watm_id}"]`).href = linkUrl;
+        break;
       case "button":
+        language = document.getElementById(`${mod.id}_language`).value;
+        buttonValue = document.getElementById(`${mod.id}_buttonValue`).value;
+        document.querySelector(`[data-watm-id="${watm_id}"]`).href =
+          buttonValue;
         break;
-      case "input":
+      case "placeholder":
+        language = document.getElementById(`${mod.id}_language`).value;
+        placeholder = document.getElementById(`${mod.id}_placeholder`).value;
+        document.querySelector(`[data-watm-id="${watm_id}"]`).placeholder =
+          placeholder;
         break;
-      case "menu":
+      case "dropdown":
+        language = document.getElementById(`${mod.id}_language`).value;
+        optionOriginal = document.getElementById(
+          `${mod.id}_optionOriginal`
+        ).value;
+        optionReplacement = document.getElementById(
+          `${mod.id}_optionReplacement`
+        ).value;
+        if (optionOriginal && optionReplacement) {
+          let optionRegex = new RegExp(optionOriginal, "gi");
+          document
+            .querySelectorAll(`[data-watm-id="${watm_id}"] option`)
+            .forEach((option) => {
+              if (option.text === optionOriginal) {
+                option.text = optionReplacement;
+              }
+            });
+        }
         break;
     }
 
@@ -1162,10 +1429,15 @@ const saveWATMDraft = (WATMtag) => {
       language,
       originalText,
       replacementText,
-      pattern
+      pattern,
+      linkText,
+      linkUrl,
+      buttonValue,
+      placeholder,
+      optionOriginal,
+      optionReplacement
     );
   });
-  console.log(draftJSON);
   showWATMToast("Draft changes saved");
 };
 
@@ -1292,4 +1564,144 @@ function watmTimeout(delay) {
   return new Promise((_, reject) =>
     setTimeout(() => reject(new Error("Request timed out")), delay)
   );
+}
+
+function watmJsonToCsv(json, includeOriginalContent = true) {
+  const baseHeaders = ["ez_id", "type", "customLabel", "isVisible"];
+
+  if (includeOriginalContent) {
+    baseHeaders.push("originalContent");
+  }
+
+  const modificationHeaders = new Set();
+  const rows = [];
+
+  for (const id in json) {
+    const baseData = json[id];
+    for (const modId in baseData.modifications) {
+      baseData.modifications[modId].forEach((mod) => {
+        Object.keys(mod).forEach((key) => {
+          if (!baseHeaders.includes(key)) {
+            modificationHeaders.add(key);
+          }
+        });
+      });
+    }
+  }
+
+  const allHeaders = [
+    ...baseHeaders,
+    "modificationId",
+    ...Array.from(modificationHeaders),
+  ];
+
+  function getRowValues(obj, prefix = "") {
+    const row = {};
+    for (const key in obj) {
+      const prefixedKey = prefix ? `${prefix}.${key}` : key;
+      if (typeof obj[key] === "object" && !Array.isArray(obj[key])) {
+        Object.assign(row, getRowValues(obj[key], prefixedKey));
+      } else {
+        row[prefixedKey] = obj[key];
+      }
+    }
+    return row;
+  }
+
+  const container = document.querySelector("body > div:first-of-type");
+  const elements = container.querySelectorAll("[data-watm-id]");
+  elements.forEach((element) => {
+    if (["SCRIPT", "STYLE"].includes(element.tagName)) {
+      return;
+    }
+
+    const id = element.getAttribute("data-watm-id");
+    const containsDirectText = Array.from(element.childNodes).some(
+      (node) =>
+        node.nodeType === Node.TEXT_NODE && node.textContent.trim() !== ""
+    );
+    const isSubmitButton =
+      element.tagName === "BUTTON" && element.type === "submit";
+
+    if (containsDirectText || isSubmitButton) {
+      const originalContent = isSubmitButton
+        ? element.value
+        : element.textContent.trim();
+      let customLabel =
+        originalContent.length > 20
+          ? originalContent.substring(0, 20)
+          : originalContent;
+      const baseRow = { ez_id: id, customLabel, type: element.tagName };
+
+      if (includeOriginalContent) {
+        baseRow.originalContent = originalContent;
+      }
+
+      if (json[id]) {
+        const jsonData = json[id];
+        if (jsonData.customLabel) {
+          baseRow.customLabel = jsonData.customLabel;
+        }
+        if (includeOriginalContent) {
+          baseRow.originalContent =
+            jsonData.originalContent || baseRow.originalContent;
+        }
+        baseRow.isVisible = jsonData.isVisible;
+
+        const modifications = jsonData.modifications;
+        if (Object.keys(modifications).length === 0) {
+          rows.push(baseRow);
+        } else {
+          for (const modId in modifications) {
+            modifications[modId].forEach((mod) => {
+              const modRow = getRowValues(mod);
+              const combinedRow = {
+                ...baseRow,
+                modificationId: modId,
+                ...modRow,
+              };
+              rows.push(combinedRow);
+            });
+          }
+        }
+      } else {
+        rows.push(baseRow);
+      }
+    }
+  });
+
+  const csvContent = [
+    allHeaders.join(","),
+    ...rows.map((row) =>
+      allHeaders
+        .map((header) => {
+          const value = row[header] || "";
+          return typeof value === "number" ? value : JSON.stringify(value);
+        })
+        .join(",")
+    ),
+  ].join("\n");
+
+  // Add BOM for UTF-8
+  const bom = "\uFEFF";
+  return bom + csvContent;
+}
+
+function watmExportPage(
+  filename = "output.csv",
+  includeOriginalContent = true
+) {
+  const csvData = watmJsonToCsv(draftJSON, includeOriginalContent);
+  const csvDataURI =
+    "data:text/csv;charset=utf-8," + encodeURIComponent(csvData);
+
+  const link = document.createElement("a");
+  link.href = csvDataURI;
+  link.download = filename;
+
+  document.body.appendChild(link);
+
+  link.click();
+
+  document.body.removeChild(link);
 }
