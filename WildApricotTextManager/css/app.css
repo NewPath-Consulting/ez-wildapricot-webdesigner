@@ -10,11 +10,11 @@ body > div:first-of-type {
   transition: 0.5s;
 }
 
-[class^="watm_"] {
+[class^="ez_"] {
   box-sizing: border-box;
 }
 
-.watm_actionbar {
+.ez_actionbar {
   width: calc(100% - 10px);
   height: 60px;
   background-color: #080c15;
@@ -33,33 +33,33 @@ body > div:first-of-type {
   gap: 10px;
 }
 
-.watm_actionbar > div {
+.ez_actionbar > div {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
 }
 
-.watm_actionbar img {
+.ez_actionbar img {
   height: 100%;
 }
 
-#watm_actionbar_logo {
+#ez_actionbar_logo {
   justify-content: flex-start;
 }
 
-#watm_actionbar_title {
+#ez_actionbar_title {
   text-transform: uppercase;
   font-weight: bold;
   font-size: 16px;
   padding: 0 15px;
 }
 
-#watm_actionbar_screen {
+#ez_actionbar_screen {
   flex-grow: 1;
 }
 
-#watm_actionbar button {
+#ez_actionbar button {
   color: white;
   border-radius: 5px;
   padding: 10px 20px;
@@ -67,39 +67,39 @@ body > div:first-of-type {
   transition: background-color 0.5s, transform 0.3s;
 }
 
-#watm_save_button {
+#ez_save_button {
   background-color: #111c31;
   border: 2px solid #117a3b;
 }
 
-#watm_save_button:before {
+#ez_save_button:before {
   font-family: "Material Symbols Outlined";
   content: "\eb60";
   padding-right: 5px;
   vertical-align: top;
 }
 
-#watm_save_button:hover {
+#ez_save_button:hover {
   background-color: #10b653;
 }
 
-#watm_exit_button {
+#ez_exit_button {
   background-color: #111c31;
   border: 2px solid #a12c2c;
 }
 
-#watm_exit_button:before {
+#ez_exit_button:before {
   font-family: "Material Symbols Outlined";
   content: "\effd";
   padding-right: 5px;
   vertical-align: top;
 }
 
-#watm_exit_button:hover {
+#ez_exit_button:hover {
   background-color: #b61010;
 }
 
-#watm_palette_button {
+#ez_palette_button {
   background-color: #111c31;
   border: 2px solid transparent;
   border-image: linear-gradient(
@@ -113,18 +113,18 @@ body > div:first-of-type {
   border-image-slice: 1;
 }
 
-#watm_palette_button:before {
+#ez_palette_button:before {
   font-family: "Material Symbols Outlined";
   content: "\e40a";
   padding-right: 5px;
   vertical-align: top;
 }
 
-#watm_palette_button:hover {
+#ez_palette_button:hover {
   background-color: #3a4f6e;
 }
 
-#watm_actionbar_screen button {
+#ez_actionbar_screen button {
   margin: 0;
   background-color: #111c31;
   border: none;
@@ -133,38 +133,38 @@ body > div:first-of-type {
   transition: background-color 0.3s;
 }
 
-#watm_actionbar_screen button:hover {
+#ez_actionbar_screen button:hover {
   background-color: #3a4f6e;
 }
 
-#watm_actionbar_screen button.active {
+#ez_actionbar_screen button.active {
   outline: none;
   background-color: #3a4f6e;
 }
 
-#watm_currentScreen_button {
+#ez_currentScreen_button {
   border-radius: 5px 0 0 5px !important;
 }
 
-#watm_currentScreen_button:before {
+#ez_currentScreen_button:before {
   font-family: "Material Symbols Outlined";
   content: "\f88d";
   padding-right: 5px;
   vertical-align: top;
 }
 
-#watm_missingScreen_button {
+#ez_missingScreen_button {
   border-radius: 0 5px 5px 0 !important;
 }
 
-#watm_missingScreen_button:before {
+#ez_missingScreen_button:before {
   font-family: "Material Symbols Outlined";
   content: "\f801";
   padding-right: 5px;
   vertical-align: top;
 }
 
-.watm_sidebar {
+.ez_sidebar {
   height: calc(100% - 80px);
   width: 400px;
   background-color: #080c15;
@@ -181,35 +181,35 @@ body > div:first-of-type {
   border: solid 3px #111c31;
 }
 
-.watm_active > div:first-of-type {
+.ez_active > div:first-of-type {
   margin-right: 410px;
   margin-top: 70px;
 }
 
-.watm_active .watm_actionbar {
+.ez_active .ez_actionbar {
   top: 0;
 }
-.watm_active .watm_sidebar {
+.ez_active .ez_sidebar {
   right: 0;
 }
 
-.watm_active #idWaAdminSwitcher {
+.ez_active #idWaAdminSwitcher {
   display: none;
 }
 
-.watm_editable_hover {
+.ez_editable_hover {
   outline: 1px dashed blue !important;
   outline-offset: -1px;
   cursor: pointer;
 }
 
-.watm_hover {
+.ez_hover {
   outline: 1px dashed red !important;
   outline-offset: -1px;
   cursor: pointer;
 }
 
-.watm_editable_tag_box {
+.ez_editable_tag_box {
   position: fixed;
   padding: 5px;
   background-color: blue;
@@ -221,7 +221,7 @@ body > div:first-of-type {
   transform: translate(-50%, "20px");
 }
 
-.watm_tag_box {
+.ez_tag_box {
   position: fixed;
   padding: 5px;
   background-color: red;
@@ -263,39 +263,39 @@ body > div:first-of-type {
   }
 }
 
-.watm_editable_selected {
+.ez_editable_selected {
   outline: 1px dashed blue;
   outline-offset: -1px;
   cursor: pointer;
   animation: pulseEditable 2s infinite;
 }
 
-.watm_selected {
+.ez_selected {
   outline: 1px dashed red;
   outline-offset: -1px;
   cursor: pointer;
   animation: pulseSelected 2s infinite;
 }
 
-#watm_selected_element {
+#ez_selected_element {
   margin-bottom: 20px;
 }
 
-#watm_selected_element_tag {
+#ez_selected_element_tag {
   background-color: #111c31;
   border-radius: 5px;
   padding: 5px 10px;
   font-weight: bold;
 }
 
-#watm_selected_element_id {
+#ez_selected_element_id {
   padding: 5px 10px;
   color: #777;
   margin-left: 5px;
   font-weight: bold;
 }
 
-.watm_selected_element_type {
+.ez_selected_element_type {
   color: #7eaae1 !important;
   border-top: 2px solid #fff;
   padding: 5px 0 0 0 !important;
@@ -304,19 +304,19 @@ body > div:first-of-type {
   cursor: pointer;
 }
 
-#watm_selected_element_text {
+#ez_selected_element_text {
   background: #111c31;
   border: 4px solid #111c31;
   padding: 10px;
   border-radius: 10px;
 }
 
-.watmModifyMenu {
+.ezModifyMenu {
   position: relative;
   display: inline-block;
 }
 
-.watmModifyMenu_button {
+.ezModifyMenu_button {
   border: 1px solid hsl(240, 3.7%, 15.9%);
   background-color: transparent;
   color: white;
@@ -327,18 +327,18 @@ body > div:first-of-type {
   transition: background-color 0.5s, transform 0.3s;
 }
 
-.watmModifyMenu_button:hover {
+.ezModifyMenu_button:hover {
   background-color: #111c31;
 }
 
-.watmModifyMenu_button:before {
+.ezModifyMenu_button:before {
   font-family: "Material Symbols Outlined";
   content: "\e147";
   padding-right: 5px;
   vertical-align: top;
 }
 
-.watmModifyMenu_content {
+.ezModifyMenu_content {
   display: none;
   position: absolute;
   border-radius: 5px;
@@ -348,7 +348,7 @@ body > div:first-of-type {
   z-index: 1;
 }
 
-.watmModifyMenu_content a {
+.ezModifyMenu_content a {
   color: #fff;
   padding: 5px 16px;
   text-decoration: none;
@@ -357,15 +357,15 @@ body > div:first-of-type {
   cursor: pointer;
 }
 
-.watmModifyMenu_content a:hover {
+.ezModifyMenu_content a:hover {
   background-color: #111c31;
 }
 
-.watmModifyMenu.show .watmModifyMenu_content {
+.ezModifyMenu.show .ezModifyMenu_content {
   display: block;
 }
 
-.watmModCard {
+.ezModCard {
   border: 1px solid hsl(240, 3.7%, 15.9%);
   background-color: #0e1627;
   color: white;
@@ -375,7 +375,7 @@ body > div:first-of-type {
   padding-bottom: 5px;
 }
 
-.watmModCardHeader {
+.ezModCardHeader {
   background-color: #111c31;
   color: white;
   padding: 5px 10px;
@@ -385,7 +385,7 @@ body > div:first-of-type {
   font-weight: bold;
 }
 
-.watmModCardHeaderButton {
+.ezModCardHeaderButton {
   background-color: #111c31;
   border: none;
   float: right;
@@ -393,16 +393,16 @@ body > div:first-of-type {
   transition: 0.5s;
 }
 
-.watmModCardHeaderButton i {
+.ezModCardHeaderButton i {
   color: white;
   font-size: 16px;
 }
 
-.watmModCardHelp:hover i {
+.ezModCardHelp:hover i {
   color: khaki;
 }
 
-.watmModCardDelete:hover i {
+.ezModCardDelete:hover i {
   color: firebrick;
 }
 
@@ -425,7 +425,7 @@ body > div:first-of-type {
   box-sizing: border-box;
 }
 
-#watmIcon {
+#ezIcon {
   left: 20px;
   background: #111c31 no-repeat center;
   width: 45px;
@@ -441,7 +441,7 @@ body > div:first-of-type {
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA0JpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDkuMC1jMDAxIDc5LmMwMjA0YjJkZWYsIDIwMjMvMDIvMDItMTI6MTQ6MjQgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCAyNC42ICgyMDIzMDUyMC5tLjIxODEgNGUwMjQ1ZikgIChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpCMUNFMTcxOTAwQ0QxMUVFQTVGRUMwNkEyRDhDQ0RBNyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpCMUNFMTcxQTAwQ0QxMUVFQTVGRUMwNkEyRDhDQ0RBNyI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkIxQ0UxNzE3MDBDRDExRUVBNUZFQzA2QTJEOENDREE3IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkIxQ0UxNzE4MDBDRDExRUVBNUZFQzA2QTJEOENDREE3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+m16kHQAAAxBJREFUeNq0l0tIVFEYx8/MXBmaMlGcQtoElSXEqD020SJ70aJ2JdpDLBjaJkkm7YI2RlpQEARlTzOTghYtJNoEkVZGSqSNUZGLHiS9yxnn9v/if+F0sJk71+uBH3Puw/s//+985zvHgG3bz5VSNphQ/rUkCIIASAMLjPM3T+5LpwisAR/U9DSbAwiwnw/uKDh+CkJA+UgcLAJzwB7ea+S19O87wkGfhWfxNwKi7Ie1Z88k1CWgD/xmOPxo30APaAE/QAeIgoPgIfhk8aWz4IuP8yoGBsAG0Ay+grs0WANWi/BncGoaE0sxw6UvK+g6eG8xxaNaVi9l+L20F+AV+yPgCrjJ+xtBN1gHbgUw0YPoVFG4DpwEwx6Fj4AbFEqBMsO5TEGB41hvK8EjDkRNwbVN0TD4BZpAgobmg72msGTg9ymIOlWwVBPtZHZHGGp551xwkmQIehR9yVCWMm9E9DKzeAUN7QYxsNl0HObyyrUlWIuXUDRJ0Z1gGZfRPtDO98+Ywm/AFnA4i/MhcFETVYZopyYqOdMITvC92WDUFP7JB+UglKE4jGlzmjbmVKrUdiZqL9gPWo3pTEvtHNTqaRvoclmPR0CCfdlkpHXwupLXDZP8XT7oNcMp9XqmyyUjThcyvCk6rQWV4DFoAG3/+4DlcZ0GKBrinHYxvBUUPQCOZ/pI0EP2Ok7zNKfVXDL9nNOj2T6Ui3APj0eL6XSc2es47WP2trr5mNtQXwLrtf1anF5jcaigUxE95taFW+EYN5FDrONXmUjlFG3KQVT25gk3wmtZ7iRb3zLcFkWfuHA616gJf1eOG+F6jnKUob4NLoBtWUQtnjqKODXSXjMJS0zhCHcovZWxPFZxnovBJg7ofIYBR1nRarmBSDnexZK8w6xczaw43aAFFIIkGAIPeL+ep8dslW0e6AfFvI7x23VybTo+zd1pgZwSuGarmVj3PJy3ZK1/BMt5uoxzmpSMZMClg1wpYIRq6DSuP5cz1zvor6JDP9sM7l6FPAC0m5k3xmKQ8lnY+WdtK488/7Q/AgwA6CmPHROgPiYAAAAASUVORK5CYII=");
 }
 
-.watm_active #watmIcon {
+.ez_active #ezIcon {
   left: -70px;
 }
 
@@ -449,31 +449,31 @@ body > div:first-of-type {
   cursor: pointer;
 }
 
-.watm_slide_up {
+.ez_slide_up {
   transition: all 0.5s ease-out;
   transform: translateY(-100%);
 }
 
-.watm_slide_up_delete {
+.ez_slide_up_delete {
   transition: all 0.5s ease-out;
   opacity: 0;
   transform: translateY(-100%);
 }
 
-.watmModCardVisibility {
+.ezModCardVisibility {
   display: flex;
   flex-direction: row;
   float: right;
 }
 
-.watmModCardVisibilityToggle {
+.ezModCardVisibilityToggle {
   flex: 1;
   border: none;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
-.watmModCardVisibilityToggle label {
+.ezModCardVisibilityToggle label {
   display: block;
   width: 40px;
   padding: 3px;
@@ -485,54 +485,54 @@ body > div:first-of-type {
   transition: background-color 0.3s;
 }
 
-.watmModCardVisibilityToggle:first-of-type label {
+.ezModCardVisibilityToggle:first-of-type label {
   border-radius: 10px 0 0 10px;
 }
 
-.watmModCardVisibilityToggle:last-of-type label {
+.ezModCardVisibilityToggle:last-of-type label {
   border-radius: 0 10px 10px 0;
 }
 
-.watmModCardVisibilityToggle input[type="radio"] {
+.ezModCardVisibilityToggle input[type="radio"] {
   display: none;
 }
-.watmModCardVisibilityToggle input[type="radio"]:checked + label {
+.ezModCardVisibilityToggle input[type="radio"]:checked + label {
   background-color: #3a4f6e;
 }
-.watmModCardVisibilityToggle:hover label {
+.ezModCardVisibilityToggle:hover label {
   background-color: #3a4f6e;
 }
 
-.watmModCardEnabled {
+.ezModCardEnabled {
   align-items: center;
   cursor: pointer;
   font-size: 12px;
   margin: 0 5px;
 }
 
-.watmModCardEnabled .material-icons {
+.ezModCardEnabled .material-icons {
   transition: color 0.3s;
 }
 
-.watmModCardEnabled .watm_toggle_on {
+.ezModCardEnabled .ez_toggle_on {
   color: green;
   vertical-align: bottom;
 }
 
-.watmModCardEnabled .watm_toggle_off {
+.ezModCardEnabled .ez_toggle_off {
   color: red;
   vertical-align: bottom;
 }
 
-.watmModCardEnabled input[type="checkbox"] {
+.ezModCardEnabled input[type="checkbox"] {
   display: none;
 }
 
-.watm_element_hidden {
+.ez_element_hidden {
   opacity: 0.6;
 }
 
-#watm_palette_content {
+#ez_palette_content {
   display: none;
   position: absolute;
   top: 70px;
@@ -547,7 +547,7 @@ body > div:first-of-type {
   flex-wrap: wrap;
 }
 
-#watm_palette_content .watm_palette_top {
+#ez_palette_content .ez_palette_top {
   width: 0;
   height: 0;
   border-left: 10px solid transparent;
@@ -559,7 +559,7 @@ body > div:first-of-type {
   transform: translateX(-50%);
 }
 
-.watm_palette_box {
+.ez_palette_box {
   width: 55px;
   height: 55px;
   margin: 5px;
@@ -576,18 +576,18 @@ body > div:first-of-type {
   cursor: pointer;
 }
 
-.watm_palette_box:hover {
+.ez_palette_box:hover {
   font-weight: bold;
   color: #eee;
 }
 
-.watm_palette_info {
+.ez_palette_info {
   font-size: 14px;
   line-height: normal;
   margin-top: 0;
 }
 
-.watm_toaster_container {
+.ez_toaster_container {
   position: fixed;
   bottom: 20px;
   left: 20px;
@@ -596,7 +596,7 @@ body > div:first-of-type {
   gap: 10px;
   z-index: 9999;
 }
-.watm_toaster {
+.ez_toaster {
   background-color: #333;
   color: #fff;
   padding: 10px 20px;
@@ -606,12 +606,12 @@ body > div:first-of-type {
   transition: opacity 1s ease, transform 0.5s ease;
   transform: translateX(-100%);
 }
-.watm_toaster.show {
+.ez_toaster.show {
   opacity: 1;
   transform: translateX(0);
 }
 
-#watmDebugWindow {
+#ezDebugWindow {
   position: fixed;
   bottom: 0;
   left: 50%;
@@ -630,7 +630,49 @@ body > div:first-of-type {
   overflow: auto;
 }
 
-#watmDebugWindow.show {
+#ezDebugWindow.show {
   opacity: 1;
   transform: translate(-50%, -40%);
+}
+
+.ez-dropdown-menu {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+.ez-dropdown-menu a {
+  text-decoration: none;
+  color: black;
+}
+.ez-dropdown {
+  transition: all 0.2s ease-in-out;
+  overflow: hidden;
+  margin: 5px;
+  background: rgb(248, 248, 248);
+  border: solid 1px rgb(222, 222, 222);
+  width: 320px;
+  cursor: pointer;
+  position: absolute;
+  z-index: 999;
+}
+.ez-dropdown-icon {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 25px 0 10px;
+  font-size: 16px;
+  margin: 10px 0;
+}
+
+.ez-dropdown-menu li {
+  font-size: 16px;
+  text-transform: uppercase;
+  padding: 14px 10px;
+  border-top: solid 1px rgb(202, 202, 202);
+}
+
+.ez-dropdown-closed .ez-dropdown-menu {
+  height: 0px;
+}
+.ez-dropdown-closed .ez-dropdown-icon span {
+  transform: rotate(180deg);
 }
