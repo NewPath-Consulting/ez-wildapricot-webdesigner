@@ -676,3 +676,25 @@ body > div:first-of-type {
 .ez-dropdown-closed .ez-dropdown-icon span {
   transform: rotate(180deg);
 }
+
+.ez_hidden_language {
+  display: none;
+}
+
+.adminContentView .ez_hidden_language,
+.ez_active .ez_hidden_language {
+  display: block;
+}
+
+.ez_active .ez-dropdown {
+  display: none !important;
+}
+
+.ezhide {
+  visibility: hidden;
+}
+
+.ez_active .ezhide {
+  visibility: visible;
+  opacity: 0.4;
+}

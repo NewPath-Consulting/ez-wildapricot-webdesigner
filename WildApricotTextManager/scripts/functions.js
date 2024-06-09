@@ -1,9 +1,10 @@
-let draftJSON;
+let draftJSON = {};
 let saveJSONString;
 let removeListeners = [];
 let pageCapture;
 let editorLoaded = false;
 let debugVisible = false;
+let missingTags = [];
 
 if (typeof checkCode == "undefined") {
   let checkCode = "8euj9o9frkj3wz2nqm6xmcp4y1mdy5tp";
@@ -23,10 +24,10 @@ const ezModifyOptions = [
   { type: "dropdown", value: "dropdown", text: "Change Dropdown Value" },
 ];
 
-const loadez = () => {
+const loadEZ = () => {
   if (editorLoaded) return;
 
-  draftJSON = savedJSON;
+  //draftJSON = savedJSON;
 
   const ezActionbarLogo = createElementWithAttributes("div", {
     id: "ez_actionbar_logo",
@@ -198,7 +199,7 @@ const loadez = () => {
 
   const ezSidebarChangeHandler = function (event) {
     if (event.target.tagName === "INPUT" || event.target.tagName === "SELECT") {
-      saveezDraft(event.target.id);
+      saveEzDraft(event.target.id);
     }
   };
 
@@ -212,7 +213,7 @@ const loadez = () => {
   );
 
   const debouncedToast = ezdebounce((eztag) => {
-    saveezDraft(eztag);
+    saveEzDraft(eztag);
   }, 1000);
 
   const ezSidebarInputHandler = function (event) {
@@ -243,7 +244,7 @@ const handleKeydown = (event) => {
     event.preventDefault();
     if (!document.body.classList.contains("ez_active")) {
       document.body.classList.add("ez_active");
-      loadez();
+      loadEZ();
     }
   }
   if (
@@ -1200,11 +1201,19 @@ function ezdebounce(func, delay) {
   };
 }
 
-function initializeDraftID(ez_id, elementType, customLabel, isVisible) {
+function initializeDraftID(
+  ez_id,
+  elementType,
+  customLabel,
+  isVisible,
+  originalContent = null
+) {
   if (!draftJSON[ez_id]) {
-    let originalContent = document.querySelector(
-      `[data-ez-id="${ez_id}"]`
-    ).innerText;
+    if (!originalContent) {
+      originalContent = document.querySelector(
+        `[data-ez-id="${ez_id}"]`
+      ).innerText;
+    }
 
     draftJSON[ez_id] = {
       type: elementType,
@@ -1219,11 +1228,11 @@ function initializeDraftID(ez_id, elementType, customLabel, isVisible) {
   }
 }
 
-function buildezDraft(
+function buildEzDraft(
   ez_id,
   ez_key,
   modType,
-  enabled,
+  modEnabled,
   language,
   originalText = "",
   replacementText = "",
@@ -1238,7 +1247,7 @@ function buildezDraft(
   const modification = {
     modType: modType,
     language: language,
-    enabled: enabled,
+    enabled: modEnabled,
   };
 
   switch (modType) {
@@ -1268,7 +1277,7 @@ function buildezDraft(
       break;
     case "linkText":
       if (linkText) {
-        modification.innerText = innerText;
+        modification.linkText = linkText;
       } else {
         return;
       }
@@ -1309,15 +1318,13 @@ function buildezDraft(
   draftJSON[ez_id].modifications[ez_key].push(modification);
 }
 
-const saveezDraft = (eztag) => {
+const saveEzDraft = (eztag) => {
   let ez_id = eztag.split("_")[0];
   let ez_name = document.getElementById(`${ez_id}_customLabel`).innerText;
   let elementType = document.querySelector(`[data-ez-id="${ez_id}"]`).tagName;
-  let isVisibleRadio = document.querySelector(
-    `input[name="${ez_id}_toggle"]:checked`
-  );
-  let isVisible = isVisibleRadio.value === "show";
-
+  let isVisible =
+    document.querySelector(`input[name="${ez_id}_toggle"]:checked`)?.value ||
+    "show";
   initializeDraftID(ez_id, elementType, ez_name, isVisible);
 
   let sidebar = document.getElementById("ez_sidebar");
@@ -1327,6 +1334,7 @@ const saveezDraft = (eztag) => {
     let language,
       originalText,
       replacementText,
+      modEnabled,
       pattern,
       linkText,
       linkUrl,
@@ -1387,7 +1395,6 @@ const saveezDraft = (eztag) => {
           `${mod.id}_optionReplacement`
         ).value;
         if (optionOriginal && optionReplacement) {
-          let optionRegex = new RegExp(optionOriginal, "gi");
           document
             .querySelectorAll(`[data-ez-id="${ez_id}"] option`)
             .forEach((option) => {
@@ -1398,14 +1405,13 @@ const saveezDraft = (eztag) => {
         }
         break;
     }
+    modEnabled = document.getElementById(`${mod.id}_enabled`).checked;
 
-    enabled = document.getElementById(`${mod.id}_enabled`).checked;
-
-    buildezDraft(
+    buildEzDraft(
       ez_id,
       ez_key,
       ez_type,
-      enabled,
+      modEnabled,
       language,
       originalText,
       replacementText,
@@ -1432,14 +1438,14 @@ const checkLicense = async () => {
       if (license == "trial") {
         showezToast("EZ Designer running in trial mode");
         console.log("EZ Designer running in trial mode");
-        loadez(license);
+        loadEZ(license);
       } else if (license == "invalid") {
         showezToast("Invalid License Key for EZ Designer");
         console.log("Invalid License Key for EZ Designer");
         exitEditor();
       } else {
         console.log("EZ Designer is running");
-        loadez(license);
+        loadEZ(license);
       }
     } else {
       try {
@@ -1481,7 +1487,7 @@ const checkLicense = async () => {
 
         setCookie("ezlicense", license);
         console.log("EZ Designer is running");
-        loadez(license);
+        loadEZ(license);
       } catch (error) {
         if (error.message === "Request timed out") {
           showezToast(
@@ -1493,7 +1499,7 @@ const checkLicense = async () => {
           license = "trial";
           showezToast("EZ Designer running in trial mode");
           console.log("EZ Designer running in trial mode");
-          loadez(license);
+          loadEZ(license);
         } else {
           showezToast("Could not verify license - Please check CORS settings");
           console.log(`EZ Web Designer License Fetch request error: ${error}`);
@@ -1506,7 +1512,7 @@ const checkLicense = async () => {
     showezToast("EZ Designer running in trial mode");
     console.log("EZ Designer running in trial mode");
     setCookie("ezlicense", license);
-    loadez(license);
+    loadEZ(license);
   }
 };
 
@@ -1589,7 +1595,7 @@ function ezJsonToCsv(json, includeOriginalContent = true) {
   const container = document.querySelector("body > div:first-of-type");
   const elements = container.querySelectorAll("[data-ez-id]");
   elements.forEach((element) => {
-    if (["SCRIPT", "STYLE"].includes(element.tagName)) {
+    if (["SCRIPT", "STYLE", "NOSCRIPT"].includes(element.tagName)) {
       return;
     }
 
@@ -1624,7 +1630,10 @@ function ezJsonToCsv(json, includeOriginalContent = true) {
           baseRow.originalContent =
             jsonData.originalContent || baseRow.originalContent;
         }
-        baseRow.isVisible = jsonData.isVisible;
+        baseRow.isVisible =
+          jsonData.isVisible !== undefined
+            ? jsonData.isVisible
+            : baseRow.isVisible;
 
         const modifications = jsonData.modifications;
         if (Object.keys(modifications).length === 0) {
@@ -1653,8 +1662,14 @@ function ezJsonToCsv(json, includeOriginalContent = true) {
     ...rows.map((row) =>
       allHeaders
         .map((header) => {
-          const value = row[header] || "";
-          return typeof value === "number" ? value : JSON.stringify(value);
+          const value = row[header] !== undefined ? row[header] : "";
+          if (typeof value === "number") {
+            return value;
+          } else if (typeof value === "boolean") {
+            return value ? "true" : "false";
+          } else {
+            return JSON.stringify(value);
+          }
         })
         .join(",")
     ),
@@ -1732,6 +1747,10 @@ const getCurrentLanguage = () => {
 const createToggle = (currentLanguage) => {
   if (!document.getElementById(languageSwitcherId)) {
     console.log("No language switcher content gadget found.");
+    return false;
+  }
+  if (document.body.classList.contains("adminContentView")) {
+    console.log("Language Toggle not available in Admin View");
     return false;
   }
   let toggleText = "Select language";
@@ -1822,4 +1841,135 @@ const getBrowserLanguage = (languageCode) => {
   let browserLanguage = languageNames[languageCode.split("-")[0]] || "";
 
   return browserLanguage.toLowerCase();
+};
+
+const applyModification = (element, mod, modification) => {
+  if (
+    !mod.enabled ||
+    (mod.language !== currentLanguage && mod.language !== "all")
+  ) {
+    return;
+  }
+
+  switch (mod.modType) {
+    case "text":
+      if (mod.replacementText) {
+        element.innerText = mod.replacementText;
+        modification.replacementText = mod.replacementText;
+      }
+      break;
+
+    case "replace":
+      if (mod.originalText) {
+        modification.originalText = mod.originalText;
+        modification.replacementText = mod.replacementText;
+      }
+      break;
+
+    case "regex":
+      if (mod.pattern) {
+        modification.pattern = mod.pattern;
+        modification.replacementText = mod.replacementText;
+      }
+      break;
+
+    case "linkText":
+      if (mod.linkText) {
+        element.innerText = mod.linkText;
+        modification.linkText = mod.linkText;
+      }
+      break;
+
+    case "url":
+      if (mod.linkUrl) {
+        element.href = mod.linkUrl;
+        modification.linkUrl = mod.linkUrl;
+      }
+      break;
+
+    case "button":
+      if (mod.buttonValue) {
+        element.href = mod.buttonValue;
+        modification.buttonValue = mod.buttonValue;
+      }
+      break;
+
+    case "placeholder":
+      if (mod.placeholder) {
+        element.placeholder = mod.placeholder;
+        modification.placeholder = mod.placeholder;
+      }
+      break;
+
+    case "dropdown":
+      if (mod.optionOriginal && mod.optionReplacement) {
+        element.querySelectorAll("option").forEach((option) => {
+          if (option.text === mod.optionOriginal) {
+            option.text = mod.optionReplacement;
+          }
+        });
+        modification.optionOriginal = mod.optionOriginal;
+        modification.optionReplacement = mod.optionReplacement;
+      }
+      break;
+  }
+};
+
+const initializeAndModify = (ezId, modKey, mod, element, JSONinit) => {
+  if (!JSONinit) {
+    initializeDraftID(
+      ezId,
+      savedJSON[ezId].type,
+      savedJSON[ezId].customLabel,
+      savedJSON[ezId].isVisible,
+      savedJSON[ezId].originalContent
+    );
+    JSONinit = true;
+  }
+
+  const modification = {
+    modType: mod.modType,
+    language: mod.language,
+    enabled: mod.enabled,
+  };
+
+  applyModification(element, mod, modification);
+
+  if (!draftJSON[ezId].modifications[modKey]) {
+    draftJSON[ezId].modifications[modKey] = [];
+  }
+
+  draftJSON[ezId].modifications[modKey].push(modification);
+
+  return JSONinit;
+};
+
+const processJSON = () => {
+  for (let ezId in savedJSON) {
+    let JSONinit = false;
+    const element = document.querySelector(`[data-ez-id="${ezId}"]`);
+
+    if (!element) {
+      missingTags.push(ezId);
+      continue;
+    }
+
+    if (savedJSON[ezId].isVisible === "hide") {
+      element.classList.add("ezhide");
+      initializeDraftID(
+        ezId,
+        savedJSON[ezId].type,
+        savedJSON[ezId].customLabel,
+        savedJSON[ezId].isVisible,
+        savedJSON[ezId].originalContent
+      );
+      JSONinit = true;
+    }
+
+    for (let modKey in savedJSON[ezId].modifications) {
+      savedJSON[ezId].modifications[modKey].forEach((mod) => {
+        JSONinit = initializeAndModify(ezId, modKey, mod, element, JSONinit);
+      });
+    }
+  }
 };

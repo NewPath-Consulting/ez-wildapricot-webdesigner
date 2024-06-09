@@ -11,22 +11,22 @@ const ezLocation = currentScript.src.substring(
   currentScript.src.lastIndexOf("/")
 );
 let savedJSON = {};
-const ezFile = `${ezLocation}/css/ezdesigner.json`;
+const ezFile = `${ezLocation}/ezdesigner.json`;
 let languageSwitcherId = "language_switch";
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 
 document.addEventListener("DOMContentLoaded", () => {
-  initializeez();
+  initializeEZ();
 });
 
-const initializeez = () => {
+const initializeEZ = () => {
   loadCSS(`${ezLocation}/css/app.css`);
   loadScript(`${ezLocation}/scripts/functions.js`, () => {
     loadScript(
       "https://cdn.jsdelivr.net/npm/html2canvas-pro@1.5.0/dist/html2canvas-pro.min.js",
-      startez
+      startEZ
     );
   });
 };
@@ -50,7 +50,7 @@ const loadScript = (src, callback) => {
   document.head.appendChild(script);
 };
 
-const startez = async () => {
+const startEZ = async () => {
   if (urlParams.get("language")) {
     setLanguage(urlParams.get("language"));
     urlParams.delete("language");
@@ -59,26 +59,35 @@ const startez = async () => {
 
   currentLanguage = getCurrentLanguage();
 
-  createToggle(currentLanguage);
-
   processElements(document.querySelector("body > div:first-of-type"));
 
-  try {
-    const response = await fetch(ezFile, {
-      method: "GET",
-    });
+  createToggle(currentLanguage);
 
-    if (response.ok) {
-      savedJSON = await response.json();
-      console.log("EZ JSON loaded successfully");
-    } else if (response.status === 404) {
-      console.log("EZ JSON does not exist.");
-    } else {
-      console.log("Failed to load EZ JSON: " + response.statusText);
+  scopeLanguages.forEach((language, index) => {
+    if (language[1] !== currentLanguage) {
+      document.querySelectorAll(`.${language[1]}`).forEach((el) => {
+        el.classList.add("ez_hidden_language");
+      });
     }
-  } catch (error) {
-    console.log("EZ Error: " + error.message);
+  });
+
+  // try {
+  const response = await fetch(ezFile, {
+    method: "GET",
+  });
+
+  if (response.ok) {
+    savedJSON = await response.json();
+    console.log("EZ JSON loaded successfully");
+    processJSON();
+  } else if (response.status === 404) {
+    console.log("EZ JSON does not exist.");
+  } else {
+    console.log("Failed to load EZ JSON: " + response.statusText);
   }
+  // } catch (error) {
+  //   console.log("EZ Error: " + error.message);
+  // }
 
   html2canvas(document.querySelector("body > div:first-of-type"))
     .then((canvas) => {
