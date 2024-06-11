@@ -1958,8 +1958,8 @@ const applyModification = (element, mod, modification) => {
     case "text":
       if (mod.replacementText) {
         if (
-          mod.enabled ||
-          (mod.language === currentLanguage && mod.language === "all")
+          mod.enabled &&
+          (mod.language === currentLanguage || mod.language === "all")
         )
           element.innerText = mod.replacementText;
         modification.replacementText = mod.replacementText;
@@ -1969,8 +1969,8 @@ const applyModification = (element, mod, modification) => {
     case "replace":
       if (mod.originalText) {
         if (
-          mod.enabled ||
-          (mod.language === currentLanguage && mod.language === "all")
+          mod.enabled &&
+          (mod.language === currentLanguage || mod.language === "all")
         )
           modification.originalText = mod.originalText;
         modification.replacementText = mod.replacementText;
@@ -1980,8 +1980,8 @@ const applyModification = (element, mod, modification) => {
     case "regex":
       if (mod.pattern) {
         if (
-          mod.enabled ||
-          (mod.language === currentLanguage && mod.language === "all")
+          mod.enabled &&
+          (mod.language === currentLanguage || mod.language === "all")
         )
           modification.pattern = mod.pattern;
         modification.replacementText = mod.replacementText;
@@ -1991,8 +1991,8 @@ const applyModification = (element, mod, modification) => {
     case "linkText":
       if (mod.linkText) {
         if (
-          mod.enabled ||
-          (mod.language === currentLanguage && mod.language === "all")
+          mod.enabled &&
+          (mod.language === currentLanguage || mod.language === "all")
         )
           element.innerText = mod.linkText;
         modification.linkText = mod.linkText;
@@ -2002,8 +2002,8 @@ const applyModification = (element, mod, modification) => {
     case "url":
       if (mod.linkUrl) {
         if (
-          mod.enabled ||
-          (mod.language === currentLanguage && mod.language === "all")
+          mod.enabled &&
+          (mod.language === currentLanguage || mod.language === "all")
         )
           element.href = mod.linkUrl;
         modification.linkUrl = mod.linkUrl;
@@ -2013,8 +2013,8 @@ const applyModification = (element, mod, modification) => {
     case "buttonValue":
       if (mod.buttonValue) {
         if (
-          mod.enabled ||
-          (mod.language === currentLanguage && mod.language === "all")
+          mod.enabled &&
+          (mod.language === currentLanguage || mod.language === "all")
         )
           element.value = mod.buttonValue;
         modification.buttonValue = mod.buttonValue;
@@ -2024,8 +2024,8 @@ const applyModification = (element, mod, modification) => {
     case "placeholder":
       if (mod.placeholder) {
         if (
-          mod.enabled ||
-          (mod.language === currentLanguage && mod.language === "all")
+          mod.enabled &&
+          (mod.language === currentLanguage || mod.language === "all")
         )
           element.placeholder = mod.placeholder;
         modification.placeholder = mod.placeholder;
@@ -2035,8 +2035,8 @@ const applyModification = (element, mod, modification) => {
     case "dropdown":
       if (mod.optionOriginal && mod.optionReplacement) {
         if (
-          mod.enabled ||
-          (mod.language === currentLanguage && mod.language === "all")
+          mod.enabled &&
+          (mod.language === currentLanguage || mod.language === "all")
         ) {
           element.querySelectorAll("option").forEach((option) => {
             if (option.text === mod.optionOriginal) {
