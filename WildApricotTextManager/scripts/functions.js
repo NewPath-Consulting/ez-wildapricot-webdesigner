@@ -5,6 +5,7 @@ let pageCapture;
 let editorLoaded = false;
 let debugVisible = false;
 let missingTags = [];
+let changesMade = false;
 
 if (typeof checkCode == "undefined") {
   let checkCode = "8euj9o9frkj3wz2nqm6xmcp4y1mdy5tp";
@@ -26,6 +27,7 @@ const ezModifyOptions = [
 
 const loadEZ = () => {
   if (editorLoaded) return;
+  setCookie("inInspector", true);
 
   //draftJSON = savedJSON;
 
@@ -50,16 +52,30 @@ const loadEZ = () => {
   const ezActionbarExportPage = createElementWithAttributes("button", {
     id: "ez_exportPage_button",
     innerText: "Export Current Page",
+    onclick: () => {
+      exportFilename = `EZ-Designer - ${document.title} (${Date.now()}).csv`;
+      ezExport(draftJSON, exportFilename, true, true);
+    },
   });
 
   const ezActionbarExportAll = createElementWithAttributes("button", {
     id: "ez_exportAll_button",
     innerText: "Export All Site Mods",
+    onclick: () => {
+      exportFilename = `EZ-Designer - All Modifications (${Date.now()}).csv`;
+      ezExport(savedJSON, exportFilename, false, false);
+    },
   });
 
   const ezActionbarExportMissing = createElementWithAttributes("button", {
     id: "ez_exportMissing_button",
     innerText: "Export Missing Mods",
+    onclick: () => {
+      exportFilename = `EZ-Designer - Missing Elements From ${
+        document.title
+      } (${Date.now()}).csv`;
+      ezExportMissing(exportFilename);
+    },
   });
 
   const ezActionbarImportMods = createElementWithAttributes("button", {
@@ -281,7 +297,7 @@ const handleKeydown = (event) => {
       innerText: "Export Page",
       onclick: () => {
         exportFilename = `EZ-Designer - ${document.title} (${Date.now()}).csv`;
-        ezExportPage(exportFilename);
+        ezExport(draftJSON, exportFilename, true, true);
       },
     });
 
@@ -300,6 +316,17 @@ const handleKeydown = (event) => {
 };
 
 const exitEditor = () => {
+  if (changesMade) {
+    if (
+      !confirm(
+        "You have unsaved changes. Are you sure you want to exit without saving?"
+      )
+    ) {
+      return;
+    }
+    setCookie("inInspector", false);
+    location.reload();
+  }
   document.body.classList.remove("ez_active");
   document.getElementById("ez_actionbar").innerHTML = "";
   document.getElementById("ez_sidebar").innerHTML = "";
@@ -313,6 +340,7 @@ const exitEditor = () => {
   removeListeners = [];
 
   editorLoaded = false;
+  setCookie("inInspector", false);
 };
 
 const getCssPath = (element) => {
@@ -578,7 +606,7 @@ const ezInspect = (element) => {
   if (element.tagName === "SELECT") elType = "Dropdown";
   if (element.tagName === "INPUT") {
     elType =
-      element.type === "submit"
+      element.type === "submit" || element.type === "button"
         ? "Button"
         : element.type === "text"
         ? "Textbox"
@@ -617,7 +645,9 @@ const ezInspect = (element) => {
         return labelElement ? labelElement.innerText + " Dropdown" : "Dropdown";
       })()
     : document.querySelector(`[data-ez-id="${element.dataset.ezId}"]`).type ===
-      "submit"
+        "submit" ||
+      document.querySelector(`[data-ez-id="${element.dataset.ezId}"]`).type ===
+        "button"
     ? document.querySelector(`[data-ez-id="${element.dataset.ezId}"]`).value +
       " Button"
     : document.querySelector(`[data-ez-id="${element.dataset.ezId}"]`).type ===
@@ -859,6 +889,7 @@ const addModCard = (modType, modText, ezId, ez_key = Date.now()) => {
           card.classList.remove("ez_slide_up");
         });
       }, 500);
+      changesMade = true;
     }
   });
 
@@ -980,7 +1011,7 @@ const addModCard = (modType, modText, ezId, ez_key = Date.now()) => {
         [
           {
             label: "Replacement Text:",
-            type: "link",
+            type: "text",
             idSuffix: "linkText",
             json_key: "linkText",
           },
@@ -993,7 +1024,7 @@ const addModCard = (modType, modText, ezId, ez_key = Date.now()) => {
         [
           {
             label: "New URL:",
-            type: "link",
+            type: "text",
             idSuffix: "linkUrl",
             json_key: "linkUrl",
           },
@@ -1006,7 +1037,7 @@ const addModCard = (modType, modText, ezId, ez_key = Date.now()) => {
         [
           {
             label: "Button Text:",
-            type: "button",
+            type: "text",
             idSuffix: "buttonValue",
             json_key: "buttonValue",
           },
@@ -1019,7 +1050,7 @@ const addModCard = (modType, modText, ezId, ez_key = Date.now()) => {
         [
           {
             label: "Placeholder Text:",
-            type: "textbox",
+            type: "text",
             idSuffix: "placeholder",
             json_key: "placeholder",
           },
@@ -1032,13 +1063,13 @@ const addModCard = (modType, modText, ezId, ez_key = Date.now()) => {
         [
           {
             label: "Original Option:",
-            type: "dropdown",
+            type: "text",
             idSuffix: "optionOriginal",
             json_key: "optionOriginal",
           },
           {
             label: "Replacement Option:",
-            type: "dropdown",
+            type: "text",
             idSuffix: "optionReplacement",
             json_key: "optionReplacement",
           },
@@ -1289,14 +1320,14 @@ function buildEzDraft(
         return;
       }
       break;
-    case "button":
+    case "buttonValue":
       if (buttonValue) {
         modification.buttonValue = buttonValue;
       } else {
         return;
       }
       break;
-    case "textbox":
+    case "placeholder":
       if (placeholder) {
         modification.placeholder = placeholder;
       } else {
@@ -1348,8 +1379,9 @@ const saveEzDraft = (eztag) => {
         replacementText = document.getElementById(
           `${mod.id}_ReplacementText`
         ).value;
-        document.querySelector(`[data-ez-id="${ez_id}"]`).innerText =
-          replacementText;
+        if (replacementText)
+          document.querySelector(`[data-ez-id="${ez_id}"]`).innerText =
+            replacementText;
         break;
       case "replace":
         language = document.getElementById(`${mod.id}_language`).value;
@@ -1368,23 +1400,28 @@ const saveEzDraft = (eztag) => {
       case "linkText":
         language = document.getElementById(`${mod.id}_language`).value;
         linkText = document.getElementById(`${mod.id}_linkText`).value;
-        document.querySelector(`[data-ez-id="${ez_id}"]`).innerText = linkText;
+        if (linkText)
+          document.querySelector(`[data-ez-id="${ez_id}"]`).innerText =
+            linkText;
         break;
       case "url":
         language = document.getElementById(`${mod.id}_language`).value;
         linkUrl = document.getElementById(`${mod.id}_linkUrl`).value;
-        document.querySelector(`[data-ez-id="${ez_id}"]`).href = linkUrl;
+        if (linkUrl)
+          document.querySelector(`[data-ez-id="${ez_id}"]`).href = linkUrl;
         break;
-      case "button":
+      case "buttonValue":
         language = document.getElementById(`${mod.id}_language`).value;
         buttonValue = document.getElementById(`${mod.id}_buttonValue`).value;
-        document.querySelector(`[data-ez-id="${ez_id}"]`).href = buttonValue;
+        if (buttonValue)
+          document.querySelector(`[data-ez-id="${ez_id}"]`).value = buttonValue;
         break;
       case "placeholder":
         language = document.getElementById(`${mod.id}_language`).value;
         placeholder = document.getElementById(`${mod.id}_placeholder`).value;
-        document.querySelector(`[data-ez-id="${ez_id}"]`).placeholder =
-          placeholder;
+        if (placeholder)
+          document.querySelector(`[data-ez-id="${ez_id}"]`).placeholder =
+            placeholder;
         break;
       case "dropdown":
         language = document.getElementById(`${mod.id}_language`).value;
@@ -1424,6 +1461,8 @@ const saveEzDraft = (eztag) => {
       optionReplacement
     );
   });
+
+  changesMade = true;
   showezToast("Draft changes saved");
 };
 
@@ -1550,7 +1589,11 @@ function ezTimeout(delay) {
   );
 }
 
-function ezJsonToCsv(json, includeOriginalContent = true) {
+function ezJsonToCsv(
+  json,
+  includeOriginalContent = true,
+  processElements = true
+) {
   const baseHeaders = ["ez_id", "type", "customLabel", "isVisible"];
 
   if (includeOriginalContent) {
@@ -1592,70 +1635,111 @@ function ezJsonToCsv(json, includeOriginalContent = true) {
     return row;
   }
 
-  const container = document.querySelector("body > div:first-of-type");
-  const elements = container.querySelectorAll("[data-ez-id]");
-  elements.forEach((element) => {
-    if (["SCRIPT", "STYLE", "NOSCRIPT"].includes(element.tagName)) {
-      return;
-    }
-
-    const id = element.getAttribute("data-ez-id");
-    const containsDirectText = Array.from(element.childNodes).some(
-      (node) =>
-        node.nodeType === Node.TEXT_NODE && node.textContent.trim() !== ""
-    );
-    const isSubmitButton =
-      element.tagName === "BUTTON" && element.type === "submit";
-
-    if (containsDirectText || isSubmitButton) {
-      const originalContent = isSubmitButton
-        ? element.value
-        : element.textContent.trim();
-      let customLabel =
-        originalContent.length > 20
-          ? originalContent.substring(0, 20)
-          : originalContent;
-      const baseRow = { ez_id: id, customLabel, type: element.tagName };
-
-      if (includeOriginalContent) {
-        baseRow.originalContent = originalContent;
+  if (processElements) {
+    const container = document.querySelector("body > div:first-of-type");
+    const elements = container.querySelectorAll("[data-ez-id]");
+    elements.forEach((element) => {
+      if (["SCRIPT", "STYLE", "NOSCRIPT"].includes(element.tagName)) {
+        return;
       }
 
-      if (json[id]) {
-        const jsonData = json[id];
-        if (jsonData.customLabel) {
-          baseRow.customLabel = jsonData.customLabel;
-        }
+      const id = element.getAttribute("data-ez-id");
+      const containsDirectText = Array.from(element.childNodes).some(
+        (node) =>
+          node.nodeType === Node.TEXT_NODE && node.textContent.trim() !== ""
+      );
+      const isSubmitButton =
+        (element.tagName === "INPUT" && element.type === "submit") ||
+        (element.tagName === "INPUT" && element.type === "button");
+
+      if (containsDirectText || isSubmitButton) {
+        const originalContent = isSubmitButton
+          ? element.value
+          : element.textContent.trim();
+        let customLabel =
+          originalContent.length > 20
+            ? originalContent.substring(0, 20)
+            : originalContent;
+        const baseRow = { ez_id: id, customLabel, type: element.tagName };
+
         if (includeOriginalContent) {
-          baseRow.originalContent =
-            jsonData.originalContent || baseRow.originalContent;
+          baseRow.originalContent = originalContent;
         }
-        baseRow.isVisible =
-          jsonData.isVisible !== undefined
-            ? jsonData.isVisible
-            : baseRow.isVisible;
 
-        const modifications = jsonData.modifications;
-        if (Object.keys(modifications).length === 0) {
-          rows.push(baseRow);
-        } else {
-          for (const modId in modifications) {
-            modifications[modId].forEach((mod) => {
-              const modRow = getRowValues(mod);
-              const combinedRow = {
-                ...baseRow,
-                modificationId: modId,
-                ...modRow,
-              };
-              rows.push(combinedRow);
-            });
+        if (json[id]) {
+          const jsonData = json[id];
+          if (jsonData.customLabel) {
+            baseRow.customLabel = jsonData.customLabel;
           }
+          if (includeOriginalContent) {
+            baseRow.originalContent =
+              jsonData.originalContent || baseRow.originalContent;
+          }
+          baseRow.isVisible =
+            jsonData.isVisible !== undefined
+              ? jsonData.isVisible
+              : baseRow.isVisible;
+
+          const modifications = jsonData.modifications;
+          if (Object.keys(modifications).length === 0) {
+            rows.push(baseRow);
+          } else {
+            for (const modId in modifications) {
+              modifications[modId].forEach((mod) => {
+                const modRow = getRowValues(mod);
+                const combinedRow = {
+                  ...baseRow,
+                  modificationId: modId,
+                  ...modRow,
+                };
+                rows.push(combinedRow);
+              });
+            }
+          }
+        } else {
+          rows.push(baseRow);
         }
-      } else {
+      }
+    });
+  } else {
+    for (const id in json) {
+      const jsonData = json[id];
+      let baseRow = { ez_id: id, customLabel: "", type: "", isVisible: true };
+
+      if (includeOriginalContent && jsonData.originalContent) {
+        baseRow.originalContent = jsonData.originalContent;
+      }
+
+      if (jsonData.customLabel) {
+        baseRow.customLabel = jsonData.customLabel;
+      }
+
+      if (jsonData.type) {
+        baseRow.type = jsonData.type;
+      }
+
+      if (jsonData.isVisible !== undefined) {
+        baseRow.isVisible = jsonData.isVisible;
+      }
+
+      const modifications = jsonData.modifications;
+      if (Object.keys(modifications).length === 0) {
         rows.push(baseRow);
+      } else {
+        for (const modId in modifications) {
+          modifications[modId].forEach((mod) => {
+            const modRow = getRowValues(mod);
+            const combinedRow = {
+              ...baseRow,
+              modificationId: modId,
+              ...modRow,
+            };
+            rows.push(combinedRow);
+          });
+        }
       }
     }
-  });
+  }
 
   const csvContent = [
     allHeaders.join(","),
@@ -1680,8 +1764,33 @@ function ezJsonToCsv(json, includeOriginalContent = true) {
   return bom + csvContent;
 }
 
-function ezExportPage(filename = "output.csv", includeOriginalContent = true) {
-  const csvData = ezJsonToCsv(draftJSON, includeOriginalContent);
+function ezExport(
+  jsonToExport,
+  filename = "output.csv",
+  includeOriginalContent = true,
+  processElements = true
+) {
+  const csvData = ezJsonToCsv(
+    jsonToExport,
+    includeOriginalContent,
+    processElements
+  );
+  const csvDataURI =
+    "data:text/csv;charset=utf-8," + encodeURIComponent(csvData);
+
+  const link = document.createElement("a");
+  link.href = csvDataURI;
+  link.download = filename;
+
+  document.body.appendChild(link);
+
+  link.click();
+
+  document.body.removeChild(link);
+}
+
+function ezExportMissing(filename = "output.csv") {
+  const csvData = ezMissingToCsv();
   const csvDataURI =
     "data:text/csv;charset=utf-8," + encodeURIComponent(csvData);
 
@@ -1709,7 +1818,8 @@ const ezSavePage = async () => {
     });
 
     if (response.ok) {
-      alert("EZ JSON saved successfully.");
+      alert("Modifications saved successfully.");
+      location.reload();
     } else {
       alert("Failed to save EZ JSON: " + response.statusText);
     }
@@ -1844,70 +1954,96 @@ const getBrowserLanguage = (languageCode) => {
 };
 
 const applyModification = (element, mod, modification) => {
-  if (
-    !mod.enabled ||
-    (mod.language !== currentLanguage && mod.language !== "all")
-  ) {
-    return;
-  }
-
   switch (mod.modType) {
     case "text":
       if (mod.replacementText) {
-        element.innerText = mod.replacementText;
+        if (
+          mod.enabled ||
+          (mod.language === currentLanguage && mod.language === "all")
+        )
+          element.innerText = mod.replacementText;
         modification.replacementText = mod.replacementText;
       }
       break;
 
     case "replace":
       if (mod.originalText) {
-        modification.originalText = mod.originalText;
+        if (
+          mod.enabled ||
+          (mod.language === currentLanguage && mod.language === "all")
+        )
+          modification.originalText = mod.originalText;
         modification.replacementText = mod.replacementText;
       }
       break;
 
     case "regex":
       if (mod.pattern) {
-        modification.pattern = mod.pattern;
+        if (
+          mod.enabled ||
+          (mod.language === currentLanguage && mod.language === "all")
+        )
+          modification.pattern = mod.pattern;
         modification.replacementText = mod.replacementText;
       }
       break;
 
     case "linkText":
       if (mod.linkText) {
-        element.innerText = mod.linkText;
+        if (
+          mod.enabled ||
+          (mod.language === currentLanguage && mod.language === "all")
+        )
+          element.innerText = mod.linkText;
         modification.linkText = mod.linkText;
       }
       break;
 
     case "url":
       if (mod.linkUrl) {
-        element.href = mod.linkUrl;
+        if (
+          mod.enabled ||
+          (mod.language === currentLanguage && mod.language === "all")
+        )
+          element.href = mod.linkUrl;
         modification.linkUrl = mod.linkUrl;
       }
       break;
 
-    case "button":
+    case "buttonValue":
       if (mod.buttonValue) {
-        element.href = mod.buttonValue;
+        if (
+          mod.enabled ||
+          (mod.language === currentLanguage && mod.language === "all")
+        )
+          element.value = mod.buttonValue;
         modification.buttonValue = mod.buttonValue;
       }
       break;
 
     case "placeholder":
       if (mod.placeholder) {
-        element.placeholder = mod.placeholder;
+        if (
+          mod.enabled ||
+          (mod.language === currentLanguage && mod.language === "all")
+        )
+          element.placeholder = mod.placeholder;
         modification.placeholder = mod.placeholder;
       }
       break;
 
     case "dropdown":
       if (mod.optionOriginal && mod.optionReplacement) {
-        element.querySelectorAll("option").forEach((option) => {
-          if (option.text === mod.optionOriginal) {
-            option.text = mod.optionReplacement;
-          }
-        });
+        if (
+          mod.enabled ||
+          (mod.language === currentLanguage && mod.language === "all")
+        ) {
+          element.querySelectorAll("option").forEach((option) => {
+            if (option.text === mod.optionOriginal) {
+              option.text = mod.optionReplacement;
+            }
+          });
+        }
         modification.optionOriginal = mod.optionOriginal;
         modification.optionReplacement = mod.optionReplacement;
       }
@@ -1973,3 +2109,117 @@ const processJSON = () => {
     }
   }
 };
+
+function ezMissingToCsv() {
+  const baseHeaders = [
+    "ez_id",
+    "type",
+    "customLabel",
+    "isVisible",
+    "originalContent",
+  ];
+  const modificationHeaders = new Set();
+  const rows = [];
+
+  missingTags.forEach((id) => {
+    const baseData = savedJSON[id];
+    if (baseData) {
+      for (const modId in baseData.modifications) {
+        baseData.modifications[modId].forEach((mod) => {
+          Object.keys(mod).forEach((key) => {
+            if (!baseHeaders.includes(key)) {
+              modificationHeaders.add(key);
+            }
+          });
+        });
+      }
+    }
+  });
+
+  const allHeaders = [
+    ...baseHeaders,
+    "modificationId",
+    ...Array.from(modificationHeaders),
+  ];
+
+  function getRowValues(obj, prefix = "") {
+    const row = {};
+    for (const key in obj) {
+      const prefixedKey = prefix ? `${prefix}.${key}` : key;
+      if (typeof obj[key] === "object" && !Array.isArray(obj[key])) {
+        Object.assign(row, getRowValues(obj[key], prefixedKey));
+      } else {
+        row[prefixedKey] = obj[key];
+      }
+    }
+    return row;
+  }
+
+  missingTags.forEach((id) => {
+    const jsonData = savedJSON[id];
+    if (jsonData) {
+      let baseRow = {
+        ez_id: id,
+        customLabel: "",
+        type: "",
+        isVisible: true,
+        originalContent: "",
+      };
+
+      if (jsonData.originalContent) {
+        baseRow.originalContent = jsonData.originalContent;
+      }
+
+      if (jsonData.customLabel) {
+        baseRow.customLabel = jsonData.customLabel;
+      }
+
+      if (jsonData.type) {
+        baseRow.type = jsonData.type;
+      }
+
+      if (jsonData.isVisible !== undefined) {
+        baseRow.isVisible = jsonData.isVisible;
+      }
+
+      const modifications = jsonData.modifications;
+      if (Object.keys(modifications).length === 0) {
+        rows.push(baseRow);
+      } else {
+        for (const modId in modifications) {
+          modifications[modId].forEach((mod) => {
+            const modRow = getRowValues(mod);
+            const combinedRow = {
+              ...baseRow,
+              modificationId: modId,
+              ...modRow,
+            };
+            rows.push(combinedRow);
+          });
+        }
+      }
+    }
+  });
+
+  const csvContent = [
+    allHeaders.join(","),
+    ...rows.map((row) =>
+      allHeaders
+        .map((header) => {
+          const value = row[header] !== undefined ? row[header] : "";
+          if (typeof value === "number") {
+            return value;
+          } else if (typeof value === "boolean") {
+            return value ? "true" : "false";
+          } else {
+            return JSON.stringify(value);
+          }
+        })
+        .join(",")
+    ),
+  ].join("\n");
+
+  // Add BOM for UTF-8
+  const bom = "\uFEFF";
+  return bom + csvContent;
+}

@@ -650,7 +650,8 @@ body > div:first-of-type {
   margin: 5px;
   background: rgb(248, 248, 248);
   border: solid 1px rgb(222, 222, 222);
-  width: 320px;
+  max-width: 320px;
+  width: 100%;
   cursor: pointer;
   position: absolute;
   z-index: 999;

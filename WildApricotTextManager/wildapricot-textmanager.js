@@ -117,7 +117,7 @@ const startEZ = async () => {
     title: `Launch EZ WildApricot Designer ${ez_version}`,
   });
 
-  ezIcon.addEventListener("click", toggleez);
+  ezIcon.addEventListener("click", toggleEz);
 
   const ezInspect = createAdminLink("EZ Designer");
 
@@ -125,14 +125,22 @@ const startEZ = async () => {
     createAdminLink(entry[0], (URL = entry[1]));
   });
 
-  ezInspect.querySelector("a").addEventListener("click", toggleez);
+  ezInspect.querySelector("a").addEventListener("click", toggleEz);
 
   document.body.append(ezToaster, ezSidebar, ezActionbar, ezIcon);
 
   document.addEventListener("keydown", handleKeydown);
+
+  let inInspector = getCookie("inInspector");
+
+  if (inInspector) {
+    setTimeout(function () {
+      toggleEz();
+    }, 500);
+  }
 };
 
-const toggleez = () => {
+const toggleEz = () => {
   if (!document.body.classList.contains("ez_active")) {
     document.body.classList.add("ez_active");
     checkLicense();
