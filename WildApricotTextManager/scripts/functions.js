@@ -18,18 +18,22 @@ const scopeLanguages = ez_languages;
 
 const ezModifyOptions = [
   { type: "text", value: "text", text: "Change Text" },
+  { type: "text", value: "replace", text: "Replace Text" },
   { type: "link", value: "linkText", text: "Change Link Text" },
   { type: "link", value: "url", text: "Change Link URL" },
   { type: "button", value: "buttonValue", text: "Change Button Text" },
   { type: "textbox", value: "placeholder", text: "Change Placeholder Text" },
   { type: "dropdown", value: "dropdown", text: "Change Dropdown Value" },
+  {
+    type: "directory",
+    value: "dierctory",
+    text: "Member Directory Text Replace",
+  },
 ];
 
 const loadEZ = () => {
   if (editorLoaded) return;
   setCookie("inInspector", true);
-
-  //draftJSON = savedJSON;
 
   const ezActionbarLogo = createElementWithAttributes("div", {
     id: "ez_actionbar_logo",
@@ -48,6 +52,33 @@ const loadEZ = () => {
   const ezActionbarScreen = createElementWithAttributes("div", {
     id: "ez_actionbar_screen",
   });
+
+  const ezActionbarExport = createElementWithAttributes("div", {
+    id: "ez_actionbar_export",
+  });
+
+  const ezActionbarExportContent = createElementWithAttributes("div", {
+    id: "ez_export_content",
+    onclick: () => {
+      event.stopPropagation();
+    },
+  });
+
+  const ezActionbarExportContentTop = createElementWithAttributes("div", {
+    className: "ez_dropdown_top",
+  });
+
+  const ezActionbarExportButton = createElementWithAttributes("button", {
+    id: "ez_export_button",
+    innerText: "Export",
+    onclick: () => {
+      ezActionbarExportContent.style.display =
+        ezActionbarExportContent.style.display === "block" ? "none" : "block";
+      event.stopPropagation();
+    },
+  });
+
+  ezActionbarExportContent.append(ezActionbarExportContentTop);
 
   const ezActionbarExportPage = createElementWithAttributes("button", {
     id: "ez_exportPage_button",
@@ -83,21 +114,16 @@ const loadEZ = () => {
     innerText: "Import Mods",
   });
 
-  ezActionbarScreen.append(
-    ezActionbarExportPage,
-    ezActionbarExportMissing,
-    ezActionbarExportAll,
-    ezActionbarImportMods
-  );
-
   const ezActionbarSave = createElementWithAttributes("div", {
     id: "ez_actionbar_save",
   });
   const ezSaveButton = createElementWithAttributes("button", {
     id: "ez_save_button",
     innerText: "Save",
+    onclick: () => {
+      ezSavePage();
+    },
   });
-  ezSaveButton.addEventListener("click", ezSavePage);
 
   ezActionbarSave.append(ezSaveButton);
 
@@ -107,8 +133,10 @@ const loadEZ = () => {
   const ezExitButton = createElementWithAttributes("button", {
     id: "ez_exit_button",
     innerText: "Exit Editor",
+    onclick: () => {
+      exitEditor();
+    },
   });
-  ezExitButton.addEventListener("click", exitEditor);
   ezActionbarExit.append(ezExitButton);
 
   const ezActionbarPalette = createElementWithAttributes("div", {
@@ -117,10 +145,18 @@ const loadEZ = () => {
   const ezActionbarPaletteButton = createElementWithAttributes("button", {
     id: "ez_palette_button",
     innerText: "Colour Palette",
+    onclick: () => {
+      ezActionbarPaletteContent.style.display =
+        ezActionbarPaletteContent.style.display === "block" ? "none" : "block";
+      event.stopPropagation();
+    },
   });
 
   const ezActionbarPaletteContent = createElementWithAttributes("div", {
     id: "ez_palette_content",
+    onclick: () => {
+      event.stopPropagation();
+    },
   });
 
   const ezActionbarPaletteContentTop = createElementWithAttributes("div", {
@@ -133,18 +169,15 @@ const loadEZ = () => {
       "Below are the most common colours found on this page. Click on a colour to copy its hex code to the clipboard.",
   });
 
-  ezActionbarPaletteButton.addEventListener("click", function (event) {
-    ezActionbarPaletteContent.style.display =
-      ezActionbarPaletteContent.style.display === "block" ? "none" : "block";
-    event.stopPropagation();
-  });
-
   const documentClickHandler = function (event) {
     if (
-      event.target !== ezActionbarPaletteButton &&
-      !ezActionbarPaletteContent.contains(event.target)
+      (event.target !== ezActionbarPaletteButton &&
+        !ezActionbarPaletteContent.contains(event.target)) ||
+      (event.target !== ezActionbarExportButton &&
+        !ezActionbarExportContent.contains(event.target))
     ) {
       ezActionbarPaletteContent.style.display = "none";
+      ezActionbarExportContent.style.display = "none";
     }
   };
 
@@ -152,10 +185,6 @@ const loadEZ = () => {
   removeListeners.push(() =>
     document.removeEventListener("click", documentClickHandler)
   );
-
-  ezActionbarPaletteContent.addEventListener("click", function (event) {
-    event.stopPropagation();
-  });
 
   ezActionbarPaletteContent.append(
     ezActionbarPaletteContentTop,
@@ -192,11 +221,23 @@ const loadEZ = () => {
     ezActionbarPaletteContent
   );
 
+  ezActionbarExport.append(
+    ezActionbarExportButton,
+    ezActionbarExportContent,
+    ezActionbarImportMods
+  );
+
+  ezActionbarExportContent.append(
+    ezActionbarExportPage,
+    ezActionbarExportMissing,
+    ezActionbarExportAll
+  );
+
   const ezActionbar = document.getElementById("ez_actionbar");
   ezActionbar.append(
     ezActionbarLogo,
     ezActionbarAppName,
-    ezActionbarScreen,
+    ezActionbarExport,
     ezActionbarPalette,
     ezActionbarSave,
     ezActionbarExit
@@ -712,6 +753,9 @@ const createModifyMenu = (elType, ezId) => {
   const ezModifyMenuButton = createElementWithAttributes("button", {
     className: "ezModifyMenu_button",
     textContent: "Add a modification",
+    onclick: () => {
+      ezModifyMenuContainer.classList.toggle("show");
+    },
   });
   ezModifyMenuContainer.append(ezModifyMenuButton);
 
@@ -728,19 +772,15 @@ const createModifyMenu = (elType, ezId) => {
     const a = createElementWithAttributes("a", {
       textContent: option.text,
       dataset: { value: option.value },
+      onclick: () => {
+        addModCard(option.value, option.text, ezId);
+      },
     });
-    a.addEventListener("click", () =>
-      addModCard(option.value, option.text, ezId)
-    );
     ezModifyMenuContent.append(a);
   });
 
   const ezSelectedElement = document.getElementById("ez_selected_element");
   ezSelectedElement.insertAdjacentElement("afterend", ezModifyMenuContainer);
-
-  ezModifyMenuButton.addEventListener("click", () => {
-    ezModifyMenuContainer.classList.toggle("show");
-  });
 
   window.addEventListener("click", (event) => {
     if (!event.target.matches(".ezModifyMenu_button")) {
@@ -859,38 +899,37 @@ const addModCard = (modType, modText, ezId, ez_key = Date.now()) => {
     className: "ezModCardHeaderButton ezModCardDelete",
     innerHTML: '<i class="material-symbols-outlined">delete</i>',
     title: "Remove Modification",
-  });
+    onclick: () => {
+      const divToRemove = document.querySelector(
+        `div[data-ez-mod-id="${modId}"]`
+      );
+      if (divToRemove) {
+        const parentContainer = divToRemove.parentElement;
+        let found = false;
 
-  ezModCardDeleteButton.addEventListener("click", () => {
-    const divToRemove = document.querySelector(
-      `div[data-ez-mod-id="${modId}"]`
-    );
-    if (divToRemove) {
-      const parentContainer = divToRemove.parentElement;
-      let found = false;
-
-      parentContainer.querySelectorAll(".ezModCard").forEach((card) => {
-        if (card === divToRemove) {
-          found = true;
-        } else if (found) {
-          card.classList.add("ez_slide_up");
-        }
-      });
-
-      if (draftJSON[ezId] && draftJSON[ezId].modifications[ez_key]) {
-        delete draftJSON[ezId].modifications[ez_key];
-      }
-
-      divToRemove.classList.add("ez_slide_up_delete");
-
-      setTimeout(() => {
-        divToRemove.remove();
         parentContainer.querySelectorAll(".ezModCard").forEach((card) => {
-          card.classList.remove("ez_slide_up");
+          if (card === divToRemove) {
+            found = true;
+          } else if (found) {
+            card.classList.add("ez_slide_up");
+          }
         });
-      }, 500);
-      changesMade = true;
-    }
+
+        if (draftJSON[ezId] && draftJSON[ezId].modifications[ez_key]) {
+          delete draftJSON[ezId].modifications[ez_key];
+        }
+
+        divToRemove.classList.add("ez_slide_up_delete");
+
+        setTimeout(() => {
+          divToRemove.remove();
+          parentContainer.querySelectorAll(".ezModCard").forEach((card) => {
+            card.classList.remove("ez_slide_up");
+          });
+        }, 500);
+        changesMade = true;
+      }
+    },
   });
 
   const ezModCardEnabled = createElementWithAttributes("label", {

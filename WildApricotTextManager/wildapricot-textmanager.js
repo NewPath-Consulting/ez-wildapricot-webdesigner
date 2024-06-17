@@ -17,78 +17,113 @@ let languageSwitcherId = "language_switch";
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 
-document.addEventListener("DOMContentLoaded", () => {
-  initializeEZ();
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    await loadResources([
+      { type: "css", href: `${ezLocation}/css/app.css` },
+      { type: "script", src: `${ezLocation}/scripts/functions.js` },
+      {
+        type: "script",
+        src: "https://cdn.jsdelivr.net/npm/html2canvas-pro@1.5.0/dist/html2canvas-pro.min.js",
+      },
+    ]);
+    startEZ();
+  } catch (error) {
+    console.error("Error loading resources:", error);
+  }
 });
 
-const initializeEZ = () => {
-  loadCSS(`${ezLocation}/css/app.css`);
-  loadScript(`${ezLocation}/scripts/functions.js`, () => {
-    loadScript(
-      "https://cdn.jsdelivr.net/npm/html2canvas-pro@1.5.0/dist/html2canvas-pro.min.js",
-      startEZ
-    );
-  });
-};
+const loadResources = (resources) => {
+  return Promise.all(
+    resources.map((resource) => {
+      return new Promise((resolve, reject) => {
+        let element;
+        if (resource.type === "css") {
+          element = document.createElement("link");
+          element.type = "text/css";
+          element.rel = "stylesheet";
+          element.href = resource.href;
+        } else if (resource.type === "script") {
+          element = document.createElement("script");
+          element.type = "text/javascript";
+          element.src = resource.src;
+        }
 
-const loadCSS = (href) => {
-  const link = document.createElement("link");
-  link.type = "text/css";
-  link.rel = "stylesheet";
-  link.href = href;
-  document.head.appendChild(link);
-};
+        element.onload = resolve;
+        element.onerror = reject;
 
-const loadScript = (src, callback) => {
-  const script = document.createElement("script");
-  script.type = "text/javascript";
-  script.src = src;
-  script.onload = callback;
-  script.onreadystatechange = () => {
-    if (script.readyState === "complete") callback();
-  };
-  document.head.appendChild(script);
+        if (resource.type === "script") {
+          element.onreadystatechange = () => {
+            if (element.readyState === "complete") resolve();
+          };
+        }
+
+        document.head.appendChild(element);
+      });
+    })
+  );
 };
 
 const startEZ = async () => {
-  if (urlParams.get("language")) {
-    setLanguage(urlParams.get("language"));
+  try {
+    handleLanguageSettings();
+    const currentLanguage = getCurrentLanguage();
+    initializePage(currentLanguage);
+    await loadEZJSON();
+    captureWebPage();
+    initializeUIElements();
+    addEventListeners();
+    checkInspectorStatus();
+  } catch (error) {
+    console.error("Error during initialization:", error);
+  }
+};
+
+const handleLanguageSettings = () => {
+  const language = urlParams.get("language");
+  if (language) {
+    setLanguage(language);
     urlParams.delete("language");
     window.history.replaceState({}, "", `${currentUrl.pathname}?${urlParams}`);
   }
+};
 
-  currentLanguage = getCurrentLanguage();
-
+const initializePage = (currentLanguage) => {
   processElements(document.querySelector("body > div:first-of-type"));
-
   createToggle(currentLanguage);
+  hideOtherLanguages(currentLanguage);
+};
 
-  scopeLanguages.forEach((language, index) => {
-    if (language[1] !== currentLanguage) {
-      document.querySelectorAll(`.${language[1]}`).forEach((el) => {
+const hideOtherLanguages = (currentLanguage) => {
+  scopeLanguages.forEach(([_, langClass]) => {
+    if (langClass !== currentLanguage) {
+      document.querySelectorAll(`.${langClass}`).forEach((el) => {
         el.classList.add("ez_hidden_language");
       });
     }
   });
+};
 
-  // try {
-  const response = await fetch(ezFile, {
-    method: "GET",
-  });
-
-  if (response.ok) {
-    savedJSON = await response.json();
-    console.log("EZ JSON loaded successfully");
-    processJSON();
-  } else if (response.status === 404) {
-    console.log("EZ JSON does not exist.");
-  } else {
-    console.log("Failed to load EZ JSON: " + response.statusText);
+const loadEZJSON = async () => {
+  try {
+    const response = await fetch(ezFile, { method: "GET" });
+    if (response.ok) {
+      savedJSON = await response.json();
+      console.log("EZ JSON loaded successfully");
+      processJSON();
+    } else {
+      console.warn(
+        "EZ JSON not loaded. Status:",
+        response.status,
+        response.statusText
+      );
+    }
+  } catch (error) {
+    console.error("Error loading EZ JSON:", error);
   }
-  // } catch (error) {
-  //   console.log("EZ Error: " + error.message);
-  // }
+};
 
+const captureWebPage = () => {
   html2canvas(document.querySelector("body > div:first-of-type"))
     .then((canvas) => {
       const ctx = canvas.getContext("2d");
@@ -97,12 +132,13 @@ const startEZ = async () => {
     .catch((error) => {
       console.error("Error capturing the webpage:", error);
     });
+};
 
+const initializeUIElements = () => {
   const ezToaster = createElementWithAttributes("div", {
     id: "ez_toaster_container",
     className: "ez_toaster_container",
   });
-
   const ezSidebar = createElementWithAttributes("div", {
     id: "ez_sidebar",
     className: "ez_sidebar",
@@ -115,9 +151,10 @@ const startEZ = async () => {
     id: "ezIcon",
     className: "ezIcon",
     title: `Launch EZ WildApricot Designer ${ez_version}`,
+    onclick: () => {
+      toggleEz();
+    },
   });
-
-  ezIcon.addEventListener("click", toggleEz);
 
   const ezInspect = createAdminLink("EZ Designer");
 
@@ -128,15 +165,15 @@ const startEZ = async () => {
   ezInspect.querySelector("a").addEventListener("click", toggleEz);
 
   document.body.append(ezToaster, ezSidebar, ezActionbar, ezIcon);
+};
 
+const addEventListeners = () => {
   document.addEventListener("keydown", handleKeydown);
+};
 
-  let inInspector = getCookie("inInspector");
-
-  if (inInspector) {
-    setTimeout(function () {
-      toggleEz();
-    }, 500);
+const checkInspectorStatus = () => {
+  if (getCookie("inInspector")) {
+    setTimeout(toggleEz, 500);
   }
 };
 
@@ -176,11 +213,9 @@ const insertAdminLink = (linkContainer) => {
         parentElement.appendChild(linkContainer);
       }
     } else {
-      // If no .ez_admin_link elements, insert at the beginning
       const firstChild = parentElement.firstChild;
       parentElement.insertBefore(linkContainer, firstChild);
     }
-    // Update the width of the parent element to accommodate the new linkContainer
     parentElement.style.width =
       parentElement.offsetWidth + linkContainer.offsetWidth + "px";
   }
