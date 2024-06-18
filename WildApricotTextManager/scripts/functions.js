@@ -70,7 +70,7 @@ const loadEZ = () => {
 
   const ezActionbarExportButton = createElementWithAttributes("button", {
     id: "ez_export_button",
-    innerText: "Export",
+    innerText: "Export CSV",
     onclick: () => {
       ezActionbarExportContent.style.display =
         ezActionbarExportContent.style.display === "block" ? "none" : "block";
@@ -111,7 +111,7 @@ const loadEZ = () => {
 
   const ezActionbarImportMods = createElementWithAttributes("button", {
     id: "ez_importMods_button",
-    innerText: "Import Mods",
+    innerText: "Import CSV",
   });
 
   const ezActionbarSave = createElementWithAttributes("div", {
@@ -569,6 +569,8 @@ const outlineElements = () => {
         target.classList.add("ez_hover");
       } else if (target.tagName.toLowerCase() === "select") {
         target.classList.add("ez_hover");
+      } else if (target.classList.contains("memberDirectoryOuterContainer")) {
+        target.classList.add("ez_hover");
       } else {
         target.classList.add("ez_uneditable");
       }
@@ -654,6 +656,8 @@ const ezInspect = (element) => {
         : element.type;
   }
   if (element.classList.contains("menuInner")) elType = "Menu";
+  if (element.classList.contains("memberDirectoryOuterContainer"))
+    elType = "Directory";
 
   const ezSelectedElement = document.getElementById("ez_selected_element");
   ezSelectedElement.innerHTML = "";
@@ -1428,6 +1432,14 @@ const saveEzDraft = (eztag) => {
         replacementText = document.getElementById(
           `${mod.id}_ReplacementText`
         ).value;
+        if (originalText && replacementText)
+          document.querySelector(`[data-ez-id="${ez_id}"]`).textContent =
+            document
+              .querySelector(`[data-ez-id="${ez_id}"]`)
+              .textContent.replace(
+                new RegExp(originalText, "g"),
+                replacementText
+              );
         break;
       case "regex":
         language = document.getElementById(`${mod.id}_language`).value;
@@ -2009,9 +2021,14 @@ const applyModification = (element, mod, modification) => {
       if (mod.originalText) {
         if (
           mod.enabled &&
+          mod.replacementText &&
           (mod.language === currentLanguage || mod.language === "all")
         )
-          modification.originalText = mod.originalText;
+          element.textContent = element.textContent.replace(
+            new RegExp(mod.originalText, "g"),
+            mod.replacementText
+          );
+        modification.originalText = mod.originalText;
         modification.replacementText = mod.replacementText;
       }
       break;

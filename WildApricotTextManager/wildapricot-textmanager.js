@@ -67,7 +67,7 @@ const loadResources = (resources) => {
 const startEZ = async () => {
   try {
     handleLanguageSettings();
-    const currentLanguage = getCurrentLanguage();
+    currentLanguage = getCurrentLanguage();
     initializePage(currentLanguage);
     await loadEZJSON();
     captureWebPage();
