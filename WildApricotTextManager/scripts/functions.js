@@ -925,7 +925,7 @@ const createModifyMenu = (elType, ezId) => {
     id: `${ezId}_show_toggle`,
     name: `${ezId}_toggle`,
     type: "radio",
-    checked: true,
+    checked: draftJSON[ezId]?.isVisible === "show",
     value: "show",
   });
 
@@ -933,6 +933,7 @@ const createModifyMenu = (elType, ezId) => {
     id: `${ezId}_hide_toggle`,
     name: `${ezId}_toggle`,
     type: "radio",
+    checked: draftJSON[ezId]?.isVisible === "hide",
     value: "hide",
   });
 
@@ -2481,8 +2482,15 @@ function csvToJson(csv, replaceFile = false) {
   const result = {};
   const headers = lines[0].split(",");
 
+  function parseValue(value) {
+    if (/^(\d+|\d*\.\d+)$/.test(value)) {
+      return JSON.parse(value);
+    }
+    return value.replace(/^"(.*)"$/, "$1"); // Remove extra quotes
+  }
+
   for (let i = 1; i < lines.length; i++) {
-    const currentline = lines[i].split(",");
+    const currentline = lines[i].split(",").map(parseValue);
     const ez_id = currentline[headers.indexOf("ez_id")];
     let modificationId = currentline[headers.indexOf("modificationId")];
 
@@ -2506,7 +2514,7 @@ function csvToJson(csv, replaceFile = false) {
 
     const modification = {};
     let validModification = true;
-    const modType = currentline[headers.indexOf("type")];
+    const modType = currentline[headers.indexOf("modType")];
     headers.forEach((header, index) => {
       if (
         ![
@@ -2522,71 +2530,79 @@ function csvToJson(csv, replaceFile = false) {
       }
     });
 
-    // switch (modType) {
-    //   case "text":
-    //     if (!currentline[headers.indexOf("replacementText")])
-    //       validModification = false;
-    //     break;
-    //   case "replace":
-    //     if (
-    //       !currentline[headers.indexOf("originalText")] ||
-    //       !currentline[headers.indexOf("replacementText")]
-    //     )
-    //       validModification = false;
-    //     break;
-    //   case "regex":
-    //     if (!currentline[headers.indexOf("pattern")]) {
-    //       validModification = false;
-    //     } else {
-    //       modification.pattern = currentline[headers.indexOf("pattern")];
-    //       modification.replacementText =
-    //         currentline[headers.indexOf("replacementText")];
-    //     }
-    //     break;
-    //   case "linkText":
-    //     if (!currentline[headers.indexOf("linkText")])
-    //       validModification = false;
-    //     break;
-    //   case "url":
-    //     if (!currentline[headers.indexOf("linkUrl")]) validModification = false;
-    //     break;
-    //   case "buttonValue":
-    //     if (!currentline[headers.indexOf("buttonValue")])
-    //       validModification = false;
-    //     break;
-    //   case "placeholder":
-    //     if (!currentline[headers.indexOf("placeholder")])
-    //       validModification = false;
-    //     break;
-    //   case "dropdown":
-    //     if (
-    //       !currentline[headers.indexOf("optionOriginal")] ||
-    //       !currentline[headers.indexOf("optionReplacement")]
-    //     )
-    //       validModification = false;
-    //     break;
-    //   default:
-    //     validModification = false;
-    // }
+    switch (modType) {
+      case "text":
+        if (!currentline[headers.indexOf("replacementText")])
+          validModification = false;
+        break;
+      case "replace":
+        if (
+          !currentline[headers.indexOf("originalText")] ||
+          !currentline[headers.indexOf("replacementText")]
+        )
+          validModification = false;
+        break;
+      case "regex":
+        if (!currentline[headers.indexOf("pattern")]) {
+          validModification = false;
+        } else {
+          modification.pattern = currentline[headers.indexOf("pattern")];
+          modification.replacementText =
+            currentline[headers.indexOf("replacementText")];
+        }
+        break;
+      case "linkText":
+        if (!currentline[headers.indexOf("linkText")])
+          validModification = false;
+        break;
+      case "url":
+        if (!currentline[headers.indexOf("linkUrl")]) validModification = false;
+        break;
+      case "buttonValue":
+        if (!currentline[headers.indexOf("buttonValue")])
+          validModification = false;
+        break;
+      case "placeholder":
+        if (!currentline[headers.indexOf("placeholder")])
+          validModification = false;
+        break;
+      case "dropdown":
+        if (
+          !currentline[headers.indexOf("optionOriginal")] ||
+          !currentline[headers.indexOf("optionReplacement")]
+        )
+          validModification = false;
+        break;
+      case "directory":
+        if (
+          !currentline[headers.indexOf("originalText")] ||
+          !currentline[headers.indexOf("replacementText")]
+        )
+          validModification = false;
+        break;
+      default:
+        console.log(modType);
+        validModification = false;
+    }
 
-    // if (validModification) {
-    result[ez_id].modifications[modificationId].push(modification);
-    // }
+    if (validModification) {
+      result[ez_id].modifications[modificationId].push(modification);
+    }
   }
 
-  if (replaceFile) {
-    for (const ez_id in result) {
-      if (!draftJSON[ez_id]) {
-        draftJSON[ez_id] = result[ez_id];
+  if (!replaceFile) {
+    for (const ez_id in draftJSON) {
+      if (!result[ez_id]) {
+        result[ez_id] = draftJSON[ez_id];
       } else {
-        for (const modId in result[ez_id].modifications) {
-          if (!draftJSON[ez_id].modifications[modId]) {
-            draftJSON[ez_id].modifications[modId] =
-              result[ez_id].modifications[modId];
+        for (const modId in draftJSON[ez_id].modifications) {
+          if (!result[ez_id].modifications[modId]) {
+            result[ez_id].modifications[modId] =
+              draftJSON[ez_id].modifications[modId];
           } else {
-            draftJSON[ez_id].modifications[modId] = [
-              ...draftJSON[ez_id].modifications[modId],
+            result[ez_id].modifications[modId] = [
               ...result[ez_id].modifications[modId],
+              ...draftJSON[ez_id].modifications[modId],
             ];
           }
         }
