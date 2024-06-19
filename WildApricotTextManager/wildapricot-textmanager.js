@@ -12,6 +12,7 @@ const ezLocation = currentScript.src.substring(
 );
 let savedJSON = {};
 const ezFile = `${ezLocation}/ezdesigner.json`;
+const ezFileBackup = `${ezLocation}/ezdesigner-backup.json`;
 let languageSwitcherId = "language_switch";
 
 const queryString = window.location.search;

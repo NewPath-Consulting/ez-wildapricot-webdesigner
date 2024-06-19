@@ -26,7 +26,7 @@ const ezModifyOptions = [
   { type: "dropdown", value: "dropdown", text: "Change Dropdown Value" },
   {
     type: "directory",
-    value: "dierctory",
+    value: "directory",
     text: "Member Directory Text Replace",
   },
 ];
@@ -49,8 +49,8 @@ const loadEZ = () => {
     innerText: `EZ WildApricot Designer ${ez_version}`,
   });
 
-  const ezActionbarScreen = createElementWithAttributes("div", {
-    id: "ez_actionbar_screen",
+  const ezActionbarCenter = createElementWithAttributes("div", {
+    id: "ez_actionbar_center",
   });
 
   const ezActionbarExport = createElementWithAttributes("div", {
@@ -72,6 +72,8 @@ const loadEZ = () => {
     id: "ez_export_button",
     innerText: "Export CSV",
     onclick: () => {
+      ezActionbarPaletteContent.style.display = "none";
+      ezActionbarImportContent.style.display = "none";
       ezActionbarExportContent.style.display =
         ezActionbarExportContent.style.display === "block" ? "none" : "block";
       event.stopPropagation();
@@ -109,10 +111,114 @@ const loadEZ = () => {
     },
   });
 
+  const ezActionbarImport = createElementWithAttributes("div", {
+    id: "ez_actionbar_import",
+  });
+
+  const ezActionbarImportContent = createElementWithAttributes("div", {
+    id: "ez_import_content",
+    onclick: () => {
+      event.stopPropagation();
+    },
+  });
+
+  const ezActionbarImportContentTop = createElementWithAttributes("div", {
+    className: "ez_dropdown_top",
+  });
+
+  const ezActionbarImportUpdate = createElementWithAttributes("button", {
+    id: "ez_import_update",
+    innerText: "Update/Append Modifications",
+    onclick: () => {
+      const input = document.createElement("input");
+      input.type = "file";
+      input.accept = ".csv";
+
+      input.addEventListener("change", (event) => {
+        const file = event.target.files[0];
+        if (file) {
+          if (
+            confirm(
+              `Are you sure you want to merge "${file.name}" with the existing site modifications?`
+            )
+          ) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+              const contents = e.target.result;
+              draftJSON = csvToJson(contents, false);
+              ezSavePage();
+            };
+            reader.readAsText(file);
+          }
+        }
+      });
+
+      input.click();
+    },
+  });
+
+  const ezActionbarImportReplace = createElementWithAttributes("button", {
+    id: "ez_import_Replace",
+    innerText: "Replace All Modifications",
+    onclick: () => {
+      const input = document.createElement("input");
+      input.type = "file";
+      input.accept = ".csv";
+
+      input.addEventListener("change", (event) => {
+        const file = event.target.files[0];
+        if (file) {
+          if (
+            confirm(
+              `Are you sure you want to replace all exiting site modifications with the contents of "${file.name}"?`
+            )
+          ) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+              const contents = e.target.result;
+              draftJSON = csvToJson(contents, true);
+              ezSavePage();
+            };
+            reader.readAsText(file);
+          }
+        }
+      });
+
+      input.click();
+    },
+  });
+
+  ezActionbarImportContent.append(
+    ezActionbarImportContentTop,
+    ezActionbarImportUpdate,
+    ezActionbarImportReplace
+  );
+
   const ezActionbarImportMods = createElementWithAttributes("button", {
     id: "ez_importMods_button",
     innerText: "Import CSV",
+    onclick: () => {
+      ezActionbarPaletteContent.style.display = "none";
+      ezActionbarExportContent.style.display = "none";
+      ezActionbarImportContent.style.display =
+        ezActionbarImportContent.style.display === "block" ? "none" : "block";
+      event.stopPropagation();
+    },
   });
+
+  const ezActionbarUndo = createElementWithAttributes("div", {
+    id: "ez_actionbar_undo",
+  });
+
+  const ezActionbarUndoButton = createElementWithAttributes("button", {
+    id: "ez_undoSave_button",
+    innerText: "Undo Last Save",
+    onclick: () => {
+      undoSave();
+    },
+  });
+
+  ezActionbarUndo.append(ezActionbarUndoButton);
 
   const ezActionbarSave = createElementWithAttributes("div", {
     id: "ez_actionbar_save",
@@ -146,6 +252,8 @@ const loadEZ = () => {
     id: "ez_palette_button",
     innerText: "Colour Palette",
     onclick: () => {
+      ezActionbarExportContent.style.display = "none";
+      ezActionbarImportContent.style.display = "none";
       ezActionbarPaletteContent.style.display =
         ezActionbarPaletteContent.style.display === "block" ? "none" : "block";
       event.stopPropagation();
@@ -160,7 +268,7 @@ const loadEZ = () => {
   });
 
   const ezActionbarPaletteContentTop = createElementWithAttributes("div", {
-    className: "ez_palette_top",
+    className: "ez_dropdown_top",
   });
 
   const ezActionbarPaletteContentInfo = createElementWithAttributes("p", {
@@ -174,10 +282,13 @@ const loadEZ = () => {
       (event.target !== ezActionbarPaletteButton &&
         !ezActionbarPaletteContent.contains(event.target)) ||
       (event.target !== ezActionbarExportButton &&
-        !ezActionbarExportContent.contains(event.target))
+        !ezActionbarExportContent.contains(event.target)) ||
+      (event.target !== ezActionbarImportButton &&
+        !ezActionbarImportContent.contains(event.target))
     ) {
       ezActionbarPaletteContent.style.display = "none";
       ezActionbarExportContent.style.display = "none";
+      ezActionbarImportContent.style.display = "none";
     }
   };
 
@@ -221,10 +332,13 @@ const loadEZ = () => {
     ezActionbarPaletteContent
   );
 
-  ezActionbarExport.append(
-    ezActionbarExportButton,
-    ezActionbarExportContent,
-    ezActionbarImportMods
+  ezActionbarExport.append(ezActionbarExportButton, ezActionbarExportContent);
+  ezActionbarImport.append(ezActionbarImportMods, ezActionbarImportContent);
+
+  ezActionbarCenter.append(
+    ezActionbarExport,
+    ezActionbarImport,
+    ezActionbarUndo
   );
 
   ezActionbarExportContent.append(
@@ -237,7 +351,7 @@ const loadEZ = () => {
   ezActionbar.append(
     ezActionbarLogo,
     ezActionbarAppName,
-    ezActionbarExport,
+    ezActionbarCenter,
     ezActionbarPalette,
     ezActionbarSave,
     ezActionbarExit
@@ -557,7 +671,6 @@ const outlineElements = () => {
   const mouseoverHandler = (event) => {
     const target = event.target;
     if (target.hasAttribute("data-ez-id")) {
-      const tagName = target.tagName;
       const hasText = Array.from(target.childNodes).some(
         (node) =>
           node.nodeType === Node.TEXT_NODE && node.textContent.trim() !== ""
@@ -672,7 +785,11 @@ const ezInspect = (element) => {
     title: "EZ-Tag ID",
   });
 
-  customLabel = draftJSON[element.dataset.ezId]
+  customLabel = document
+    .querySelector(`[data-ez-id="${element.dataset.ezId}"]`)
+    .classList.contains("memberDirectoryOuterContainer")
+    ? "Member Directory"
+    : draftJSON[element.dataset.ezId]
     ? draftJSON[element.dataset.ezId].originalContent
     : document.querySelector(`[data-ez-id="${element.dataset.ezId}"]`)
         .tagName === "SELECT"
@@ -1004,13 +1121,13 @@ const addModCard = (modType, modText, ezId, ez_key = Date.now()) => {
           {
             label: "Original Text:",
             type: "text",
-            idSuffix: "OriginalText",
+            idSuffix: "originalText",
             json_key: "originalText",
           },
           {
             label: "Replacement Text:",
             type: "text",
-            idSuffix: "ReplacementText",
+            idSuffix: "replacementText",
             json_key: "replacementText",
           },
         ],
@@ -1023,7 +1140,7 @@ const addModCard = (modType, modText, ezId, ez_key = Date.now()) => {
           {
             label: "Replacement Text:",
             type: "text",
-            idSuffix: "ReplacementText",
+            idSuffix: "replacementText",
             json_key: "replacementText",
           },
         ],
@@ -1042,7 +1159,7 @@ const addModCard = (modType, modText, ezId, ez_key = Date.now()) => {
           {
             label: "Replacement Text:",
             type: "text",
-            idSuffix: "ReplacementText",
+            idSuffix: "replacementText",
             json_key: "replacementText",
           },
         ],
@@ -1115,6 +1232,25 @@ const addModCard = (modType, modText, ezId, ez_key = Date.now()) => {
             type: "text",
             idSuffix: "optionReplacement",
             json_key: "optionReplacement",
+          },
+        ],
+        modValues
+      );
+      break;
+    case "directory":
+      appendInputFields(
+        [
+          {
+            label: "Original Text:",
+            type: "text",
+            idSuffix: "originalText",
+            json_key: "originalText",
+          },
+          {
+            label: "Replacement Text:",
+            type: "text",
+            idSuffix: "replacementText",
+            json_key: "replacementText",
           },
         ],
         modValues
@@ -1333,7 +1469,7 @@ function buildEzDraft(
       }
       break;
     case "replace":
-      if (originalText) {
+      if (originalText && replacementText) {
         modification.originalText = originalText;
         modification.replacementText = replacementText;
       } else {
@@ -1385,6 +1521,14 @@ function buildEzDraft(
         return;
       }
       break;
+    case "directory":
+      if (originalText && replacementText) {
+        modification.originalText = originalText;
+        modification.replacementText = replacementText;
+      } else {
+        return;
+      }
+      break;
   }
 
   draftJSON[ez_id].modifications[ez_key] = [];
@@ -1420,7 +1564,7 @@ const saveEzDraft = (eztag) => {
       case "text":
         language = document.getElementById(`${mod.id}_language`).value;
         replacementText = document.getElementById(
-          `${mod.id}_ReplacementText`
+          `${mod.id}_replacementText`
         ).value;
         if (replacementText)
           document.querySelector(`[data-ez-id="${ez_id}"]`).innerText =
@@ -1428,24 +1572,20 @@ const saveEzDraft = (eztag) => {
         break;
       case "replace":
         language = document.getElementById(`${mod.id}_language`).value;
-        originalText = document.getElementById(`${mod.id}_OriginalText`).value;
+        originalText = document.getElementById(`${mod.id}_originalText`).value;
         replacementText = document.getElementById(
-          `${mod.id}_ReplacementText`
+          `${mod.id}_replacementText`
         ).value;
         if (originalText && replacementText)
-          document.querySelector(`[data-ez-id="${ez_id}"]`).textContent =
-            document
-              .querySelector(`[data-ez-id="${ez_id}"]`)
-              .textContent.replace(
-                new RegExp(originalText, "g"),
-                replacementText
-              );
+          document.querySelector(`[data-ez-id="${ez_id}"]`).innerHTML = document
+            .querySelector(`[data-ez-id="${ez_id}"]`)
+            .innerHTML.replace(new RegExp(originalText, "g"), replacementText);
         break;
       case "regex":
         language = document.getElementById(`${mod.id}_language`).value;
         pattern = document.getElementById(`${mod.id}_Pattern`).value;
         replacementText = document.getElementById(
-          `${mod.id}_ReplacementText`
+          `${mod.id}_replacementText`
         ).value;
         break;
       case "linkText":
@@ -1490,6 +1630,23 @@ const saveEzDraft = (eztag) => {
                 option.text = optionReplacement;
               }
             });
+        }
+        break;
+      case "directory":
+        language = document.getElementById(`${mod.id}_language`).value;
+        originalText = document.getElementById(`${mod.id}_originalText`).value;
+        replacementText = document.getElementById(
+          `${mod.id}_replacementText`
+        ).value;
+        if (originalText && replacementText) {
+          let directoryHeaders = document
+            .querySelector(`[data-ez-id="${ez_id}"]`)
+            .getElementsByTagName("th");
+          for (let i = 0; i < directoryHeaders.length; i++) {
+            let th = directoryHeaders[i];
+            let regex = new RegExp(originalText, "g");
+            th.textContent = th.textContent.replace(regex, replacementText);
+          }
         }
         break;
     }
@@ -1858,6 +2015,23 @@ function ezExportMissing(filename = "output.csv") {
 
 const ezSavePage = async () => {
   saveJSONString = JSON.stringify(draftJSON);
+  saveJSONBackupString = JSON.stringify(savedJSON);
+
+  try {
+    const response = await fetch(ezFileBackup, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: saveJSONBackupString,
+    });
+
+    if (!response.ok) {
+      alert("Failed to backup EZ JSON: " + response.statusText);
+    }
+  } catch (error) {
+    alert("EZ Error: " + error.message);
+  }
 
   try {
     const response = await fetch(ezFile, {
@@ -2024,7 +2198,7 @@ const applyModification = (element, mod, modification) => {
           mod.replacementText &&
           (mod.language === currentLanguage || mod.language === "all")
         )
-          element.textContent = element.textContent.replace(
+          element.innerHTML = element.innerHTML.replace(
             new RegExp(mod.originalText, "g"),
             mod.replacementText
           );
@@ -2104,6 +2278,28 @@ const applyModification = (element, mod, modification) => {
         modification.optionReplacement = mod.optionReplacement;
       }
       break;
+    case "directory":
+      if (mod.originalText && mod.replacementText) {
+        if (
+          mod.enabled &&
+          (mod.language === currentLanguage || mod.language === "all")
+        ) {
+          let directoryHeaders = element.getElementsByTagName("th");
+          setTimeout(() => {
+            for (let i = 0; i < directoryHeaders.length; i++) {
+              let th = directoryHeaders[i];
+              let regex = new RegExp(mod.originalText, "g");
+              th.textContent = th.textContent.replace(
+                regex,
+                mod.replacementText
+              );
+            }
+          }, 1000);
+        }
+        modification.optionOriginal = mod.optionOriginal;
+        modification.optionReplacement = mod.optionReplacement;
+        break;
+      }
   }
 };
 
@@ -2279,3 +2475,169 @@ function ezMissingToCsv() {
   const bom = "\uFEFF";
   return bom + csvContent;
 }
+
+function csvToJson(csv, replaceFile = false) {
+  const lines = csv.split("\n").map((line) => line.trim().replace(/\r/g, ""));
+  const result = {};
+  const headers = lines[0].split(",");
+
+  for (let i = 1; i < lines.length; i++) {
+    const currentline = lines[i].split(",");
+    const ez_id = currentline[headers.indexOf("ez_id")];
+    let modificationId = currentline[headers.indexOf("modificationId")];
+
+    if (!modificationId) {
+      modificationId = Date.now().toString();
+    }
+
+    if (!result[ez_id]) {
+      result[ez_id] = {
+        type: currentline[headers.indexOf("type")],
+        customLabel: currentline[headers.indexOf("customLabel")],
+        isVisible: currentline[headers.indexOf("isVisible")],
+        originalContent: currentline[headers.indexOf("originalContent")],
+        modifications: {},
+      };
+    }
+
+    if (!result[ez_id].modifications[modificationId]) {
+      result[ez_id].modifications[modificationId] = [];
+    }
+
+    const modification = {};
+    let validModification = true;
+    const modType = currentline[headers.indexOf("type")];
+    headers.forEach((header, index) => {
+      if (
+        ![
+          "ez_id",
+          "type",
+          "customLabel",
+          "isVisible",
+          "originalContent",
+          "modificationId",
+        ].includes(header)
+      ) {
+        modification[header] = currentline[index];
+      }
+    });
+
+    // switch (modType) {
+    //   case "text":
+    //     if (!currentline[headers.indexOf("replacementText")])
+    //       validModification = false;
+    //     break;
+    //   case "replace":
+    //     if (
+    //       !currentline[headers.indexOf("originalText")] ||
+    //       !currentline[headers.indexOf("replacementText")]
+    //     )
+    //       validModification = false;
+    //     break;
+    //   case "regex":
+    //     if (!currentline[headers.indexOf("pattern")]) {
+    //       validModification = false;
+    //     } else {
+    //       modification.pattern = currentline[headers.indexOf("pattern")];
+    //       modification.replacementText =
+    //         currentline[headers.indexOf("replacementText")];
+    //     }
+    //     break;
+    //   case "linkText":
+    //     if (!currentline[headers.indexOf("linkText")])
+    //       validModification = false;
+    //     break;
+    //   case "url":
+    //     if (!currentline[headers.indexOf("linkUrl")]) validModification = false;
+    //     break;
+    //   case "buttonValue":
+    //     if (!currentline[headers.indexOf("buttonValue")])
+    //       validModification = false;
+    //     break;
+    //   case "placeholder":
+    //     if (!currentline[headers.indexOf("placeholder")])
+    //       validModification = false;
+    //     break;
+    //   case "dropdown":
+    //     if (
+    //       !currentline[headers.indexOf("optionOriginal")] ||
+    //       !currentline[headers.indexOf("optionReplacement")]
+    //     )
+    //       validModification = false;
+    //     break;
+    //   default:
+    //     validModification = false;
+    // }
+
+    // if (validModification) {
+    result[ez_id].modifications[modificationId].push(modification);
+    // }
+  }
+
+  if (replaceFile) {
+    for (const ez_id in result) {
+      if (!draftJSON[ez_id]) {
+        draftJSON[ez_id] = result[ez_id];
+      } else {
+        for (const modId in result[ez_id].modifications) {
+          if (!draftJSON[ez_id].modifications[modId]) {
+            draftJSON[ez_id].modifications[modId] =
+              result[ez_id].modifications[modId];
+          } else {
+            draftJSON[ez_id].modifications[modId] = [
+              ...draftJSON[ez_id].modifications[modId],
+              ...result[ez_id].modifications[modId],
+            ];
+          }
+        }
+      }
+    }
+  }
+
+  return result;
+}
+
+const undoSave = async () => {
+  if (confirm("Do you wish to revert to the previous save?")) {
+    try {
+      const responseBackup = await fetch(ezFileBackup, { method: "GET" });
+      if (!responseBackup.ok) {
+        alert("Failed to load EZ JSON Backup: " + responseBackup.statusText);
+        return;
+      }
+      const backupFileContent = await responseBackup.json();
+
+      const saveBackupResponse = await fetch(ezFileBackup, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(savedJSON),
+      });
+
+      if (!saveBackupResponse.ok) {
+        alert(
+          "Failed to save EZ JSON Backup: " + saveBackupResponse.statusText
+        );
+        return;
+      }
+
+      const saveMainResponse = await fetch(ezFile, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(backupFileContent),
+      });
+
+      if (saveMainResponse.ok) {
+        alert("Backup file restored successfully.");
+        location.reload();
+      } else {
+        alert("Failed to save EZ JSON: " + saveMainResponse.statusText);
+      }
+    } catch (error) {
+      alert("EZ Error: " + error.message);
+    }
+  }
+};
