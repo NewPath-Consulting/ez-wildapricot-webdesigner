@@ -688,7 +688,11 @@ const outlineElements = () => {
         target.classList.add("ez_uneditable");
       }
 
-      document.addEventListener("mousemove", mousemoveHandler);
+      if (target.closest(".memberDirectory")) {
+        console.log("The element is within a memberDirectory");
+      }
+
+      target.classList.add("ez_uneditable");
     }
   };
 
@@ -1061,7 +1065,7 @@ const addModCard = (modType, modText, ezId, ez_key = Date.now()) => {
   const ezModCardEnabledToggle = createElementWithAttributes("input", {
     type: "checkbox",
     id: `${modId}_enabled`,
-    checked: true,
+    checked: draftJSON[ezId]?.enabled !== false,
   });
 
   const ezModCardEnabledToggleIcon = createElementWithAttributes("i", {
