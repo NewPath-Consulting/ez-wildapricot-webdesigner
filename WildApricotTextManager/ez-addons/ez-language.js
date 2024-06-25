@@ -2,7 +2,11 @@ let ez_language_addon_version = "1.0";
 log(`EZ-Language Addon Version ${ez_language_addon_version} enabled.`);
 
 let ez_language = () => {
-  const classesToProcess = ["WaGadgetEvents", "WaGadgetUpcomingEvents"];
+  const classesToProcess = [
+    "WaGadgetEvents",
+    "WaGadgetUpcomingEvents",
+    "WaGadgetBreadcrumbs",
+  ];
 
   classesToProcess.forEach((className) => {
     const elements = document.querySelectorAll(`.${className}`);
