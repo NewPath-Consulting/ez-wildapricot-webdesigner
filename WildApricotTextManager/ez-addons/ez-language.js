@@ -8,19 +8,35 @@ let ez_language = () => {
     const elements = document.querySelectorAll(`.${className}`);
 
     elements.forEach((element) => {
-      const html = element.innerHTML;
+      let html = element.innerHTML;
 
-      const newHtml = html.replace(
-        /\[ez ([^\]]+)\]([\s\S]*?)\[\/ez\]/g,
-        function (match, p1, p2) {
-          if (p1 !== currentLanguage) {
-            return `<span class="${p1}" style="display:none;">${p2}</span>`;
+      html = html.replace(
+        /(<(?!div)[^>]+>)?\[ez ([^\]]+)\]/gi,
+        function (match, precedingTag, p1) {
+          let spanTag = `<span class="${p1.trim()}"`;
+          if (p1.trim() === currentLanguage) {
+            spanTag += ">";
+          } else {
+            spanTag += ' style="display:none;">';
           }
-          return `<span class="${p1}">${p2}</span>`;
+          if (precedingTag) {
+            return spanTag + precedingTag;
+          }
+          return spanTag;
         }
       );
 
-      element.innerHTML = newHtml;
+      html = html.replace(
+        /(<(?!div)[^>]+>)?\[\/ez\]/gi,
+        function (match, precedingTag) {
+          if (precedingTag) {
+            return `</span>${precedingTag}`;
+          }
+          return `</span>`;
+        }
+      );
+
+      element.innerHTML = html;
     });
   });
 };
