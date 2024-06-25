@@ -6,6 +6,11 @@ let ez_language = () => {
     "WaGadgetEvents",
     "WaGadgetUpcomingEvents",
     "WaGadgetBreadcrumbs",
+    "OnlineStoreCatalog_list_item_link",
+    "OnlineStoreProduct_title_container",
+    "OnlineStoreProduct_description",
+    "storeCartTable_itemTitle",
+    "storeCartTable_tdTitle",
   ];
 
   classesToProcess.forEach((className) => {
