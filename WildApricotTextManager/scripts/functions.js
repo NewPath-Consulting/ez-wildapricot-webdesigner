@@ -7,6 +7,22 @@ let debugVisible = false;
 let missingTags = [];
 let changesMade = false;
 
+const ezLanguageTitleClasses = [
+  "pageTitleOuterContainer",
+  "WaGadgetBreadcrumbs",
+  "eventDetailsLink",
+  "pastEventLink",
+  "eventDivItem",
+  "OnlineStoreCatalog_list_item_link",
+  "OnlineStoreProduct_title_container",
+  "storeCartTable_tdTitle",
+  "storeCartTable_itemTitle",
+];
+const ezLanguageDescriptionClasses = [
+  "gadgetEventEditableArea",
+  "OnlineStoreProduct_description",
+];
+
 if (typeof checkCode == "undefined") {
   let checkCode = "8euj9o9frkj3wz2nqm6xmcp4y1mdy5tp";
 }
@@ -2365,6 +2381,7 @@ const processJSON = () => {
       });
     }
   }
+  processEzLanguageTags();
 };
 
 function ezMissingToCsv() {
@@ -2660,4 +2677,33 @@ const undoSave = async () => {
       alert("EZ Error: " + error.message);
     }
   }
+};
+
+let processEzLanguageTags = () => {
+  const classesToProcess = [
+    ...ezLanguageTitleClasses,
+    ...ezLanguageDescriptionClasses,
+  ];
+
+  const processHtml = (html, className) => {
+    const regex = /\[ez\s+(\w+)\](.*?)\[\/ez\]/gs;
+
+    return html.replace(regex, (match, p1, p2) => {
+      const displayStyle = `style="display: ${
+        p1 === currentLanguage ? "inline" : "none"
+      };"`;
+      const classAddedContent = p2.replace(
+        /(<\w+)([^>]*>)/g,
+        `$1 class="${p1}" ${displayStyle} $2`
+      );
+      return `<div class="${p1}" ${displayStyle}>${classAddedContent}</div>`;
+    });
+  };
+
+  classesToProcess.forEach((className) => {
+    const containers = document.querySelectorAll(`.${className}`);
+    containers.forEach((container) => {
+      container.innerHTML = processHtml(container.innerHTML, className);
+    });
+  });
 };
