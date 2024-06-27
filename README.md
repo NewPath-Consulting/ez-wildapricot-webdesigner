@@ -690,6 +690,62 @@ watm_language_name[0] = "English";
 
 Within the square brackets, add type the name of the add-ons within quotes. Separate multiple add-ons with a comma, with each add-on name within their own quotation marks.
 
+For example this will enable all the add-ons:
+
+```javascript
+ez_addons = ["fontawesome","ez-notice","ez-toggle","ez-tabs","ez-library","ez-language"];
+watm_language_name[0] = "English";
+```
+
+## Language Add-On
+
+This add-on will enable you to create event descriptiosn and online store product descriptions in multiple languages. When the language toggle is used the appropriately labeled section of the event title and event description or online store product title and description will show.
+
+To enable this add-on add this line to your configuration script:
+
+```javascript
+ez_addons = ["ez-language"];
+watm_language_name[0] = "English";
+```
+
+To add multiple language to your event titles and descriptions you can use the
+
+`[ez <languagename>][/ez]`
+
+short codes to surround the content for a particular langauge.
+
+For example in an event title you can do the following to support english and french event titles:
+
+`[ez english]May 1 2023 Tickets[/ez][ez french]Billets pour le 1er mai 2023[/ez]`
+
+In an event description we recommend to put the short description that shows in an event listing near the top of the event description and put the full event description in a separate set of tags as follows:
+
+![ez language event description](https://github.com/NewPath-Consulting/ez-wildapricot-webdesigner/blob/master/readme-images/ez-language-admin-event-config.png?raw=true)
+
+When you switch the language the content in the `[ez english]` tag will render, and when you switch to french, the content in the `[ez french]` tag will render.
+
+English event:
+
+![ez language english event on front end](https://github.com/NewPath-Consulting/ez-wildapricot-webdesigner/blob/master/readme-images/ez-language-full-event-english.png?raw=true)
+
+
+French event:
+
+![ez language french event on front end](https://github.com/NewPath-Consulting/ez-wildapricot-webdesigner/blob/master/readme-images/ez-language-full-event-french.png?raw=true)
+
+For online store products, the product title and description can be configured as follows with the `[ez <language>]` tags:
+
+![ez language product title](https://github.com/NewPath-Consulting/ez-wildapricot-webdesigner/blob/master/readme-images/ez-language-product-title.png?raw=true)
+
+![ez language product description](https://github.com/NewPath-Consulting/ez-wildapricot-webdesigner/blob/master/readme-images/ez-language-product-description.png?raw=true)
+
+Here's how the online store product shows in English and French on the website:
+
+![ez language product english](https://github.com/NewPath-Consulting/ez-wildapricot-webdesigner/blob/master/readme-images/ez-language-product-english.png?raw=true)
+
+
+![ez language product french](https://github.com/NewPath-Consulting/ez-wildapricot-webdesigner/blob/master/readme-images/ez-language-product-french.png?raw=true)
+
 ## FontAwesome Add-On
 
 EZ WildApricot Web Designer comes with a free Add-on for FontAwesome, making it easy to insert FontAwesome icons by using macros. To start, [sign up for FontAwesome](https://fontawesome.com/start) and add the provided JavaScript code snippet to your WildApricot Global JavaScript settings.
@@ -698,9 +754,12 @@ Here's an example of the code you may add. Make sure the `YOUR_FONTAWESEOME_KIT_
 
 `<script src="https://kit.fontawesome.com/YOUR_FONTAWESEOME_KIT_ID.js" crossorigin="anonymous"></script>`
 
-To enable the addon, add this line to your EZ WildApricot Web Designer JavaScript installation script:
+To enable this add-on add this line to your configuration script:
 
-`ez_addons = ["fontawesome"];`
+```javascript
+ez_addons = ["fontawesome"];
+watm_language_name[0] = "English";
+```
 
 To insert an icon, first [find the name of the icon you wish to use](https://fontawesome.com/search?o=r&m=free&s=solid). Add
 
@@ -738,6 +797,13 @@ These styles are currently available in FontAwesome, and some icon sets require 
 
 The EZ-Notice Add-On enables displaying important, colourful messages on your website. Using this macro, any text is be displayed in a colorful box on a WildApricot web page, spanning the width of the layout that contains the macro. It can be used on any WildApricot content page, page template, or system template.
 
+To enable this add-on add this line to your configuration script:
+
+```javascript
+ez_addons = ["ez-notice"];
+watm_language_name[0] = "English";
+```
+
 ![EZ-Notice Add-On Screenshot](https://github.com/NewPath-Consulting/ez-wildapricot-webdesigner/blob/master/readme-images/ez-notice.png?raw=true)
 
 To use the macro, insert your notice text inside the `[ez-notice][/ez-notice]` tags. An optional `color` parameter can decorate the notice. You can use a [color name](https://www.w3schools.com/colors/colors_names.asp) or [HTML color](https://www.w3schools.com/colors/colors_picker.asp) code. EZ-Notice will use your selected color as the text color for the the notice, and automatically set the notice's border and background color to a matching lighter color.
@@ -752,6 +818,13 @@ Macro Text: [ez-notice color="red"]Saturday's potter classes have been cancelled
 ## EZ-Toggle Add-On
 
 The EZ-Toggle Add-On enables expandable and collapsible content sections (also known as "accordions"). Website visitors can click on the section header to open that section and automatically close the other sections on the page. This macro can be used to shorten long content such as a Frequently Asked Questions section.
+
+To enable this add-on add this line to your configuration script:
+
+```javascript
+ez_addons = ["ez-toggle"];
+watm_language_name[0] = "English";
+```
 
 ![EZ-Toggle Add-On Screenshot](https://github.com/NewPath-Consulting/ez-wildapricot-webdesigner/blob/master/readme-images/ez-toggle.png?raw=true)
 
@@ -769,6 +842,13 @@ Macro Text: [ez-toggle title="What are the benefits for students?"]We have schol
 
 The EZ-Tabs Add-On creates a tabbed content area on a page. Website visitors can click on the tabs to switch between different content sections.
 
+To enable this add-on add this line to your configuration script:
+
+```javascript
+ez_addons = ["ez-tabs"];
+watm_language_name[0] = "English";
+```
+
 ![EZ-Tabs Add-on Screenshot](https://github.com/NewPath-Consulting/ez-wildapricot-webdesigner/blob/master/readme-images/ez-tabs.png?raw=true)
 
 The macro has two required components. The first is the `title` parameter - use this to specify what the label on the tab should be. Next, place the content for that tab within the `[ez-tabs][/ez-tabs]` macro tags. Add a new macro for each tab you wish to include.
@@ -784,6 +864,13 @@ Macro Text: [ez-tabs title="2020 Scholarship Winners"]Jennie Miranda, Carina Mye
 ## EZ-Library Add-On
 
 The EZ-Library Addon makes it easy to insert a document library into a WildApricot website. The add-on takes care of formatting the presentation of the selected documents, sorting them by title or date, and makes them available for one-click download.
+
+To enable this add-on add this line to your configuration script:
+
+```javascript
+ez_addons = ["ez-library"];
+watm_language_name[0] = "English";
+```
 
 ![EZ-Library Add-On Screenshot with Toggle, Notice and Tabs](https://github.com/NewPath-Consulting/ez-wildapricot-webdesigner/blob/master/readme-images/ez-library.png?raw=true)
 
@@ -922,3 +1009,4 @@ The following open-source code libraries are used by this product. All the libra
 - added check to see if configuration file has the right column headers 04/24/2024
 
 2.2 - added Table of Contents to README and description of the configuration file columns and how they are used
+- added ez-langauge add-on to support event title/description and online store produc title/description translations
