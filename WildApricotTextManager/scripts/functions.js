@@ -1,7 +1,7 @@
 let draftJSON = {};
 let saveJSONString;
 let removeListeners = [];
-let pageCapture;
+let pagePalette;
 let editorLoaded = false;
 let debugVisible = false;
 let missingTags = [];
@@ -17,6 +17,7 @@ const ezLanguageTitleClasses = [
   "OnlineStoreProduct_title_container",
   "storeCartTable_tdTitle",
   "storeCartTable_itemTitle",
+  "title",
 ];
 const ezLanguageDescriptionClasses = [
   "gadgetEventEditableArea",
@@ -45,6 +46,15 @@ const ezModifyOptions = [
     value: "directory",
     text: "Member Directory Text Replace",
   },
+];
+
+const ezStyleOptions = [
+  { value: "size", text: "Height & Width" },
+  { value: "color", text: "Change Colors" },
+  { value: "font", text: "Adjust Font" },
+  { value: "border", text: "Change Border" },
+  { value: "padding", text: "Change Padding" },
+  { value: "margin", text: "Change Margin" },
 ];
 
 const loadEZ = () => {
@@ -266,7 +276,7 @@ const loadEZ = () => {
   });
   const ezActionbarPaletteButton = createElementWithAttributes("button", {
     id: "ez_palette_button",
-    innerText: "Colour Palette",
+    innerText: "Color Palette",
     onclick: () => {
       ezActionbarExportContent.style.display = "none";
       ezActionbarImportContent.style.display = "none";
@@ -290,7 +300,7 @@ const loadEZ = () => {
   const ezActionbarPaletteContentInfo = createElementWithAttributes("p", {
     className: "ez_palette_info",
     innerText:
-      "Below are the most common colours found on this page. Click on a colour to copy its hex code to the clipboard.",
+      "Below are the most common colors found on this page. Click on a color to copy its hex code to the clipboard.",
   });
 
   const documentClickHandler = function (event) {
@@ -318,22 +328,20 @@ const loadEZ = () => {
     ezActionbarPaletteContentInfo
   );
 
-  const palette = getColorPalette(pageCapture, 9);
-
-  palette.forEach((colour) => {
+  pagePalette.forEach((color) => {
     const box = document.createElement("div");
     box.className = "ez_palette_box";
-    box.style.backgroundColor = colour.rgb;
+    box.style.backgroundColor = color;
 
     const hexCode = document.createElement("span");
-    hexCode.innerText = colour.hex;
+    hexCode.innerText = color;
     box.appendChild(hexCode);
 
     box.addEventListener("click", () => {
       navigator.clipboard
-        .writeText(colour.hex)
+        .writeText(color.hex)
         .then(() => {
-          showezToast("Colour code copied to clipboard");
+          showezToast("Color code copied to clipboard");
         })
         .catch((err) => {
           console.error("Failed to copy text: ", err);
@@ -920,6 +928,17 @@ const createModifyMenu = (elType, ezId) => {
     ezModifyMenuContent.append(a);
   });
 
+  ezStyleOptions.forEach((option) => {
+    const a = createElementWithAttributes("a", {
+      textContent: option.text,
+      dataset: { value: option.value },
+      onclick: () => {
+        addModCard(option.value, option.text, ezId);
+      },
+    });
+    ezModifyMenuContent.append(a);
+  });
+
   const ezSelectedElement = document.getElementById("ez_selected_element");
   ezSelectedElement.insertAdjacentElement("afterend", ezModifyMenuContainer);
 
@@ -999,17 +1018,43 @@ const createModifyMenu = (elType, ezId) => {
   ezModifyMenuContainer.insertAdjacentElement("afterend", ezModCardVisibility);
 };
 
-const createElementWithAttributes = (tag, attributes) => {
-  const element = document.createElement(tag);
+const createColorField = (attributes) => {
+  const element = document.createElement("input");
+  element.type = "text"; // Assuming the jsColor picker is initialized on a text input
+
+  const jsColorAttributes = {};
   for (const [key, value] of Object.entries(attributes)) {
-    if (key === "dataset") {
-      Object.assign(element.dataset, value);
-    } else if (key in element) {
-      element[key] = value;
-    } else {
-      element.setAttribute(key, value);
+    if (key !== "type" && key !== "id") {
+      jsColorAttributes[key] = value;
     }
   }
+
+  element.id = attributes["id"];
+  element.setAttribute("data-jscolor", JSON.stringify(jsColorAttributes));
+
+  return element;
+};
+
+const createElementWithAttributes = (tag, attributes) => {
+  let element;
+
+  // Check if the tag is 'input' and type is 'color'
+  if (tag === "input" && attributes.type === "color") {
+    element = createColorField(attributes);
+  } else {
+    element = document.createElement(tag);
+
+    for (const [key, value] of Object.entries(attributes)) {
+      if (key === "dataset") {
+        Object.assign(element.dataset, value);
+      } else if (key in element) {
+        element[key] = value;
+      } else {
+        element.setAttribute(key, value);
+      }
+    }
+  }
+
   return element;
 };
 
@@ -1114,7 +1159,7 @@ const addModCard = (modType, modText, ezId, ez_key = Date.now()) => {
   ezModCard.append(ezModCardHeader);
 
   const appendInputFields = (fields, values = {}) => {
-    fields.forEach(({ label, type, idSuffix, json_key }) => {
+    fields.forEach(({ label, type, idSuffix, json_key, defaultValue = "" }) => {
       const div = createElementWithAttributes("div", {
         className: "modCardRow",
       });
@@ -1125,7 +1170,7 @@ const addModCard = (modType, modText, ezId, ez_key = Date.now()) => {
       const input = createElementWithAttributes("input", {
         type,
         id: `${modId}_${idSuffix}`,
-        value: values[json_key] || "",
+        value: values[json_key] || defaultValue,
       });
       div.append(labelElem, input);
       ezModCard.append(div);
@@ -1277,9 +1322,182 @@ const addModCard = (modType, modText, ezId, ez_key = Date.now()) => {
         modValues
       );
       break;
-  }
 
+    case "size":
+      appendInputFields(
+        [
+          {
+            label: "Set Height:",
+            type: "text",
+            idSuffix: "height",
+            json_key: "height",
+            defaultValue:
+              document.querySelector(`[data-ez-id="${ezId}"]`).offsetHeight +
+              "px",
+          },
+          {
+            label: "Set Width:",
+            type: "text",
+            idSuffix: "width",
+            json_key: "width",
+            defaultValue:
+              document.querySelector(`[data-ez-id="${ezId}"]`).offsetWidth +
+              "px",
+          },
+        ],
+        modValues
+      );
+      break;
+    case "color":
+      appendInputFields(
+        [
+          {
+            label: "Text Color:",
+            type: "color",
+            idSuffix: "color",
+            json_key: "color",
+            defaultValue: convertColorToHex(
+              window.getComputedStyle(
+                document.querySelector(`[data-ez-id="${ezId}"]`)
+              ).color
+            ),
+          },
+          {
+            label: "Background Color:",
+            type: "color",
+            idSuffix: "backgroundColor",
+            json_key: "backgroundColor",
+            defaultValue: convertColorToHex(
+              window.getComputedStyle(
+                document.querySelector(`[data-ez-id="${ezId}"]`)
+              ).backgroundColor
+            ),
+          },
+        ],
+        modValues
+      );
+      break;
+    case "font":
+      appendInputFields(
+        [
+          {
+            label: "Text Size:",
+            type: "text",
+            idSuffix: "fontSize",
+            json_key: "fontSize",
+          },
+          {
+            label: "Boldness:",
+            type: "number",
+            idSuffix: "fontWeight",
+            json_key: "fontWeight",
+          },
+          {
+            label: "Font Family:",
+            type: "text",
+            idSuffix: "fontFamily",
+            json_key: "fontFamily",
+          },
+        ],
+        modValues
+      );
+      break;
+    case "border":
+      appendInputFields(
+        [
+          {
+            label: "Border Width:",
+            type: "text",
+            idSuffix: "borderWidth",
+            json_key: "borderWidth",
+          },
+          {
+            label: "Border Style:",
+            type: "text",
+            idSuffix: "borderStyle",
+            json_key: "borderStyle",
+          },
+          {
+            label: "Border Color:",
+            type: "color",
+            idSuffix: "borderColor",
+            json_key: "borderColor",
+          },
+          {
+            label: "Border Radius:",
+            type: "text",
+            idSuffix: "borderRadius",
+            json_key: "borderRadius",
+          },
+        ],
+        modValues
+      );
+      break;
+    case "padding":
+      appendInputFields(
+        [
+          {
+            label: "Top Paddng:",
+            type: "text",
+            idSuffix: "paddingTop",
+            json_key: "paddingTop",
+          },
+          {
+            label: "Right Padding:",
+            type: "text",
+            idSuffix: "paddingRight",
+            json_key: "paddingRight",
+          },
+          {
+            label: "Bottom Padding:",
+            type: "text",
+            idSuffix: "paddingBotom",
+            json_key: "paddingBotom",
+          },
+          {
+            label: "Left Padding:",
+            type: "text",
+            idSuffix: "paddingLeft",
+            json_key: "paddingLeft",
+          },
+        ],
+        modValues
+      );
+      break;
+    case "margin":
+      appendInputFields(
+        [
+          {
+            label: "Top Margin:",
+            type: "text",
+            idSuffix: "marginTop",
+            json_key: "marginTop",
+          },
+          {
+            label: "Right Margin:",
+            type: "text",
+            idSuffix: "marginRight",
+            json_key: "marginRight",
+          },
+          {
+            label: "Bottom Margin:",
+            type: "text",
+            idSuffix: "marginBotom",
+            json_key: "marginBotom",
+          },
+          {
+            label: "Left Margin:",
+            type: "text",
+            idSuffix: "marginLeft",
+            json_key: "marginLeft",
+          },
+        ],
+        modValues
+      );
+      break;
+  }
   document.getElementById("ez_sidebar").append(ezModCard);
+  jscolor.install();
 };
 
 const appendLanguageDropdown = (
@@ -1339,10 +1557,10 @@ const appendInputField = (ezModCard, labelText, inputId) => {
 
 const getColorPalette = (
   imageData,
-  numColours = 6,
+  numColors = 6,
   similarityThreshold = 30
 ) => {
-  const colourMap = {};
+  const colorMap = {};
   const totalPixels = imageData.data.length / 4;
 
   for (let i = 0; i < totalPixels; i++) {
@@ -1361,25 +1579,25 @@ const getColorPalette = (
 
     const rgb = `${r},${g},${b}`;
 
-    if (!colourMap[rgb]) {
-      colourMap[rgb] = 0;
+    if (!colorMap[rgb]) {
+      colorMap[rgb] = 0;
     }
 
-    colourMap[rgb]++;
+    colorMap[rgb]++;
   }
 
-  const sortedColours = Object.keys(colourMap).sort(
-    (a, b) => colourMap[b] - colourMap[a]
+  const sortedColors = Object.keys(colorMap).sort(
+    (a, b) => colorMap[b] - colorMap[a]
   );
 
   const palette = [];
 
-  for (const rgb of sortedColours) {
-    if (palette.length >= numColours) break;
+  for (const rgb of sortedColors) {
+    if (palette.length >= numColors) break;
 
     const [r, g, b] = rgb.split(",").map(Number);
-    const isTooSimilar = palette.some((colour) => {
-      const [pr, pg, pb] = colour.rgb.slice(4, -1).split(",").map(Number);
+    const isTooSimilar = palette.some((color) => {
+      const [pr, pg, pb] = color.rgb.slice(4, -1).split(",").map(Number);
       const distance = Math.sqrt(
         Math.pow(r - pr, 2) + Math.pow(g - pg, 2) + Math.pow(b - pb, 2)
       );
@@ -2707,3 +2925,187 @@ let processEzLanguageTags = () => {
     });
   });
 };
+
+function convertColorToHex(color) {
+  if (color === "rgba(0, 0, 0, 0)") {
+    return "#00000000";
+  }
+
+  if (color.startsWith("rgb")) {
+    const rgba = color.match(/\d+/g);
+    if (rgba) {
+      if (rgba.length === 4) {
+        const hex = `#${(
+          (1 << 24) +
+          (parseInt(rgba[0]) << 16) +
+          (parseInt(rgba[1]) << 8) +
+          parseInt(rgba[2])
+        )
+          .toString(16)
+          .slice(1)}${Math.round(parseFloat(rgba[3]) * 255)
+          .toString(16)
+          .slice(0, 2)}`;
+        return hex;
+      } else {
+        const hex =
+          "#" +
+          (
+            (1 << 24) +
+            (parseInt(rgba[0]) << 16) +
+            (parseInt(rgba[1]) << 8) +
+            parseInt(rgba[2])
+          )
+            .toString(16)
+            .slice(1);
+        return hex;
+      }
+    }
+  }
+  return color;
+}
+
+function hexToHSL(H) {
+  let r = 0,
+    g = 0,
+    b = 0;
+  if (H.length === 4) {
+    r = parseInt("0x" + H[1] + H[1]);
+    g = parseInt("0x" + H[2] + H[2]);
+    b = parseInt("0x" + H[3] + H[3]);
+  } else if (H.length === 7) {
+    r = parseInt("0x" + H[1] + H[2]);
+    g = parseInt("0x" + H[3] + H[4]);
+    b = parseInt("0x" + H[5] + H[6]);
+  }
+  r /= 255;
+  g /= 255;
+  b /= 255;
+  let cmin = Math.min(r, g, b),
+    cmax = Math.max(r, g, b),
+    delta = cmax - cmin,
+    h = 0,
+    s = 0,
+    l = 0;
+
+  if (delta === 0) h = 0;
+  else if (cmax === r) h = ((g - b) / delta) % 6;
+  else if (cmax === g) h = (b - r) / delta + 2;
+  else h = (r - g) / delta + 4;
+
+  h = Math.round(h * 60);
+
+  if (h < 0) h += 360;
+
+  l = (cmax + cmin) / 2;
+  s = delta === 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
+  s = +(s * 100).toFixed(1);
+  l = +(l * 100).toFixed(1);
+
+  return { h, s, l };
+}
+
+async function getColorsFromPage() {
+  const elements = document.querySelectorAll("*");
+  const fontColors = {};
+  const backgroundColors = {};
+  const colorThief = new ColorThief();
+  const imagePalette = [];
+
+  function colorDistance(color1, color2) {
+    const [r1, g1, b1] = color1;
+    const [r2, g2, b2] = color2;
+    return Math.sqrt((r1 - r2) ** 2 + (g1 - g2) ** 2 + (b1 - b2) ** 2);
+  }
+
+  function isSimilar(color, colorList, threshold = 50) {
+    return colorList.some(
+      (existingColor) => colorDistance(color, existingColor) < threshold
+    );
+  }
+
+  elements.forEach((element) => {
+    const style = window.getComputedStyle(element);
+    const color = style.color;
+    const backgroundColor = style.backgroundColor;
+
+    if (color) {
+      fontColors[color] = (fontColors[color] || 0) + 1;
+    }
+    if (backgroundColor && backgroundColor !== "rgba(0, 0, 0, 0)") {
+      backgroundColors[backgroundColor] =
+        (backgroundColors[backgroundColor] || 0) + 1;
+    }
+  });
+
+  const imageUrls = Array.from(document.images).map((img) => img.src);
+  for (const url of imageUrls) {
+    const img = new Image();
+    img.crossOrigin = "Anonymous";
+    img.src = url;
+
+    try {
+      await new Promise((resolve, reject) => {
+        img.onload = () => {
+          try {
+            const colors = colorThief.getPalette(img, 5);
+            if (colors) {
+              colors.forEach((color) => {
+                const rgb = `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
+                imagePalette.push(rgb);
+              });
+            }
+            resolve();
+          } catch (e) {
+            reject(e);
+          }
+        };
+        img.onerror = reject;
+      });
+    } catch (error) {
+      console.error(`Error processing image ${url}:`, error);
+    }
+  }
+
+  const allColors = [
+    ...Object.keys(fontColors),
+    ...Object.keys(backgroundColors),
+    ...imagePalette,
+  ];
+
+  const rgbColors = allColors.map((color) => {
+    const rgb = color.match(/\d+/g).map(Number);
+    return rgb;
+  });
+
+  const uniqueColors = [];
+  rgbColors.forEach((color) => {
+    if (!isSimilar(color, uniqueColors)) {
+      uniqueColors.push(color);
+    }
+  });
+
+  pagePalette = uniqueColors
+    .filter((rgb) => {
+      const isWhite = rgb[0] === 255 && rgb[1] === 255 && rgb[2] === 255;
+      const isBlack = rgb[0] === 0 && rgb[1] === 0 && rgb[2] === 0;
+      return !isWhite && !isBlack;
+    })
+    .map((rgb) => {
+      const rgbString = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+      return convertColorToHex(rgbString);
+    });
+
+  // Sort the palette by color
+  pagePalette.sort((a, b) => {
+    const hslA = hexToHSL(a);
+    const hslB = hexToHSL(b);
+    return hslA.h - hslB.h || hslA.s - hslB.s || hslA.l - hslB.l;
+  });
+
+  jscolor.presets.default = {
+    palette: pagePalette.toString(),
+    hideOnPaletteClick: true,
+    backgroundColor: "#111c31",
+    paletteCols: 6,
+  };
+}

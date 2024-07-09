@@ -22,6 +22,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   try {
     await loadResources([
       { type: "css", href: `${ezLocation}/css/app.css` },
+      { type: "script", src: `${ezLocation}/scripts/jscolor.js` },
+      { type: "script", src: `${ezLocation}/scripts/color-thief.js` },
       { type: "script", src: `${ezLocation}/scripts/functions.js` },
       {
         type: "script",
@@ -71,7 +73,7 @@ const startEZ = async () => {
     currentLanguage = getCurrentLanguage();
     initializePage(currentLanguage);
     await loadEZJSON();
-    captureWebPage();
+    getColorsFromPage();
     initializeUIElements();
     addEventListeners();
     checkInspectorStatus();
@@ -122,17 +124,6 @@ const loadEZJSON = async () => {
   } catch (error) {
     console.error("Error loading EZ JSON:", error);
   }
-};
-
-const captureWebPage = () => {
-  html2canvas(document.querySelector("body > div:first-of-type"))
-    .then((canvas) => {
-      const ctx = canvas.getContext("2d");
-      pageCapture = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    })
-    .catch((error) => {
-      console.error("Error capturing the webpage:", error);
-    });
 };
 
 const initializeUIElements = () => {

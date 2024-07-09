@@ -211,3 +211,8 @@ The Action bar is where you fill find the following functionality:
 EZ WildApricot Web Designer is supported on the latest versions of Chrome, Safari, Firefox and Edge. Older browsers like Internet Explorer on Windows are supported "best effort," without formal testing or 100% compatibility.
 
 ---
+
+# External Libraries
+
+https://jscolor.com/
+https://lokeshdhakar.com/projects/color-thief
