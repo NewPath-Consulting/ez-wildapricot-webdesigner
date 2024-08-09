@@ -47,6 +47,7 @@
   - [**googlefont**](#googlefont)
 - [Using EZ WildApricot Web Designer with WildApricot iframe Widgets](#using-ez-wildapricot-web-designer-with-wildapricot-iframe-widgets)
 - [EZ Add-Ons](#ez-add-ons)
+  - [Language Add-On](#language-add-on)
   - [FontAwesome Add-On](#fontawesome-add-on)
   - [EZ-Notice Add-On](#ez-notice-add-on)
   - [EZ-Toggle Add-On](#ez-toggle-add-on)
@@ -699,7 +700,7 @@ watm_language_name[0] = "English";
 
 ## Language Add-On
 
-This add-on will enable you to create event descriptiosn and online store product descriptions in multiple languages. When the language toggle is used the appropriately labeled section of the event title and event description or online store product title and description will show.
+This add-on will enable you to create event descriptions and online store product descriptions in multiple languages. When the language add on short code is used, the appropriately labeled section of the event title and event description or online store product title and description will show based on the language selection.
 
 To enable this add-on add this line to your configuration script:
 
@@ -1009,4 +1010,4 @@ The following open-source code libraries are used by this product. All the libra
 - added check to see if configuration file has the right column headers 04/24/2024
 
 2.2 - added Table of Contents to README and description of the configuration file columns and how they are used
-- added ez-langauge add-on to support event title/description and online store produc title/description translations
+- added ez-langauge add-on to support event title/description and online store product title/description translations
