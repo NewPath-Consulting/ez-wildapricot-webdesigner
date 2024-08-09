@@ -1010,4 +1010,4 @@ The following open-source code libraries are used by this product. All the libra
 - added check to see if configuration file has the right column headers 04/24/2024
 
 2.2 - added Table of Contents to README and description of the configuration file columns and how they are used
-- added ez-langauge add-on to support event title/description and online store product title/description translations
+- added ez-langauge add-on to support event title/description and online store product title/description translations 08/09/2024
