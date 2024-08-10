@@ -12,6 +12,7 @@ let ez_language = () => {
     "OnlineStoreProduct_title_container",
     "storeCartTable_tdTitle",
     "storeCartTable_itemTitle",
+    "title",
   ];
   const classesToProcessUser = [
     "gadgetEventEditableArea",
