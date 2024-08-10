@@ -367,7 +367,7 @@ This field is a required field that specifies which CSS ID, CSS Class or CSS Pat
 
 It is important to understand that a particular element can be targeted using different ways. Based on experience of using this product we recommend the following preference when choosing how to target an element:
 
-  - if an ID is available for an element, us the ID directly (eg #ElementID)
+  - if an ID is available for an element, use the ID directly (eg #ElementID)
   - if a CSS Path is available for an element, use the Parent ID of the CSS Path (eg for CSS Path `#ElementID > div > table > nth-child` the Parent ID is `#ElementID`)
   - use the CSS Path directly (eg `#ElementID > div > table > nth-child`)
   - use the CSS class (eg `.aClassName`)
@@ -925,7 +925,7 @@ The following open-source code libraries are used by this product. All the libra
 
 - The inspector's spreadsheet user interface is powered by [Jspreadsheet CE](https://bossanova.uk/jspreadsheet)
 - View Properties button features the ability to extract the primary colors used by an image. The [Color Thief](https://lokeshdhakar.com/projects/color-thief/) JavaScript library is used to extract colors of an image.
-- Drawing the UI to get into the inspector and adding tooltips to elements is handled by [Tippy JS](https://atomiks.github.io/tippyjs/)
+- Adding tooltips to elements in the UI is handled by [Tippy JS](https://atomiks.github.io/tippyjs/)
 - Parsing the CSV configuration files is handled by [Papa Parse](https://www.papaparse.com/)
 
 ---
