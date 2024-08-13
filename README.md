@@ -9,7 +9,7 @@ EZ WildApricot Web Designer v3 is a tool to simplify the customization of text o
 - **Sleek User Interface**: An easy to use graphical interface for updating and managing texts. Preview edits without needing to refresh teh page.
 - **Export and Import Capabilities**: Export modifications to CSV and import them back for easy mass edits
 
-# Qucik Start
+# Quick Start
 
 ## Installation
 
