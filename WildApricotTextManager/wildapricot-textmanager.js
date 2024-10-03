@@ -11,7 +11,7 @@ const watm_location = document.currentScript.src.substring(
  * The version number of the WATM script.
  * @constant {string}
  */
-const watm_version = "2.2";
+const watm_version = "2.2.1";
 
 /**
  * The URL of the WATM information page.
@@ -260,10 +260,11 @@ const loadScripts = () => {
     script.src = `${watm_location}/ez-addons/${scriptList[loadedScripts]}.js`;
   } else {
     // Load the script as a regular script
-    script.src = `${scriptList[loadedScripts].includes("http")
+    script.src = `${
+      scriptList[loadedScripts].includes("http")
         ? ""
         : watm_location + "/scripts/"
-      }${scriptList[loadedScripts]}`;
+    }${scriptList[loadedScripts]}`;
   }
 
   // Call the callback when the script is loaded
@@ -347,8 +348,8 @@ const start = (license) => {
       // Set the default language if no language is selected
       currentLanguage =
         currentLanguage === "Default" ||
-          currentLanguage === null ||
-          currentLanguage === ""
+        currentLanguage === null ||
+        currentLanguage === ""
           ? languages[0].className
           : currentLanguage;
 
@@ -384,9 +385,10 @@ const start = (license) => {
       // Load the selected language CSV
       if (currentCSV) {
         Papa.parse(
-          `${watm_location}/translations/${currentCSV}${do_not_cache === true
-            ? `?time=${Math.round(Date.now() / 1000)}`
-            : ""
+          `${watm_location}/translations/${currentCSV}${
+            do_not_cache === true
+              ? `?time=${Math.round(Date.now() / 1000)}`
+              : ""
           }`,
           {
             download: true,
@@ -463,7 +465,8 @@ const start = (license) => {
 
     // Load the default config file
     Papa.parse(
-      `${watm_location}/config.csv${do_not_cache === true ? `?time=${Math.round(Date.now() / 1000)}` : ""
+      `${watm_location}/config.csv${
+        do_not_cache === true ? `?time=${Math.round(Date.now() / 1000)}` : ""
       }`,
       {
         download: true,
@@ -580,7 +583,7 @@ const start = (license) => {
         appendWATMBtn(
           license,
           !!document.getElementById("idWaAdminSwitcher") ||
-          (enable_public_editor && !isInEditMode())
+            (enable_public_editor && !isInEditMode())
         );
       }
     };
