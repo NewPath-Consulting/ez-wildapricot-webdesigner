@@ -95,7 +95,9 @@ let ez_terms = () => {
         .then((html) => {
           const tempDiv = document.createElement("div");
           tempDiv.innerHTML = html;
-          const termsContent = tempDiv.querySelector(".terms");
+          const termsContent = tempDiv.querySelector(
+            `.terms.${currentLanguage}`
+          );
 
           scrollableContent.innerHTML = "";
           if (termsContent) {
