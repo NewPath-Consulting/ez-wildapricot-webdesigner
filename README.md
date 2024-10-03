@@ -53,6 +53,7 @@
   - [EZ-Toggle Add-On](#ez-toggle-add-on)
   - [EZ-Tabs Add-on](#ez-tabs-add-on)
   - [EZ-Library Add-On](#ez-library-add-on)
+  - [EZ-Terms Add-On](#ez-terms-add-on)
 - [Browser Requirements](#browser-requirements)
 - [Third-party open-source modules in use by EZ WildApricot Web Designer](#third-party-open-source-modules-in-use-by-ez-wildapricot-web-designer)
 - [Release History](#release-history)
@@ -911,6 +912,23 @@ Place this into a Custom HTML gadget.
 </pre>
 ```
 
+## EZ-Terms Add-On
+
+The EZ-Terms Addon makes it easy to modify how all terms of service checkboxes work in WildApricot. Instead of blindly checking a checkbox without reading the linked document, this addon encourages the user to click on the terms. The checkbox is checked only after the terms of serivce is read and confirmed it has been read by the user.
+
+To enable this add-on add this line to your configuration script:
+
+```javascript
+ez_addons = ["ez-terms"];
+watm_language_name[0] = "English";
+```
+**Using the EZ-Library Add-on**
+
+This add-on comes with two macros that must be used together. The first macro is `[ez-terms][/ez-terms]` used to configure the library. This macro has three mandatory parameters:
+
+
+**EXAMPLE:**
+
 ---
 
 # Browser Requirements
@@ -1011,3 +1029,5 @@ The following open-source code libraries are used by this product. All the libra
 
 2.2 - added Table of Contents to README and description of the configuration file columns and how they are used
 - added ez-langauge add-on to support event title/description and online store product title/description translations 08/09/2024
+
+2.2.1 - added Terms add-on to improve how Terms of Service checkbox works in WildApricot websites 10/03/2024
