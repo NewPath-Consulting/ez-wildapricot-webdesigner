@@ -926,19 +926,21 @@ watm_language_name[0] = "English";
 
 **Using the EZ-Terms Add-on**
 
+This add on changes the default behavior of the checkbox on the terms of service checkboxes on event registration forms and member application/renewal forms. 
+
 When the EZ-Terms addon-on is enabled, you must have a public page set up with the terms added to it. This cannot be a document - the terms must be added directly to this page. WHen setting up the Terms of Use field, be sure to use the URL of that terms page.
 
-On the terms page, add the class name `.terms` as well as the class name for the language (for example, `.english` or `.french`) to your content gadget. You can add a new content gadget for each language your site supports.
+On the terms page, add the class name `.terms` in the advanced settings on the page. If you are using the multi-language features, add the class name for the language (for example, `.english` or `.french`) to your content gadget. You can add a new content gadget for each language your site supports.
 
-This is how the Terms of Service settings map to the modal:
+This is how the Terms of Service settings map to the modal dialog:
 
 | Setting         | Use                                                                                                                                 |
 | --------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| **Field label** | This will be used as the title for the modal                                                                                        |
+| **Field label** | This will be used as the title for the terms of service modal                                                                                        |
 | **Text**        | This is used for the link to open the modal as well as for the text on the agree button                                             |
 | **Link**        | This is the URL of the page that contains the terms. The content from the gadget with the `.terms` class will be shown in the modal |
 
-If you translate these texts un the Inspector, they will also be translated in the modal. There are two fixed texts however that cannot be translated:
+If you translate these texts in the Inspector, they will also be translated in the modal. There are two fixed text strings, however, that cannot be translated:
 
 - The "Cancel" button
 - The tooltip when you hover over the agree button that says "Scroll to the bottom to agree"
