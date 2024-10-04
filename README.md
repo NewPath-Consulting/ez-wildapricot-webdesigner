@@ -1050,4 +1050,4 @@ The following open-source code libraries are used by this product. All the libra
 
 - added ez-language add-on to support event title/description and online store product title/description translations 08/09/2024
 
-  2.2.1 - added Terms add-on to improve how Terms of Service checkbox works in WildApricot websites 10/03/2024
+  2.2.1 - added ez-terms add-on to improve how Terms of Service checkbox works in WildApricot websites 10/03/2024
