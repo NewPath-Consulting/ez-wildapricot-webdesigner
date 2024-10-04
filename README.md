@@ -6,7 +6,7 @@
     - [Multilingual Script Setup](#multilingual-script-setup)
     - [Recommended Language Class Names](#recommended-language-class-names)
     - [Extra Install Script Options](#extra-install-script-options)
-      - [Enablic the Inspector \& Editor without Being Logged in as an Admin](#enablic-the-inspector--editor-without-being-logged-in-as-an-admin)
+      - [Enable the Inspector \& Editor without Being Logged in as an Admin](#Enable-the-inspector--editor-without-being-logged-in-as-an-admin)
       - [Hiding the EZ WildApricot Web Designer Icon](#hiding-the-ez-wildapricot-web-designer-icon)
       - [Automatic CSV Backups](#automatic-csv-backups)
       - [Installing EZ Add-ons](#installing-ez-add-ons)
@@ -30,7 +30,7 @@
 - [EZ WildApricot Web Designer Functions](#ez-wildapricot-web-designer-functions)
   - [**text**](#text)
   - [**replace**](#replace)
-  - [**replace\_element**](#replace_element)
+  - [**replace_element**](#replace_element)
   - [**shortdelay**](#shortdelay)
   - [**longdelay**](#longdelay)
   - [**button**](#button)
@@ -53,10 +53,10 @@
   - [EZ-Toggle Add-On](#ez-toggle-add-on)
   - [EZ-Tabs Add-on](#ez-tabs-add-on)
   - [EZ-Library Add-On](#ez-library-add-on)
+  - [EZ-Terms Add-On](#ez-terms-add-on)
 - [Browser Requirements](#browser-requirements)
 - [Third-party open-source modules in use by EZ WildApricot Web Designer](#third-party-open-source-modules-in-use-by-ez-wildapricot-web-designer)
 - [Release History](#release-history)
-
 
 # About the EZ WildApricot Web Designer
 
@@ -223,7 +223,7 @@ vietnamese
 
 ### Extra Install Script Options
 
-#### Enablic the Inspector & Editor without Being Logged in as an Admin
+#### Enable the Inspector & Editor without Being Logged in as an Admin
 
 By default, the Inspector & Editor can be used only when logged in as an administrator to the WildApricot Admin view. If you'd like to be able to view the Inspector & Editor without being logged in to the Admin view, add this line in the install script
 
@@ -337,8 +337,7 @@ Note: When the EZ WildApricot Designer runs through the configuration files the 
 
 ### What's in the Configuration File?
 
- The following columns of data are available in the editor:
-
+The following columns of data are available in the editor:
 
 ![ez editor user interface](https://github.com/NewPath-Consulting/ez-wildapricot-webdesigner/blob/master/readme-images/ez-editor.png?raw=true)
 
@@ -360,21 +359,20 @@ This is an optional field that specifies what function to call when processing a
 
 The [functions are all defined](#ez-wildapricot-web-designer-functions) in this README file.
 
-
 #### Query
 
 This field is a required field that specifies which CSS ID, CSS Class or CSS Path is to be targeted when processing the current configuration line. It can be obtained a variety of ways, but the easiest is to click on an element while using the Inspector. You can hover over a field, label, button or just about any pixel on a page and retrieve the CSS Path and/or CSS class that has been highlighted.
 
 It is important to understand that a particular element can be targeted using different ways. Based on experience of using this product we recommend the following preference when choosing how to target an element:
 
-  - if an ID is available for an element, use the ID directly (eg #ElementID)
-  - if a CSS Path is available for an element, use the Parent ID of the CSS Path (eg for CSS Path `#ElementID > div > table > nth-child` the Parent ID is `#ElementID`)
-  - use the CSS Path directly (eg `#ElementID > div > table > nth-child`)
-  - use the CSS class (eg `.aClassName`)
+- if an ID is available for an element, use the ID directly (eg #ElementID)
+- if a CSS Path is available for an element, use the Parent ID of the CSS Path (eg for CSS Path `#ElementID > div > table > nth-child` the Parent ID is `#ElementID`)
+- use the CSS Path directly (eg `#ElementID > div > table > nth-child`)
+- use the CSS class (eg `.aClassName`)
 
-A CSS class could be used when styling various parts of a site, so use classes as sparingly as possible *unless* you specifically wish to apply a change on a sitewide basis whereever the CSS class is used.
+A CSS class could be used when styling various parts of a site, so use classes as sparingly as possible _unless_ you specifically wish to apply a change on a sitewide basis where ever the CSS class is used.
 
-The Query field also can accept a comma-delimited list of IDs, CSS Paths and CSS classes. This can be useful when translating or modifying a set of values in mutliple places on a website. A good example if a list of Month names to be translated into another language can be stored as 12 lines in a file. The query field could then contain a list of IDs, Paths or classes that need to be changed (eg #ElementID, #AnotherElementID, .aCSSClass)
+The Query field also can accept a comma-delimited list of IDs, CSS Paths and CSS classes. This can be useful when translating or modifying a set of values in multiple places on a website. A good example if a list of Month names to be translated into another language can be stored as 12 lines in a file. The query field could then contain a list of IDs, Paths or classes that need to be changed (eg #ElementID, #AnotherElementID, .aCSSClass)
 
 #### Style
 
@@ -395,7 +393,7 @@ This is an optional field that is updated automatically when a line is updated w
 
 ## The Error Log
 
-As EZ WildApricot Web Designer parses each configuration file it may encounter an error while processing a configuration row. If it does encounter an error, the error will be logged into the Error Log, and EZ WildApricot Web Designer willproceed to process the next configuration row in the configuration line. The configuration row with the error will not be proceessed until the error has been resolved.
+As EZ WildApricot Web Designer parses each configuration file it may encounter an error while processing a configuration row. If it does encounter an error, the error will be logged into the Error Log, and EZ WildApricot Web Designer willproceed to process the next configuration row in the configuration line. The configuration row with the error will not be processed until the error has been resolved.
 
 The `View Error Log` button in the inspector opens the error log and displays the error message, timestamp and the ability to delete the error from the log. The error message will contain information about which line created an error and the error message. Currently correctly-formatted CSS Paths or CSS Element IDs that are not found on the page will _not_ be logged as errors, as they will be simply skipped.
 
@@ -417,7 +415,7 @@ stepThroughConfig = true;
 stepThrough = true;
 ```
 
-When step-through debugging is enabled, you can open the development console to view the processing of the config.csv or language.csv files. The console will display what file and line number it is processing, and the EZ WildApricot Web Designer function being processed on that line. It will then pause for 5 seconds and then more to the next line. You can watch the web page to see how the changes are occuring, and see what line in the file may be causing errors.
+When step-through debugging is enabled, you can open the development console to view the processing of the config.csv or language.csv files. The console will display what file and line number it is processing, and the EZ WildApricot Web Designer function being processed on that line. It will then pause for 5 seconds and then more to the next line. You can watch the web page to see how the changes are occurring, and see what line in the file may be causing errors.
 
 To change the delay time, add this to the EZ WildApricot Web Designer install JavaScript:
 
@@ -435,7 +433,6 @@ stepThroughConfigFrom = 10;
 // Start current language step-through at a certain line
 stepThroughFrom = 20;
 ```
-
 
 ---
 
@@ -658,9 +655,9 @@ Function: googlefont
 
 # Using EZ WildApricot Web Designer with WildApricot iframe Widgets
 
-The EZ WildApricot Web Designer affects any page loaded from a WildApricot website, including the widgets published through the Website Settings. These are implemented as iframes which load the JavaScript libary just like any web page. It's best to test the content on a regular WildApricot website before implementing the iframe gadgets to make sure all changes are rendering outside the iframe first.
+The EZ WildApricot Web Designer affects any page loaded from a WildApricot website, including the widgets published through the Website Settings. These are implemented as iframes which load the JavaScript library just like any web page. It's best to test the content on a regular WildApricot website before implementing the iframe gadgets to make sure all changes are rendering outside the iframe first.
 
-To reference the widgets in an iframe in a different langauge when mutli-lingual mode is turned on use the ?watm-<language> query parameter on the iframe URL in the `src` parameter of the iframe tag.
+To reference the widgets in an iframe in a different language when multilingual mode is turned on use the ?watm-<language> query parameter on the iframe URL in the `src` parameter of the iframe tag.
 
 Example:
 
@@ -676,7 +673,7 @@ Example:
 
 The iframe code above Will load the WildApricot profile widget in an iframe and trigger the French version of the profile.
 
-If you omit the ?watm-<language> in the `src` paramater the widget will load in the current language set previously by the language dropdown menu or the previously loaded langauge.
+If you omit the ?watm-<language> in the `src` parameter the widget will load in the current language set previously by the language dropdown menu or the previously loaded language.
 
 ---
 
@@ -694,7 +691,14 @@ Within the square brackets, add type the name of the add-ons within quotes. Sepa
 For example this will enable all the add-ons:
 
 ```javascript
-ez_addons = ["fontawesome","ez-notice","ez-toggle","ez-tabs","ez-library","ez-language"];
+ez_addons = [
+  "fontawesome",
+  "ez-notice",
+  "ez-toggle",
+  "ez-tabs",
+  "ez-library",
+  "ez-language",
+];
 watm_language_name[0] = "English";
 ```
 
@@ -713,7 +717,7 @@ To add multiple language to your event titles and descriptions you can use the
 
 `[ez <languagename>][/ez]`
 
-short codes to surround the content for a particular langauge.
+short codes to surround the content for a particular language.
 
 For example in an event title you can do the following to support english and french event titles:
 
@@ -729,7 +733,6 @@ English event:
 
 ![ez language english event on front end](https://github.com/NewPath-Consulting/ez-wildapricot-webdesigner/blob/master/readme-images/ez-language-full-event-english.png?raw=true)
 
-
 French event:
 
 ![ez language french event on front end](https://github.com/NewPath-Consulting/ez-wildapricot-webdesigner/blob/master/readme-images/ez-language-full-event-french.png?raw=true)
@@ -743,7 +746,6 @@ For online store products, the product title and description can be configured a
 Here's how the online store product shows in English and French on the website:
 
 ![ez language product english](https://github.com/NewPath-Consulting/ez-wildapricot-webdesigner/blob/master/readme-images/ez-language-product-english.png?raw=true)
-
 
 ![ez language product french](https://github.com/NewPath-Consulting/ez-wildapricot-webdesigner/blob/master/readme-images/ez-language-product-french.png?raw=true)
 
@@ -911,6 +913,38 @@ Place this into a Custom HTML gadget.
 </pre>
 ```
 
+## EZ-Terms Add-On
+
+The EZ-Terms Addon makes it easy to modify how all terms of service checkboxes work in WildApricot. Instead of blindly checking a checkbox without reading the linked document, this addon prevents the users from checking the box until they click on the terms link and click on the agree button. Clicking on the the terms link will load the terms in a popup modal, keeping them on the same page. The user must scroll to the bottom of the terms to enable the agree button. The checkbox is checked only after the terms of service is read and confirmed it has been read by the user.
+
+To enable this add-on add this line to your configuration script:
+
+```javascript
+ez_addons = ["ez-terms"];
+watm_language_name[0] = "English";
+```
+
+**Using the EZ-Terms Add-on**
+
+This add on changes the default behavior of the checkbox on the terms of service checkboxes on event registration forms and member application/renewal forms. 
+
+When the EZ-Terms addon-on is enabled, you must have a public page set up with the terms added to it. This cannot be a document - the terms must be added directly to this page. WHen setting up the Terms of Use field, be sure to use the URL of that terms page.
+
+On the terms page, add the class name `.terms` in the advanced settings on the page. If you are using the multi-language features, add the class name for the language (for example, `.english` or `.french`) to your content gadget. You can add a new content gadget for each language your site supports.
+
+This is how the Terms of Service settings map to the modal dialog:
+
+| Setting         | Use                                                                                                                                 |
+| --------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| **Field label** | This will be used as the title for the terms of service modal                                                                                        |
+| **Text**        | This is used for the link to open the modal as well as for the text on the agree button                                             |
+| **Link**        | This is the URL of the page that contains the terms. The content from the gadget with the `.terms` class will be shown in the modal |
+
+If you translate these texts in the Inspector, they will also be translated in the modal. There are two fixed text strings, however, that cannot be translated:
+
+- The "Cancel" button
+- The tooltip when you hover over the agree button that says "Scroll to the bottom to agree"
+
 ---
 
 # Browser Requirements
@@ -993,6 +1027,7 @@ The following open-source code libraries are used by this product. All the libra
 2.0.9 - removed the CSS from install script and added it into the code to ensure no "white screen of death" scenarios if JavaScript fails to install 02/18/2023
 
 2.1.0 - added the `replace_element` function for backwards compatibility to pre-v2 WATM/EZ Website Designer versions 04/09/2023
+
 - the EZ license is now checked once per day, rather than on every page load
 - if the [web browser's language is set](https://www.computerhope.com/issues/ch001904.htm) EZ WildApricot Web Designer will automatically switch to the language, if available.
 - added an error log and a "View Error Log" button to the inspector
@@ -1001,13 +1036,18 @@ The following open-source code libraries are used by this product. All the libra
 - added instructions on adding translated content gadgets
 - added "step through" debugging mechanism to process config and language files line by line with delay
 
-2.1.1 - fixed infinite loop bug that was encountered when the default text contained a substring or the an identical string in the replacement text 07/06/2023
+  2.1.1 - fixed infinite loop bug that was encountered when the default text contained a substring or the an identical string in the replacement text 07/06/2023
 
-2.1.2 - updated ez-library add on to support multiple library instances in separate custom html content gadgets on the same WA page and in different languages 10/31/2023
-- added the Copy Parent ID button to select the ID of the element without the full CSS Path 
+  2.1.2 - updated ez-library add on to support multiple library instances in separate custom html content gadgets on the same WA page and in different languages 10/31/2023
 
-2.1.3 - added configurable automatic file backup support of all configuration files
+- added the Copy Parent ID button to select the ID of the element without the full CSS Path
+
+  2.1.3 - added configurable automatic file backup support of all configuration files
+
 - added check to see if configuration file has the right column headers 04/24/2024
 
-2.2 - added Table of Contents to README and description of the configuration file columns and how they are used
-- added ez-langauge add-on to support event title/description and online store product title/description translations 08/09/2024
+  2.2 - added Table of Contents to README and description of the configuration file columns and how they are used
+
+- added ez-language add-on to support event title/description and online store product title/description translations 08/09/2024
+
+  2.2.1 - added ez-terms add-on to improve how Terms of Service checkbox works in WildApricot websites 10/03/2024
