@@ -6,7 +6,7 @@
     - [Multilingual Script Setup](#multilingual-script-setup)
     - [Recommended Language Class Names](#recommended-language-class-names)
     - [Extra Install Script Options](#extra-install-script-options)
-      - [Enable the Inspector \& Editor without Being Logged in as an Admin](#Enable-the-inspector--editor-without-being-logged-in-as-an-admin)
+      - [Enable the Inspector \& Editor without Being Logged in as an Admin](#enable-the-inspector--editor-without-being-logged-in-as-an-admin)
       - [Hiding the EZ WildApricot Web Designer Icon](#hiding-the-ez-wildapricot-web-designer-icon)
       - [Automatic CSV Backups](#automatic-csv-backups)
       - [Installing EZ Add-ons](#installing-ez-add-ons)
@@ -30,7 +30,7 @@
 - [EZ WildApricot Web Designer Functions](#ez-wildapricot-web-designer-functions)
   - [**text**](#text)
   - [**replace**](#replace)
-  - [**replace_element**](#replace_element)
+  - [**replace\_element**](#replace_element)
   - [**shortdelay**](#shortdelay)
   - [**longdelay**](#longdelay)
   - [**button**](#button)
@@ -936,7 +936,7 @@ This is how the Terms of Service settings map to the modal dialog:
 
 | Setting         | Use                                                                                                                                 |
 | --------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| **Field label** | This will be used as the title for the terms of service modal                                                                                        |
+| **Field label** | This will be used as the title for the terms of service modal                                                                       |
 | **Text**        | This is used for the link to open the modal as well as for the text on the agree button                                             |
 | **Link**        | This is the URL of the page that contains the terms. The content from the gadget with the `.terms` class will be shown in the modal |
 
@@ -1036,18 +1036,18 @@ The following open-source code libraries are used by this product. All the libra
 - added instructions on adding translated content gadgets
 - added "step through" debugging mechanism to process config and language files line by line with delay
 
-  2.1.1 - fixed infinite loop bug that was encountered when the default text contained a substring or the an identical string in the replacement text 07/06/2023
+2.1.1 - fixed infinite loop bug that was encountered when the default text contained a substring or the an identical string in the replacement text 07/06/2023
 
-  2.1.2 - updated ez-library add on to support multiple library instances in separate custom html content gadgets on the same WA page and in different languages 10/31/2023
+2.1.2 - updated ez-library add on to support multiple library instances in separate custom html content gadgets on the same WA page and in different languages 10/31/2023
 
 - added the Copy Parent ID button to select the ID of the element without the full CSS Path
 
-  2.1.3 - added configurable automatic file backup support of all configuration files
+2.1.3 - added configurable automatic file backup support of all configuration files
 
 - added check to see if configuration file has the right column headers 04/24/2024
 
-  2.2 - added Table of Contents to README and description of the configuration file columns and how they are used
+2.2 - added Table of Contents to README and description of the configuration file columns and how they are used
 
 - added ez-language add-on to support event title/description and online store product title/description translations 08/09/2024
 
-  2.2.1 - added ez-terms add-on to improve how Terms of Service checkbox works in WildApricot websites 10/03/2024
+ 2.2.1 - added ez-terms add-on to improve how Terms of Service checkbox works in WildApricot websites 10/03/2024
