@@ -1036,18 +1036,15 @@ The following open-source code libraries are used by this product. All the libra
 - added instructions on adding translated content gadgets
 - added "step through" debugging mechanism to process config and language files line by line with delay
 
-  2.1.1 - fixed infinite loop bug that was encountered when the default text contained a substring or the an identical string in the replacement text 07/06/2023
+2.1.1 - fixed infinite loop bug that was encountered when the default text contained a substring or the an identical string in the replacement text 07/06/2023
 
-  2.1.2 - updated ez-library add on to support multiple library instances in separate custom html content gadgets on the same WA page and in different languages 10/31/2023
-
+2.1.2 - updated ez-library add on to support multiple library instances in separate custom html content gadgets on the same WA page and in different languages 10/31/2023
 - added the Copy Parent ID button to select the ID of the element without the full CSS Path
 
-  2.1.3 - added configurable automatic file backup support of all configuration files
-
+2.1.3 - added configurable automatic file backup support of all configuration files
 - added check to see if configuration file has the right column headers 04/24/2024
 
-  2.2 - added Table of Contents to README and description of the configuration file columns and how they are used
-
+2.2 - added Table of Contents to README and description of the configuration file columns and how they are used
 - added ez-language add-on to support event title/description and online store product title/description translations 08/09/2024
 
-  2.2.1 - added ez-terms add-on to improve how Terms of Service checkbox works in WildApricot websites 10/03/2024
+2.2.1 - added ez-terms add-on to improve how Terms of Service checkbox works in WildApricot websites 10/03/2024
