@@ -135,7 +135,7 @@ NOTE: this code snippet assumes you have uploaded all files into the folder `/re
 NOTE: to use the development license key database add this to the `<script>` tag:
 
 ```html
-checkCode = "4suuck1up58qja9qfcqyosyhni63jwsn";
+env = "text";
 ```
 
 ### Multilingual Script Setup

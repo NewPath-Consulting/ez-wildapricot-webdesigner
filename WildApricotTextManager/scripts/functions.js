@@ -6,7 +6,7 @@
 const checkLicense = async () => {
   // Declare two variables, `license` and `checkUrl`
   let license;
-  let checkUrl = "https://hook.us1.make.com/" + checkCode;
+  let checkUrl = "https://newpathconsulting.com/licensechecker/";
 
   // If `license_key` is not an empty string, attempt to retrieve the `watmlicense` cookie using the `getCookie` function
   if (license_key !== "") {
@@ -21,7 +21,7 @@ const checkLicense = async () => {
         // Include the `license_key` as a query parameter
         // Race the fetch request against the timeout promise
         const response = await Promise.race([
-          fetch(`${checkUrl}/?json=true&key=${license_key}`),
+          fetch(`${checkUrl}/?json=true&key=${license_key}&env=${env}`),
           timeout(3000),
         ]);
 
