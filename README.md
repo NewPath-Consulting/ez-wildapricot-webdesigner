@@ -30,7 +30,7 @@
 - [EZ WildApricot Web Designer Functions](#ez-wildapricot-web-designer-functions)
   - [**text**](#text)
   - [**replace**](#replace)
-  - [**replace\_element**](#replace_element)
+  - [**replace_element**](#replace_element)
   - [**shortdelay**](#shortdelay)
   - [**longdelay**](#longdelay)
   - [**button**](#button)
@@ -135,7 +135,7 @@ NOTE: this code snippet assumes you have uploaded all files into the folder `/re
 NOTE: to use the development license key database add this to the `<script>` tag:
 
 ```html
-checkCode = "4suuck1up58qja9qfcqyosyhni63jwsn";
+env = "test";
 ```
 
 ### Multilingual Script Setup
@@ -925,7 +925,7 @@ watm_language_name[0] = "English";
 
 **Using the EZ-Terms Add-on**
 
-This add on changes the default behavior of the checkbox on the terms of service checkboxes on event registration forms and member application/renewal forms. 
+This add on changes the default behavior of the checkbox on the terms of service checkboxes on event registration forms and member application/renewal forms.
 
 When the EZ-Terms addon-on is enabled, you must have a public page set up with the terms added to it. This cannot be a document - the terms must be added directly to this page. WHen setting up the Terms of Use field, be sure to use the URL of that terms page.
 

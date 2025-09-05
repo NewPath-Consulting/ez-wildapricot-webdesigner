@@ -11,7 +11,7 @@ const watm_location = document.currentScript.src.substring(
  * The version number of the WATM script.
  * @constant {string}
  */
-const watm_version = "2.2.1";
+const watm_version = "2.2.2";
 
 /**
  * The URL of the WATM information page.
@@ -116,10 +116,10 @@ let watm_language_csv_file = [];
 let ez_addons = [];
 
 /**
- * The default license checker code.
+ * The default environment variable
  * type {string}
  */
-let checkCode = "8euj9o9frkj3wz2nqm6xmcp4y1mdy5tp";
+let env = "production";
 
 /**
  * An array of language being used
