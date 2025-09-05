@@ -83,4 +83,4 @@
 
 2.2.1 - added ez-terms add-on to improve how Terms of Service checkbox works in WildApricot websites 10/03/2024
 
-2.2.2 - added support for new license checker URL, `checkCod`e variable has been removed, replaced with `env` variable. Set `env` to `'test'` in JavaScript install code to use development license database 09/05/2025
+2.2.2 - added support for new license checker URL, `checkCode` variable has been removed, replaced with `env` variable. Set `env` to `'test'` in JavaScript install code to use development license database 09/05/2025
