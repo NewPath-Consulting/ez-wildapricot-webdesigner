@@ -104,7 +104,7 @@ The following is a list of all the external URLs currently being implemented by 
 
 **Core Plugin**
 
-- hook.us1.make.com
+- newpathconsulting.com
 
 **EZ Add-Ons**
 
@@ -126,6 +126,7 @@ NOTE: this code snippet assumes you have uploaded all files into the folder `/re
 */
 
   license_key = "";
+  env = "production";
   watm_saves_before_backup = 20; // number of saves before backup is made, set to 0 to turn off automatic backups
 </script>
 ```
